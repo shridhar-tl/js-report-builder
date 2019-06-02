@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This package contains a Report Builder component which can be used by end users to build custom reports from browser.
+
+Notes: This is still in development and not ready for public use.
 
 ## Available Scripts
 

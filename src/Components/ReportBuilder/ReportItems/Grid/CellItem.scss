@@ -1,0 +1,13 @@
+.grid-cell-item {
+  float: left;
+
+  i {
+    color: red;
+    cursor: pointer;
+    margin: 3px 5px;
+  }
+
+  span {
+    cursor: default;
+  }
+}

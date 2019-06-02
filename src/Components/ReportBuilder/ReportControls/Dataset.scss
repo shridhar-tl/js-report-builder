@@ -1,0 +1,37 @@
+.set-list {
+    width: 100%;
+
+    .set {
+        width: 100%;
+        border: 1px solid grey;
+        border-radius: 5px;
+        margin-bottom: 10px;
+
+        .title {
+            width: 100%;
+            border-bottom: 2px solid grey;
+            padding: 3px 5px;
+            font-weight: bold;
+            cursor: pointer;
+            height: 33px;
+
+            span:before {
+            }
+        }
+
+        .list {
+            width: 100%;
+
+            .item {
+                width: 100%;
+                height: 25px;
+                padding: 3px 5px;
+                cursor: move;
+            }
+
+            .item:not(:last-child) {
+                border-bottom: 1px solid grey;
+            }
+        }
+    }
+}

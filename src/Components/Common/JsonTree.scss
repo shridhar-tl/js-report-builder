@@ -1,0 +1,44 @@
+.tree {
+    width: 100%;
+    overflow: auto;
+
+    .node {
+        margin-left: 10px;
+        min-height: 25px;
+        overflow: auto;
+
+        &.draggable {
+            cursor: move;
+        }
+
+        .text {
+            width: 100%;
+            cursor: move;
+
+            i.togglable {
+                cursor: pointer;
+            }
+
+            i.fa {
+                width: 15px;
+                font-size: 14px;
+
+                &.fa-caret-right,
+                &.fa-caret-down {
+                    font-size: 16px;
+                }
+            }
+
+            .key {
+                font-size: 16px;
+                margin-left: 3px;
+                margin-right: 5px;
+            }
+
+            .sub {
+                color: grey;
+                font-size: 14px;
+            }
+        }
+    }
+}

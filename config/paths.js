@@ -49,14 +49,17 @@ const resolveModule = (resolveFn, filePath) => {
     return resolveFn(`${filePath}.js`);
 };
 
+const isEnvDevelopment = process.env.BABEL_ENV === "development";
+const isEnvProduction = process.env.BABEL_ENV === "production";
+
 // config after eject: we're in ./config/
 module.exports = {
     dotenv: resolveApp(".env"),
     appPath: resolveApp("."),
-    appBuild: resolveApp("build/lib"),
+    appBuild: resolveApp(isEnvDevelopment ? "build/lib" : "build"),
     appPublic: resolveApp("public"),
     appHtml: resolveApp("public/index.html"),
-    appIndexJs: resolveModule(resolveApp, "src/lib/index"),
+    appIndexJs: resolveModule(resolveApp, isEnvDevelopment ? "src/index" : "src/lib/index"),
     appPackageJson: resolveApp("package.json"),
     appSrc: resolveApp("src"),
     appTsConfig: resolveApp("tsconfig.json"),

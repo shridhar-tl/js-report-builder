@@ -29,7 +29,7 @@ const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const postcssNormalize = require('postcss-normalize');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = false;//OldCode: TempCode: process.env.GENERATE_SOURCEMAP !== 'false'; // To disable generation of sourcemap
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
@@ -149,8 +149,8 @@ module.exports = function(webpackEnv) {
     ].filter(Boolean),
     output: {
       /// Begin: Customized code
-      library: '',
-      libraryTarget: 'commonjs',
+      library: isEnvProduction ? '' : undefined,
+      libraryTarget: isEnvProduction ? 'commonjs' : undefined,
       /// End: Customized code
       
       // The build folder.
@@ -248,18 +248,13 @@ module.exports = function(webpackEnv) {
       // Automatically split vendor and commons
       // https://twitter.com/wSokra/status/969633336732905474
       // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-      splitChunks:false,
-      /*
-      Begin - Custom code
-      splitChunks: {
+      splitChunks: isEnvDevelopment ? { // OldCode: added additional condition for isEnvDevelopment
         chunks: 'all',
         name: false,
-      },
-      End - Custom code
-      */
+      } : undefined,
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: false, //OldCode: true,
+      runtimeChunk: isEnvDevelopment, //OldCode: true,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
@@ -486,7 +481,7 @@ module.exports = function(webpackEnv) {
     },
     plugins: [
       // Generates an `index.html` file with the <script> injected.
-      !isEnvProduction && new HtmlWebpackPlugin(
+      isEnvDevelopment && new HtmlWebpackPlugin( // OldCode: added isEnvDevelopment check additionaly
         Object.assign(
           {},
           {
@@ -548,14 +543,14 @@ module.exports = function(webpackEnv) {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: 'css/style.css'//OldCode: filename: 'static/css/[name].[contenthash:8].css',
-          //OldCode: chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+          filename: isEnvDevelopment ? 'static/css/[name].[contenthash:8].css': 'css/style.css', // OldCode: filename: 'static/css/[name].[contenthash:8].css',
+          chunkFilename: isEnvDevelopment ? 'static/css/[name].[contenthash:8].chunk.css':undefined // OldCode: chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
         }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
       // having to parse `index.html`.
-      /*
-      OldCode: Removed as manifest file is not required
+           
+      isEnvDevelopment && //OldCode: Added isEnvDevelopment condition additional as manifest file is not required for production build
       new ManifestPlugin({
         fileName: 'asset-manifest.json',
         publicPath: publicPath,
@@ -569,7 +564,7 @@ module.exports = function(webpackEnv) {
             files: manifestFiles,
           };
         },
-      }),*/
+      }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how Webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.

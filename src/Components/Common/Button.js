@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import { Button as PrimeButton } from "primereact/button";
+import "./Button.scss";
 
 const buttonTypes = {
     danger: "p-button-danger",
@@ -13,10 +14,13 @@ const buttonTypes = {
 
 class Button extends PureComponent {
     render() {
-        var { type, className, rounded } = this.props;
-        var btnClass = buttonTypes[type] || "";
+        var { type, className, rounded, label } = this.props;
+        var btnClass = "rb-button " + (buttonTypes[type] || "");
         if (rounded) {
             btnClass += " p-button-rounded ";
+        }
+        if (!label) {
+            btnClass += " ui-button-icon-only ";
         }
         className = className || "";
         var props = { ...this.props, className: btnClass + " " + className };

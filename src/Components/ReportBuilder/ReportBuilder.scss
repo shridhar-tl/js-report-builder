@@ -1,18 +1,16 @@
 .report-builder {
-  width: 100%;
-  height: 100%;
-
-  .report-controls-cntr {
-    width: 21%;
+    width: calc(100% - 5px);
     height: 100%;
-    border: 1px solid black;
-    float: left;
-  }
 
-  .report-display-cntr {
-    width: 78%;
-    height: 100%;
-    border: 1px solid black;
-    float: right;
-  }
+    .report-controls-cntr {
+        width: calc(22% - 4px);
+        height: 100%;
+        float: left;
+    }
+
+    .report-display-cntr {
+        width: calc(78% - 4px);
+        height: 100%;
+        float: right;
+    }
 }

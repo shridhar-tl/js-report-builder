@@ -4,7 +4,8 @@
     }
 
     .header-cntr {
-        position: relative;
+        position: absolute;
+        width: 300px;
     }
 
     .header {
@@ -15,10 +16,11 @@
         border: 1px solid grey;
         position: absolute;
         width: 250px;
-        top: -25px;
+        top: -28px;
         background-color: lightyellow;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
+        z-index: 100;
 
         .pull-right {
             .fa {

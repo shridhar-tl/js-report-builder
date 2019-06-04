@@ -1,0 +1,25 @@
+body {
+    .p-dialog {
+        .p-dialog-titlebar {
+            background: repeat-x #f6f7f9;
+            background: linear-gradient(to bottom, #f6f7f9 0, #ebedf0 100%);
+            border: 1px solid #d9d9d9;
+            color: #1b1d1f;
+            font-weight: 400;
+
+            .p-dialog-titlebar-icons {
+                text-decoration: none;
+                float: right;
+                padding: 0.125em;
+                cursor: pointer;
+                border: 1px solid transparent;
+            }
+
+            .p-dialog-titlebar-icons:hover {
+                border-color: silver;
+                background-color: #eee;
+                color: #212121;
+            }
+        }
+    }
+}

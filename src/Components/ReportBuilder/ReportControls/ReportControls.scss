@@ -5,4 +5,14 @@
             padding: 3px 5px;
         }
     }
+    .p-accordion {
+        .p-accordion-header {
+            & > a {
+                padding: 0.229em 0.2em;
+            }
+        }
+        .p-accordion-header-text {
+            width: 90%;
+        }
+    }
 }

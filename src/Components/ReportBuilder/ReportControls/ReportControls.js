@@ -12,14 +12,18 @@ class ReportControls extends PureComponent {
         super(props);
         var { data, selectedItems } = props;
         var { parameters, datasetList } = data;
-        if (!selectedItems) { selectedItems = [] }
+        if (!selectedItems) {
+            selectedItems = [];
+        }
         this.state = { data, activeIndex: [], parameters, datasetList, selectedItems };
     }
 
     UNSAFE_componentWillReceiveProps(newProps) {
         var { data, selectedItems } = newProps;
         var { parameters, datasetList } = data;
-        if (!selectedItems) { selectedItems = [] }
+        if (!selectedItems) {
+            selectedItems = [];
+        }
         this.setState({ data, parameters, datasetList, selectedItems });
     }
 
@@ -60,16 +64,16 @@ class ReportControls extends PureComponent {
         var [selectedItem] = selectedItems;
 
         var parameterHeader = (
-            <div>
+            <div style={{ width: "100%" }}>
                 Parameters ({parameters.length})
-                <Button type="secondary" icon="fa fa-plus" onClick={this.addParam} />
+                <Button type="success" icon="fa fa-plus" className="pull-right" onClick={this.addParam} />
             </div>
         );
 
         var datasetHeader = (
-            <div>
+            <div style={{ width: "100%" }}>
                 Datasets ({datasetList.length})
-                <Button type="secondary" icon="fa fa-plus" onClick={this.addDataset} />
+                <Button type="success" icon="fa fa-plus" className="pull-right" onClick={this.addDataset} />
             </div>
         );
 

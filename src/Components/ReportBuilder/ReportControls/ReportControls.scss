@@ -1,10 +1,10 @@
 .report-controls {
-    .report-controls-ctr {
-        border: 1px solid black;
-        .p-accordion-content {
-            padding: 3px 5px;
-        }
+    width: calc(100% - 5px);
+
+    .p-accordion-content {
+        padding: 3px 5px;
     }
+
     .p-accordion {
         .p-accordion-header {
             & > a {

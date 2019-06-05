@@ -5,7 +5,6 @@ import "font-awesome/css/font-awesome.min.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-import "./theme.scss";
 import data from "./testdata";
 
 var defaultConfig = {

@@ -16,3 +16,25 @@
         }
     }
 }
+
+.builtin-fields {
+    .field {
+        cursor: move;
+        padding: 3px 0px;
+    }
+}
+
+.func-list {
+    .func-grp {
+        .header {
+            font-weight: bold;
+        }
+        .list {
+            padding-left: 20px;
+
+            .func {
+                padding: 3px 0px;
+            }
+        }
+    }
+}

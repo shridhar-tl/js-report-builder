@@ -1,11 +1,39 @@
 body {
-    .p-dialog {
+    .p-tabview.p-tabview-top .p-tabview-nav li.p-highlight a,
+    .p-tabview.p-tabview-top .p-tabview-nav li.p-highlight:hover a {
+        background: #fff;
+        border: 1px solid #c8c8c8;
+        color: #555;
+        border-bottom: 0;
+    }
+
+    .p-tabview.p-tabview-top .p-tabview-nav li a:not(.p-disabled):focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: none;
+    }
+
+    .p-tabview.p-tabview-top .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover a {
+        border: 1px solid silver;
+    }
+
+    .p-tabview-selected {
+        a {
+            height: 39px;
+        }
+    }
+
+    /*.p-dialog {
+        border-radius: 3px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+
         .p-dialog-titlebar {
             background: repeat-x #f6f7f9;
             background: linear-gradient(to bottom, #f6f7f9 0, #ebedf0 100%);
             border: 1px solid #d9d9d9;
             color: #1b1d1f;
             font-weight: 400;
+            font-size: 1.25em;
 
             .p-dialog-titlebar-icons {
                 text-decoration: none;
@@ -13,6 +41,10 @@ body {
                 padding: 0.125em;
                 cursor: pointer;
                 border: 1px solid transparent;
+
+                span {
+                    font-size: 1.25em;
+                }
             }
 
             .p-dialog-titlebar-icons:hover {
@@ -21,5 +53,46 @@ body {
                 color: #212121;
             }
         }
+
+        .p-dialog-content {
+            border: 1px solid #d5d5d5;
+            background-color: #fff;
+            color: #222;
+            padding: 0;
+        }
+
+        .p-dialog-footer {
+            padding: 1em;
+            border-width: 1px 0 0;
+            text-align: right;
+            background-color: #f6f7f9;
+        }
     }
+
+    .p-component-overlay {
+        background-color: #666;
+        opacity: 0.5;
+    }
+
+    .p-tabview {
+        .p-tabview-nav {
+            height: 36px;
+
+            li {
+                display: block;
+                background: #f6f7f9;
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+                border: 1px solid #d6d6d6;
+                font-size: 14px;
+
+                &.p-tabview-selected {
+                    background: #fff;
+                }
+                a {
+                    color: #555;
+                }
+            }
+        }
+    }*/
 }

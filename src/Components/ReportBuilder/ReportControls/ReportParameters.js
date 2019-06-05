@@ -7,6 +7,7 @@ import Button from "../../Common/Button";
 import DraggableHandle from "../DragDrop/DraggableHandle";
 import "./ReportParameters.scss";
 import SelectDataset from "../Common/SelectDataset";
+import { getParamTypes } from "../../../Common/ReportConfig";
 
 class ReportParameters extends ReportControlBase {
     constructor(props) {
@@ -66,19 +67,6 @@ class ReportParameters extends ReportControlBase {
 }
 
 export default ReportParameters;
-
-const paramTypes = [
-    { label: "Text", value: "TXT" },
-    { label: "Checkbox", value: "CHK" },
-    { label: "Yes / No Slider", value: "YNS" },
-    { label: "Integer", value: "INT" },
-    { label: "Number", value: "NUM" },
-    { label: "Dropdown", value: "DDL" },
-    { label: "Autocomplete", value: "AC" },
-    { label: "Date", value: "DTE" },
-    { label: "Date Range", value: "DR" },
-    { label: "User group", value: "UG" }
-];
 
 class EditParameter extends PureComponent {
     constructor(props) {
@@ -177,7 +165,7 @@ class EditParameter extends PureComponent {
                                 <label>Param type:</label>
                                 <Dropdown
                                     value={parameter.type}
-                                    options={paramTypes}
+                                    options={getParamTypes()}
                                     onChange={e => updateFieldValue("type", e.value)}
                                     placeholder="Select a Parameter type"
                                 />
@@ -209,8 +197,7 @@ class EditParameter extends PureComponent {
                     <TabPanel header="Available values">
                         <div>
                             <label>Dataset</label>
-                            <SelectDataset value={parameter.dataset}
-                                onChange={ds => updateFieldValue("dataset", ds)}></SelectDataset>
+                            <SelectDataset value={parameter.dataset} onChange={ds => updateFieldValue("dataset", ds)} />
                         </div>
                         <div>
                             <label>Display field</label>

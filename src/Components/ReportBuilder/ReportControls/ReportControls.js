@@ -6,6 +6,7 @@ import Button from "../../Common/Button";
 import ReportParameters from "./ReportParameters";
 import Datasets from "./Datasets";
 import StyleEditor from "../../Common/StyleEditor";
+import { getBuiltInFields, getCommonFunctions } from "../../../Common/ReportConfig";
 
 class ReportControls extends PureComponent {
     constructor(props) {
@@ -27,6 +28,7 @@ class ReportControls extends PureComponent {
         this.setState({ data, parameters, datasetList, selectedItems });
     }
 
+    editFunctions = e => this.showAddPopup(e, 1, { showAddPopup: () => {} });
     addParam = e => this.showAddPopup(e, 2, this.ctlParameters);
     addDataset = e => this.showAddPopup(e, 3, this.ctlDatasets);
 
@@ -63,6 +65,13 @@ class ReportControls extends PureComponent {
         var { datasets = {} } = data;
         var [selectedItem] = selectedItems;
 
+        var functionsHeader = (
+            <div style={{ width: "100%" }}>
+                Utility Functions
+                <Button type="success" icon="fa fa-edit" className="pull-right" onClick={this.editFunctions} />
+            </div>
+        );
+
         var parameterHeader = (
             <div style={{ width: "100%" }}>
                 Parameters ({parameters.length})
@@ -84,8 +93,12 @@ class ReportControls extends PureComponent {
                     activeIndex={activeIndex}
                     className="report-controls-ctr"
                     onTabChange={this.tabChanged}>
-                    <AccordionTab header="Built in fields" />
-                    <AccordionTab header="Utility Functions" />
+                    <AccordionTab header="Built in fields">
+                        <BuiltinFields />
+                    </AccordionTab>
+                    <AccordionTab header={functionsHeader}>
+                        <FunctionsList />
+                    </AccordionTab>
                     <AccordionTab header={parameterHeader}>
                         <ReportParameters
                             ref={c => (this.ctlParameters = c)}
@@ -114,3 +127,46 @@ class ReportControls extends PureComponent {
 }
 
 export default ReportControls;
+
+class BuiltinFields extends PureComponent {
+    render() {
+        return (
+            <div className="builtin-fields">
+                {getBuiltInFields().map(f => (
+                    <div className="field" key={f.field} title={f.helpText}>
+                        {f.field}
+                    </div>
+                ))}
+            </div>
+        );
+    }
+}
+
+class FunctionsList extends PureComponent {
+    render() {
+        return (
+            <div className="func-list">
+                <div className="func-grp">
+                    <div className="header">Common functions</div>
+                    <div className="list">
+                        {getCommonFunctions().map(f => (
+                            <div className="func" key={f.field} title={f.helpText}>
+                                {f.field}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="func-grp">
+                    <div className="header">My functions</div>
+                    <div className="list">
+                        {getCommonFunctions().map(f => (
+                            <div className="func" key={f.field} title={f.helpText}>
+                                {f.field}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}

@@ -1,7 +1,12 @@
-.rb-button {
+.p-button.rb-button {
     height: 26px;
 
     &.ui-button-icon-only {
         width: 2em;
+    }
+
+    &.p-button-text-icon-left .p-button-text,
+    .p-button-text {
+        padding: 0.1em 1em 0.17em 1.8em !important;
     }
 }

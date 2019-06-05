@@ -6,7 +6,7 @@ import { TabView, TabPanel } from "primereact/tabview";
 import { InputText } from "primereact/inputtext";
 import SelectDataset from "./SelectDataset";
 import ExpressionList from "./ExpressionList";
-import array from '../../../Common/linq'
+import array from "../../../Common/linq";
 
 class GroupProperties extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class GroupProperties extends Component {
     hidePopup = () => {
         this.setState({ showDialog: false });
         this.props.onHide();
-    }
+    };
 
     setValue(field, value) {
         var { group } = this.state;
@@ -30,18 +30,23 @@ class GroupProperties extends Component {
     }
 
     isModelValid(group) {
-        return !!(group.name && group.dataset);
+        return !!(group.name && group.dataset && (group.dataset !== -1 || group.expression));
     }
 
     saveProperties = () => {
-        var { keys } = this.state.group;
+        var { group } = this.state;
+        var { keys, dataset } = group;
         if (keys && keys.length) {
             array(keys).removeAll(k => !k.expr);
         }
 
+        if (dataset !== -1) {
+            delete group.expression;
+        }
+
         this.setState({ showDialog: false });
-        this.props.onChange(this.state.group);
-    }
+        this.props.onChange(group);
+    };
 
     render() {
         var { showDialog, isParamValid, group } = this.state;
@@ -65,12 +70,32 @@ class GroupProperties extends Component {
                     <TabPanel header="General">
                         <div>
                             <label>Name:</label>
-                            <InputText keyfilter="alphanum" value={group.name} placeholder="Unique group name" onChange={e => this.setValue("name", e.currentTarget.value)} />
+                            <InputText
+                                keyfilter="alphanum"
+                                value={group.name}
+                                placeholder="Unique group name"
+                                onChange={e => this.setValue("name", e.currentTarget.value)}
+                            />
                         </div>
                         <div>
                             <label>Dataset:</label>
-                            <SelectDataset value={group.dataset} onChange={id => this.setValue("dataset", id)} />
+                            <SelectDataset
+                                includeExprDS={true}
+                                value={group.dataset}
+                                onChange={id => this.setValue("dataset", id)}
+                            />
                         </div>
+                        {group.dataset === -1 && (
+                            <div>
+                                <label>Dataset expression:</label>
+                                <ExpressionEditor
+                                    expression={group.expression}
+                                    onChange={value => {
+                                        this.setValue("expression", value);
+                                    }}
+                                />
+                            </div>
+                        )}
                         <div>
                             <label>Filter dataset:</label>
                             <ExpressionEditor

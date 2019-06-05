@@ -15,28 +15,36 @@ class ReportBuilder extends PureComponent {
         var { datasets, datasetList } = data;
         this.sharedProps = {
             data,
-            getDatasetList: () =>
-                array(
+            getDatasetList: includeExpressionDS => {
+                var list = array(
                     datasetList.map(id => {
                         var ds = datasets[id];
                         return { id, name: ds.name };
                     })
-                ).sortBy("name")(),
+                ).sortBy("name")();
+
+                if (includeExpressionDS) {
+                    list.push({ id: -1, name: "<<Expression>>" });
+                }
+                return list;
+            },
             getDataset: id => datasets[id],
             selectControl: (selElement, elementData) => {
                 this.setState({ selElement, elementData });
             },
-            getState: (itemName) => itemName ? this.state[itemName] : this.state
+            getState: itemName => (itemName ? this.state[itemName] : this.state)
         };
     }
 
-    itemSelected = (e) => {
+    itemSelected = e => {
         var { selections } = e;
         if (selections) {
-            this.setState({ selections })
+            this.setState({ selections });
             delete e.selections;
         }
-    }
+    };
+
+    getReportDefinition = () => this.state.data;
 
     render() {
         var { data, selections } = this.state;

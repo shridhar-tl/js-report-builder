@@ -11,8 +11,8 @@ class SelectDataset extends PureComponent {
     }
 
     componentDidMount() {
-        var datasets = this.context.getDatasetList();
-        var { value, multiselect } = this.props;
+        var { value, multiselect, includeExprDS } = this.props;
+        var datasets = this.context.getDatasetList(!!includeExprDS);
         if (!value) {
             value = [];
         }

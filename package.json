@@ -11,7 +11,7 @@
         "build",
         "README.md"
     ],
-    "main": "./build/lib/index.js",
+    "main": "./build/index.js",
     "license": "MIT",
     "dependencies": {
         "react-dnd": "^7.4.5",

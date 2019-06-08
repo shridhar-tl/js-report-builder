@@ -337,7 +337,7 @@ class FlatternDataset extends PureComponent {
     };
 
     render() {
-        var { showDialog, isPropsValid, colProps, datasets, dependencies, colProps, variables, filter } = this.state;
+        var { showDialog, isPropsValid, colProps, datasets, dependencies, variables, filter } = this.state;
 
         var footer = (
             <div>

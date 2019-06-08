@@ -10,7 +10,7 @@ import array from "../../Common/linq";
 class ReportBuilder extends PureComponent {
     constructor(props) {
         super();
-        var { data } = props;
+        var { definition: data } = props;
         this.state = { data: data || { reportItems: [], datasets: {}, parameters: [] } };
         var { datasets, datasetList } = data;
         this.sharedProps = {

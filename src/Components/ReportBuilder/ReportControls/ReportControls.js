@@ -150,8 +150,8 @@ class FunctionsList extends PureComponent {
                     <div className="header">Common functions</div>
                     <div className="list">
                         {getCommonFunctions().map(f => (
-                            <div className="func" key={f.field} title={f.helpText}>
-                                {f.field}
+                            <div className="func" key={f.name} title={f.helpText}>
+                                {f.name}
                             </div>
                         ))}
                     </div>
@@ -160,8 +160,8 @@ class FunctionsList extends PureComponent {
                     <div className="header">My functions</div>
                     <div className="list">
                         {getCommonFunctions().map(f => (
-                            <div className="func" key={f.field} title={f.helpText}>
-                                {f.field}
+                            <div className="func" key={f.name} title={f.helpText}>
+                                {f.name}
                             </div>
                         ))}
                     </div>

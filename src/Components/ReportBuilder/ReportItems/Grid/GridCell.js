@@ -148,6 +148,9 @@ class GridCell extends PureComponent {
                 case "IMG":
                     newItem = { itemType: "IMG", style: { height: "16px", width: "16px" } };
                     break;
+                default:
+                    newItem = { itemType: "", style: { height: "16px", width: "16px" } };
+                    break;
             }
         }
 

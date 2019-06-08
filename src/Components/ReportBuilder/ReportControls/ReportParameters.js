@@ -72,6 +72,7 @@ class EditParameter extends PureComponent {
     constructor(props) {
         super(props);
         var { parameter = {} } = props;
+        this.paramTypes = getParamTypes(true);
         this.state = { parameter: { ...parameter }, showDialog: true };
     }
 
@@ -132,7 +133,7 @@ class EditParameter extends PureComponent {
     }
 
     render() {
-        var { showDialog, parameter, isParamValid } = this.state;
+        var { showDialog, parameter, isParamValid, noMultiValue } = this.state;
         var { updateValue, updateFieldValue } = this;
 
         var footer = (
@@ -166,7 +167,11 @@ class EditParameter extends PureComponent {
                                 <Dropdown
                                     value={parameter.type}
                                     options={getParamTypes()}
-                                    onChange={e => updateFieldValue("type", e.value)}
+                                    onChange={e => {
+                                        var selType = this.paramTypes[e.value];
+                                        this.setState({ noMultiValue: selType.supportMultiValue === false });
+                                        updateFieldValue("type", e.value);
+                                    }}
                                     placeholder="Select a Parameter type"
                                 />
                             </div>
@@ -185,6 +190,7 @@ class EditParameter extends PureComponent {
                                 <label>
                                     <input
                                         type="checkbox"
+                                        disabled={noMultiValue}
                                         checked={parameter.allowMultiple}
                                         field="allowMultiple"
                                         onChange={updateValue}

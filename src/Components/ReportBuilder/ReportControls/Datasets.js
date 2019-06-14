@@ -9,6 +9,7 @@ import { UUID } from "../../../Common/HelperFunctions";
 import SelectDataset from "../Common/SelectDataset";
 import ExpressionList from "../Common/ExpressionList";
 import ExpressionEditor from "../Common/ExpressionEditor";
+import { getDatasetTypes } from "../../../Common/ReportConfig";
 
 class Datasets extends PureComponent {
     constructor(props) {
@@ -115,20 +116,10 @@ class Datasets extends PureComponent {
 
 export default Datasets;
 
-var datasetTypes = [
-    /*{ type: 'JQL', label: 'JQL search result' },
-    { type: 'PLS', label: 'Project list' },
-    { type: 'STS', label: 'Status list' },
-    { type: 'ITL', label: 'Issue type list' },*/
-    { type: "HTP", label: "Online dataset (http request)" },
-    { type: "FIL", label: "File dataset (CSV, EXCEL or JSON files)" },
-    { type: "FLT", label: "Flatern dataset (generate dataset by flatening other dataset)" },
-    { type: "EXP", label: "Expression dataset (generate dataset using other dataset)" }
-];
-
 class DatasetType extends PureComponent {
     constructor() {
         super();
+        this.datasetTypes = getDatasetTypes();
         this.state = { showDialog: true };
     }
 
@@ -179,7 +170,7 @@ class DatasetType extends PureComponent {
                         <label>Dataset name:</label>
                         <input type="text" field="name" value={name} onChange={this.updateValue} />
                     </div>
-                    {datasetTypes.map((ds, i) => (
+                    {this.datasetTypes.map((ds, i) => (
                         <div map={i}>
                             <label>
                                 <input type="radio" name="datasetType" value={ds.type} field="type" onChange={this.updateValue} />{" "}

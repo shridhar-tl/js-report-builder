@@ -6,7 +6,8 @@ import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";
-import data, { userDaywiseReport } from "./testdata";
+import data, { userDaywiseReport } from "./testschema";
+import datasets, { userList } from "./testdata";
 
 var defaultConfig = {
     parameterTypes: {
@@ -14,10 +15,16 @@ var defaultConfig = {
         //DDL: false // To remove a default param type do this.
     },
     datasetTypes: {
-        JQL: { label: "JQL search result", getSchema: name => {}, getData: schema => {} },
-        PLS: { label: "Project list", getSchema: name => {}, getData: schema => {} },
-        STS: { label: "Status list", getSchema: name => {}, getData: schema => {} },
-        ITL: { label: "Issue type list", getSchema: name => {}, getData: schema => {} }
+        JQL: {
+            label: "JQL search result",
+            resolveSchema: name => {},
+            resolveData: props => {
+                return Promise.resolve(datasets[props.dataset.type]);
+            }
+        },
+        PLS: { label: "Project list", resolveSchema: name => {}, resolveData: props => {} },
+        STS: { label: "Status list", resolveSchema: name => {}, resolveData: props => {} },
+        ITL: { label: "Issue type list", resolveSchema: name => {}, resolveData: props => {} }
     },
     builtInFields: {
         UserDateFormat: { value: "", helpText: "Provides the date format of the current user" },
@@ -54,7 +61,7 @@ class App extends Component {
                 </div>
                 <div style={{ width: "100%", height: "calc(100vh - 46px)", overflow: "auto" }}>
                     {!preview && <ReportBuilder definition={userDaywiseReport} />}
-                    {preview && <ReportViewer definition={userDaywiseReport} />}
+                    {preview && <ReportViewer definition={userDaywiseReport} defaultParameters={{ userList }} />}
                 </div>
             </div>
         );

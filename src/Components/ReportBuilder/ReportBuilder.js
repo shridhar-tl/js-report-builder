@@ -36,6 +36,17 @@ class ReportBuilder extends PureComponent {
         };
     }
 
+    componentDidMount() {
+        var { api } = this.props;
+        if (api) {
+            api(this.externalApi);
+        }
+    }
+
+    externalApi = {
+        getReportDefinition: () => this.state.data
+    };
+
     itemSelected = e => {
         var { selections } = e;
         if (selections) {
@@ -44,18 +55,33 @@ class ReportBuilder extends PureComponent {
         }
     };
 
-    getReportDefinition = () => this.state.data;
-
     render() {
         var { data, selections } = this.state;
         return (
             <BuilderContext.Provider value={this.sharedProps}>
                 <div className="report-builder">
                     <div className="report-controls-cntr">
-                        <ReportControls data={data} datasets={data.datasets} selectedItems={selections} />
+                        <ReportControls
+                            data={data}
+                            selectedItems={selections}
+                            onChange={d => {
+                                this.setState({ data: d });
+                                if (this.props.onChange) {
+                                    this.props.onChange(d);
+                                }
+                            }}
+                        />
                     </div>
                     <div className="report-display-cntr" onClick={this.itemSelected}>
-                        <ReportDisplay items={data.reportItems} />
+                        <ReportDisplay
+                            items={data.reportItems}
+                            onChange={d => {
+                                data.reportItems = d;
+                                if (this.props.onChange) {
+                                    this.props.onChange(data);
+                                }
+                            }}
+                        />
                     </div>
                 </div>
             </BuilderContext.Provider>

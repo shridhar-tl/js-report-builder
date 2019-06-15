@@ -1,4 +1,4 @@
-import React, { PureComponent, createContext } from "react";
+import React, { PureComponent } from "react";
 import ReportParameters from "./ReportParameters/ReportParameters";
 import ReportDisplay from "./ReportDisplay/ReportDisplay";
 import { getDatasetTypes, getCommonFunctions } from "../../Common/ReportConfig";
@@ -84,7 +84,7 @@ class ReportViewer extends PureComponent {
     }
 
     isAnyDSUnresolved() {
-        var { datasetList, datasets } = this.definition;
+        var { datasetList } = this.definition;
         return datasetList.some(dsId => !this.isDsResolved(dsId));
     }
 
@@ -108,7 +108,7 @@ class ReportViewer extends PureComponent {
             }
 
             if (~dependency.indexOf(dsId)) {
-                throw "A dataset cannot depend on itself. Malformed report definition";
+                throw { message: "A dataset cannot depend on itself. Malformed report definition" };
             }
 
             // ToDo: Correct following check to loop through dependency in datasetList and see if it is valid

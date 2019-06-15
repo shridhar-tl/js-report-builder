@@ -117,6 +117,9 @@ class ReportControls extends PureComponent {
                     <AccordionTab header="Components">
                         <ReportItems />
                     </AccordionTab>
+                    <AccordionTab header="Resources">
+                        <ReportItems />
+                    </AccordionTab>
                     <AccordionTab header="Styles">
                         {selectedItem && <StyleEditor element={selectedItem.element} elementData={selectedItem.data} />}
                     </AccordionTab>

@@ -1,8 +1,12 @@
 export function clone(obj, deep) {
     if (Array.isArray(obj)) {
         return cloneArray(obj, deep);
+    } else if (obj instanceof Date) {
+        return new Date(obj.getTime());
     } else if (typeof obj === "object") {
         return cloneObject(obj, deep);
+    } else {
+        return obj;
     }
 }
 
@@ -29,8 +33,12 @@ export function cloneObject(obj, deep) {
         return obj;
     }
     if (deep) {
-        var result = { ...obj }; ////ToDo: do deep cloning logic
-
+        var result = {};
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                result[prop] = clone(obj[prop], true);
+            }
+        }
         return result;
     } else {
         return { ...obj };

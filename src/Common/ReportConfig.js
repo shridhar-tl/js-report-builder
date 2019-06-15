@@ -1,3 +1,4 @@
+import "./extensions";
 import array from "./linq";
 import inbuiltFunctions from "./CommonFunctions";
 import inbuiltDatasets from "./DatasetTypes";

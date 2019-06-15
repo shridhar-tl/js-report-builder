@@ -18,7 +18,7 @@ export default inbuiltDatasets;
 function resolve_FLT(props, getDatasetData) {
     return new Promise(function(resolve, reject) {
         try {
-            var { dataset, parameters, commonFunctions, myFunctions, getDataset } = props;
+            var { dataset, parameters, commonFunctions, myFunctions } = props;
             var { colProps, dependencies: dsId, filter, variables } = dataset;
             var $filter = filter ? compileExpression(filter)(commonFunctions, myFunctions, parameters, getDatasetData) : null;
             var $colProps = null;

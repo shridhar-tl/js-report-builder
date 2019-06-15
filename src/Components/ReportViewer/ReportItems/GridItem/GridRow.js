@@ -6,7 +6,7 @@ export default class GridRow extends PureComponent {
     static contextType = GridContext;
 
     render() {
-        var { definition, columns, isHeader, rowGroup, rowGroupFields } = this.props;
+        var { definition, columns, isHeader, rowGroup } = this.props;
         var { style, children } = definition;
 
         return (
@@ -41,21 +41,19 @@ class GridCellRepeater extends PureComponent {
     }
 
     render() {
-        var { cellStartIndex = 0, columns, cells, isHeader, colGroupFields, group, rowGroup } = this.props;
+        var { cellStartIndex = 0, columns, cells, isHeader, colGroupFields, rowGroup } = this.props;
 
         return columns.map((column, icolumn) => {
-            var { type, style } = column;
+            var { type } = column;
             var bIndex = cellStartIndex + icolumn; // ToDo: correction required in this index
 
             if (type === 1) {
                 return (
                     <GridCell
                         key={icolumn}
-                        colGroupFields={colGroupFields}
                         colGroup={this.colGroup}
                         rowGroup={rowGroup}
                         isHeader={isHeader}
-                        index={bIndex}
                         column={column}
                         cell={cells[bIndex]}
                     />
@@ -68,14 +66,7 @@ class GridCellRepeater extends PureComponent {
                 }
 
                 return (
-                    <GridGroup
-                        key={icolumn}
-                        colGroupFields={colGroupFields}
-                        isHeader={isHeader}
-                        index={bIndex}
-                        group={column}
-                        parentGroup={this.colGroup}
-                        cells={cells}>
+                    <GridGroup key={icolumn} group={column} parentGroup={this.colGroup}>
                         {(fields, i, _rowGroup, colGroup) => (
                             <GridCellRepeater
                                 key={i}
@@ -104,10 +95,6 @@ class GridCell extends PureComponent {
         this.cellType = isHeader ? "th" : "td";
     }
 
-    UNSAFE_componentWillMount() {
-        this.$column = this.context.getCompiledColumn(this.props.index); // compileGroup(props.group);
-    }
-
     render() {
         var {
             cellType: CellType,
@@ -120,10 +107,11 @@ class GridCell extends PureComponent {
         return (
             <CellType>
                 {cell.map((c, i) => {
+                    var { title, style, data: displayValue } = c;
+                    var displayValue;
                     switch (c.itemType || "") {
-                        case "text":
-                            return <span key={i}>{c.data}</span>;
                         case "":
+                        case "expression":
                             var { hideWhen, $hideWhen, $expression } = c;
                             if (!$expression) {
                                 var { expression, template } = c;
@@ -138,22 +126,20 @@ class GridCell extends PureComponent {
                                 return false;
                             }
 
-                            var fldValue = null;
-                            var title;
-
                             try {
-                                fldValue = $expression(rowGroupFields, rowGroup, colGroup, rowGroupVars);
+                                displayValue = $expression(rowGroupFields, rowGroup, colGroup, rowGroupVars);
                             } catch (e) {
-                                fldValue = "#Error";
+                                displayValue = "#Error";
                                 title = e;
                             }
-
-                            return (
-                                <span key={i} title={title}>
-                                    {fldValue}
-                                </span>
-                            );
+                            break;
                     }
+
+                    return (
+                        <span key={i} style={style} title={title}>
+                            {displayValue}
+                        </span>
+                    );
                 })}
             </CellType>
         );

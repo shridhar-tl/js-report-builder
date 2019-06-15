@@ -13,11 +13,21 @@ class ReportDisplay extends Component {
         var addedItems = this.state.addedItems.map(i => i);
         addedItems.push({ type: item.type, attrs: {} });
         this.setState({ addedItems });
+        this.props.onChange(addedItems);
     };
 
     onItemRemoved = index => {
-        this.state.addedItems.splice(index, 1);
-        this.setState({ addedItems: [...this.state.addedItems] });
+        var { addedItems } = this.state;
+        addedItems.splice(index, 1);
+        addedItems = [...this.state.addedItems];
+        this.setState({ addedItems });
+        this.props.onChange(addedItems);
+    };
+
+    onChanged = (data, index) => {
+        var { addedItems } = this.state;
+        addedItems[index].data = data;
+        this.props.onChange(addedItems);
     };
 
     getControl = (item, index) => {
@@ -25,7 +35,15 @@ class ReportDisplay extends Component {
         if (item.attrs) {
             return <Ctl key={index} index={index} onItemRemoved={this.onItemRemoved} {...item.attrs} />;
         } else {
-            return <Ctl key={index} index={index} onItemRemoved={this.onItemRemoved} data={item.data} />;
+            return (
+                <Ctl
+                    key={index}
+                    index={index}
+                    onItemRemoved={this.onItemRemoved}
+                    data={item.data}
+                    onChange={d => this.onChanged(d, index)}
+                />
+            );
         }
     };
 

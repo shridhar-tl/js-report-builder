@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import { PureComponent } from "react";
 import { GridContext } from "../../Common";
 import array from "../../../../Common/linq";
 
@@ -11,7 +11,7 @@ export default class GridGroup extends PureComponent {
     }
 
     UNSAFE_componentWillMount() {
-        var { data, props } = this;
+        var { props } = this;
         var { group, parentGroup, isRowGroup } = props;
 
         var $group = group.$group;
@@ -84,66 +84,3 @@ export default class GridGroup extends PureComponent {
         );
     }
 }
-/*
-class GridRowGroup extends GridGroup {
-    constructor(props) {
-        super(props, true);
-    }
-
-    render() {
-        var { data, props } = this;
-        var { group, columns, isHeader, rowGroupFields } = props;
-        var { name, children } = group;
-
-        if (!rowGroupFields) {
-            rowGroupFields = {};
-        }
-
-        return (
-            data &&
-            data.map((d, i) => (
-                <GridRowRepeator
-                    key={i}
-                    isHeader={isHeader}
-                    columns={columns}
-                    rows={children}
-                    group={group}
-                    rowGroupFields={{ ...rowGroupFields, [name]: { fields: d, variables: this.variables } }}
-                />
-            ))
-        );
-    }
-}
-
-class GridColGroup extends GridGroup {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        var { data, props } = this;
-        var { index, group, cells, isHeader, rowGroupFields, colGroupFields } = props;
-        var { children, name } = group;
-
-        if (!colGroupFields) {
-            colGroupFields = {};
-        }
-
-        return (
-            data &&
-            data.map((d, i) => (
-                <GridCells
-                    key={i}
-                    colGroupFields={{ ...colGroupFields, [name]: { fields: d } }}
-                    rowGroupFields={rowGroupFields}
-                    isHeader={isHeader}
-                    cellStartIndex={index}
-                    columns={children}
-                    cells={cells}
-                    group={group}
-                />
-            ))
-        );
-    }
-}
-*/

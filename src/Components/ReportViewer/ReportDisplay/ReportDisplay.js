@@ -3,12 +3,6 @@ import ReportItems from "../ReportItems";
 import "./ReportDisplay.scss";
 
 class ReportDisplay extends PureComponent {
-    constructor(props) {
-        super(props);
-        //var { definition } = props;
-        //this.state = {  };
-    }
-
     getReportItemComponent(item, i) {
         var { type } = item;
         var ItemType = ReportItems[type];

@@ -1,10 +1,10 @@
+/*eslint-disable no-extend-native, no-loop-func*/
 import { clone, cloneArray } from "./HelperFunctions";
 
-/*eslint-disable no-extend-native, no-loop-func*/
 var arrayInitFunc = (function() {
     var arrayFunc = function arrayFunc(array) {
         if (!array) {
-            throw "No input received. Expected an array.";
+            throw { message: "No input received. Expected an array." };
         }
         var source = array;
 
@@ -178,20 +178,20 @@ var arrayInitFunc = (function() {
             return result;
         };
 
-
-        prototype.sum = function (clause) {
+        prototype.sum = function(clause) {
             var value = 0;
+            var index;
             if (clause) {
-                for (var index = 0; index < source.length; index++) {
+                for (index = 0; index < source.length; index++) {
                     value += clause(source[index]) || 0;
                 }
             } else {
-                for (var index = 0; index < source.length; index++) {
+                for (index = 0; index < source.length; index++) {
                     value += parseFloat(source[index]) || 0;
                 }
             }
             return value;
-        }
+        };
 
         prototype.groupBy = function(clause, filter) {
             var result = [];
@@ -244,7 +244,7 @@ var arrayInitFunc = (function() {
 
                 if (typeof field === "object" && !Array.isArray(field)) {
                     var obj = field;
-                    var field = field.field;
+                    field = field.field;
                     if (!field || field === true) {
                         field = propName;
                     }
@@ -260,13 +260,13 @@ var arrayInitFunc = (function() {
                                 curItem[propPrefix + propName] = newVal;
                             }
                         } else if (Array.isArray(value)) {
-                            var newVal = props
+                            newVal = props
                                 ? arrayFunc(value).flattern(props, null, spread ? curItem : null, spread ? propName : "")()
                                 : value;
                             if (!spread) {
                                 curItem = newVal.map(nv => {
                                     var ret = { ...curItem, [propPrefix + propName]: nv };
-                                    var newValProps = Object.keys(nv).forEach(nvp => {
+                                    Object.keys(nv).forEach(nvp => {
                                         if (nvp.startsWith("...")) {
                                             ret[nvp.substring(3)] = nv[nvp];
                                             delete nv[nvp];
@@ -280,8 +280,7 @@ var arrayInitFunc = (function() {
                         }
                     }
                 } else {
-                    var value = getObjVal(row, field);
-                    curItem[propPrefix + propName] = value;
+                    curItem[propPrefix + propName] = getObjVal(row, field);
                 }
             }
             return returnRaw ? curItem : [curItem];

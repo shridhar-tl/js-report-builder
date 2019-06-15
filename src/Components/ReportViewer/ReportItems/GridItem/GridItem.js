@@ -1,4 +1,4 @@
-import React, { PureComponent, createContext } from "react";
+import React, { PureComponent } from "react";
 import GridRow from "./GridRow";
 import { GridContext, ViewerContext } from "../../Common";
 import GridGroup from "./GridGroup";
@@ -11,22 +11,22 @@ export default class GridItem extends PureComponent {
         super(props);
     }
 
+    UNSAFE_componentWillMount() {
+        this.commonContext = {
+            ...this.context,
+            compileGroup: this.context.compileGroup,
+            compileExpression: this.context.compileExpression
+        };
+    }
+
+    /*
     compiledExpressions = { columns: [], headCells: {}, bodyCells: {} };
 
     UNSAFE_componentWillMount() {
         this.commonContext = {
             ...this.context,
-            getCompiledColumn: index => this.compiledExpressions.columns[index],
             compileGroup: this.context.compileGroup,
             compileExpression: this.context.compileExpression
-        };
-
-        this.headerContext = {
-            ...this.commonContext
-        };
-
-        this.bodyContext = {
-            ...this.commonContext
         };
 
         var {
@@ -36,7 +36,7 @@ export default class GridItem extends PureComponent {
         } = this.props;
         this.compileColumns(this.compiledExpressions.columns, columns);
     }
-
+    
     compileColumns(result, cols, $groups) {
         cols.forEach(col => {
             if (col.type === 1) {
@@ -65,7 +65,7 @@ export default class GridItem extends PureComponent {
         if (children && children.length) {
             this.compileColumns(result, children, $groups);
         }
-    }
+    }*/
 
     render() {
         var { definition } = this.props;
@@ -73,18 +73,16 @@ export default class GridItem extends PureComponent {
         var { columns, head, body } = data;
 
         return (
-            <table>
-                <thead>
-                    <GridContext.Provider value={this.headerContext}>
+            <GridContext.Provider value={this.commonContext}>
+                <table>
+                    <thead>
                         <GridRowRepeator isHeader={true} columns={columns} rows={head} />
-                    </GridContext.Provider>
-                </thead>
-                <tbody>
-                    <GridContext.Provider value={this.bodyContext}>
+                    </thead>
+                    <tbody>
                         <GridRowRepeator columns={columns} rows={body} />
-                    </GridContext.Provider>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </GridContext.Provider>
         );
     }
 }
@@ -94,10 +92,9 @@ class GridRowRepeator extends PureComponent {
 
     UNSAFE_componentWillMount() {
         var { rowGroupFields, group } = this.props;
-        var rowGroup;
 
         if (group) {
-            rowGroup = function(grpName) {
+            var rowGroup = function(grpName) {
                 return rowGroupFields[grpName];
             };
             var curGroup = rowGroup(group.name);
@@ -123,15 +120,8 @@ class GridRowRepeator extends PureComponent {
                     rowGroupFields = {};
                 }
                 return (
-                    <GridGroup
-                        key={iRow}
-                        isRowGroup={true}
-                        isHeader={isHeader}
-                        group={row}
-                        columns={columns}
-                        rowGroupFields={rowGroupFields}
-                        parentGroup={this.rowGroup}>
-                        {(fields, index, rowGroup, colGroup) => (
+                    <GridGroup key={iRow} isRowGroup={true} group={row} parentGroup={this.rowGroup}>
+                        {(fields, index) => (
                             <GridRowRepeator
                                 key={index}
                                 isHeader={isHeader}

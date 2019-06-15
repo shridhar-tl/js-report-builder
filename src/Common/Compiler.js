@@ -13,7 +13,7 @@ export function compileGroup(group, props) {
         keys = null;
     }
 
-    var $expression = dataset == -1 && expression ? compileExpression(expression, props) : undefined;
+    var $expression = dataset === -1 && expression ? compileExpression(expression, props) : undefined;
     var $filter = filter ? compileExpression(getWrapperFunction(filter), props) : undefined;
     var $keys = keys ? keys.map(f => compileExpression(f.expr, props)) : undefined;
     var $sortBy = sortBy ? compileExpression(getWrapperFunction(sortBy), props) : undefined;

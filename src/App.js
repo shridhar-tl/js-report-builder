@@ -11,7 +11,22 @@ import datasets, { userList } from "./testdata";
 
 var defaultConfig = {
     parameterTypes: {
-        UG: { label: "User group", control: Button }
+        UG: {
+            label: "User group",
+            control: function(props) {
+                console.log("Props received for User group control", props);
+                return React.createElement(
+                    "span",
+                    {
+                        onClick: () => {
+                            alert("This is dummy parameter");
+                        },
+                        className: "ctl-ug"
+                    },
+                    "Select users"
+                );
+            }
+        }
         //DDL: false // To remove a default param type do this.
     },
     datasetTypes: {

@@ -9,6 +9,7 @@ export function initReportBuilder(config) {
     initDatasetTypes(datasetTypes);
     initBuiltinFields(builtInFields);
     initCommonFunctions(commonFunctions);
+    return Promise.resolve({ parameterTypes: getParamTypes(true) });
 }
 
 // #region Parameter related functions
@@ -91,19 +92,28 @@ function initDatasetTypes(customTypes) {
 
         Object.keys(customTypes).forEach(k => {
             var ds = customTypes[k];
+
             if (ds === false) {
                 $datasetTypes.removeAll(p => p.value === k);
                 return;
-            } else if (!ds.label || !ds.resolveSchema || !ds.resolveData) {
+            }
+
+            var { label, resolveSchema, resolveData } = ds;
+
+            if (!label || !resolveSchema || !resolveData) {
                 console.error("Custom dataset type expect mandatory properties of label, resolveSchema and resolveData", ds);
                 return;
             }
 
             datasetTypes.push({
                 type: k,
-                label: ds.label,
-                resolveSchema: ds.resolveSchema,
-                resolve: ds.resolveData
+                label: label,
+                resolveSchema: resolveSchema,
+                resolve: function({ dataset, parameters, parameterTemplate }, getDatasetData) {
+                    //Also received in first param, commonFunctions, myFunctions
+                    var { props } = dataset;
+                    return resolveData(props, parameters, { parameterTemplate, getDatasetData });
+                }
             });
         });
     }

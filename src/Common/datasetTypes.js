@@ -109,7 +109,7 @@ function getItems(obj, set, prefix) {
     } else {
         prefix = "";
     }
-    return items.Select(key => {
+    return items.map(key => {
         let type = getItemType(obj[key]);
         if (!type) {
             return null;

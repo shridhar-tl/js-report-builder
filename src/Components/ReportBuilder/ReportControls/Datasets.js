@@ -30,7 +30,12 @@ class Datasets extends PureComponent {
     editDataset(datasetId) {
         var { datasets } = this.state;
         var editedDataset = datasets[datasetId];
+        this.setForEditing(editedDataset, datasetId);
+    }
+
+    setForEditing(editedDataset, datasetId) {
         var dsType = this.datasetTypes[editedDataset.type];
+
         if (dsType.resolveSchema) {
             new Promise((resolve, reject) => {
                 dsType.resolveSchema(editedDataset.name, editedDataset.props, { resolve, reject }).then(props => {
@@ -59,20 +64,20 @@ class Datasets extends PureComponent {
     }
 
     typeSelected = (type, name) => {
-        this.setState({ showAddDialog: true, editedDataset: { type, name } });
+        this.setForEditing({ type, name })
     };
 
     saveDataset = dataset => {
         var { editIndex } = this.state;
 
-        if (!editIndex) {
-            editIndex = UUID.generate();
-        }
-
         this.updateDataset(dataset, editIndex);
     };
 
     updateDataset = (dataset, editIndex) => {
+        if (!editIndex) {
+            editIndex = UUID.generate();
+        }
+
         var { datasets } = this.state;
         datasets[editIndex] = dataset;
         datasets = { ...datasets };

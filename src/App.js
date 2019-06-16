@@ -17,14 +17,34 @@ var defaultConfig = {
     datasetTypes: {
         JQL: {
             label: "JQL search result",
-            resolveSchema: name => {},
+            resolveSchema: (name, props, promise) => {
+                return Promise.resolve(props);
+            },
             resolveData: props => {
                 return Promise.resolve(datasets[props.dataset.type]);
             }
         },
-        PLS: { label: "Project list", resolveSchema: name => {}, resolveData: props => {} },
-        STS: { label: "Status list", resolveSchema: name => {}, resolveData: props => {} },
-        ITL: { label: "Issue type list", resolveSchema: name => {}, resolveData: props => {} }
+        PLS: {
+            label: "Project list",
+            resolveSchema: (name, props, promise) => {
+                return Promise.resolve(props);
+            },
+            resolveData: props => {}
+        },
+        STS: {
+            label: "Status list",
+            resolveSchema: (name, props, promise) => {
+                return Promise.resolve(props);
+            },
+            resolveData: props => {}
+        },
+        ITL: {
+            label: "Issue type list",
+            resolveSchema: (name, props, promise) => {
+                return Promise.resolve(props);
+            },
+            resolveData: props => {}
+        }
     },
     builtInFields: {
         UserDateFormat: { value: "", helpText: "Provides the date format of the current user" },

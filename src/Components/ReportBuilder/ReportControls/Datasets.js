@@ -10,10 +10,12 @@ import SelectDataset from "../Common/SelectDataset";
 import ExpressionList from "../Common/ExpressionList";
 import ExpressionEditor from "../Common/ExpressionEditor";
 import { getDatasetTypes } from "../../../Common/ReportConfig";
+import { getDatasetDefinition } from "../../../Common/DatasetTypes";
 
 class Datasets extends PureComponent {
     constructor(props) {
         super(props);
+        this.datasetTypes = getDatasetTypes(true);
         this.state = { datasets: props.datasets || {}, datasetList: props.datasetList || [] };
     }
 
@@ -27,7 +29,21 @@ class Datasets extends PureComponent {
 
     editDataset(datasetId) {
         var { datasets } = this.state;
-        this.setState({ showAddDialog: true, editedDataset: datasets[datasetId], editIndex: datasetId });
+        var editedDataset = datasets[datasetId];
+        var dsType = this.datasetTypes[editedDataset.type];
+        if (dsType.resolveSchema) {
+            new Promise((resolve, reject) => {
+                dsType.resolveSchema(editedDataset.name, editedDataset.props, { resolve, reject }).then(props => {
+                    editedDataset.props = props;
+                    this.updateDataset(editedDataset, datasetId);
+                });
+            }).then(data => {
+                editedDataset.definition = getDatasetDefinition(data);
+                this.updateDataset(editedDataset, datasetId);
+            });
+        } else {
+            this.setState({ showAddDialog: true, editedDataset, editIndex: datasetId });
+        }
     }
 
     deleteDataset(datasetId) {
@@ -47,12 +63,17 @@ class Datasets extends PureComponent {
     };
 
     saveDataset = dataset => {
-        var { datasets, editIndex } = this.state;
+        var { editIndex } = this.state;
 
         if (!editIndex) {
             editIndex = UUID.generate();
         }
 
+        this.updateDataset(dataset, editIndex);
+    };
+
+    updateDataset = (dataset, editIndex) => {
+        var { datasets } = this.state;
         datasets[editIndex] = dataset;
         datasets = { ...datasets };
         var datasetList = Object.keys(datasets);

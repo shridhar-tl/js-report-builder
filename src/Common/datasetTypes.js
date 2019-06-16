@@ -2,10 +2,6 @@ import array from "./linq";
 import { compileExpression, compileVariables } from "./Compiler";
 
 var inbuiltDatasets = [
-    /*{ type: 'JQL', label: 'JQL search result' },
-    { type: 'PLS', label: 'Project list' },
-    { type: 'STS', label: 'Status list' },
-    { type: 'ITL', label: 'Issue type list' },*/
     { type: "HTP", label: "Online dataset (http request)", resolve: resolve_HTP },
     { type: "FIL", label: "File dataset (CSV, EXCEL or JSON files)", resolve: resolve_FIL },
     { type: "STC", label: "Static dataset (manually input value in a table)", resolve: resolve_STC },
@@ -91,4 +87,63 @@ function resolve_STC() {
             reject(err);
         }
     });
+}
+
+export function getDatasetDefinition(data, datasetId, path) {
+    if (!data) {
+        return undefined;
+    }
+    if (Array.isArray(data)) {
+        data = data[0];
+    }
+    return getItems(data, datasetId, path);
+}
+
+function getItems(obj, set, prefix) {
+    if (!obj) {
+        return null;
+    }
+    let items = Object.keys(obj);
+    if (prefix) {
+        prefix += ".";
+    } else {
+        prefix = "";
+    }
+    return items.Select(key => {
+        let type = getItemType(obj[key]);
+        if (!type) {
+            return null;
+        }
+        let path = prefix + key;
+        var childrens;
+
+        if (type === "object") {
+            childrens = getItems(obj[key], set, path);
+        } else if (type === "array") {
+            path += "[0]";
+            childrens = getDatasetDefinition(obj[key], set, path);
+        }
+
+        let itm = { set, key, path, type, children: childrens };
+
+        if (!itm.children || itm.children.length === 0) {
+            delete itm.children;
+        }
+
+        //itm.hasChild = itm.type === 'object' && Object.keys(obj[item]).length > 0;
+        return itm;
+    });
+}
+
+function getItemType(item) {
+    if (item == null) {
+        return;
+    }
+    if (Array.isArray(item)) {
+        return "array";
+    }
+    if (item instanceof Date) {
+        return "date";
+    }
+    return (typeof item).toLowerCase();
 }

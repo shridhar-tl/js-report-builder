@@ -12,10 +12,9 @@ class ReportBuilder extends PureComponent {
         super();
         var { definition: data } = props;
         this.state = { data: data || { reportItems: [], datasets: {}, parameters: [] } };
-        var { datasets, datasetList } = data;
         this.sharedProps = {
-            data,
             getDatasetList: includeExpressionDS => {
+                var { datasets, datasetList } = data;
                 var list = array(
                     datasetList.map(id => {
                         var ds = datasets[id];
@@ -28,7 +27,7 @@ class ReportBuilder extends PureComponent {
                 }
                 return list;
             },
-            getDataset: id => datasets[id],
+            getDataset: id => this.state.data.datasets[id],
             selectControl: (selElement, elementData) => {
                 this.setState({ selElement, elementData });
             },

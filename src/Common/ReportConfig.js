@@ -109,7 +109,7 @@ function initDatasetTypes(customTypes) {
                 type: k,
                 label: label,
                 resolveSchema: resolveSchema,
-                resolve: function({ dataset, parameters, parameterTemplate }, getDatasetData) {
+                resolve: function ({ dataset, parameters, parameterTemplate }, getDatasetData) {
                     //Also received in first param, commonFunctions, myFunctions
                     var { props } = dataset;
                     return resolveData(props, parameters, { parameterTemplate, getDatasetData });

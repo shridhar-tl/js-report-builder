@@ -47,13 +47,15 @@ class ReportControls extends PureComponent {
         var { data } = this.state;
         data.parameters = parameters;
         this.setState({ parameters });
+        this.props.onChange(data);
     };
 
     datasetModified = (datasets, datasetList) => {
         var { data } = this.state;
-        data.datasets = datasets;
         data.datasetList = datasetList;
+        data.datasets = datasets;
         this.setState({ datasetList });
+        this.props.onChange(data);
     };
 
     tabChanged = e => {

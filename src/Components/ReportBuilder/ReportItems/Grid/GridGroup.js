@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from "react";
 import GridRow from "./GridRow";
+import { getUniqueGroupName } from "../../Common/HelperFunctions";
 
 class GridGroup extends PureComponent {
     constructor(props) {
@@ -37,12 +38,51 @@ class GridGroup extends PureComponent {
         this.updateGroup(group);
     };
 
-    updateGroup = (newGroup) => {
+    updateGroup = newGroup => {
         var { index, group } = this.state;
         var { updateParent } = this.props;
         newGroup.children = group.children;
         group = updateParent(newGroup, index);
-    }
+    };
+
+    insertGroup = isParent => {
+        var { group } = this.state;
+        var { parent, updateParent } = this.props;
+        if (isParent) {
+            var rows = parent;
+            if (rows && !Array.isArray(rows)) {
+                rows = parent.children;
+            }
+
+            var idx = rows.indexOf(group);
+            rows[idx] = { type: 2, name: getUniqueGroupName(), children: [group] };
+            updateParent(rows[idx], idx);
+        } else {
+            var children = group.children;
+            group.children = [{ type: 3, name: getUniqueGroupName(), children: children }];
+            this.updateGroup(group);
+        }
+    };
+
+    removeGroup = () => {
+        var { group } = this.state;
+        var { parent } = this.props;
+
+        var arr = parent;
+        var isFirstLevelGrp = true;
+        if (arr && !Array.isArray(arr)) {
+            arr = parent.children;
+            isFirstLevelGrp = false;
+        }
+
+        var idx = arr.indexOf(group);
+        arr.splice(idx, 1, ...group.children);
+        if (isFirstLevelGrp) {
+            this.props.updateParent(arr[0], 0);
+        } else {
+            this.props.updateParent(arr);
+        }
+    };
 
     addRow = (above, inParent) => {
         var { parent, updateParent } = this.props;
@@ -76,7 +116,16 @@ class GridGroup extends PureComponent {
             rowSpans.push({
                 name,
                 span: this.getRowsCount(children),
-                data: { children, parent, updateParent, addRow: this.addRow, group, updateGroup: this.updateGroup }
+                data: {
+                    children,
+                    parent,
+                    updateParent,
+                    addRow: this.addRow,
+                    group,
+                    updateGroup: this.updateGroup,
+                    insertGroup: this.insertGroup,
+                    removeGroup: this.removeGroup
+                }
             });
         }
 
@@ -85,7 +134,7 @@ class GridGroup extends PureComponent {
                 {children &&
                     children.map((item, i) => {
                         var commonProps = {
-                            key: i,
+                            key: item._uniqueId,
                             index: i,
                             parent: group,
                             columns,

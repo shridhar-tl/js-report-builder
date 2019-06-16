@@ -10,8 +10,10 @@ import { AutoComplete } from "primereact/autocomplete";
 import { Chips } from "primereact/chips";
 import "./ReportParameters.scss";
 import Button from "../../Common/Button";
+import { ViewerContext } from "../ReportViewer";
 
 class ReportParameters extends PureComponent {
+    //static contextType = ViewerContext;
     constructor(props) {
         super(props);
         var { definition, values } = props;
@@ -26,8 +28,14 @@ class ReportParameters extends PureComponent {
         var { values } = this.state;
         values[param.name] = value;
         values = { ...values };
-        this.setState({ values });
+        var state = this.validateParameters(values);
+        this.setState(state);
     };
+
+    validateParameters(values) {
+        //ToDo: add validation code
+        return { values };
+    }
 
     saveParameters = () => {
         var { values } = this.state;
@@ -76,7 +84,6 @@ class ReportParameters extends PureComponent {
                 <div className="footer">
                     <Button type="success" label="Done" onClick={this.saveParameters} />
                 </div>
-                <div>{JSON.stringify(values)}</div>
             </div>
         );
     }
@@ -96,9 +103,29 @@ class InputParameter extends PureComponent {
         this.setValue((e.target || e).value);
     };
 
-    setValue = value => {
+    setValue = (value, noPropogate) => {
         this.setState({ value });
-        this.props.onChange(this.props.definition, value);
+        if (!noPropogate) {
+            this.props.onChange(this.props.definition, value);
+        }
+    };
+
+    dateRangeChanged = e => {
+        var value = this.getDateRangeFromArr(e);
+        if (value) {
+            this.setValue(value, !value.toDate);
+        }
+    };
+
+    getDateRangeFromArr = e => {
+        var range = e.value;
+        if (!range || !Array.isArray(range)) {
+            return;
+        }
+        if (!range[0]) {
+            return;
+        }
+        return { fromDate: range[0], toDate: range[1] };
     };
 
     onFileSelected = e => {};
@@ -146,7 +173,14 @@ class InputParameter extends PureComponent {
             case "DTE":
                 return <Calendar value={value} onChange={this.valueChanged} />;
             case "DR":
-                return <Calendar value={value} onChange={this.valueChanged} selectionMode="range" readonlyInput={true} />;
+                return (
+                    <Calendar
+                        value={value ? [value.fromDate, value.toDate] : []}
+                        onChange={this.dateRangeChanged}
+                        selectionMode="range"
+                        readonlyInput={true}
+                    />
+                );
             case "FILE":
                 return (
                     <FileUpload

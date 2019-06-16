@@ -1,19 +1,22 @@
+/*eslint-disable no-extend-native, no-loop-func*/
 import { clone, cloneArray } from "./HelperFunctions";
 
-/*eslint-disable no-extend-native, no-loop-func*/
-var arrayInitFunc = (function () {
+var arrayInitFunc = (function() {
     var arrayFunc = function arrayFunc(array) {
+        if (!array) {
+            throw { message: "No input received. Expected an array." };
+        }
         var source = array;
 
         if (typeof source === "number") {
             source = new Array(source);
         }
 
-        var prototype = function () {
+        var prototype = function() {
             return source;
         };
 
-        prototype.where = function (clause, maxItems) {
+        prototype.where = function(clause, maxItems) {
             var newArray = [];
 
             // The clause was passed in as a Method that return a Boolean
@@ -25,7 +28,7 @@ var arrayInitFunc = (function () {
             return arrayFunc(newArray);
         };
 
-        prototype.findIndex = function (clause, maxItems) {
+        prototype.findIndex = function(clause, maxItems) {
             var newArray = [];
 
             // The clause was passed in as a Method that return a Boolean
@@ -37,7 +40,7 @@ var arrayInitFunc = (function () {
             return newArray;
         };
 
-        prototype.select = function (clause, incNull) {
+        prototype.select = function(clause, incNull) {
             var newArray = [];
 
             // The clause was passed in as a Method that returns a Value
@@ -48,9 +51,9 @@ var arrayInitFunc = (function () {
                 }
             }
             return arrayFunc(newArray);
-        }
+        };
 
-        prototype.addRange = function (items, startIdx = 0) {
+        prototype.addRange = function(items, startIdx = 0) {
             if (items && Array.isArray(items)) {
                 for (var i = 0; i < items.length; i++) {
                     source[startIdx + i] = items[i];
@@ -59,7 +62,7 @@ var arrayInitFunc = (function () {
             return prototype;
         };
 
-        prototype.fillWith = function (defaultValue) {
+        prototype.fillWith = function(defaultValue) {
             var len = source.length;
             while (len--) {
                 source[len] = clone(defaultValue);
@@ -67,27 +70,27 @@ var arrayInitFunc = (function () {
             return prototype;
         };
 
-        prototype.clone = function (deep) {
+        prototype.clone = function(deep) {
             source = cloneArray(source, deep);
             return prototype;
         };
 
-        prototype.toArray = function () {
+        prototype.toArray = function() {
             return source;
         };
 
-        prototype.sortBy = function (clause, desc) {
+        prototype.sortBy = function(clause, desc) {
             return desc ? prototype.orderByDescending(clause) : prototype.orderBy(clause);
         };
 
-        prototype.orderBy = function (clause) {
+        prototype.orderBy = function(clause) {
             var tempArray = [];
             var len = source.length;
             while (len--) {
                 tempArray[len] = source[len];
             }
 
-            source = tempArray.sort(function (a, b) {
+            source = tempArray.sort(function(a, b) {
                 var x = parseClause(clause, a);
                 var y = parseClause(clause, b);
                 return x < y ? -1 : x > y ? 1 : 0;
@@ -96,14 +99,14 @@ var arrayInitFunc = (function () {
             return prototype;
         };
 
-        prototype.orderByDescending = function (clause) {
+        prototype.orderByDescending = function(clause) {
             var tempArray = [];
             var len = source.length;
             while (len--) {
                 tempArray[len] = source[len];
             }
 
-            source = tempArray.sort(function (a, b) {
+            source = tempArray.sort(function(a, b) {
                 var x = parseClause(clause, b);
                 var y = parseClause(clause, a);
                 return x < y ? -1 : x > y ? 1 : 0;
@@ -112,7 +115,7 @@ var arrayInitFunc = (function () {
             return prototype;
         };
 
-        prototype.select = function (clause, incNull) {
+        prototype.select = function(clause, incNull) {
             var newArray = [];
 
             // The clause was passed in as a Method that returns a Value
@@ -126,17 +129,184 @@ var arrayInitFunc = (function () {
             return prototype;
         };
 
-        prototype.removeAt = function (index, count) {
+        prototype.removeAt = function(index, count) {
             if (index < 0) return prototype;
             source.splice(index, count || 1);
             return prototype;
         };
 
-        prototype.removeAll = function (clause) {
-            if (typeof clause === "function") { arrayFunc(prototype.findIndex(clause)).orderByDescending()().forEach(i => source.splice(i, 1)); }
-            else if (Array.isArray(clause)) { clause.forEach(function (o) { prototype.remove(o); }); }
+        prototype.removeAll = function(clause) {
+            if (typeof clause === "function") {
+                arrayFunc(prototype.findIndex(clause))
+                    .orderByDescending()()
+                    .forEach(i => source.splice(i, 1));
+            } else if (Array.isArray(clause)) {
+                clause.forEach(function(o) {
+                    prototype.remove(o);
+                });
+            }
             return prototype;
         };
+
+        // Array flattening related methods
+        prototype.flattern = function(clause, filter, templ, propPrefix) {
+            var $this = source;
+            var thisLen = $this.length;
+            var resultArray = [];
+            for (var i = 0; i < thisLen; i++) {
+                var row = $this[i];
+                var result = getObject(row, clause, templ ? { ...templ } : {}, propPrefix);
+                result.forEach(r => {
+                    if (!filter || filter(r)) {
+                        resultArray.push(r);
+                    }
+                });
+            }
+            source = resultArray;
+
+            return prototype;
+        };
+
+        // ToDo: this function can be renamed as "reduceByKey"
+        prototype.toKeyValuePair = function(clause, filter, singleOnly) {
+            var $this = prototype.groupBy(clause, filter)();
+            var result = {};
+            for (var i = 0; i < $this.length; i++) {
+                var item = $this[i];
+                result["" + item.key] = singleOnly ? item.values[0] : item.values;
+            }
+            return result;
+        };
+
+        prototype.sum = function(clause) {
+            var value = 0;
+            var index;
+            if (clause) {
+                for (index = 0; index < source.length; index++) {
+                    value += clause(source[index]) || 0;
+                }
+            } else {
+                for (index = 0; index < source.length; index++) {
+                    value += parseFloat(source[index]) || 0;
+                }
+            }
+            return value;
+        };
+
+        prototype.groupBy = function(clause, filter) {
+            var result = [];
+            var valObj = {};
+            var isClauseString = typeof clause === "string";
+            if (isClauseString) {
+                var tmp = clause;
+                clause = function(obj) {
+                    return obj[tmp];
+                };
+            }
+
+            for (var i = 0; i < source.length; i++) {
+                var item = source[i];
+                var key = clause(item);
+                var keyStr = null;
+                if (typeof key === "object") {
+                    keyStr = JSON.stringify(key);
+                }
+                var obj = valObj[keyStr || key];
+                if (!obj) {
+                    obj = { key: key, values: [] };
+                    result.push((valObj[keyStr || key] = obj));
+                }
+                if (!filter || filter(item)) {
+                    obj.values.push(item);
+                }
+            }
+            source = result;
+            return prototype;
+        };
+
+        function getObject(row, clause, curItem, propPrefix) {
+            propPrefix = propPrefix || "";
+            var cols = getColsArr(clause);
+            var colsLen = cols.length;
+            var returnRaw = false;
+
+            for (var i = 0; i < colsLen; i++) {
+                var propName = cols[i];
+                var field = clause[propName];
+                var repeatOnVal = propName.startsWith("~~");
+                if (repeatOnVal) {
+                    propName = propName.substring(2);
+                }
+
+                if (field === true) {
+                    field = propName;
+                }
+
+                if (typeof field === "object" && !Array.isArray(field)) {
+                    var obj = field;
+                    field = field.field;
+                    if (!field || field === true) {
+                        field = propName;
+                    }
+                    var spread = obj.spread === true || !propName;
+                    var value = getObjVal(row, field);
+                    var props = obj.props;
+                    var newVal = null;
+
+                    if (value) {
+                        if (!repeatOnVal) {
+                            newVal = props ? getObject(value, props, spread ? curItem : {}, spread ? propName : "") : value; // ToDo: Need to check
+                            if (!spread) {
+                                curItem[propPrefix + propName] = newVal;
+                            }
+                        } else if (Array.isArray(value)) {
+                            newVal = props
+                                ? arrayFunc(value).flattern(props, null, spread ? curItem : null, spread ? propName : "")()
+                                : value;
+                            if (!spread) {
+                                curItem = newVal.map(nv => {
+                                    var ret = { ...curItem, [propPrefix + propName]: nv };
+                                    Object.keys(nv).forEach(nvp => {
+                                        if (nvp.startsWith("...")) {
+                                            ret[nvp.substring(3)] = nv[nvp];
+                                            delete nv[nvp];
+                                        }
+                                    });
+
+                                    return ret;
+                                });
+                                returnRaw = true;
+                            }
+                        }
+                    }
+                } else {
+                    curItem[propPrefix + propName] = getObjVal(row, field);
+                }
+            }
+            return returnRaw ? curItem : [curItem];
+        }
+
+        function getObjVal(row, prop) {
+            if (typeof prop === "string") {
+                var split = prop.split(".");
+                var value = row[split[0]];
+                for (var j = 1; value && j < split.length; j++) {
+                    value = value[split[j]];
+                }
+                return value;
+            } else if (typeof prop === "function") {
+                return prop(row);
+            }
+        }
+
+        function getColsArr(obj) {
+            var cols = Object.keys(obj);
+            if (cols.filter(c => c.startsWith("~~")).length > 1) {
+                throw Error("#Error: Multiple array recurssion not allowed");
+            } // check to see if their are more than one ~~ item
+            cols = arrayFunc(cols).orderBy(c => (c.startsWith("~~") ? 2 : 1))(); //sort ~~ at end
+            return cols;
+        }
 
         function parseClause(clause, value, param2, param3) {
             if (!clause) {
@@ -165,23 +335,10 @@ var arrayInitFunc = (function () {
             }
         }
 
-        /*debugger;
-        var ref = getProtoFunc();
-        var funcs = Object.getOwnPropertyNames(ref);
-        for (var funcName of funcs) {
-            obj[funcName] = function () {
-                source = ref[funcName].apply(source, arguments);
-                if (Array.isArray(source) && funcName !== 'toArray') {
-                    return obj;
-                }
-                else { return source; }
-            }
-        }
-        debugger;*/
         return prototype;
     };
 
-    arrayFunc.from = function (obj) {
+    arrayFunc.from = function(obj) {
         return arrayFunc(Array.from(obj));
     };
     //arrayFunc.cloneFrom = function (obj, deep) { return arrayFunc(Array.from(obj)); }
@@ -251,19 +408,6 @@ function getProtoFunc() {
             }
         }
         return retVal;
-    }
-    prototype.Sum = function (clause) {
-        var value = 0;
-        if (clause) {
-            for (var index = 0; index < this.length; index++) {
-                value += clause(this[index]) || 0;
-            }
-        } else {
-            for (var index = 0; index < this.length; index++) {
-                value += parseFloat(this[index]) || 0;
-            }
-        }
-        return value;
     }
     prototype.Avg = function (clause) {
         var value = 0;
@@ -487,31 +631,6 @@ function getProtoFunc() {
         }
         return this;
     };
-    prototype.GroupBy = function (clause, filter) {
-        var result = [];
-        var valObj = {};
-        var isClauseString = typeof clause === 'string';
-        if (isClauseString) {
-            var tmp = clause;
-            clause = function (obj) { return obj[tmp]; }
-        }
-
-        for (var i = 0; i < this.length; i++) {
-            var item = this[i];
-            var key = clause(item);
-            var keyStr = null;
-            if (typeof key === "object") { keyStr = JSON.stringify(key); }
-            var obj = valObj[keyStr || key];
-            if (!obj) {
-                obj = { key: key, values: [] };
-                result.Add(valObj[keyStr || key] = obj);
-            }
-            if (!filter || filter(item)) {
-                obj.values.Add(item);
-            }
-        }
-        return result;
-    };
     prototype.Replace = function (item, newItem) {
         var idx = this.indexOf(item);
         if (idx != -1) this[idx] = newItem;
@@ -689,109 +808,6 @@ function getProtoFunc() {
         return result;
     }
 
-    prototype.ToKeyValuePair = function (clause, filter) {
-        var $this = this.GroupBy(clause, filter);
-        var result = {};
-        for (var i = 0; i < $this.length; i++) {
-            var item = $this[i];
-            result["" + item.key] = item.values;
-        }
-        return result;
-    }
-
-    // Array flattening related methods
-    prototype.Flattern = function (clause, filter, templ, propPrefix) {
-        var $this = this;
-        var thisLen = $this.length;
-        var resultArray = [];
-        for (var i = 0; i < thisLen; i++) {
-            var row = $this[i];
-            var result = getObject(row, clause, templ ? { ...templ } : {}, propPrefix);
-            result.forEach(r => { if (!filter || filter(r)) { resultArray.push(r); } });
-        }
-        return resultArray;
-    }
-
-    function getObject(row, clause, curItem, propPrefix) {
-        propPrefix = propPrefix || '';
-        var cols = getColsArr(clause);
-        var colsLen = cols.length;
-        var returnRaw = false;
-
-        for (var i = 0; i < colsLen; i++) {
-            var propName = cols[i];
-            var field = clause[propName];
-            var repeatOnVal = propName.startsWith('~~');
-            if (repeatOnVal) { propName = propName.substring(2); }
-
-            if (field === true) {
-                field = propName;
-            }
-
-            if (typeof field === 'object' && !Array.isArray(field)) {
-                var obj = field;
-                var field = field.field;
-                if (!field || field === true) { field = propName; }
-                var spread = obj.spread === true || !propName;
-                var value = getObjVal(row, field);
-                var props = obj.props;
-                var newVal = null;
-
-                if (value) {
-                    if (!repeatOnVal) {
-                        newVal = props ? getObject(value, props, spread ? curItem : {}, spread ? propName : '') : value; // ToDo: Need to check
-                        if (!spread) {
-                            curItem[propPrefix + propName] = newVal;
-                        }
-                    }
-                    else if (Array.isArray(value)) {
-                        var newVal = props ? value.Flattern(props, null, spread ? curItem : null, spread ? propName : '') : value;
-                        if (!spread) {
-                            curItem = newVal.map(nv => {
-                                var ret = { ...curItem, [propPrefix + propName]: nv };
-                                var newValProps = Object.keys(nv).forEach(nvp => {
-                                    if (nvp.startsWith('...')) {
-                                        ret[nvp.substring(3)] = nv[nvp];
-                                        delete nv[nvp];
-                                    }
-                                });
-
-                                return ret;
-                            });
-                            returnRaw = true;
-                        }
-                    }
-
-                }
-            }
-            else {
-                var value = getObjVal(row, field);
-                curItem[propPrefix + propName] = value;
-            }
-        }
-        return returnRaw ? curItem : [curItem];
-    }
-
-    function getObjVal(row, prop) {
-        if (typeof prop === 'string') {
-            var split = prop.split('.');
-            var value = row[split[0]];
-            for (var j = 1; value && j < split.length; j++) {
-                value = value[split[j]];
-            }
-            return value;
-        }
-        else if (typeof prop === 'function') {
-            return prop(row);
-        }
-    }
-
-    function getColsArr(obj) {
-        var cols = Object.keys(obj);
-        if (cols.filter(c => c.startsWith('~~')).length > 1) { throw Error('#Error: Multiple array recurssion not allowed'); }// check to see if their are more than one ~~ item
-        cols = cols.OrderBy(c => c.startsWith('~~') ? 2 : 1); //sort ~~ at end
-        return cols;
-    }
 
     return prototype;
 }

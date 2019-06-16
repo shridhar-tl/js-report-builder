@@ -1,5 +1,7 @@
+import "./extensions";
 import array from "./linq";
-import moment from "moment";
+import inbuiltFunctions from "./CommonFunctions";
+import inbuiltDatasets from "./DatasetTypes";
 
 export function initReportBuilder(config) {
     var { parameterTypes, datasetTypes, builtInFields, commonFunctions } = config;
@@ -67,7 +69,47 @@ function initParamTypes(parameterTypes) {
 
 // #endregion
 
-function initDatasetTypes(datasetTypes) {}
+// #region Dataset related functions
+var datasetTypes = [...inbuiltDatasets];
+
+export function getDatasetTypes(reduced) {
+    if (!reduced) {
+        return datasetTypes;
+    } else {
+        return datasetTypes.reduce((obj, param) => {
+            obj[param.type] = param;
+            return obj;
+        }, {});
+    }
+}
+
+function initDatasetTypes(customTypes) {
+    if (customTypes) {
+        datasetTypes = [...inbuiltDatasets];
+        var $datasetTypes = array(datasetTypes);
+        // ToDo: Check for duplicate / existing datasets and override. Allow changing label alone
+
+        Object.keys(customTypes).forEach(k => {
+            var ds = customTypes[k];
+            if (ds === false) {
+                $datasetTypes.removeAll(p => p.value === k);
+                return;
+            } else if (!ds.label || !ds.resolveSchema || !ds.resolveData) {
+                console.error("Custom dataset type expect mandatory properties of label, resolveSchema and resolveData", ds);
+                return;
+            }
+
+            datasetTypes.push({
+                type: k,
+                label: ds.label,
+                resolveSchema: ds.resolveSchema,
+                resolve: ds.resolveData
+            });
+        });
+    }
+}
+
+// #endregion
 
 // #region Builtin fields
 var builtInFields = [];
@@ -92,49 +134,18 @@ function initBuiltinFields(fields) {
 // #endregion
 
 // #region Common inbuilt functions
-var inbuiltFunctions = [
-    {
-        name: "getDateRange",
-        helpText: "Returns an array with the list of available dates between the provided from and to date",
-        value: (fromDate, toDate) => {
-            return getDateArray(fromDate, toDate).map(d => {
-                var dayOfWeek = d.getDay();
-                var today = moment(d)
-                    .startOf("day")
-                    .toDate();
-
-                return {
-                    yyyyMMdd: d.format("yyyyMMdd"),
-                    dayAndDate: d.format("DDD, dd"),
-                    dayOfWeek,
-                    date: d,
-                    today,
-                    todayInMS: today.getTime(),
-                    isWeekEnd: dayOfWeek === 6 || dayOfWeek === 0
-                    //isHoliday: this.$utils.isHoliday(d)
-                };
-            });
-        }
-    }
-];
-
-function getDateArray(startDate, endDate) {
-    var interval = 1;
-    var retVal = [];
-    var current = new Date(startDate.getTime());
-
-    while (current <= endDate) {
-        retVal.push(new Date(current.getTime()));
-        current = current.addDays(interval);
-    }
-
-    return retVal;
-}
 
 var commonFuncs = [...inbuiltFunctions];
 
-export function getCommonFunctions() {
-    return commonFuncs;
+export function getCommonFunctions(reduced) {
+    if (!reduced) {
+        return commonFuncs;
+    } else {
+        return commonFuncs.reduce((obj, val) => {
+            obj[val.name] = val.value;
+            return obj;
+        }, {});
+    }
 }
 
 function initCommonFunctions(funcs) {

@@ -36,7 +36,7 @@ export function getDefaultGridData() {
 }
 
 export function getUniqueGroupName() {
-    return "Group " + UUID.generate().split("-")[4];
+    return "Group" + UUID.generate().split("-")[4];
 }
 
 /*

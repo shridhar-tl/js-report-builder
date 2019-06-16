@@ -21,9 +21,9 @@ class GridRow extends PureComponent {
         return (
             <tr style={style}>
                 {rowSpans &&
-                    rowSpans.map((s, i) => (
+                    rowSpans.map(s => (
                         <th
-                            key={i}
+                            key={s._uniqueId}
                             rowSpan={s.span}
                             title={s.name || "<<No name given>>"}
                             className="grid-group-head"
@@ -64,7 +64,7 @@ class GridRow extends PureComponent {
         return (
             <GridCell
                 grid={grid}
-                key={index}
+                key={col._uniqueId}
                 index={index}
                 isHeaderCell={isHeaderRow}
                 colData={col}

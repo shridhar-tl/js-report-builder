@@ -13,7 +13,7 @@ var defaultConfig = {
     parameterTypes: {
         UG: {
             label: "User group",
-            control: function(props) {
+            control: function (props) {
                 console.log("Props received for User group control", props);
                 return React.createElement(
                     "span",
@@ -33,10 +33,11 @@ var defaultConfig = {
         JQL: {
             label: "JQL search result",
             resolveSchema: (name, props, promise) => {
+                promise.resolve(datasets.JQL);
                 return Promise.resolve(props);
             },
             resolveData: props => {
-                return Promise.resolve(datasets[props.dataset.type]);
+                return Promise.resolve(datasets.JQL);
             }
         },
         PLS: {
@@ -44,21 +45,21 @@ var defaultConfig = {
             resolveSchema: (name, props, promise) => {
                 return Promise.resolve(props);
             },
-            resolveData: props => {}
+            resolveData: props => { }
         },
         STS: {
             label: "Status list",
             resolveSchema: (name, props, promise) => {
                 return Promise.resolve(props);
             },
-            resolveData: props => {}
+            resolveData: props => { }
         },
         ITL: {
             label: "Issue type list",
             resolveSchema: (name, props, promise) => {
                 return Promise.resolve(props);
             },
-            resolveData: props => {}
+            resolveData: props => { }
         }
     },
     builtInFields: {
@@ -68,11 +69,11 @@ var defaultConfig = {
         RenderFormat: { value: "" }
     },
     commonFunctions: {
-        getUsersFromGroup: { value: function(group) {} },
-        getJiraIssueUrl: { value: function(jiraIssueKey) {} },
-        getUserProfileUrl: { value: function(userName) {} },
-        getTicketDetails: { value: function(ticketsList, fields) {} },
-        executeJQL: { value: function(jql, fields) {} }
+        getUsersFromGroup: { value: function (group) { } },
+        getJiraIssueUrl: { value: function (jiraIssueKey) { } },
+        getUserProfileUrl: { value: function (userName) { } },
+        getTicketDetails: { value: function (ticketsList, fields) { } },
+        executeJQL: { value: function (jql, fields) { } }
     }
 };
 
@@ -82,7 +83,7 @@ class App extends Component {
         this.state = { preview: false, reportDefinition: userDaywiseReport };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         initReportBuilder(defaultConfig);
     }
 

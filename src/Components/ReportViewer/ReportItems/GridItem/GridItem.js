@@ -74,7 +74,7 @@ export default class GridItem extends PureComponent {
 
         return (
             <GridContext.Provider value={this.commonContext}>
-                <table>
+                <table className="table table-striped">
                     <thead>
                         <GridRowRepeator isHeader={true} columns={columns} rows={head} />
                     </thead>
@@ -94,7 +94,7 @@ class GridRowRepeator extends PureComponent {
         var { rowGroupFields, group } = this.props;
 
         if (group) {
-            var rowGroup = function(grpName) {
+            var rowGroup = function (grpName) {
                 return rowGroupFields[grpName];
             };
             var curGroup = rowGroup(group.name);

@@ -133,6 +133,7 @@ class ReportViewer extends PureComponent {
 
                 promises.push(
                     resolver.then(data => {
+                        if (!data) { data = []; }
                         this.datasets[dsId] = data;
                         this.datasets[dataset.name] = data;
                     })

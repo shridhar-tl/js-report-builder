@@ -1,0 +1,2752 @@
+[
+    {
+        "id": 486,
+        "name": "SourceTree (Kieran)",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 297,
+        "name": "Copy of JIRA Support Performance Backlog",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 302,
+        "name": "Copy of Angry Nerds",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 219,
+        "name": "Kanban Team",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 227,
+        "name": "Support blitz",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 519,
+        "name": "JIM spring 5",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 30,
+        "name": "GreenHopper docs (Kanban)",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 223,
+        "name": "Glenn's Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 449,
+        "name": "Michael Tokar's GH Demo",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 300,
+        "name": "Copy of Angry Nerds",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 330,
+        "name": "BackTester Agile Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 505,
+        "name": "CONFVN - Jira working items",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 24,
+        "name": "BuildEng - Dependant BAMs",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 38,
+        "name": "Crowd Maintenance",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 217,
+        "name": "Bitbucket Server QA (Kostya)",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 370,
+        "name": "GH Stats",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 353,
+        "name": "KFA Bugfix",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 213,
+        "name": "SourceTree Rapid Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 156,
+        "name": "PTEST",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 214,
+        "name": "GreenHopper Team Kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 39,
+        "name": "Confluence 4.1.x Bug Fixing",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 462,
+        "name": "GH and JIRA docs",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 454,
+        "name": "GreenHopper docs (Scrum)",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 68,
+        "name": "Confluence Continuous Deployment - Bugfix",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 137,
+        "name": "Confluence Bugfix",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 373,
+        "name": "Confluence 5.0 documentation planning",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 466,
+        "name": "Confluence 5.2 documentation planning",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 436,
+        "name": "Confluence 5.1 documentation planning",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 99,
+        "name": "Team Black",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 233,
+        "name": "JIRA Support Performance Backlog",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 461,
+        "name": "Bitbucket Server Metrics",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 2423,
+        "name": "Connie Disco Prod Feedback",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 258,
+        "name": "FECRU Support Backlog",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 276,
+        "name": "Copy of Support blitz",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 280,
+        "name": "Confluence Enterprise",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 229,
+        "name": "Answers 3.0 Rapid Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 401,
+        "name": "Stash Ecosystem Abetment",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 408,
+        "name": "Confluence 5.0 Final Push",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 426,
+        "name": "Core Features",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 572,
+        "name": "Copy of Coathanger",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 380,
+        "name": "SourceTree4Win Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 646,
+        "name": "Confluence VN Bugfix",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 591,
+        "name": "Tokes JIRA Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 626,
+        "name": "Hedgehogs Master Releases",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 614,
+        "name": "Old GreenHopper",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 619,
+        "name": "Fabs & Joe - Notifications API",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 643,
+        "name": "HaoHo",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 987,
+        "name": "HipChat – All Connect Work",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 657,
+        "name": "Translations",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 520,
+        "name": "CONFVN - Integration Spring 5",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 696,
+        "name": "SharePoint Connector Bug Fixing",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 712,
+        "name": "Grad Bootcamp 2014",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 723,
+        "name": "InstantOn Confluence",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1090,
+        "name": "Copy of Confluence EFI",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1194,
+        "name": "CAC Champion",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1195,
+        "name": "a",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 760,
+        "name": "Confluence Quality",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 556,
+        "name": "Doraemon",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 765,
+        "name": "JIRA Test",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 775,
+        "name": "Enterprise Cluster Performance",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 640,
+        "name": "Dev Services",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 819,
+        "name": "TAC - Kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 854,
+        "name": "CNAV3 Continuous Development",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 807,
+        "name": "Confluence Previews",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1766,
+        "name": "Crowd 2.10 board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 872,
+        "name": "SourceTree Windows 2",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1193,
+        "name": "Confluence Cloud Performance",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 844,
+        "name": "Confluence Cloud Infrastructure",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 797,
+        "name": "SourceTree (Kieran) FO' REAL!",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 906,
+        "name": "OD Blockers",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 925,
+        "name": "HipChat – Team Awesome",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 986,
+        "name": "HipChat – Drunken Sea Monkeys",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 960,
+        "name": "JIRA 6.4 Bugfix (Saigon)",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 939,
+        "name": "JIRA Bugfig 6.4.x (Saigon)",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 949,
+        "name": "Copy of Stash Bug Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 898,
+        "name": "HipChat DoS",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 928,
+        "name": "HipChat Project Tracking Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 894,
+        "name": "HipChat Web Core",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 929,
+        "name": "Stash 3.6 Bug Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1079,
+        "name": "demo",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1080,
+        "name": "TEst",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1065,
+        "name": "HipChat – DevOps",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1083,
+        "name": "a",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1086,
+        "name": "HipChat Client Architecture",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1082,
+        "name": "HipChat Platform – Features and Security",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1102,
+        "name": "Multiboard",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1200,
+        "name": "Ticketdownloader",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1205,
+        "name": "guru",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1235,
+        "name": "Sample Scrum Board ",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1247,
+        "name": "Pika pika",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1249,
+        "name": "SIBU",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1241,
+        "name": "demo",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1063,
+        "name": "HipChat iOS Scrum",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1072,
+        "name": "HipChat Mac Scrum",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1105,
+        "name": "Training Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1166,
+        "name": "REST ",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1106,
+        "name": "Pluggable Clients",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1597,
+        "name": "HC Platform - Files Modernization",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1115,
+        "name": "CSI Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1116,
+        "name": "HipChat - QA",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 946,
+        "name": "HipChat Android",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1118,
+        "name": "TEST 42 CO",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1119,
+        "name": "TEST 43 CO ",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1134,
+        "name": "SRM",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1136,
+        "name": "QA Testing",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1142,
+        "name": "bianchi-fabrizio",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1183,
+        "name": "Space Invaders",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1150,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1170,
+        "name": "TEST BOARD",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1168,
+        "name": "Demo",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1158,
+        "name": "dk test123445",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1159,
+        "name": "1A2",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1164,
+        "name": "Badger",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1182,
+        "name": "User Log In",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1184,
+        "name": "Copy of HipChat – DevOps",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1114,
+        "name": "HipChat Microservices",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1012,
+        "name": "What are the Dragons eating?",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1013,
+        "name": "Grad Bootcamp Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1026,
+        "name": "Confluence EFI",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1206,
+        "name": "Confluence Enterprise",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1046,
+        "name": "Test ",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1030,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1031,
+        "name": "nerds1",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1059,
+        "name": "Demo Digital Marketing and Comm",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1060,
+        "name": "123",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1201,
+        "name": "KanbanTest",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1212,
+        "name": "Test",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1214,
+        "name": "NewBoard",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1218,
+        "name": "Test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1252,
+        "name": "TETDEOKDsdds",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1260,
+        "name": "Maklon Kosmetik",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1262,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1052,
+        "name": "Bitbucket Server Frontend DOB",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1282,
+        "name": "kusp",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1256,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1259,
+        "name": "test me",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1285,
+        "name": "jasmine",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 211,
+        "name": "Bitbucket Server QA",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1253,
+        "name": "HipChat Platform Defense (HCPD) Backlog",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1266,
+        "name": "maryam bibi",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1271,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1298,
+        "name": "Sprint 1",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1301,
+        "name": "SourceTree Scrum",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1272,
+        "name": "1233333dsada",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1276,
+        "name": "Corvo Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1305,
+        "name": "HipChat Developer Relations",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1291,
+        "name": "Global Scheme",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1311,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1316,
+        "name": "My-Sprint",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1322,
+        "name": "Walking Patay",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1333,
+        "name": "Test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1304,
+        "name": "HipChat Android SCRUM",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1337,
+        "name": "Test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1355,
+        "name": "Zalo",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1391,
+        "name": "Scrum Training",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1395,
+        "name": "Yrespass",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1374,
+        "name": "vHELP-BOARD",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1446,
+        "name": "HipChat Platform RTC",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1377,
+        "name": "Test Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1382,
+        "name": "Confluence SWT",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1284,
+        "name": "Doraemon - Kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1383,
+        "name": "My First Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1384,
+        "name": "backlog",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1385,
+        "name": "HCPUB board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1388,
+        "name": "Test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1401,
+        "name": "Adocal P1",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1412,
+        "name": "Smarket",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1413,
+        "name": "Sasi",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1429,
+        "name": "B1",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1416,
+        "name": "this is new",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1418,
+        "name": "ye bhi he bhai",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1432,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1434,
+        "name": "polimoni",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1437,
+        "name": "testt",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1440,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1454,
+        "name": "Implementation Services",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1455,
+        "name": "abc",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1499,
+        "name": "mppo",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1458,
+        "name": "POKERHOST88.COM AGEN JUDI POKER INDONESIA ONLINE TERPERCAYA",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1470,
+        "name": "HipChat Desktop HCPUB Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1463,
+        "name": "WAD",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1460,
+        "name": "Confluence WebScale",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1465,
+        "name": "board ",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1466,
+        "name": "YoshTest",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1501,
+        "name": "SOLUK",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1376,
+        "name": "JIRA Software Bugfix",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1469,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1473,
+        "name": "Test Bug Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1504,
+        "name": "Stallion It Consultant",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1506,
+        "name": "kanban sample",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1472,
+        "name": "Test SW Scrum Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1480,
+        "name": "kanban test",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1481,
+        "name": "test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1507,
+        "name": "abc",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1490,
+        "name": "HipChat Platform SHELF",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1508,
+        "name": "Victor Test",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1496,
+        "name": "js Training",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1491,
+        "name": "HipChat Platform SHELF - Execution",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1517,
+        "name": "HipChat Platform RTC (makeitso)",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1523,
+        "name": "CONFDEV Architecture",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1533,
+        "name": "HipChat Platform Triad",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1537,
+        "name": "Bitbucket Server Grads 2016",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1704,
+        "name": "Bitbucket Search Maintenance",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1788,
+        "name": "Safe Attachment Extraction",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1751,
+        "name": "ReConnect Api Team",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1749,
+        "name": "Confluence Cloud and Server docs",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1752,
+        "name": "HipChat Platform Night Fury - Triage",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1817,
+        "name": "SAMLDC board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1795,
+        "name": "Galaxy loves Vertigo",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1777,
+        "name": "Bitbucket Server Personal Dashboards",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1778,
+        "name": "Clarity",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1606,
+        "name": "Confluence Server Features",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1808,
+        "name": "ADG3",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1809,
+        "name": "ADG3 kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1812,
+        "name": "JIM board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1820,
+        "name": "Copy of 123",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1830,
+        "name": "SAMLDC",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1792,
+        "name": "Confluence Vertigo Migration",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1616,
+        "name": "HCPUB Velocity",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1690,
+        "name": "SoftServe - DevOps",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 441,
+        "name": "Hedgehogs",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1632,
+        "name": "HipChat Status Page",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1667,
+        "name": "HCP Night Fury",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1691,
+        "name": "Confluence Vertigo Import/Export",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1648,
+        "name": "HipChat - SRE",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1669,
+        "name": "Copy of HipChat Desktop HCPUB Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1600,
+        "name": "Google Calendar for HipChat",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1610,
+        "name": "Confluence 6.0 documentation",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1552,
+        "name": "Copy of HipChat Microservices",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1553,
+        "name": "Software Wrapup",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1579,
+        "name": "Message Edit – ShipIt 34",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1554,
+        "name": "Software - Wrapup - Epic",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1583,
+        "name": "Copy of HipChat Web Core",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1555,
+        "name": "SourceTree for Mac TODO",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1558,
+        "name": "historian-k8s",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1707,
+        "name": "Confluence Vertigo Import/Export Backlog",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1708,
+        "name": "Confluence Server Kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1564,
+        "name": "Warranty Issues",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1744,
+        "name": "Imps Backlog",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1715,
+        "name": "Arifa Test Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1714,
+        "name": "Confluence WebScale Storm",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1668,
+        "name": "HipChat Platform Night Fury Backlog",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1731,
+        "name": "Copy of Hedgehogs",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 1904,
+        "name": "JIRA Software",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1927,
+        "name": "Bitbucket Server PM suggestion counts",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 1993,
+        "name": "Bitbucket Server Enterprise Team Epics",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2337,
+        "name": "CFO board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2023,
+        "name": "Microsoft <> SourceTree",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2114,
+        "name": "Copy of TAC - Kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2132,
+        "name": "Hedgehogs Kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2254,
+        "name": "SoftServe — DevOps",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2244,
+        "name": "Confluence Server Service Rotation",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2233,
+        "name": "IM board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2115,
+        "name": "Confluence Vertigo Scale",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 2230,
+        "name": "Confluence Server Docs",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2095,
+        "name": "Bitbucket Server Tokamaks",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 2345,
+        "name": "Confluence Server docs v2",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2348,
+        "name": "Server Mobile Feedback",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2375,
+        "name": "astegani's board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 2354,
+        "name": "Copy of Confluence Vertigo Scale",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 2386,
+        "name": "Suggestions for Bamboo",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-4w"
+    },
+    {
+        "id": 2396,
+        "name": "Bamboo Support Requests",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2397,
+        "name": "Gadgets bugs",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2277,
+        "name": "Confluence Defence Squad Kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": true,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-1w"
+    },
+    {
+        "id": 2411,
+        "name": "MIG board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2434,
+        "name": "Xinyi Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2489,
+        "name": "API board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2466,
+        "name": "Bugfix for Bamboo",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-4w"
+    },
+    {
+        "id": 1612,
+        "name": "Megalodon Sprint Board",
+        "canEdit": false,
+        "sprintSupportEnabled": true,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 2513,
+        "name": "Bitbucket Server Suggestion Kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2502,
+        "name": "Pobara",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 2418,
+        "name": "JIRA Server & Data Center Bug Fix Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "NONE"
+    },
+    {
+        "id": 2514,
+        "name": "Copy of Bitbucket Server Suggestion Kanban",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2523,
+        "name": "Bitbucket Server Bug Fix Board",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": false,
+        "oldDoneIssuesCutoff": "-2w"
+    },
+    {
+        "id": 2525,
+        "name": "Issues I'm watching",
+        "canEdit": false,
+        "sprintSupportEnabled": false,
+        "showDaysInColumn": false,
+        "kanPlanEnabled": false,
+        "showEpicAsPanel": true,
+        "oldDoneIssuesCutoff": "-2w"
+    }
+]

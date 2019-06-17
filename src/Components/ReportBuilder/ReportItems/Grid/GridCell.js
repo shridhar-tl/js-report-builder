@@ -142,7 +142,7 @@ class GridCell extends PureComponent {
         var { cellData } = this.state;
         var newItem = item;
         if (source.itemType === "RPT_DS_PRPS") {
-            newItem = { data: item.key, expression: 'RowGroup.Fields("' + item.path + '")' };
+            newItem = { data: item.key, expression: 'RowGroup.Fields.' + item.path };
         } else if (source.itemType === "RPT_ITMS") {
             switch (source.item.type) {
                 case "IMG":

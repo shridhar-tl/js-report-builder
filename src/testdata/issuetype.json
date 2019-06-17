@@ -1,0 +1,404 @@
+[
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/10000",
+        "id": "10000",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51505&avatarType=issuetype",
+        "name": "Suggestion",
+        "subtask": false,
+        "avatarId": 51505
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/1",
+        "id": "1",
+        "description": "A problem which impairs or prevents the functions of the product.",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51493&avatarType=issuetype",
+        "name": "Bug",
+        "subtask": false,
+        "avatarId": 51493
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/4",
+        "id": "4",
+        "description": "An improvement or enhancement to an existing feature or task.",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51500&avatarType=issuetype",
+        "name": "Improvement",
+        "subtask": false,
+        "avatarId": 51500
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/32",
+        "id": "32",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Feature",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/6",
+        "id": "6",
+        "description": "The sub-task of the issue",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51506&avatarType=issuetype",
+        "name": "Sub-task",
+        "subtask": true,
+        "avatarId": 51506
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/2",
+        "id": "2",
+        "description": "A new feature of the product, which has yet to be developed.",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51501&avatarType=issuetype",
+        "name": "New Feature",
+        "subtask": false,
+        "avatarId": 51501
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/3",
+        "id": "3",
+        "description": "A task that needs to be done.",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51508&avatarType=issuetype",
+        "name": "Task",
+        "subtask": false,
+        "avatarId": 51508
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/5",
+        "id": "5",
+        "description": "Issue that is likely specific to the installation",
+        "iconUrl": "https://jira.atlassian.com/images/icons/status_generic.gif",
+        "name": "Support Request",
+        "subtask": false
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/7",
+        "id": "7",
+        "description": "An issue relating to a third-party product (eg. app server) that nevertheless affects this product",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Third-party issue",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/8",
+        "id": "8",
+        "description": "Marketing Tasks for Laurel in the SF Office",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Laurel Marketing Task",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/10",
+        "id": "10",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51493&avatarType=issuetype",
+        "name": "Atlassian Task",
+        "subtask": false,
+        "avatarId": 51493
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/11",
+        "id": "11",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51500&avatarType=issuetype",
+        "name": "OEM Task",
+        "subtask": false,
+        "avatarId": 51500
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/12",
+        "id": "12",
+        "description": "Internal Atlassian development task",
+        "iconUrl": "https://jira.atlassian.com/images/icons/issuetypes/requirement.png",
+        "name": "Development Task",
+        "subtask": false
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/13",
+        "id": "13",
+        "description": "Development subtask",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51506&avatarType=issuetype",
+        "name": "Dev. Sub-task",
+        "subtask": true,
+        "avatarId": 51506
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/14",
+        "id": "14",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Test Case",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/15",
+        "id": "15",
+        "description": "A Task that has to be done but doesn't directly relate to the project",
+        "iconUrl": "https://jira.atlassian.com/images/icons/issuetypes/exclamation.png",
+        "name": "Non-project task",
+        "subtask": false
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/16",
+        "id": "16",
+        "description": "Created by Jira Software - do not edit or delete. Issue type for a user story.",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51504&avatarType=issuetype",
+        "name": "Story",
+        "subtask": false,
+        "avatarId": 51504
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/17",
+        "id": "17",
+        "description": "Subtask raised from a Crucible review",
+        "iconUrl": "http://jira.atlassian.com/download/resources/com.atlassian.jirafisheyeplugin:fisheye-projectpanel/makereview.gif",
+        "name": "Crucible Subtask",
+        "subtask": true
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/18",
+        "id": "18",
+        "description": "A User Request",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51501&avatarType=issuetype",
+        "name": "Request",
+        "subtask": false,
+        "avatarId": 51501
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/19",
+        "id": "19",
+        "description": "Created by Jira Software - do not edit or delete. Issue type for a big user story that needs to be broken down.",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51497&avatarType=issuetype",
+        "name": "Epic",
+        "subtask": false,
+        "avatarId": 51497
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/20",
+        "id": "20",
+        "description": "Holds retro stuff",
+        "iconUrl": "https://jira.atlassian.com/images/icons/issuetypes/health.png",
+        "name": "Retrospective",
+        "subtask": false
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/21",
+        "id": "21",
+        "description": "A backend \"story\"",
+        "iconUrl": "https://jira.atlassian.com/images/icons/issuetypes/task_agile.png",
+        "name": "Technical Story",
+        "subtask": false
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/22",
+        "id": "22",
+        "description": "A technical task.",
+        "iconUrl": "https://jira.atlassian.com/download/resources/com.pyxis.greenhopper.jira:greenhopper-webactions/images/ico_task.png",
+        "name": "Technical task",
+        "subtask": true
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/23",
+        "id": "23",
+        "description": "A story that's more about making a feature most lust worthy",
+        "iconUrl": "https://jira.atlassian.com/images/icons/issuetypes/health.png",
+        "name": "UX Story",
+        "subtask": false
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/24",
+        "id": "24",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51497&avatarType=issuetype",
+        "name": "Dev Speed",
+        "subtask": false,
+        "avatarId": 51497
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/25",
+        "id": "25",
+        "description": "",
+        "iconUrl": "http://confluence.atlassian.com/images/icons/magnify_16.png",
+        "name": "QA Task",
+        "subtask": true
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/26",
+        "id": "26",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51505&avatarType=issuetype",
+        "name": "Infrastructure",
+        "subtask": false,
+        "avatarId": 51505
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/27",
+        "id": "27",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/images/icons/issuetypes/documentation.png",
+        "name": "Documentation",
+        "subtask": false
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/28",
+        "id": "28",
+        "description": "Its not quite a feature and not quite a bug its a fug!",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51500&avatarType=issuetype",
+        "name": "Fug",
+        "subtask": false,
+        "avatarId": 51500
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/29",
+        "id": "29",
+        "description": "Feedback",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Feedback",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/30",
+        "id": "30",
+        "description": "A general description of a customer problem",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51497&avatarType=issuetype",
+        "name": "Customer Problem",
+        "subtask": false,
+        "avatarId": 51497
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/31",
+        "id": "31",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Inquiry",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/33",
+        "id": "33",
+        "description": "Request for a blog post, event, or campaign assistance",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51504&avatarType=issuetype",
+        "name": "Marketing Request",
+        "subtask": false,
+        "avatarId": 51504
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/34",
+        "id": "34",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Dependency",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/35",
+        "id": "35",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Enhancement",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/36",
+        "id": "36",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "PM Decision",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/37",
+        "id": "37",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Risk",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/38",
+        "id": "38",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51493&avatarType=issuetype",
+        "name": "Concern",
+        "subtask": true,
+        "avatarId": 51493
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/39",
+        "id": "39",
+        "description": "A user experience task",
+        "iconUrl": "https://jira.atlassian.com/images/icons/issuetypes/health.png",
+        "name": "UX",
+        "subtask": false
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/40",
+        "id": "40",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/images/icons/issuetypes/task_agile.png",
+        "name": "Testing Task",
+        "subtask": false
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/10100",
+        "id": "10100",
+        "description": "Analytics event",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51490&avatarType=issuetype",
+        "name": "Event",
+        "subtask": false,
+        "avatarId": 51490
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/10200",
+        "id": "10200",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=98191&avatarType=issuetype",
+        "name": "Lighten",
+        "subtask": false,
+        "avatarId": 98191
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/10300",
+        "id": "10300",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51494&avatarType=issuetype",
+        "name": "Experiment",
+        "subtask": false,
+        "avatarId": 51494
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/10400",
+        "id": "10400",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=51510&avatarType=issuetype",
+        "name": "Investigation",
+        "subtask": false,
+        "avatarId": 51510
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/10401",
+        "id": "10401",
+        "description": "",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=98190&avatarType=issuetype",
+        "name": "Technical Improvement",
+        "subtask": false,
+        "avatarId": 98190
+    },
+    {
+        "self": "https://jira.atlassian.com/rest/api/2/issuetype/10500",
+        "id": "10500",
+        "description": "This issue is a piece of Spam.",
+        "iconUrl": "https://jira.atlassian.com/secure/viewavatar?size=xsmall&avatarId=98192&avatarType=issuetype",
+        "name": "Spam Issue",
+        "subtask": false,
+        "avatarId": 98192
+    }
+]

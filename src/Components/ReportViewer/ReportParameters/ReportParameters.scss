@@ -1,18 +1,33 @@
 .params-container {
     width: 100%;
+
     .params-list {
         width: 100%;
+
         .param {
             float: left;
             margin: 5px;
             margin-right: 15px;
 
-            label {
-                font-weight: bold;
-                padding: 5px;
+            & div.label {
+                padding: 5px 2px;
+
+                &.mandatory {
+                    label:before {
+                        content: "*";
+                        color: red;
+                        font-weight: 900;
+                        margin-right: 3px;
+                    }
+                }
+
+                label {
+                    font-weight: 500;
+                }
             }
+
             div.control {
-                display: inline-block;
+                display: block;
             }
         }
     }
@@ -20,4 +35,63 @@
     .footer {
         width: 100%;
     }
+}
+
+.param-ctl {
+    width: 100%;
+}
+
+.param-ctl-ac {
+    width: 100% !important;
+
+    & > input {
+        width: calc(100% - 33px);
+    }
+}
+
+.param-ctl-dte,
+.param-ctl-dr,
+.param-multctl-dte {
+    width: 100% !important;
+
+    & > input {
+        width: 100%;
+    }
+}
+
+.param-multctl-txt {
+    ul {
+        width: 100%;
+    }
+}
+
+.param-ctl-chk {
+    padding: 5px 0;
+}
+
+.multivalue-param {
+    table {
+        width: 100%;
+        tr {
+            td:first-child {
+                width: calc(100% - 30px);
+            }
+
+            td:last-child {
+                width: 30px;
+            }
+        }
+    }
+}
+
+.param-multctl-ac {
+    width: 100% !important;
+
+    & > ul {
+        width: calc(100% - 33px);
+    }
+}
+
+.param-multctl-ddl {
+    width: 100% !important;
 }

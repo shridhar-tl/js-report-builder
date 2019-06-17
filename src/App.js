@@ -6,8 +6,12 @@ import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";
-import data, { userDaywiseReport } from "./testschema";
-import datasets, { userList } from "./testdata";
+import data, { userDaywiseReport } from "./testdata/testschema";
+import datasets, { userList } from "./testdata/testdata";
+import projects from './testdata/projects.json';
+import issuetypes from './testdata/issuetype.json';
+import customfields from './testdata/customfields.json';
+import rapidview from './testdata/rapidview.json';
 
 var defaultConfig = {
     parameterTypes: {
@@ -43,20 +47,39 @@ var defaultConfig = {
         PLS: {
             label: "Project list",
             resolveSchema: (name, props, promise) => {
+                promise.resolve(projects);
                 return Promise.resolve(props);
             },
-            resolveData: props => { }
-        },
-        STS: {
-            label: "Status list",
-            resolveSchema: (name, props, promise) => {
-                return Promise.resolve(props);
-            },
-            resolveData: props => { }
+            resolveData: props => projects
         },
         ITL: {
             label: "Issue type list",
             resolveSchema: (name, props, promise) => {
+                promise.resolve(issuetypes);
+                return Promise.resolve(props);
+            },
+            resolveData: props => issuetypes
+        },
+        RPV: {
+            label: "Rapid view list (sprint board list)",
+            resolveSchema: (name, props, promise) => {
+                promise.resolve(rapidview);
+                return Promise.resolve(props);
+            },
+            resolveData: props => rapidview
+        },
+        CUF: {
+            label: "Custom fields list",
+            resolveSchema: (name, props, promise) => {
+                promise.resolve(customfields);
+                return Promise.resolve(props);
+            },
+            resolveData: props => customfields
+        },
+        STS: {
+            label: "Status list",
+            resolveSchema: (name, props, promise) => {
+                promise.resolve(projects);
                 return Promise.resolve(props);
             },
             resolveData: props => { }

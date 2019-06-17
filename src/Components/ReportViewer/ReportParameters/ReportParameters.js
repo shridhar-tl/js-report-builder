@@ -21,7 +21,7 @@ class ReportParameters extends PureComponent {
         this.parameters = parameters;
         this.datasets = datasets;
         this.paramTypes = getParamTypes(true);
-        this.state = { values: { ...values } };
+        this.state = { values: this.validateParameters({ ...values }) };
     }
 
     parameterValueChanged = (param, value) => {
@@ -33,8 +33,25 @@ class ReportParameters extends PureComponent {
     };
 
     validateParameters(values) {
-        //ToDo: add validation code
-        return { values };
+        var { definition, values } = this.props;
+        var { datasets, parameters } = definition;
+        var paramLen = parameters.length;
+        var paramErrors = {};
+        var isParamsValid = true;
+
+        while (paramLen--) {
+            var paramDef = parameters[paramLen];
+            var { name, allowNulls, allowMultiple } = paramDef;
+            if (allowNulls) { continue; }
+            var paramValue = values[name];
+
+            if (!paramValue) { isParamsValid = false; }
+            else if (allowMultiple && Array.isArray(paramValue)) {
+                if (paramValue.length) { isParamsValid = false; }
+            }
+        }
+
+        return { values, paramErrors, isParamsValid };
     }
 
     saveParameters = () => {
@@ -43,7 +60,7 @@ class ReportParameters extends PureComponent {
     };
 
     getParameterControl = (param, i) => {
-        var { display, name, type } = param;
+        var { display, name, type, allowNulls } = param;
         var { values } = this.state;
         var paramType = this.paramTypes[type];
 
@@ -57,8 +74,8 @@ class ReportParameters extends PureComponent {
         var Control = control || InputParameter;
 
         return (
-            <div key={i} className="param">
-                {!displayHandled && <label>{display}</label>}
+            <div key={i} className="p-xl-3 p-lg-4 p-md-5 p-nogutter param">
+                {!displayHandled && <div className={"label" + (allowNulls ? "" : " mandatory")}><label>{display}</label></div>}
                 <div className="control">
                     <Control
                         definition={param}
@@ -73,16 +90,16 @@ class ReportParameters extends PureComponent {
 
     render() {
         var { parameters, state } = this;
-        var { values } = state;
+        var { values, isParamsValid } = state;
 
         return (
             <div className="params-container">
-                <div className="params-list">
+                <div className="p-grid params-list">
                     {parameters.map(this.getParameterControl)}
                     <div style={{ clear: "both" }} />
                 </div>
                 <div className="footer">
-                    <Button type="success" label="Done" onClick={this.saveParameters} />
+                    <Button type="success" label="Done" disabled={!isParamsValid} onClick={this.saveParameters} />
                 </div>
             </div>
         );
@@ -90,6 +107,8 @@ class ReportParameters extends PureComponent {
 }
 
 export default ReportParameters;
+
+const fieldStyles = { width: '100%' };
 
 class InputParameter extends PureComponent {
     constructor(props) {
@@ -128,20 +147,22 @@ class InputParameter extends PureComponent {
         return { fromDate: range[0], toDate: range[1] };
     };
 
-    onFileSelected = e => {};
+    onFileSelected = e => { };
 
     getSingleValueField() {
         var { name, display, type } = this.props.definition;
         var { value } = this.state;
 
+        var className = "param-ctl param-ctl-" + type.toLowerCase();
+
         switch (type) {
             default:
-                return <InputText value={value} onChange={this.valueChanged} />;
+                return <InputText value={value} onChange={this.valueChanged} className={className} />;
             case "MASK":
-                return <InputText value={value} onChange={this.valueChanged} />;
+                return <InputText value={value} onChange={this.valueChanged} className={className} />;
             case "CHK":
                 return (
-                    <React.Fragment>
+                    <div className={className}>
                         <Checkbox
                             inputId={"pcb_" + name}
                             value={true}
@@ -151,14 +172,14 @@ class InputParameter extends PureComponent {
                         <label htmlFor={"pcb_" + name} className="p-checkbox-label">
                             {display}
                         </label>
-                    </React.Fragment>
+                    </div>
                 );
             case "INT":
-                return <InputText keyfilter="int" value={value} onChange={this.valueChanged} />;
+                return <InputText keyfilter="int" value={value} onChange={this.valueChanged} className={className} />;
             case "NUM":
-                return <InputText keyfilter="num" value={value} onChange={this.valueChanged} />;
+                return <InputText keyfilter="num" value={value} onChange={this.valueChanged} className={className} />;
             case "DDL":
-                return <Dropdown optionLabel="name" value={value} options={[]} onChange={this.valueChanged} />;
+                return <Dropdown optionLabel="name" value={value} options={[]} onChange={this.valueChanged} className={className} />;
             case "AC":
                 return (
                     <AutoComplete
@@ -168,10 +189,11 @@ class InputParameter extends PureComponent {
                         minLength={1}
                         dropdown={true}
                         onChange={this.valueChanged}
+                        className={className}
                     />
                 );
             case "DTE":
-                return <Calendar value={value} onChange={this.valueChanged} />;
+                return <Calendar value={value} onChange={this.valueChanged} className={className} />;
             case "DR":
                 return (
                     <Calendar
@@ -179,6 +201,7 @@ class InputParameter extends PureComponent {
                         onChange={this.dateRangeChanged}
                         selectionMode="range"
                         readonlyInput={true}
+                        className={className}
                     />
                 );
             case "FILE":
@@ -197,18 +220,20 @@ class InputParameter extends PureComponent {
     getMultiValueField(value, setValue, valueChanged) {
         var { name, display, type } = this.props.definition;
 
+        var className = "param-ctl param-multctl-" + type.toLowerCase();
+
         switch (type) {
             default:
-                return <Chips value={value} onChange={valueChanged} />;
+                return <Chips value={value} onChange={valueChanged} className={className} />;
             case "MASK":
-                return <InputText value={value} onChange={valueChanged} />;
+                return <InputText value={value} onChange={valueChanged} className={className} />;
             case "INT":
-                return <InputText keyfilter="int" value={value} onChange={valueChanged} />;
+                return <InputText keyfilter="int" value={value} onChange={valueChanged} className={className} />;
             case "NUM":
-                return <InputText keyfilter="num" value={value} onChange={valueChanged} />;
+                return <InputText keyfilter="num" value={value} onChange={valueChanged} className={className} />;
             case "DDL":
                 return (
-                    <MultiSelect value={value} options={[]} onChange={valueChanged} style={{ minWidth: "12em" }} filter={true} />
+                    <MultiSelect value={value} options={[]} onChange={valueChanged} style={{ minWidth: "12em" }} filter={true} className={className} />
                 );
             case "AC":
                 return (
@@ -220,10 +245,11 @@ class InputParameter extends PureComponent {
                         dropdown={true}
                         multiple={true}
                         onChange={valueChanged}
+                        className={className}
                     />
                 );
             case "DTE":
-                return <Calendar value={value} onChange={valueChanged} selectionMode="multiple" readonlyInput={true} />;
+                return <Calendar value={value} onChange={valueChanged} selectionMode="multiple" readonlyInput={true} className={className} />;
             case "FILE":
                 return (
                     <FileUpload
@@ -233,6 +259,7 @@ class InputParameter extends PureComponent {
                         auto={true}
                         multiple={true}
                         chooseLabel="Browse"
+                        className={className}
                     />
                 );
         }
@@ -247,11 +274,11 @@ class InputParameter extends PureComponent {
                     {(value, setValue, valueChanged) => this.getMultiValueField(value, setValue, valueChanged)}
                 </MultiValueField>
             ) : (
-                this.getMultiValueField(this.state.value, this.setValue, this.valueChanged)
-            )
+                    this.getMultiValueField(this.state.value, this.setValue, this.valueChanged)
+                )
         ) : (
-            this.getSingleValueField()
-        );
+                this.getSingleValueField()
+            );
     }
 }
 

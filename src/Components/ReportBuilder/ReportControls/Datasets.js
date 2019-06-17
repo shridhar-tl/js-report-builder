@@ -40,11 +40,11 @@ class Datasets extends PureComponent {
             new Promise((resolve, reject) => {
                 dsType.resolveSchema(editedDataset.name, editedDataset.props, { resolve, reject }).then(props => {
                     editedDataset.props = props;
-                    this.updateDataset(editedDataset, datasetId);
+                    datasetId = this.updateDataset(editedDataset, datasetId);
                 });
             }).then(data => {
                 editedDataset.definition = getDatasetDefinition(data);
-                this.updateDataset(editedDataset, datasetId);
+                datasetId = this.updateDataset(editedDataset, datasetId);
             });
         } else {
             this.setState({ showAddDialog: true, editedDataset, editIndex: datasetId });
@@ -91,6 +91,7 @@ class Datasets extends PureComponent {
         });
 
         this.props.onChange(datasets, datasetList);
+        return editIndex;
     };
 
     render() {

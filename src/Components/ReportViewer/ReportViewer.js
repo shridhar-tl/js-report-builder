@@ -37,6 +37,14 @@ class ReportViewer extends PureComponent {
 
     contextProps = {
         getDataset: id => this.datasets[id],
+        resolveDataset: (dsId) => {
+            if (this.isDsResolved(dsId)) {
+                return Promise.resolve(this.datasets[dsId]);
+            }
+            else {
+                return this.resolveDataset(dsId, false, true);
+            }
+        },
         compileGroup: group => {
             var {
                 commonFunctions,
@@ -94,53 +102,61 @@ class ReportViewer extends PureComponent {
     }
 
     iterateAndResolveDS(refresh) {
-        let {
-            definition: { datasetList, datasets, parameters }
-        } = this;
+        let { definition: { datasetList } } = this;
 
         let promises = [];
 
         for (let dsId of datasetList) {
-            let dataset = datasets[dsId];
-            var dependency = dataset.dependencies || [];
-            if (!Array.isArray(dependency)) {
-                dependency = [dependency];
-            }
-
-            if (~dependency.indexOf(dsId)) {
-                throw { message: "A dataset cannot depend on itself. Malformed report definition" };
-            }
-
-            // ToDo: Correct following check to loop through dependency in datasetList and see if it is valid
-            //if (!~datasetList.indexOf(dsId)) { throw "Invalid dataset dependency specified"; }
-
-            if (dependency.some(d => !this.isDsResolved(d))) {
-                continue;
-            }
-            if (refresh || !this.datasets[dsId]) {
-                var props = {
-                    dataset,
-                    parameters: this.parameterValues,
-                    parameterTemplate: parameters,
-                    getDataset: dsId => {
-                        return datasets[dsId];
-                    },
-                    commonFunctions: { ...this.commonFunctions },
-                    myFunctions: { ...this.myFunctions }
-                };
-
-                var resolver = this.datasetTypes[dataset.type].resolve(props, rdsId => this.datasets[rdsId]);
-
-                promises.push(
-                    resolver.then(data => {
-                        if (!data) { data = []; }
-                        this.datasets[dsId] = data;
-                        this.datasets[dataset.name] = data;
-                    })
-                );
-            }
+            var resolver = this.resolveDataset(dsId, refresh);
+            promises.push(resolver);
         }
         return promises;
+    }
+
+    async resolveDataset(dsId, refresh, resolveDependency) {
+        let { definition: { datasets, parameters } } = this;
+
+        let dataset = datasets[dsId];
+        var dependency = dataset.dependencies || [];
+        if (!Array.isArray(dependency)) {
+            dependency = [dependency];
+        }
+
+        if (~dependency.indexOf(dsId)) {
+            throw { message: "A dataset cannot depend on itself. Malformed report definition" };
+        }
+
+        // ToDo: Correct following check to loop through dependency in datasetList and see if it is valid
+        //if (!~datasetList.indexOf(dsId)) { throw "Invalid dataset dependency specified"; }
+
+        if (dependency.some(d => !this.isDsResolved(d))) {
+            if (resolveDependency) {
+                await Promise.all(dependency.map(async d => await this.resolveDataset(d)));
+            }
+            else {
+                return;
+            }
+        }
+        if (refresh || !this.datasets[dsId]) {
+            var props = {
+                dataset,
+                parameters: this.parameterValues,
+                parameterTemplate: parameters,
+                getDataset: dsId => {
+                    return datasets[dsId];
+                },
+                commonFunctions: { ...this.commonFunctions },
+                myFunctions: { ...this.myFunctions }
+            };
+
+            var data = await this.datasetTypes[dataset.type].resolve(props, rdsId => this.datasets[rdsId]);
+            if (!data) { data = []; }
+
+            this.datasets[dsId] = data;
+            this.datasets[dataset.name] = data;
+
+            return data;
+        }
     }
 
     render() {

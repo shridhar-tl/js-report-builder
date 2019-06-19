@@ -1,0 +1,646 @@
+{
+    "datasets": {
+        "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321": {
+            "type": "JQL",
+            "props": {
+                "fields": {},
+                "filterFields": [],
+                "outputFields": [
+                    {
+                        "id": "project",
+                        "name": "Project",
+                        "custom": false,
+                        "knownObj": true,
+                        "type": "project"
+                    },
+                    {
+                        "id": "issuekey",
+                        "name": "Key",
+                        "custom": false,
+                        "type": "string"
+                    },
+                    {
+                        "id": "summary",
+                        "name": "Summary",
+                        "custom": false,
+                        "type": "string"
+                    },
+                    {
+                        "id": "issuetype",
+                        "name": "Issue Type",
+                        "custom": false,
+                        "knownObj": true,
+                        "type": "issuetype"
+                    },
+                    {
+                        "id": "customfield_10042",
+                        "name": "Story Points",
+                        "custom": true,
+                        "type": "number"
+                    },
+                    {
+                        "id": "worklog",
+                        "name": "Log Work",
+                        "custom": false,
+                        "isArray": false,
+                        "type": "worklog"
+                    }
+                ],
+                "jql": "worklogAuthor in (@Parameters.userList|currentUser()$) and worklogDate >= @Parameters.DateRange.fromDate|startOfMonth()$ and worklogDate <= @Parameters.DateRange.toDate|endOfMonth()$"
+            },
+            "name": "WorklogSet",
+            "definition": [
+                {
+                    "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                    "key": "summary",
+                    "path": "summary",
+                    "type": "string"
+                },
+                {
+                    "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                    "key": "issuetype",
+                    "path": "issuetype",
+                    "type": "object",
+                    "children": [
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "self",
+                            "path": "issuetype.self",
+                            "type": "string"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "id",
+                            "path": "issuetype.id",
+                            "type": "string"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "description",
+                            "path": "issuetype.description",
+                            "type": "string"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "iconUrl",
+                            "path": "issuetype.iconUrl",
+                            "type": "string"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "name",
+                            "path": "issuetype.name",
+                            "type": "string"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "subtask",
+                            "path": "issuetype.subtask",
+                            "type": "boolean"
+                        }
+                    ]
+                },
+                {
+                    "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                    "key": "project",
+                    "path": "project",
+                    "type": "object",
+                    "children": [
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "self",
+                            "path": "project.self",
+                            "type": "string"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "id",
+                            "path": "project.id",
+                            "type": "string"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "key",
+                            "path": "project.key",
+                            "type": "string"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "name",
+                            "path": "project.name",
+                            "type": "string"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "avatarUrls",
+                            "path": "project.avatarUrls",
+                            "type": "object",
+                            "children": [
+                                {
+                                    "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                                    "key": "48x48",
+                                    "path": "project.avatarUrls.48x48",
+                                    "type": "string"
+                                },
+                                {
+                                    "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                                    "key": "24x24",
+                                    "path": "project.avatarUrls.24x24",
+                                    "type": "string"
+                                },
+                                {
+                                    "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                                    "key": "16x16",
+                                    "path": "project.avatarUrls.16x16",
+                                    "type": "string"
+                                },
+                                {
+                                    "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                                    "key": "32x32",
+                                    "path": "project.avatarUrls.32x32",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                    "key": "worklog",
+                    "path": "worklog",
+                    "type": "object",
+                    "children": [
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "startAt",
+                            "path": "worklog.startAt",
+                            "type": "number"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "maxResults",
+                            "path": "worklog.maxResults",
+                            "type": "number"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "total",
+                            "path": "worklog.total",
+                            "type": "number"
+                        },
+                        {
+                            "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                            "key": "worklogs",
+                            "path": "worklog.worklogs",
+                            "type": "array"
+                        }
+                    ]
+                },
+                {
+                    "set": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                    "key": "key",
+                    "path": "key",
+                    "type": "string"
+                }
+            ]
+        },
+        "10725824-7724-4ffa-85de-33b67cc6aafe": {
+            "type": "FLT",
+            "id": "10725824-7724-4ffa-85de-33b67cc6aafe",
+            "name": "flatWorklogSet",
+            "dependencies": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+            "colProps": "{\n    'key': true,\n    'summary': 'summary',\n    'issuetype': 'issuetype.name',\n    'issueicon': 'issuetype.iconUrl',\n    'projectName': 'project.name',\n    'parentkey': 'parent.key',\n    'storyPoints': 'storyPoints',\n    'parentsummary': 'parent.fields.summary',\n    '~~worklog': {\n      field: 'worklog.worklogs',\n      spread: false,\n      props: {\n        '...author': function (obj) { return obj.author.name.toLowerCase() },\n        'author': 'author.name',\n        'authorDisplay': 'author.displayName',\n        'authorEmail': 'author.emailAddress',\n        'authorAvatar': 'author.avatarUrls.48x48',\n        'comment': 'comment',\n        'date': function (obj) { return obj.started ? new Date(obj.started) : null },\n        '...yyyyMMdd': function (obj) { return obj.started ? CommonFunctions.formatDate(obj.started, 'yyyyMMdd') : null },\n        'timespent': 'timeSpentSeconds',\n      }\n    }\n  }",
+            "variables": [],
+            "filter": ""
+        },
+        "723a81d1-5f4a-4f6e-a055-362f05446e43": {
+            "type": "PLS",
+            "name": "projects",
+            "definition": [
+                {
+                    "key": "expand",
+                    "path": "expand",
+                    "type": "string"
+                },
+                {
+                    "key": "self",
+                    "path": "self",
+                    "type": "string"
+                },
+                {
+                    "key": "id",
+                    "path": "id",
+                    "type": "string"
+                },
+                {
+                    "key": "key",
+                    "path": "key",
+                    "type": "string"
+                },
+                {
+                    "key": "name",
+                    "path": "name",
+                    "type": "string"
+                },
+                {
+                    "key": "avatarUrls",
+                    "path": "avatarUrls",
+                    "type": "object",
+                    "children": [
+                        {
+                            "key": "48x48",
+                            "path": "avatarUrls.48x48",
+                            "type": "string"
+                        },
+                        {
+                            "key": "24x24",
+                            "path": "avatarUrls.24x24",
+                            "type": "string"
+                        },
+                        {
+                            "key": "16x16",
+                            "path": "avatarUrls.16x16",
+                            "type": "string"
+                        },
+                        {
+                            "key": "32x32",
+                            "path": "avatarUrls.32x32",
+                            "type": "string"
+                        }
+                    ]
+                },
+                {
+                    "key": "projectTypeKey",
+                    "path": "projectTypeKey",
+                    "type": "string"
+                }
+            ]
+        }
+    },
+    "reportItems": [
+        {
+            "type": "TBL",
+            "data": {
+                "columns": [
+                    {
+                        "type": 1,
+                        "style": {
+                            "width": "100px"
+                        },
+                        "children": []
+                    },
+                    {
+                        "type": 1,
+                        "style": {
+                            "width": "100px"
+                        },
+                        "children": []
+                    },
+                    {
+                        "type": 1,
+                        "style": {
+                            "width": "100px"
+                        },
+                        "children": []
+                    },
+                    {
+                        "type": 3,
+                        "children": [
+                            {
+                                "type": 1,
+                                "style": {
+                                    "width": "100px"
+                                },
+                                "children": []
+                            }
+                        ],
+                        "keys": [],
+                        "sortBy": [],
+                        "filter": [],
+                        "variables": [],
+                        "dataset": -1,
+                        "name": "DayRepeator",
+                        "expression": "CommonFunctions.getDateRange(Parameters.DateRange.fromDate,Parameters.DateRange.toDate)"
+                    },
+                    {
+                        "type": 1,
+                        "style": {
+                            "width": "100px"
+                        },
+                        "children": []
+                    }
+                ],
+                "head": [
+                    {
+                        "type": 1,
+                        "style": {
+                            "height": "25px"
+                        },
+                        "children": [
+                            [
+                                {
+                                    "itemType": "text",
+                                    "data": "Users List"
+                                }
+                            ],
+                            [
+                                {
+                                    "itemType": "text",
+                                    "data": "Issue type"
+                                }
+                            ],
+                            [
+                                {
+                                    "itemType": "text",
+                                    "data": "Project name"
+                                }
+                            ],
+                            [
+                                {
+                                    "expression": "ColGroup.Fields.dayAndDate"
+                                }
+                            ],
+                            [
+                                {
+                                    "itemType": "text",
+                                    "data": "Total"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "body": [
+                    {
+                        "type": 2,
+                        "label": "Group c633b23624d2",
+                        "children": [
+                            {
+                                "type": 1,
+                                "style": {
+                                    "height": "25px"
+                                },
+                                "children": [
+                                    [
+                                        {
+                                            "expression": "Fields.name"
+                                        }
+                                    ],
+                                    [],
+                                    [],
+                                    [],
+                                    []
+                                ]
+                            },
+                            {
+                                "type": 3,
+                                "children": [
+                                    {
+                                        "type": 1,
+                                        "style": {
+                                            "height": "25px"
+                                        },
+                                        "children": [
+                                            [
+                                                {
+                                                    "expression": "Fields.displayName"
+                                                }
+                                            ],
+                                            [],
+                                            [],
+                                            [],
+                                            []
+                                        ],
+                                        "keys": [],
+                                        "sortBy": [],
+                                        "filter": [],
+                                        "variables": []
+                                    },
+                                    {
+                                        "type": 2,
+                                        "label": "Group 37987dfff5b8",
+                                        "children": [
+                                            {
+                                                "type": 1,
+                                                "style": {
+                                                    "height": "25px"
+                                                },
+                                                "children": [
+                                                    [
+                                                        {
+                                                            "expression": "RowGroup.key"
+                                                        },
+                                                        {
+                                                            "setId": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                                                            "data": "summary",
+                                                            "type": "string",
+                                                            "expression": "Fields[0].summary",
+                                                            "template": "<span> - {0}</span>"
+                                                        }
+                                                    ],
+                                                    [
+                                                        {
+                                                            "setId": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                                                            "data": "name",
+                                                            "type": "string",
+                                                            "expression": "Fields[0].issuetype"
+                                                        }
+                                                    ],
+                                                    [
+                                                        {
+                                                            "setId": "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+                                                            "data": "name",
+                                                            "type": "string",
+                                                            "expression": "Fields[0].projectName"
+                                                        }
+                                                    ],
+                                                    [
+                                                        {
+                                                            "expression": "array(Fields).sum(function(row){ return ColGroup.Fields.yyyyMMdd == row.yyyyMMdd ? row.worklog.timespent:0}) / 3600"
+                                                        }
+                                                    ],
+                                                    [
+                                                        {
+                                                            "expression": "array(Fields).sum(function(row){ return row.worklog.timespent}) / 3600"
+                                                        }
+                                                    ]
+                                                ],
+                                                "keys": ["Fields.key"],
+                                                "sortBy": [],
+                                                "filter": [],
+                                                "variables": []
+                                            }
+                                        ],
+                                        "keys": [
+                                            {
+                                                "expr": "Fields.key"
+                                            }
+                                        ],
+                                        "sortBy": "",
+                                        "filter": "",
+                                        "variables": [],
+                                        "dataset": -1,
+                                        "name": "Tickets",
+                                        "expression": "RowGroup('UserGroup').Variables('userWiseWorklog')[Fields.name.toLowerCase()] || []"
+                                    }
+                                ],
+                                "keys": [],
+                                "sortBy": "",
+                                "filter": "",
+                                "variables": [],
+                                "name": "Users",
+                                "expression": "Fields.users",
+                                "dataset": -1
+                            }
+                        ],
+                        "dataset": -1,
+                        "keys": [],
+                        "sortBy": "",
+                        "filter": "",
+                        "variables": [
+                            {
+                                "expr": "array(Datasets('flatWorklogSet')).toKeyValuePair('author')",
+                                "key": "userWiseWorklog"
+                            }
+                        ],
+                        "expression": "Parameters.userList",
+                        "name": "UserGroup"
+                    }
+                ]
+            }
+        }
+    ],
+    "parameters": [
+        {
+            "name": "txtText",
+            "display": "TextFieldSample",
+            "type": "TXT"
+        },
+        {
+            "name": "txtMask",
+            "display": "Mask field sample",
+            "type": "MASK"
+        },
+        {
+            "name": "txtChkBox",
+            "display": "Checkbox sample",
+            "type": "CHK"
+        },
+        {
+            "name": "txtInt",
+            "display": "Integer Sample",
+            "type": "INT"
+        },
+        {
+            "name": "txtNum",
+            "display": "Number sample",
+            "type": "NUM"
+        },
+        {
+            "name": "txtDDL",
+            "display": "Dropdown sample",
+            "type": "DDL",
+            "dataset": "723a81d1-5f4a-4f6e-a055-362f05446e43",
+            "displayField": "name",
+            "valueField": "key"
+        },
+        {
+            "name": "txtAC",
+            "display": "Autocomplete sample",
+            "type": "AC",
+            "dataset": "723a81d1-5f4a-4f6e-a055-362f05446e43",
+            "displayField": "name",
+            "valueField": "key"
+        },
+        {
+            "name": "txtDTE",
+            "display": "Date sample",
+            "type": "DTE"
+        },
+        {
+            "name": "txtDR",
+            "display": "Date range sample",
+            "type": "DR"
+        },
+        {
+            "name": "txtFile",
+            "display": "File browser sample",
+            "type": "FILE"
+        },
+        {
+            "name": "txtMText",
+            "display": "TextFieldSample",
+            "type": "TXT",
+            "allowMultiple": true
+        },
+        {
+            "name": "txtMMask",
+            "display": "Mask field sample",
+            "type": "MASK",
+            "allowMultiple": true
+        },
+        {
+            "name": "txtMInt",
+            "display": "Integer Sample",
+            "type": "INT",
+            "allowMultiple": true
+        },
+        {
+            "name": "txtMNum",
+            "display": "Number sample",
+            "type": "NUM",
+            "allowMultiple": true
+        },
+        {
+            "name": "txtMDDL",
+            "display": "Dropdown sample",
+            "type": "DDL",
+            "allowMultiple": true,
+            "dataset": "723a81d1-5f4a-4f6e-a055-362f05446e43",
+            "displayField": "name",
+            "valueField": "key"
+        },
+        {
+            "name": "txtMAC",
+            "display": "Autocomplete sample",
+            "type": "AC",
+            "allowMultiple": true,
+            "dataset": "723a81d1-5f4a-4f6e-a055-362f05446e43",
+            "displayField": "name",
+            "valueField": "key"
+        },
+        {
+            "name": "txtMDTE",
+            "display": "Date sample",
+            "type": "DTE",
+            "allowMultiple": true
+        },
+        {
+            "name": "txtMFile",
+            "display": "File browser sample",
+            "type": "FILE",
+            "allowMultiple": true
+        },
+        {
+            "name": "DateRange",
+            "display": "Worklog date range",
+            "type": "DR"
+        },
+        {
+            "name": "userList",
+            "display": "User list",
+            "type": "UG"
+        }
+    ],
+    "queryName": "User daywise report",
+    "advanced": true,
+    "dateCreated": "2019-06-05T11:07:16.818Z",
+    "datasetList": [
+        "a77b3ae4-11f8-40b3-aed3-d2c5a1e31321",
+        "10725824-7724-4ffa-85de-33b67cc6aafe",
+        "723a81d1-5f4a-4f6e-a055-362f05446e43"
+    ],
+    "userScript": "function prepareFlatDataset(worklogset)\n{\n          return [];\n}",
+    "uniqueId": "7cb61ad6-8ec6-415c-92fe-1e2b9571f699",
+    "updateId": "5d095090-6795-4c6d-9d5e-b5f29d19a151",
+    "dateUpdated": "2019-06-05T11:07:16.900Z"
+}

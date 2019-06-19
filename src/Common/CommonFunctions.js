@@ -93,7 +93,7 @@ var TINY_DAY_NAMES = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 var SHORT_DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var FULL_DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-function convertToDate(value) {
+export function convertToDate(value) {
     return new Date(value);
 }
 

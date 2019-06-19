@@ -6,12 +6,7 @@ import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";
-import data, { userDaywiseReport } from "./testdata/testschema";
-import datasets, { userList } from "./testdata/testdata";
-import projects from './testdata/projects.json';
-import issuetypes from './testdata/issuetype.json';
-import customfields from './testdata/customfields.json';
-import rapidview from './testdata/rapidview.json';
+import { userDaywiseReport, datasets, userList, projects, issuetypes, customfields, rapidview } from './testdata'
 
 var defaultConfig = {
     parameterTypes: {
@@ -50,7 +45,7 @@ var defaultConfig = {
                 promise.resolve(projects);
                 return Promise.resolve(props);
             },
-            resolveData: props => projects
+            resolveData: props => Promise.resolve(projects)
         },
         ITL: {
             label: "Issue type list",
@@ -58,7 +53,7 @@ var defaultConfig = {
                 promise.resolve(issuetypes);
                 return Promise.resolve(props);
             },
-            resolveData: props => issuetypes
+            resolveData: props => Promise.resolve(issuetypes)
         },
         RPV: {
             label: "Rapid view list (sprint board list)",
@@ -66,7 +61,7 @@ var defaultConfig = {
                 promise.resolve(rapidview);
                 return Promise.resolve(props);
             },
-            resolveData: props => rapidview
+            resolveData: props => Promise.resolve(rapidview)
         },
         CUF: {
             label: "Custom fields list",
@@ -74,7 +69,7 @@ var defaultConfig = {
                 promise.resolve(customfields);
                 return Promise.resolve(props);
             },
-            resolveData: props => customfields
+            resolveData: props => Promise.resolve(customfields)
         },
         STS: {
             label: "Status list",
@@ -82,7 +77,7 @@ var defaultConfig = {
                 promise.resolve(projects);
                 return Promise.resolve(props);
             },
-            resolveData: props => { }
+            resolveData: props => { Promise.resolve(null) }
         }
     },
     builtInFields: {
@@ -110,6 +105,27 @@ class App extends Component {
         initReportBuilder(defaultConfig);
     }
 
+    copyDefinition = () => {
+        this.copyStringToClipboard(JSON.stringify(this.builderAPI.getReportDefinition()));
+    }
+
+    copyStringToClipboard(str) {
+        // Create new element
+        var el = document.createElement('textarea');
+        // Set value (string to be copied)
+        el.value = str;
+        // Set non-editable to avoid focus and move outside of view
+        el.setAttribute('readonly', '');
+        el.style = { position: 'absolute', left: '-9999px' };
+        document.body.appendChild(el);
+        // Select text inside element
+        el.select();
+        // Copy text to clipboard
+        document.execCommand('copy');
+        // Remove temporary element
+        document.body.removeChild(el);
+    }
+
     viewPreview = () => {
         var { preview } = this.state;
         var newState = { preview: !preview };
@@ -127,6 +143,7 @@ class App extends Component {
             <div className="report-builder-container">
                 <div style={{ width: "100%", height: "45px" }}>
                     <Button type="success" label={preview ? "View Builder" : "View Preview"} onClick={this.viewPreview} />
+                    {!preview && <Button className="pull-right" type="success" label="Copy Definition" onClick={this.copyDefinition} />}
                 </div>
                 <div style={{ width: "100%", height: "calc(100vh - 46px)", overflow: "auto" }}>
                     {!preview && (

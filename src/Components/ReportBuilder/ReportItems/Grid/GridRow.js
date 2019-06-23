@@ -25,7 +25,7 @@ class GridRow extends PureComponent {
                         <th
                             key={s._uniqueId}
                             rowSpan={s.span}
-                            title={s.name || "<<No name given>>"}
+                            title={(s.name || "<<No name given>>") + " (" + (s.data.group.type === 2 ? "Parent" : "Details") + " group)"}
                             className="grid-group-head"
                             onContextMenu={e => grid.showRowGroupContext(e, index, s.data, updateParent)}
                         />
@@ -34,7 +34,7 @@ class GridRow extends PureComponent {
                     colSpan={headSpan}
                     onContextMenu={e => grid.showRowHeaderContext(e, index, parent, updateParent)}
                     className="grid-row-header">
-                    {isDetailsRow ? "+" : " "}
+                    {isDetailsRow ? <i className="fa fa-bars" /> : "+"}
                 </th>
                 {this.repeatColumns(columns)}
             </tr>

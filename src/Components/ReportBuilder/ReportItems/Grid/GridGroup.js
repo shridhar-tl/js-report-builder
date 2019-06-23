@@ -30,10 +30,13 @@ class GridGroup extends PureComponent {
         return count;
     }
 
-    updateGroupItems = updated => {
+    updateGroupItems = (updated, index) => {
         var { group } = this.state;
         if (Array.isArray(updated)) {
             group.children = [...updated];
+        }
+        else if (updated && typeof updated === "object") {
+            group.children[index] = updated;
         }
         this.updateGroup(group);
     };

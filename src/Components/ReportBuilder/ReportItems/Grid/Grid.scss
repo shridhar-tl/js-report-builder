@@ -18,8 +18,8 @@
 
     .grid-row-header {
         @include headerStyle;
-        height: 17px;
-        width: 14px;
+        height: 20px;
+        width: 24px;
     }
 
     th.selected,
@@ -31,13 +31,18 @@
         &.jsr-builder-head {
             tr {
                 height: 5px;
+
                 &:last-child {
-                    height: 14px;
+                    height: 18px;
                 }
+
+                th:not(.builder-head-col):not(.grid-row-header) {
+                    width: 110px;
+                }
+
                 th {
                     @include headerStyle;
                     font-size: 0px;
-                    width: 110px;
 
                     &.builder-head-grp {
                         border-top: 1px solid #d64700;

@@ -6,6 +6,19 @@
         width: 100%;
         height: 100%;
         padding-bottom: 50px;
+
+        .component {
+            margin-bottom: 15px;
+            border: 2px solid gainsboro;
+
+            &.selected {
+                border: 2px solid grey;
+            }
+
+            div.not-implemented {
+                padding: 15px 5px;
+            }
+        }
     }
 
     .message-no-items {

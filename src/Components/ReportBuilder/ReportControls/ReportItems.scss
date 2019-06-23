@@ -1,17 +1,22 @@
 .report-items {
-  width: 100%;
-  padding: 2px;
-
-  .report-item {
     width: 100%;
     padding: 2px;
-    float: left;
-    cursor: move;
-    border: 1px dashed grey;
-    margin: 2px;
 
-    & > span {
-      float: left;
+    .report-item {
+        width: 100%;
+        padding: 5px 5px;
+        float: left;
+        cursor: move;
+        border: 1px dashed grey;
+        margin: 2px;
+
+        & > span {
+            float: left;
+            margin: 0 4px;
+
+            &:first-child {
+                width: 18px;
+            }
+        }
     }
-  }
 }

@@ -8,18 +8,18 @@
     border-collapse: collapse;
     @mixin headerStyle {
         text-align: center;
-        background-color: #f3f3f3;
+        background-color: #f0f0f0;
         cursor: default;
         font-weight: normal;
         font-size: 14px;
-        border: 1px solid #9eb6ce;
+        border: 1px solid #cccccc;
         border-width: 0px 1px 1px 0px;
     }
 
     .grid-row-header {
         @include headerStyle;
-        height: 20px;
-        width: 24px;
+        height: 24px;
+        width: 32px;
     }
 
     th.selected,
@@ -36,8 +36,8 @@
                     height: 18px;
                 }
 
-                th:not(.builder-head-col):not(.grid-row-header) {
-                    width: 110px;
+                th:not(:first-child):not(.grid-row-header) {
+                    width: 140px;
                 }
 
                 th {

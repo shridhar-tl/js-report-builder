@@ -2,9 +2,9 @@ import array from "./linq";
 import { compileExpression, compileVariables } from "./Compiler";
 
 var inbuiltDatasets = [
-    { type: "HTP", label: "Online dataset (http request)", resolve: resolve_HTP },
-    { type: "FIL", label: "File dataset (CSV, EXCEL or JSON files)", resolve: resolve_FIL },
-    { type: "STC", label: "Static dataset (manually input value in a table)", resolve: resolve_STC },
+    { type: "HTP", label: "Online dataset (http request)", resolve: resolve_HTP, disabled: true },
+    { type: "FIL", label: "File dataset (CSV, EXCEL or JSON files)", resolve: resolve_FIL, disabled: true },
+    { type: "STC", label: "Static dataset (manually input value in a table)", resolve: resolve_STC, disabled: true },
     { type: "FLT", label: "Flatern dataset (generate dataset by flatening other dataset)", resolve: resolve_FLT },
     { type: "EXP", label: "Expression dataset (generate dataset using other dataset)", resolve: resolve_EXP }
 ];
@@ -12,7 +12,7 @@ var inbuiltDatasets = [
 export default inbuiltDatasets;
 
 function resolve_FLT(props, getDatasetData) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         try {
             var { dataset, parameters, commonFunctions, myFunctions } = props;
             var { colProps, dependencies: dsId, filter, variables } = dataset;
@@ -50,7 +50,7 @@ function resolve_FLT(props, getDatasetData) {
 }
 
 function resolve_EXP(props, getDatasetData) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         try {
             resolve({});
         } catch (err) {
@@ -60,7 +60,7 @@ function resolve_EXP(props, getDatasetData) {
 }
 
 function resolve_FIL(props, getDatasetData) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         try {
             resolve({});
         } catch (err) {
@@ -70,7 +70,7 @@ function resolve_FIL(props, getDatasetData) {
 }
 
 function resolve_HTP() {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         try {
             resolve({});
         } catch (err) {
@@ -80,7 +80,7 @@ function resolve_HTP() {
 }
 
 function resolve_STC() {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         try {
             resolve({});
         } catch (err) {

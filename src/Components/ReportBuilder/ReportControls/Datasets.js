@@ -206,7 +206,7 @@ class DatasetType extends PureComponent {
                     {this.datasetTypes.map((ds, i) => (
                         <div map={i}>
                             <label>
-                                <input type="radio" name="datasetType" value={ds.type} field="type" onChange={this.updateValue} />{" "}
+                                <input type="radio" name="datasetType" value={ds.type} field="type" disabled={ds.disabled} onChange={this.updateValue} />
                                 {ds.label}
                             </label>
                         </div>

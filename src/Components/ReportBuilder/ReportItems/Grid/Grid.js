@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import ReportItemBase from "../ReportItemBase";
 import "./Grid.scss";
 import GridRow from "./GridRow";
@@ -7,7 +7,6 @@ import { getNestingDepth, getDefaultGridData, getUniqueGroupName } from "../../C
 import ExpressionEditor from "../../Common/ExpressionEditor";
 import { Menu } from "primereact/menu";
 import array from "../../../../Common/linq";
-import "react-contexify/dist/ReactContexify.min.css";
 import GroupProperties from "../../Common/GroupProperties";
 import { cloneObject } from "../../../../Common/HelperFunctions";
 import { BuilderContext, GridContext } from "../../Common/Constants";
@@ -419,10 +418,9 @@ class Grid extends ReportItemBase {
     };
 
     CellItemContext = () => {
-        var { contextData = {} } = this.state;
-        var { index, data, menuClicked } = contextData;
+        var { contextData: { index, data, menuClicked } = {} } = this.state;
 
-        var contextData = [
+        var menuData = [
             {
                 label: "Edit item",
                 icon: "fa fa-edit",
@@ -443,7 +441,7 @@ class Grid extends ReportItemBase {
             }
         ];
 
-        return <Menu model={contextData} popup={true} ref={el => (this.cellItemContext = el)} />
+        return <Menu model={menuData} popup={true} ref={el => (this.cellItemContext = el)} />
     }
 
     expressionChanged = (value, type, validation) => {

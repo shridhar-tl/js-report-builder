@@ -214,6 +214,7 @@ class GridCell extends PureComponent {
                     this.dataChanged(cellData, null);
                 });
                 break;
+            default: break;
         }
     }
 }

@@ -34,7 +34,7 @@ class GridRow extends PureComponent {
                     colSpan={headSpan}
                     onContextMenu={e => grid.showRowHeaderContext(e, index, parent, updateParent)}
                     className="grid-row-header">
-                    {isDetailsRow ? <i className="fa fa-bars" /> : "+"}
+                    {rowSpans && (isDetailsRow ? <i className="fa fa-bars" /> : "+")}
                 </th>
                 {this.repeatColumns(columns)}
             </tr>

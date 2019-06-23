@@ -173,3 +173,15 @@ function initCommonFunctions(funcs) {
 }
 
 // #endregion
+
+// #region Builder template
+
+var defaultDefinition = { reportItems: [], datasets: {}, datasetList: [], parameters: [] };
+
+var reportDefinition = { ...defaultDefinition };
+
+export function getDefaultRptDefinition() {
+    return reportDefinition;
+}
+
+// #endregion

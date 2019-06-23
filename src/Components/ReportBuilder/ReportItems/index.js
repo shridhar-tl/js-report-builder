@@ -3,13 +3,13 @@ import ImageItem from "./ImageItem";
 import Grid from "./Grid/Grid";
 
 export const defaultComponents = [
-    { type: 'TAB', icon: 'fa fa-list-alt', text: 'Tab view', control: HorizontalLine },
-    { type: 'TPG', icon: 'fa fa-square', text: 'Tab page' },
     { type: 'TBL', icon: 'fa fa-table', text: 'Table', control: Grid },
     {
         type: 'IMG', icon: 'fa fa-image', text: 'Image', control: ImageItem,
         target: ['rpt-items', 'rpt-cntr', 'table-cell']
     },
+    { type: 'TAB', icon: 'fa fa-list-alt', text: 'Tab view' },
+    { type: 'TPG', icon: 'fa fa-square', text: 'Tab page' },
     { type: 'CHT', icon: 'fa fa-bar-chart', text: 'Chart' },
     { type: 'PNL', icon: 'fa fa-object-group', text: 'Container' },
     { type: 'CPL', icon: 'fa fa-window-maximize', text: 'Collapsible panel' },

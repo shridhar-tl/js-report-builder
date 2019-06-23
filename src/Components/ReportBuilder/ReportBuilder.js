@@ -14,12 +14,18 @@ import ReportDisplay from "./ReportDisplay/ReportDisplay";
 import { BuilderContext } from "./Common/Constants";
 import ExpressionEditor from "./Common/ExpressionEditor";
 import ExpressionList from "./Common/ExpressionList";
+import { getDefaultRptDefinition } from "../../Common/ReportConfig";
 
 class ReportBuilder extends ReportBase {
     constructor(props) {
         super(props);
         var { definition: data } = props;
-        this.state = { data: data || { reportItems: [], datasets: {}, parameters: [] } };
+
+        if (!data) {
+            data = getDefaultRptDefinition();
+        }
+
+        this.state = { data };
         this.builderProps = {
             ...this.sharedProps,
             getDatasetList: includeExpressionDS => {

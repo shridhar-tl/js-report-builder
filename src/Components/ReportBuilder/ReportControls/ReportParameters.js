@@ -211,7 +211,7 @@ class EditParameter extends PureComponent {
                             </div>
                         </div>
                     </TabPanel>
-                    <TabPanel header="Available values">
+                    <TabPanel header="Available values" disabled={!parameter.type}>
                         <div className="field-collection">
                             <div>
                                 <label>Dataset</label>
@@ -232,7 +232,7 @@ class EditParameter extends PureComponent {
                             </div>
                         </div>
                     </TabPanel>
-                    <TabPanel header="Validations">
+                    <TabPanel header="Validations" disabled={!parameter.type}>
                         <div className="field-collection">
                             <div>
                                 <Checkbox

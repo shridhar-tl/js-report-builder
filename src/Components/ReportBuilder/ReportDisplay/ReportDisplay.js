@@ -12,7 +12,7 @@ class ReportDisplay extends Component {
 
     onItemAdded = item => {
         var addedItems = this.state.addedItems.map(i => i);
-        addedItems.push({ type: item.type, attrs: {} });
+        addedItems.push({ type: item.type }); // ToDo: attrs property need to be added
         this.setState({ addedItems });
         this.props.onChange(addedItems);
     };

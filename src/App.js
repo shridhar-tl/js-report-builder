@@ -99,7 +99,7 @@ var defaultConfig = {
 class App extends Component {
     constructor() {
         super();
-        this.state = { preview: false, reportDefinition: userDaywiseReport };
+        this.state = { preview: false, reportDefinition: null && userDaywiseReport };
     }
 
     componentWillMount() {

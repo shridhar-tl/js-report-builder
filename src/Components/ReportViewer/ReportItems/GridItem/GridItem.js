@@ -7,10 +7,6 @@ import "./GridItem.scss";
 export default class GridItem extends PureComponent {
     static contextType = ViewerContext;
 
-    constructor(props) {
-        super(props);
-    }
-
     UNSAFE_componentWillMount() {
         this.commonContext = {
             ...this.context,
@@ -18,54 +14,6 @@ export default class GridItem extends PureComponent {
             compileExpression: this.context.compileExpression
         };
     }
-
-    /*
-    compiledExpressions = { columns: [], headCells: {}, bodyCells: {} };
-
-    UNSAFE_componentWillMount() {
-        this.commonContext = {
-            ...this.context,
-            compileGroup: this.context.compileGroup,
-            compileExpression: this.context.compileExpression
-        };
-
-        var {
-            definition: {
-                data: { columns }
-            }
-        } = this.props;
-        this.compileColumns(this.compiledExpressions.columns, columns);
-    }
-    
-    compileColumns(result, cols, $groups) {
-        cols.forEach(col => {
-            if (col.type === 1) {
-                var colGroup = (function(result, $groups) {
-                    var obj = {};
-                    //obj[$groups.name] = $groups;
-                    var grpFunc = function(grpId) {
-                        return obj[grpId];
-                    };
-                    grpFunc.Fields = $groups;
-                    return grpFunc;
-                })(result, $groups);
-                var $compiled = { $groups, colGroup }; // ToDo: newely add expression to show hide columns
-                // ToDo: add "getGroup" as a function to find only previously added and current group
-                result.push($compiled);
-            } else {
-                this.compileGroup(result, col, $groups ? [...$groups] : []);
-            }
-        });
-    }
-
-    compileGroup(result, group, $groups) {
-        var $compiled = this.commonContext.compileGroup(group);
-        $groups.push($compiled);
-        var { children } = group;
-        if (children && children.length) {
-            this.compileColumns(result, children, $groups);
-        }
-    }*/
 
     render() {
         var { definition } = this.props;

@@ -24,7 +24,7 @@ class GridCellRepeater extends PureComponent {
         var { colGroupFields, group } = this.props;
 
         if (group) {
-            var colGroup = function(grpName) {
+            var colGroup = function (grpName) {
                 return colGroupFields[grpName];
             };
 
@@ -108,11 +108,11 @@ class GridCell extends PureComponent {
             <CellType>
                 {cell.map((c, i) => {
                     var { title, style, data: displayValue } = c;
-                    var displayValue;
+
                     switch (c.itemType || "") {
                         case "":
                         case "expression":
-                            var { hideWhen, $hideWhen, $expression } = c;
+                            var { hidden: hideWhen, $hideWhen, $expression } = c;
                             if (!$expression) {
                                 var { expression, template } = c;
                                 $expression = compileExpression(expression);
@@ -133,6 +133,7 @@ class GridCell extends PureComponent {
                                 title = e;
                             }
                             break;
+                        default: break;
                     }
 
                     return (

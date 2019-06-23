@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import { compileExpression } from '../Common/Compiler';
 
 class ReportBase extends PureComponent {

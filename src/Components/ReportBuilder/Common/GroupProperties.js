@@ -36,9 +36,17 @@ class GroupProperties extends Component {
     saveProperties = () => {
         var { group } = this.state;
         var { keys, dataset } = group;
+
         if (keys && keys.length) {
             array(keys).removeAll(k => !k.expr);
+            if (!keys.length) { delete group.keys; }
         }
+
+        group.type = keys && keys.length ? 2 : 3;
+
+        if (!group.filter) { delete group.filter; }
+        if (!group.sortBy) { delete group.sortBy; }
+        if (Array.isArray(group.variables) && !group.variables.length) { delete group.variables; }
 
         if (dataset !== -1) {
             delete group.expression;
@@ -65,7 +73,7 @@ class GroupProperties extends Component {
                 footer={footer}
                 style={{ width: "50vw" }}
                 modal={true}
-                onHide={this.hideAddPopup}>
+                onHide={this.hidePopup}>
                 <TabView>
                     <TabPanel header="General">
                         <div>

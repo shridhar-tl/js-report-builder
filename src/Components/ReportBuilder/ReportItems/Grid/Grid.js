@@ -63,6 +63,11 @@ class Grid extends ReportItemBase {
             }
         };
     }
+
+    showGridContext = (e) => {
+
+    }
+
     RowContext = () => {
         var { contextData = {} } = this.state;
         var { index = 0, parent = [], updateParent } = contextData;
@@ -504,7 +509,7 @@ class Grid extends ReportItemBase {
                         className="builder-head-col"
                         rowSpan={colGrpDepth}
                         colSpan={maxDepth}
-                        onContextMenu={e => this.sharedProps.showGridContext(e)}>
+                        onContextMenu={this.showGridContext}>
                         #
                     </th>
                 )}

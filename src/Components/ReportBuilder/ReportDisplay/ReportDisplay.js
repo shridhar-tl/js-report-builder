@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./ReportDisplay.scss";
 import Droppable from "../DragDrop/Droppable";
 import { componentsMap } from "../ReportItems/index";
+import ReportItemBase from "../ReportItems/ReportItemBase";
 
 class ReportDisplay extends Component {
     constructor(props) {
@@ -32,6 +33,9 @@ class ReportDisplay extends Component {
 
     getControl = (item, index) => {
         var Ctl = componentsMap[item.type].control;
+
+        if (!Ctl) { Ctl = ReportItemBase; }
+
         if (item.attrs) {
             return <Ctl key={index} index={index} onItemRemoved={this.onItemRemoved} {...item.attrs} />;
         } else {

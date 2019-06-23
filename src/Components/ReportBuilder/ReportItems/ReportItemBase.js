@@ -18,6 +18,10 @@ class ReportItemBase extends PureComponent {
             {childItems}
         </div >;
     }
+
+    render() {
+        return this.renderBase(<div className="not-implemented">This component is not yet implemented!</div>)
+    }
 }
 
 export default ReportItemBase;

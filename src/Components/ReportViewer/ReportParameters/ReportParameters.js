@@ -15,7 +15,7 @@ class ReportParameters extends PureComponent {
         this.parameters = parameters;
         this.datasets = datasets;
         this.paramTypes = getParamTypes(true);
-        this.state = { values: this.validateParameters({ ...values }) };
+        this.state = this.validateParameters({ ...values });
     }
 
     parameterValueChanged = (param, value) => {
@@ -27,8 +27,8 @@ class ReportParameters extends PureComponent {
     };
 
     validateParameters(values) {
-        var { definition, values } = this.props;
-        var { datasets, parameters } = definition;
+        var { definition } = this.props;
+        var { parameters } = definition;
         var paramLen = parameters.length;
         var paramErrors = {};
         var isParamsValid = true;
@@ -39,9 +39,9 @@ class ReportParameters extends PureComponent {
             if (allowNulls) { continue; }
             var paramValue = values[name];
 
-            if (!paramValue) { isParamsValid = false; }
+            if (!paramValue) { isParamsValid = false; break; }
             else if (allowMultiple && Array.isArray(paramValue)) {
-                if (paramValue.length) { isParamsValid = false; }
+                if (paramValue.length) { isParamsValid = false; break; }
             }
         }
 
@@ -85,7 +85,7 @@ class ReportParameters extends PureComponent {
 
     render() {
         var { parameters, state } = this;
-        var { values, isParamsValid } = state;
+        var { isParamsValid } = state;
 
         return (
             <div className="params-container">

@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import { InputText } from "primereact/inputtext";
+import { InputMask } from "primereact/inputmask";
 import { Checkbox } from "primereact/checkbox";
 import { FileUpload } from "primereact/fileupload";
 import { Calendar } from "primereact/calendar";
@@ -40,8 +41,8 @@ export default class InputParameter extends PureComponent {
                             newValue = dataset.filter(d => value.indexOf(d[valueField]) >= 0);
                         }
                         else if (firstVal instanceof Date) {
-                            var valTicks = value.map(v => v.getTime());
-                            newValue = dataset.filter(d => valTicks.indexOf(convertToDate(d[valueField]).getTime()) >= 0);
+                            var vTicks = value.map(v => v.getTime());
+                            newValue = dataset.filter(d => vTicks.indexOf(convertToDate(d[valueField]).getTime()) >= 0);
                         }
                         if (newValue.length === 0) { newValue = null; }
                     }
@@ -134,7 +135,7 @@ export default class InputParameter extends PureComponent {
     onFileSelected = e => { };
 
     getSingleValueField() {
-        var { name, display, type, displayField } = this.props.definition;
+        var { name, mask, slotChar, display, type, displayField } = this.props.definition;
         var { value, dataset, filteredDataset } = this.state;
 
         var className = "param-ctl param-ctl-" + type.toLowerCase();
@@ -143,7 +144,7 @@ export default class InputParameter extends PureComponent {
             default:
                 return <InputText value={value} onChange={this.valueChanged} className={className} />;
             case "MASK":
-                return <InputText value={value} onChange={this.valueChanged} className={className} />;
+                return <InputMask mask={mask || ""} slotChar={slotChar} value={value} onChange={this.valueChanged} className={className} />;
             case "CHK":
                 return (
                     <div className={className}>
@@ -215,7 +216,7 @@ export default class InputParameter extends PureComponent {
     }
 
     getMultiValueField(value, setValue, valueChanged) {
-        var { name, display, type, displayField } = this.props.definition;
+        var { mask, slotChar, type, displayField } = this.props.definition;
 
         var className = "param-ctl param-multctl-" + type.toLowerCase();
 
@@ -223,7 +224,7 @@ export default class InputParameter extends PureComponent {
             default:
                 return <Chips value={value} onChange={valueChanged} className={className} />;
             case "MASK":
-                return <InputText value={value} onChange={valueChanged} className={className} />;
+                return <InputMask mask={mask || ""} slotChar={slotChar} value={value} onChange={valueChanged} className={className} />;
             case "INT":
                 return <InputText keyfilter="int" value={value} onChange={valueChanged} className={className} />;
             case "NUM":

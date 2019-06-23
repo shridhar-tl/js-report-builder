@@ -11,7 +11,6 @@ import SelectDataset from "../Common/SelectDataset";
 import { getParamTypes } from "../../../Common/ReportConfig";
 import { Checkbox } from "primereact/checkbox";
 import InputParameter from "../../Common/InputParameter";
-import { convertToDate } from "../../../Common/CommonFunctions";
 
 class ReportParameters extends ReportControlBase {
     constructor(props) {
@@ -106,6 +105,12 @@ class EditParameter extends PureComponent {
         var { parameter } = this.state;
         parameter[field] = value;
         parameter = { ...parameter };
+
+        if (!parameter.dataset) {
+            delete parameter.displayField;
+            delete parameter.valueField;
+        }
+
         var isParamValid = this.isParamValid(parameter);
         this.setState({ parameter, isParamValid });
     };
@@ -130,6 +135,14 @@ class EditParameter extends PureComponent {
         }
 
         if (!param.type) {
+            return false;
+        }
+
+        if (param.type === "MASK" && !param.mask) {
+            return false;
+        }
+
+        if (param.dataset && !param.displayField) {
             return false;
         }
 
@@ -163,36 +176,38 @@ class EditParameter extends PureComponent {
                 <TabView>
                     <TabPanel header="General" contentClassName="no-padding" className="no-padding">
                         <div className="field-collection">
-                            <div>
+                            <div className="mandatory">
                                 <label>Name:</label>
                                 <InputText keyfilter="alphanum" field="name" value={parameter.name} onChange={updateValue} />
                             </div>
-                            <div>
+                            <div className="mandatory">
                                 <label>Display text:</label>
                                 <InputText field="display" value={parameter.display} onChange={updateValue} />
                             </div>
-                            <div>
+                            <div className="mandatory">
                                 <label>Param type:</label>
                                 <Dropdown
                                     value={parameter.type}
                                     options={getParamTypes()}
                                     onChange={e => {
                                         var paramType = this.paramTypes[e.value];
-                                        this.setState({ paramType, noMultiValue: paramType.supportMultiValue === false });
+                                        this.setState({
+                                            paramType, noMultiValue: paramType.supportMultiValue === false,
+                                            defaultValue: null, mask: null, slotChar: null, minVal: null, maxVal: null
+                                        });
                                         updateFieldValue("type", e.value);
                                     }}
                                     placeholder="Select a Parameter type"
                                 />
                             </div>
                             <div>
-                                <label>
-                                    <Checkbox
-                                        disabled={noMultiValue}
-                                        checked={parameter.allowMultiple}
-                                        onChange={e => updateFieldValue("allowMultiple", e.checked)}
-                                    />
-                                    <span style={{ marginLeft: '3px' }}>This is a multi value field</span>
-                                </label>
+                                <Checkbox
+                                    inputId="cbAllowMultiple"
+                                    disabled={noMultiValue}
+                                    checked={parameter.allowMultiple}
+                                    onChange={e => updateFieldValue("allowMultiple", e.checked)}
+                                />
+                                <label htmlFor="cbAllowMultiple"><span style={{ marginLeft: '3px' }}>This is a multi value field</span></label>
                             </div>
                         </div>
                     </TabPanel>
@@ -202,13 +217,13 @@ class EditParameter extends PureComponent {
                                 <label>Dataset</label>
                                 <SelectDataset value={parameter.dataset} onChange={ds => { delete parameter.defaultValue; updateFieldValue("dataset", ds); }} />
                             </div>
-                            <div>
+                            <div className={parameter.dataset ? "mandatory" : ""}>
                                 <label>Display field</label>
-                                <InputText value={parameter.displayField} field="displayField" onChange={updateValue} />
+                                <InputText value={parameter.displayField} disabled={!parameter.dataset} field="displayField" onChange={updateValue} />
                             </div>
                             <div>
                                 <label>Value field</label>
-                                <InputText value={parameter.valueField} field="valueField" onChange={updateValue} />
+                                <InputText value={parameter.valueField} disabled={!parameter.dataset} field="valueField" onChange={updateValue} />
                             </div>
                             <div>
                                 <label>Default value</label>
@@ -220,14 +235,25 @@ class EditParameter extends PureComponent {
                     <TabPanel header="Validations">
                         <div className="field-collection">
                             <div>
-                                <label>
-                                    <Checkbox
-                                        checked={parameter.allowNulls}
-                                        onChange={e => updateFieldValue("allowNulls", e.checked)}
-                                    />
+                                <Checkbox
+                                    inputId="cbAllowNulls"
+                                    checked={parameter.allowNulls}
+                                    onChange={e => updateFieldValue("allowNulls", e.checked)}
+                                />
+                                <label htmlFor="cbAllowNulls">
                                     <span style={{ marginLeft: '3px' }}>This field is not mandatory</span>
                                 </label>
                             </div>
+                            {pTypeName === "MASK" && <div className="mandatory">
+                                <label>Mask template</label>
+                                <InputParameter definition={{ type: "TXT" }} value={parameter.mask}
+                                    onChange={(d, val) => updateFieldValue("mask", val)} />
+                            </div>}
+                            {pTypeName === "MASK" && <div>
+                                <label>Slot template</label>
+                                <InputParameter definition={{ type: "TXT" }} value={parameter.slotChar}
+                                    onChange={(d, val) => updateFieldValue("slotChar", val)} />
+                            </div>}
                             {allowedValidations.indexOf("regex") >= 0 && <div>
                                 <label>Regular expression</label>
                                 <InputParameter definition={{ type: "TXT" }} value={parameter.regex}

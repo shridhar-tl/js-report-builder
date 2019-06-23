@@ -18,6 +18,7 @@ var defaultConfig = {
                     "span",
                     {
                         onClick: () => {
+                            props.onChange(userList);
                             alert("This is dummy parameter");
                         },
                         className: "ctl-ug"
@@ -40,7 +41,7 @@ var defaultConfig = {
             }
         },
         PLS: {
-            label: "Project list",
+            label: "Project list", allowEdit: false,
             resolveSchema: (name, props, promise) => {
                 promise.resolve(projects);
                 return Promise.resolve(props);
@@ -48,7 +49,7 @@ var defaultConfig = {
             resolveData: props => Promise.resolve(projects)
         },
         ITL: {
-            label: "Issue type list",
+            label: "Issue type list", allowEdit: false,
             resolveSchema: (name, props, promise) => {
                 promise.resolve(issuetypes);
                 return Promise.resolve(props);
@@ -56,7 +57,7 @@ var defaultConfig = {
             resolveData: props => Promise.resolve(issuetypes)
         },
         RPV: {
-            label: "Rapid view list (sprint board list)",
+            label: "Rapid view list (sprint board list)", allowEdit: false,
             resolveSchema: (name, props, promise) => {
                 promise.resolve(rapidview);
                 return Promise.resolve(props);
@@ -64,7 +65,7 @@ var defaultConfig = {
             resolveData: props => Promise.resolve(rapidview)
         },
         CUF: {
-            label: "Custom fields list",
+            label: "Custom fields list", allowEdit: false,
             resolveSchema: (name, props, promise) => {
                 promise.resolve(customfields);
                 return Promise.resolve(props);
@@ -72,7 +73,7 @@ var defaultConfig = {
             resolveData: props => Promise.resolve(customfields)
         },
         STS: {
-            label: "Status list",
+            label: "Status list", allowEdit: false,
             resolveSchema: (name, props, promise) => {
                 promise.resolve(projects);
                 return Promise.resolve(props);

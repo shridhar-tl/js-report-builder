@@ -10,10 +10,11 @@ import array from "../../../../Common/linq";
 import "react-contexify/dist/ReactContexify.min.css";
 import GroupProperties from "../../Common/GroupProperties";
 import { cloneObject } from "../../../../Common/HelperFunctions";
-
-export const GridContext = createContext({});
+import { BuilderContext, GridContext } from "../../Common/Constants";
 
 class Grid extends ReportItemBase {
+    static contextType = BuilderContext
+
     constructor(props) {
         super(props);
         this.state = {
@@ -21,42 +22,48 @@ class Grid extends ReportItemBase {
             data: props.data || getDefaultGridData()
         };
     }
-
-    sharedProps = {
-        itemSelected: (e, d, itm) => {
-            var { selected = {} } = this.state;
-            var { element } = selected;
-            if (element) {
-                element.changeSelection();
+    componentWillMount() {
+        this.sharedProps = {
+            builderContext: this.context,
+            itemSelected: (e, d, itm) => {
+                var { selected = {} } = this.state;
+                var { element } = selected;
+                if (element) {
+                    element.changeSelection();
+                }
+                selected = { element: e, cellData: d };
+                if (itm) {
+                    selected.cellItem = itm;
+                }
+                this.setState({ selected });
+            },
+            showRowHeaderContext: (e, index, parent, updateParent) => {
+                e.preventDefault();
+                this.setState({ contextData: { index, parent, updateParent } });
+                this.rowContext.toggle(e);
+            },
+            showRowGroupContext: (e, index, data, updateParent) => {
+                e.preventDefault();
+                this.setState({ contextData: { index, data, updateParent } });
+                this.rowGroupContext.toggle(e);
+            },
+            showColHeaderContext: (e, index, parent, realObj) => {
+                e.preventDefault();
+                this.setState({ contextData: { index, parent, realObj } });
+                this.colContext.toggle(e);
+            },
+            showColGroupContext: (e, index, parent, group, grpSpan) => {
+                e.preventDefault();
+                this.setState({ contextData: { index, parent, group, grpSpan } });
+                this.colGroupContext.toggle(e);
+            },
+            showCellItemContext: (e, index, data, menuClicked) => {
+                e.preventDefault();
+                this.setState({ contextData: { index, data, menuClicked } });
+                this.cellItemContext.toggle(e);
             }
-            selected = { element: e, cellData: d };
-            if (itm) {
-                selected.cellItem = itm;
-            }
-            this.setState({ selected });
-        },
-        showRowHeaderContext: (e, index, parent, updateParent) => {
-            e.preventDefault();
-            this.setState({ contextData: { index, parent, updateParent } });
-            this.rowContext.toggle(e);
-        },
-        showRowGroupContext: (e, index, data, updateParent) => {
-            e.preventDefault();
-            this.setState({ contextData: { index, data, updateParent } });
-            this.rowGroupContext.toggle(e);
-        },
-        showColHeaderContext: (e, index, parent, realObj) => {
-            e.preventDefault();
-            this.setState({ contextData: { index, parent, realObj } });
-            this.colContext.toggle(e);
-        },
-        showColGroupContext: (e, index, parent, group, grpSpan) => {
-            e.preventDefault();
-            this.setState({ contextData: { index, parent, group, grpSpan } });
-            this.colGroupContext.toggle(e);
-        }
-    };
-
+        };
+    }
     RowContext = () => {
         var { contextData = {} } = this.state;
         var { index = 0, parent = [], updateParent } = contextData;
@@ -83,12 +90,12 @@ class Grid extends ReportItemBase {
             updateParent(data);
         };
 
-        var removeRow = function() {
+        var removeRow = function () {
             data.splice(index, 1);
             updateParent(data);
         };
 
-        var insertGroup = function() {
+        var insertGroup = function () {
             var curRow = data[index];
             data[index] = { type: 3, name: getUniqueGroupName(), children: [curRow] };
             updateParent(data);
@@ -411,6 +418,34 @@ class Grid extends ReportItemBase {
         return <Menu model={menuModel} popup={true} ref={el => (this.colGroupContext = el)} />;
     };
 
+    CellItemContext = () => {
+        var { contextData = {} } = this.state;
+        var { index, data, menuClicked } = contextData;
+
+        var contextData = [
+            {
+                label: "Edit item",
+                icon: "fa fa-edit",
+                command: () => menuClicked(index, data, "EDIT")
+
+            },
+            {
+                label: "Remove item",
+                icon: "fa fa-trash",
+                command: () => menuClicked(index, data, "REMOVE")
+
+            },
+            {
+                label: "Properties",
+                icon: "fa fa-trash",
+                command: () => menuClicked(index, data, "PROPS")
+
+            }
+        ];
+
+        return <Menu model={contextData} popup={true} ref={el => (this.cellItemContext = el)} />
+    }
+
     expressionChanged = (value, type, validation) => {
         var { selected } = this.state;
         var { element } = selected || {};
@@ -618,6 +653,7 @@ class Grid extends ReportItemBase {
                 <this.RowGroupContext />
                 <this.ColContext />
                 <this.ColGroupContext />
+                <this.CellItemContext />
                 {table}
             </GridContext.Provider>,
             this.getGroupProperties()

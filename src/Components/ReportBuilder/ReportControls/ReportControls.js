@@ -7,8 +7,12 @@ import ReportParameters from "./ReportParameters";
 import Datasets from "./Datasets";
 import StyleEditor from "../../Common/StyleEditor";
 import { getBuiltInFields, getCommonFunctions } from "../../../Common/ReportConfig";
+import { BuilderContext } from "../Common/Constants";
+import { Dialog } from "primereact/dialog";
 
 class ReportControls extends PureComponent {
+    static contextType = BuilderContext;
+
     constructor(props) {
         super(props);
         var { data, selectedItems } = props;
@@ -28,7 +32,7 @@ class ReportControls extends PureComponent {
         this.setState({ data, parameters, datasetList, selectedItems });
     }
 
-    editFunctions = e => this.showAddPopup(e, 1, { showAddPopup: () => {} });
+    editFunctions = e => this.showAddPopup(e, 1, this.ctlFunctions);
     addParam = e => this.showAddPopup(e, 2, this.ctlParameters);
     addDataset = e => this.showAddPopup(e, 3, this.ctlDatasets);
 
@@ -64,7 +68,7 @@ class ReportControls extends PureComponent {
 
     render() {
         var { data, parameters = [], datasetList = [], activeIndex, selectedItems } = this.state;
-        var { datasets = {} } = data;
+        var { datasets = {}, myFunctions, userScript } = data;
         var [selectedItem] = selectedItems;
 
         var functionsHeader = (
@@ -99,7 +103,8 @@ class ReportControls extends PureComponent {
                         <BuiltinFields />
                     </AccordionTab>
                     <AccordionTab header={functionsHeader}>
-                        <FunctionsList />
+                        <FunctionsList
+                            ref={c => (this.ctlFunctions = c)} myFunctions={myFunctions} userScript={userScript} />
                     </AccordionTab>
                     <AccordionTab header={parameterHeader}>
                         <ReportParameters
@@ -120,7 +125,6 @@ class ReportControls extends PureComponent {
                         <ReportItems />
                     </AccordionTab>
                     <AccordionTab header="Resources">
-                        <ReportItems />
                     </AccordionTab>
                     <AccordionTab header="Styles">
                         {selectedItem && <StyleEditor element={selectedItem.element} elementData={selectedItem.data} />}
@@ -148,30 +152,71 @@ class BuiltinFields extends PureComponent {
 }
 
 class FunctionsList extends PureComponent {
+    static contextType = BuilderContext;
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    showAddPopup = () => {
+        this.setState({ showDialog: true, userScript: this.props.userScript || "" });
+    };
+
+    saveFunction = () => {
+        try {
+            this.context.buildMyFunctions(this.state.userScript);
+            this.hidePopup();
+        }
+        catch (err) {
+            alert("An error occured while parsing your script. Check the console to trace the error.");
+        }
+    };
+
+    hidePopup = () => {
+        this.setState({ showDialog: false });
+    };
+
     render() {
-        return (
-            <div className="func-list">
-                <div className="func-grp">
-                    <div className="header">Common functions</div>
-                    <div className="list">
-                        {getCommonFunctions().map(f => (
-                            <div className="func" key={f.name} title={f.helpText}>
-                                {f.name}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="func-grp">
-                    <div className="header">My functions</div>
-                    <div className="list">
-                        {getCommonFunctions().map(f => (
-                            <div className="func" key={f.name} title={f.helpText}>
-                                {f.name}
-                            </div>
-                        ))}
-                    </div>
-                </div>
+        var { userScript, showDialog } = this.state;
+        var footer = (
+            <div>
+                <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
+                <Button type="primary" icon="fa fa-check" onClick={this.saveFunction} label="Save" />
             </div>
+        );
+        return (
+            <React.Fragment>
+                <div className="func-list">
+                    <div className="func-grp">
+                        <div className="header">Common functions</div>
+                        <div className="list">
+                            {getCommonFunctions().map(f => (
+                                <div className="func" key={f.name} title={f.helpText}>
+                                    {f.name}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    {this.props.myFunctions && <div className="func-grp">
+                        <div className="header">My functions</div>
+                        <div className="list">
+                            {this.props.myFunctions.map(f => (
+                                <div className="func" key={f}>{f}</div>
+                            ))}
+                        </div>
+                    </div>}
+                </div>
+                {showDialog && <Dialog
+                    header="My functions"
+                    visible={showDialog}
+                    footer={footer}
+                    style={{ width: "65vw" }}
+                    modal={true}
+                    onHide={this.hidePopup}>
+                    <textarea style={{ height: "334px", width: "100%" }} value={userScript} onChange={(e) => this.setState({ userScript: e.target.value })}></textarea>
+                </Dialog>}
+            </React.Fragment>
         );
     }
 }

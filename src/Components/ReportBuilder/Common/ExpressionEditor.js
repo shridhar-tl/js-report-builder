@@ -5,7 +5,7 @@ class ExpressionEditor extends PureComponent {
     constructor(props) {
         super();
         var { expression, type } = props;
-        this.state = { expression, type };
+        this.state = { expression, type, validation: this.validateExpression(expression) };
     }
 
     componentDidMount() {
@@ -18,11 +18,12 @@ class ExpressionEditor extends PureComponent {
     }
 
     expressionChanged = e => {
+        this.isChanged = true;
         var expression = e.currentTarget.value;
         var value = expression.trim();
         var type;
         var validation = null;
-        if (!value.startsWith("=")) {
+        if (!value.startsWith("=") && !this.props.isStrict) {
             type = "text";
         } else {
             validation = this.validateExpression(value);
@@ -35,6 +36,7 @@ class ExpressionEditor extends PureComponent {
     };
 
     validateExpression(expression) {
+        // ToDo: validation need to be implemented
         return { isValid: true, errors: [] };
     }
 
@@ -62,11 +64,11 @@ class ExpressionEditor extends PureComponent {
         if (!endEdit) {
             return;
         }
-        var { expression, type } = field || this.state;
+        var { expression, type, validation } = field || this.state;
         if (field) {
             this.setState({ expression, type });
         }
-        endEdit(expression, type);
+        endEdit(expression, type, field ? { isCanceled: true } : { validation, isCanceled: !this.isChanged });
 
         this.disableBlurEvent = true;
         this.inputField.blur();
@@ -100,21 +102,21 @@ class ExpressionEditor extends PureComponent {
                         onBlur={() => this.endEdit()}
                     />
                 ) : (
-                    <input
-                        style={style}
-                        disabled={disabled}
-                        placeholder={placeholder}
-                        type="text"
-                        value={expression || ""}
-                        className={this.props.className}
-                        ref={f => {
-                            this.inputField = f;
-                        }}
-                        onChange={this.expressionChanged}
-                        onKeyDown={this.validateKeys}
-                        onBlur={() => this.endEdit()}
-                    />
-                )}
+                        <input
+                            style={style}
+                            disabled={disabled}
+                            placeholder={placeholder}
+                            type="text"
+                            value={expression || ""}
+                            className={this.props.className}
+                            ref={f => {
+                                this.inputField = f;
+                            }}
+                            onChange={this.expressionChanged}
+                            onKeyDown={this.validateKeys}
+                            onBlur={() => this.endEdit()}
+                        />
+                    )}
             </div>
         );
     }

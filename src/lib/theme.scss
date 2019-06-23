@@ -38,6 +38,21 @@ body {
             }
         }
     }
+    div.mandatory > label:before,
+    label.mandatory {
+        content: "*";
+        color: red;
+        font-weight: 900;
+        margin-right: 3px;
+    }
+
+    .padding-15 {
+        padding: 15px;
+    }
+    .padding-v-15 {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
 
     /*.p-dialog {
         border-radius: 3px;

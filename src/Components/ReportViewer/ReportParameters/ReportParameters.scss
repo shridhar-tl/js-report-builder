@@ -12,15 +12,6 @@
             & div.label {
                 padding: 5px 2px;
 
-                &.mandatory {
-                    label:before {
-                        content: "*";
-                        color: red;
-                        font-weight: 900;
-                        margin-right: 3px;
-                    }
-                }
-
                 label {
                     font-weight: 500;
                 }

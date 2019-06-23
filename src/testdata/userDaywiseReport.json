@@ -315,8 +315,8 @@
                             }
                         ],
                         "keys": [],
-                        "sortBy": [],
-                        "filter": [],
+                        "sortBy": null,
+                        "filter": null,
                         "variables": [],
                         "dataset": -1,
                         "name": "DayRepeator",
@@ -411,8 +411,8 @@
                                             []
                                         ],
                                         "keys": [],
-                                        "sortBy": [],
-                                        "filter": [],
+                                        "sortBy": null,
+                                        "filter": null,
                                         "variables": []
                                     },
                                     {
@@ -465,8 +465,8 @@
                                                     ]
                                                 ],
                                                 "keys": ["Fields.key"],
-                                                "sortBy": [],
-                                                "filter": [],
+                                                "sortBy": null,
+                                                "filter": null,
                                                 "variables": []
                                             }
                                         ],
@@ -639,7 +639,7 @@
         "10725824-7724-4ffa-85de-33b67cc6aafe",
         "723a81d1-5f4a-4f6e-a055-362f05446e43"
     ],
-    "userScript": "function prepareFlatDataset(worklogset)\n{\n          return [];\n}",
+    "userScript": "function prepareFlatDataset(worklogset)\n{\n          return [];\n}\n\nthis.prepareFlatDataset=prepareFlatDataset;",
     "uniqueId": "7cb61ad6-8ec6-415c-92fe-1e2b9571f699",
     "updateId": "5d095090-6795-4c6d-9d5e-b5f29d19a151",
     "dateUpdated": "2019-06-05T11:07:16.900Z"

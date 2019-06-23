@@ -98,7 +98,7 @@ function initDatasetTypes(customTypes) {
                 return;
             }
 
-            var { label, resolveSchema, resolveData } = ds;
+            var { label, allowEdit, resolveSchema, resolveData } = ds;
 
             if (!label || !resolveSchema || !resolveData) {
                 console.error("Custom dataset type expect mandatory properties of label, resolveSchema and resolveData", ds);
@@ -107,7 +107,8 @@ function initDatasetTypes(customTypes) {
 
             datasetTypes.push({
                 type: k,
-                label: label,
+                label,
+                allowEdit,
                 resolveSchema: resolveSchema,
                 resolve: function ({ dataset, parameters, parameterTemplate }, getDatasetData) {
                     //Also received in first param, commonFunctions, myFunctions

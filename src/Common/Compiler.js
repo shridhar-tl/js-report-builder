@@ -1,4 +1,4 @@
-import array from "./linq";
+import array, { getObjVal } from "./linq";
 
 export function compileGroup(group, props) {
     let { filter, keys, sortBy, variables, dataset, expression } = group;
@@ -18,15 +18,15 @@ export function compileGroup(group, props) {
     var $keys = keys ? keys.map(f => compileExpression(f.expr, props)) : undefined;
     var $sortBy = sortBy ? compileExpression(getWrapperFunction(sortBy), props) : undefined;
     var $variables = compileVariables(variables, props);
-    var varFunc = (function(varObj) {
-        return function(props) {
+    var varFunc = (function (varObj) {
+        return function (props) {
             var keysList = Object.keys(varObj);
             var valueObj = keysList.reduce((obj, varName) => {
                 obj["$" + varName] = varObj[varName](props.fields, props.rowGroup, props.colGroup, props.variables);
                 return obj;
             }, {});
 
-            var $varFunc = function(varName) {
+            var $varFunc = function (varName) {
                 //console.log("Variable data for ", varName, " requested from ", valueObj);
                 return valueObj["$" + varName];
             };
@@ -69,10 +69,21 @@ export function wrapWithFunction(obj) {
 }*/
 
 export function compileExpression(expression, props) {
-    // ToDo: If required loopthrough window and use it as params
     try {
+        var isNoWrap = props && props.noWrap === true;
+        var exprToCompile = expression;
+
+        if (!isNoWrap) {
+            exprToCompile = "return function(Fields,RowGroup,ColGroup,Variables){ var Field = function(key){return getObjVal(Fields,key);}; return " +
+                exprToCompile +
+                ";}";
+        }
+
+        exprToCompile = "'use strict'; return function(CommonFunctions,MyFunctions,Parameters,Datasets, array, getObjVal) { " + exprToCompile + " }";
+
         var func = Function(
             "window",
+            "global",
             "document",
             "navigator",
             "Function",
@@ -111,15 +122,16 @@ export function compileExpression(expression, props) {
             " jQuery",
             "console", //'eval', // eval couldn't be used a parameter
 
-            "'use strict'; return function(CommonFunctions,MyFunctions,Parameters,Datasets, array) { return function(Fields,RowGroup,ColGroup,Variables){ return " +
-                expression +
-                ";} }"
+            exprToCompile
         );
 
         var result = func();
         if (props) {
-            var { commonFunctions, myFunctions, parameters, datasets } = props;
-            result = result(commonFunctions, myFunctions, parameters, datasets, array);
+            var { commonFunctions, myFunctions, parameters, datasets, $this } = props;
+            if ($this) {
+                result = result.bind($this);
+            }
+            result = result(commonFunctions, myFunctions, parameters, datasets, array, getObjVal);
         }
         return result;
     } catch (err) {
@@ -130,13 +142,13 @@ export function compileExpression(expression, props) {
 export function compileVariables(variables, props, initVars) {
     return variables
         ? variables.reduce((vars, v) => {
-              var value = compileExpression(v.expr, props);
-              if (initVars) {
-                  value = value();
-              }
-              vars[v.key] = value;
-              return vars;
-          }, {})
+            var value = compileExpression(v.expr, props);
+            if (initVars) {
+                value = value();
+            }
+            vars[v.key] = value;
+            return vars;
+        }, {})
         : undefined;
 }
 

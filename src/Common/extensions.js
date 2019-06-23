@@ -1,14 +1,14 @@
-(function() {
+(function () {
     var id_counter = 1;
-    Object.defineProperty(Object.prototype, "__objectId__", {
-        writable: true,
-        configurable: false,
-        enumerable: false
-    });
     Object.defineProperty(Object.prototype, "_uniqueId", {
-        get: function() {
+        get: function () {
             if (this.__objectId__ === undefined) {
-                this.__objectId__ = id_counter++;
+                Object.defineProperty(this, "__objectId__", {
+                    value: id_counter++,
+                    writable: false,
+                    configurable: false,
+                    enumerable: false
+                });
             }
             return this.__objectId__;
         }

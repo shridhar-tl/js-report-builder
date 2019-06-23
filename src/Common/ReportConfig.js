@@ -15,17 +15,17 @@ export function initReportBuilder(config) {
 // #region Parameter related functions
 
 const inbuiltParamTypes = [
-    { label: "Text", value: "TXT" },
-    { label: "Masked Text", value: "MASK", handleMultivalue: true },
+    { label: "Text", value: "TXT", allowedValidations: ["regex", "keyfilter", "length"] },
+    { label: "Masked Text", value: "MASK", handleMultivalue: true, allowedValidations: ["regex", "keyfilter", "length"] },
     { label: "Checkbox", value: "CHK", displayHandled: true, supportMultiValue: false },
     //{ label: "Yes / No Slider", value: "YNS", supportMultiValue: false },
-    { label: "Integer", value: "INT", handleMultivalue: true },
-    { label: "Number", value: "NUM", handleMultivalue: true },
-    { label: "Dropdown", value: "DDL" },
-    { label: "Autocomplete", value: "AC" },
-    { label: "Date", value: "DTE" },
-    { label: "Date Range", value: "DR", handleMultivalue: true },
-    { label: "File browser", value: "FILE" }
+    { label: "Integer", value: "INT", handleMultivalue: true, allowedValidations: ["range"] },
+    { label: "Number", value: "NUM", handleMultivalue: true, allowedValidations: ["range"] },
+    { label: "Dropdown", value: "DDL", allowedValidations: ["length"] },
+    { label: "Autocomplete", value: "AC", allowedValidations: ["length"] },
+    { label: "Date", value: "DTE", allowedValidations: ["daterange"] },
+    { label: "Date Range", value: "DR", handleMultivalue: true, allowedValidations: ["daterange"] },
+    { label: "File browser", value: "FILE", supportDefaultValue: false, allowedValidations: ["length"] }
 ];
 
 var paramTypes = [...inbuiltParamTypes];
@@ -98,7 +98,7 @@ function initDatasetTypes(customTypes) {
                 return;
             }
 
-            var { label, resolveSchema, resolveData } = ds;
+            var { label, allowEdit, resolveSchema, resolveData } = ds;
 
             if (!label || !resolveSchema || !resolveData) {
                 console.error("Custom dataset type expect mandatory properties of label, resolveSchema and resolveData", ds);
@@ -107,7 +107,8 @@ function initDatasetTypes(customTypes) {
 
             datasetTypes.push({
                 type: k,
-                label: label,
+                label,
+                allowEdit,
                 resolveSchema: resolveSchema,
                 resolve: function ({ dataset, parameters, parameterTemplate }, getDatasetData) {
                     //Also received in first param, commonFunctions, myFunctions

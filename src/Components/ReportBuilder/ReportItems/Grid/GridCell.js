@@ -4,8 +4,11 @@ import ExpressionEditor from "../../Common/ExpressionEditor";
 import DraggableHandle from "../../DragDrop/DraggableHandle";
 import Droppable from "../../DragDrop/Droppable";
 import "./GridCell.scss";
+import { GridContext } from "../../Common/Constants";
 
 class GridCell extends PureComponent {
+    static contextType = GridContext;
+
     constructor(props) {
         super(props);
         this.state = { cellData: props.cellData, editMode: false, editedItem: null };
@@ -31,7 +34,7 @@ class GridCell extends PureComponent {
                     {editMode && (
                         <ExpressionEditor
                             className="expression"
-                            expression={editedItem.data}
+                            expression={editedItem.expression || editedItem.data}
                             type={editedItem.itemType}
                             endEdit={this.expressionValueReceived}
                         />
@@ -42,7 +45,8 @@ class GridCell extends PureComponent {
         );
     }
 
-    expressionValueReceived = (val, type, validation) => {
+    expressionValueReceived = (val, type, prop) => {
+        if (prop.isCanceled) { this.endEdit(); return; }
         var { editedItem, cellData } = this.state;
         val = (val || "").trim();
         if (!editedItem && val) {
@@ -178,6 +182,7 @@ class GridCell extends PureComponent {
                         onRemove={this.removeItem}
                         beginEdit={this.beginEdit}
                         endEdit={this.endEdit}
+                        showContext={e => this.showItemContext(e, d, i)}
                     />
                 );
         }
@@ -192,6 +197,24 @@ class GridCell extends PureComponent {
                 </DraggableHandle>
             ))
         );
+    }
+
+    showItemContext = (e, d, i) => {
+        this.context.showCellItemContext(e, i, d, this.menuClicked);
+    }
+
+    menuClicked = (index, data, menu) => {
+        switch (menu) {
+            case "EDIT": this.beginEdit(index); break;
+            case "REMOVE": this.removeItem(index); break;
+            case "PROPS":
+                this.context.builderContext.editExpression(data).then(d => {
+                    var { cellData } = this.props;
+                    cellData[index] = d;
+                    this.dataChanged(cellData, null);
+                });
+                break;
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 /*eslint-disable no-extend-native, no-loop-func*/
 import { clone, cloneArray } from "./HelperFunctions";
 
-var arrayInitFunc = (function() {
+var arrayInitFunc = (function () {
     var arrayFunc = function arrayFunc(array) {
         if (!array) {
             throw { message: "No input received. Expected an array." };
@@ -12,11 +12,11 @@ var arrayInitFunc = (function() {
             source = new Array(source);
         }
 
-        var prototype = function() {
+        var prototype = function () {
             return source;
         };
 
-        prototype.where = function(clause, maxItems) {
+        prototype.where = function (clause, maxItems) {
             var newArray = [];
 
             // The clause was passed in as a Method that return a Boolean
@@ -28,7 +28,7 @@ var arrayInitFunc = (function() {
             return arrayFunc(newArray);
         };
 
-        prototype.findIndex = function(clause, maxItems) {
+        prototype.findIndex = function (clause, maxItems) {
             var newArray = [];
 
             // The clause was passed in as a Method that return a Boolean
@@ -40,7 +40,7 @@ var arrayInitFunc = (function() {
             return newArray;
         };
 
-        prototype.select = function(clause, incNull) {
+        prototype.select = function (clause, incNull) {
             var newArray = [];
 
             // The clause was passed in as a Method that returns a Value
@@ -53,7 +53,7 @@ var arrayInitFunc = (function() {
             return arrayFunc(newArray);
         };
 
-        prototype.addRange = function(items, startIdx = 0) {
+        prototype.addRange = function (items, startIdx = 0) {
             if (items && Array.isArray(items)) {
                 for (var i = 0; i < items.length; i++) {
                     source[startIdx + i] = items[i];
@@ -62,7 +62,7 @@ var arrayInitFunc = (function() {
             return prototype;
         };
 
-        prototype.fillWith = function(defaultValue) {
+        prototype.fillWith = function (defaultValue) {
             var len = source.length;
             while (len--) {
                 source[len] = clone(defaultValue);
@@ -70,27 +70,27 @@ var arrayInitFunc = (function() {
             return prototype;
         };
 
-        prototype.clone = function(deep) {
+        prototype.clone = function (deep) {
             source = cloneArray(source, deep);
             return prototype;
         };
 
-        prototype.toArray = function() {
+        prototype.toArray = function () {
             return source;
         };
 
-        prototype.sortBy = function(clause, desc) {
+        prototype.sortBy = function (clause, desc) {
             return desc ? prototype.orderByDescending(clause) : prototype.orderBy(clause);
         };
 
-        prototype.orderBy = function(clause) {
+        prototype.orderBy = function (clause) {
             var tempArray = [];
             var len = source.length;
             while (len--) {
                 tempArray[len] = source[len];
             }
 
-            source = tempArray.sort(function(a, b) {
+            source = tempArray.sort(function (a, b) {
                 var x = parseClause(clause, a);
                 var y = parseClause(clause, b);
                 return x < y ? -1 : x > y ? 1 : 0;
@@ -99,14 +99,14 @@ var arrayInitFunc = (function() {
             return prototype;
         };
 
-        prototype.orderByDescending = function(clause) {
+        prototype.orderByDescending = function (clause) {
             var tempArray = [];
             var len = source.length;
             while (len--) {
                 tempArray[len] = source[len];
             }
 
-            source = tempArray.sort(function(a, b) {
+            source = tempArray.sort(function (a, b) {
                 var x = parseClause(clause, b);
                 var y = parseClause(clause, a);
                 return x < y ? -1 : x > y ? 1 : 0;
@@ -115,7 +115,7 @@ var arrayInitFunc = (function() {
             return prototype;
         };
 
-        prototype.select = function(clause, incNull) {
+        prototype.select = function (clause, incNull) {
             var newArray = [];
 
             // The clause was passed in as a Method that returns a Value
@@ -129,19 +129,19 @@ var arrayInitFunc = (function() {
             return prototype;
         };
 
-        prototype.removeAt = function(index, count) {
+        prototype.removeAt = function (index, count) {
             if (index < 0) return prototype;
             source.splice(index, count || 1);
             return prototype;
         };
 
-        prototype.removeAll = function(clause) {
+        prototype.removeAll = function (clause) {
             if (typeof clause === "function") {
                 arrayFunc(prototype.findIndex(clause))
                     .orderByDescending()()
                     .forEach(i => source.splice(i, 1));
             } else if (Array.isArray(clause)) {
-                clause.forEach(function(o) {
+                clause.forEach(function (o) {
                     prototype.remove(o);
                 });
             }
@@ -149,7 +149,7 @@ var arrayInitFunc = (function() {
         };
 
         // Array flattening related methods
-        prototype.flattern = function(clause, filter, templ, propPrefix) {
+        prototype.flattern = function (clause, filter, templ, propPrefix) {
             var $this = source;
             var thisLen = $this.length;
             var resultArray = [];
@@ -168,7 +168,7 @@ var arrayInitFunc = (function() {
         };
 
         // ToDo: this function can be renamed as "reduceByKey"
-        prototype.toKeyValuePair = function(clause, filter, singleOnly) {
+        prototype.toKeyValuePair = function (clause, filter, singleOnly) {
             var $this = prototype.groupBy(clause, filter)();
             var result = {};
             for (var i = 0; i < $this.length; i++) {
@@ -178,7 +178,7 @@ var arrayInitFunc = (function() {
             return result;
         };
 
-        prototype.sum = function(clause) {
+        prototype.sum = function (clause) {
             var value = 0;
             var index;
             if (clause) {
@@ -193,13 +193,13 @@ var arrayInitFunc = (function() {
             return value;
         };
 
-        prototype.groupBy = function(clause, filter) {
+        prototype.groupBy = function (clause, filter) {
             var result = [];
             var valObj = {};
             var isClauseString = typeof clause === "string";
             if (isClauseString) {
                 var tmp = clause;
-                clause = function(obj) {
+                clause = function (obj) {
                     return obj[tmp];
                 };
             }
@@ -286,19 +286,6 @@ var arrayInitFunc = (function() {
             return returnRaw ? curItem : [curItem];
         }
 
-        function getObjVal(row, prop) {
-            if (typeof prop === "string") {
-                var split = prop.split(".");
-                var value = row[split[0]];
-                for (var j = 1; value && j < split.length; j++) {
-                    value = value[split[j]];
-                }
-                return value;
-            } else if (typeof prop === "function") {
-                return prop(row);
-            }
-        }
-
         function getColsArr(obj) {
             var cols = Object.keys(obj);
             if (cols.filter(c => c.startsWith("~~")).length > 1) {
@@ -338,7 +325,7 @@ var arrayInitFunc = (function() {
         return prototype;
     };
 
-    arrayFunc.from = function(obj) {
+    arrayFunc.from = function (obj) {
         return arrayFunc(Array.from(obj));
     };
     //arrayFunc.cloneFrom = function (obj, deep) { return arrayFunc(Array.from(obj)); }
@@ -346,6 +333,20 @@ var arrayInitFunc = (function() {
     return arrayFunc;
 })();
 export default arrayInitFunc;
+
+export function getObjVal(row, prop) {
+    if (typeof prop === "string") {
+        var split = prop.split(".");
+        var value = row[split[0]];
+        for (var j = 1; value && j < split.length; j++) {
+            value = value[split[j]];
+        }
+        return value;
+    } else if (typeof prop === "function") {
+        return prop(row);
+    }
+}
+
 /*
 var initializor = function (prototype) {
     var ref = getProtoFunc();

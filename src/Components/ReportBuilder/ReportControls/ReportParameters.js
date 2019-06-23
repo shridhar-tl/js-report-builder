@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { Dialog } from "primereact/dialog";
 import { TabView, TabPanel } from "primereact/tabview";
+import { InputText } from 'primereact/inputtext';
 import { Dropdown } from "primereact/dropdown";
 import ReportControlBase from "./ReportControlBase";
 import Button from "../../Common/Button";
@@ -8,6 +9,8 @@ import DraggableHandle from "../DragDrop/DraggableHandle";
 import "./ReportParameters.scss";
 import SelectDataset from "../Common/SelectDataset";
 import { getParamTypes } from "../../../Common/ReportConfig";
+import { Checkbox } from "primereact/checkbox";
+import InputParameter from "../../Common/InputParameter";
 
 class ReportParameters extends ReportControlBase {
     constructor(props) {
@@ -73,7 +76,7 @@ class EditParameter extends PureComponent {
         super(props);
         var { parameter = {} } = props;
         this.paramTypes = getParamTypes(true);
-        this.state = { parameter: { ...parameter }, showDialog: true };
+        this.state = { parameter: { ...parameter }, paramType: this.paramTypes[parameter.type], showDialog: true };
     }
 
     saveParameter = () => {
@@ -102,6 +105,12 @@ class EditParameter extends PureComponent {
         var { parameter } = this.state;
         parameter[field] = value;
         parameter = { ...parameter };
+
+        if (!parameter.dataset) {
+            delete parameter.displayField;
+            delete parameter.valueField;
+        }
+
         var isParamValid = this.isParamValid(parameter);
         this.setState({ parameter, isParamValid });
     };
@@ -129,13 +138,26 @@ class EditParameter extends PureComponent {
             return false;
         }
 
+        if (param.type === "MASK" && !param.mask) {
+            return false;
+        }
+
+        if (param.dataset && !param.displayField) {
+            return false;
+        }
+
         return true;
     }
 
-    render() {
-        var { showDialog, parameter, isParamValid, noMultiValue } = this.state;
-        var { updateValue, updateFieldValue } = this;
+    resolveDataset = (dsId) => {
+        return Promise.resolve([]);
+        // ToDo: Resolve dataset implementation need to be done
+    }
 
+    render() {
+        var { showDialog, parameter, isParamValid, noMultiValue, paramType } = this.state;
+        var { updateValue, updateFieldValue } = this;
+        var { value: pTypeName, allowedValidations = [] } = paramType || {};
         var footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.hideAddPopup} label="Cancel" />
@@ -153,71 +175,118 @@ class EditParameter extends PureComponent {
                 onHide={this.hideAddPopup}>
                 <TabView>
                     <TabPanel header="General" contentClassName="no-padding" className="no-padding">
-                        <div>
-                            <div>
+                        <div className="field-collection">
+                            <div className="mandatory">
                                 <label>Name:</label>
-                                <input type="text" field="name" value={parameter.name} onChange={updateValue} />
+                                <InputText keyfilter="alphanum" field="name" value={parameter.name} onChange={updateValue} />
                             </div>
-                            <div>
+                            <div className="mandatory">
                                 <label>Display text:</label>
-                                <input type="text" field="display" value={parameter.display} onChange={updateValue} />
+                                <InputText field="display" value={parameter.display} onChange={updateValue} />
                             </div>
-                            <div>
+                            <div className="mandatory">
                                 <label>Param type:</label>
                                 <Dropdown
                                     value={parameter.type}
                                     options={getParamTypes()}
                                     onChange={e => {
-                                        var selType = this.paramTypes[e.value];
-                                        this.setState({ noMultiValue: selType.supportMultiValue === false });
+                                        var paramType = this.paramTypes[e.value];
+                                        this.setState({
+                                            paramType, noMultiValue: paramType.supportMultiValue === false,
+                                            defaultValue: null, mask: null, slotChar: null, minVal: null, maxVal: null
+                                        });
                                         updateFieldValue("type", e.value);
                                     }}
                                     placeholder="Select a Parameter type"
                                 />
                             </div>
                             <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={parameter.allowNulls}
-                                        field="allowNulls"
-                                        onChange={updateValue}
-                                    />
-                                    This field is not mandatory
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        disabled={noMultiValue}
-                                        checked={parameter.allowMultiple}
-                                        field="allowMultiple"
-                                        onChange={updateValue}
-                                    />
-                                    This is a multi value field
-                                </label>
+                                <Checkbox
+                                    inputId="cbAllowMultiple"
+                                    disabled={noMultiValue}
+                                    checked={parameter.allowMultiple}
+                                    onChange={e => updateFieldValue("allowMultiple", e.checked)}
+                                />
+                                <label htmlFor="cbAllowMultiple"><span style={{ marginLeft: '3px' }}>This is a multi value field</span></label>
                             </div>
                         </div>
                     </TabPanel>
                     <TabPanel header="Available values">
-                        <div>
-                            <label>Dataset</label>
-                            <SelectDataset value={parameter.dataset} onChange={ds => updateFieldValue("dataset", ds)} />
-                        </div>
-                        <div>
-                            <label>Display field</label>
-                            <input type="text" mod={parameter.displayField} />
-                        </div>
-                        <div>
-                            <label>Value field</label>
-                            <input type="text" ngModel={parameter.valueField} />
+                        <div className="field-collection">
+                            <div>
+                                <label>Dataset</label>
+                                <SelectDataset value={parameter.dataset} onChange={ds => { delete parameter.defaultValue; updateFieldValue("dataset", ds); }} />
+                            </div>
+                            <div className={parameter.dataset ? "mandatory" : ""}>
+                                <label>Display field</label>
+                                <InputText value={parameter.displayField} disabled={!parameter.dataset} field="displayField" onChange={updateValue} />
+                            </div>
+                            <div>
+                                <label>Value field</label>
+                                <InputText value={parameter.valueField} disabled={!parameter.dataset} field="valueField" onChange={updateValue} />
+                            </div>
+                            <div>
+                                <label>Default value</label>
+                                <InputParameter definition={parameter} value={parameter.defaultValue} resolveDataset={this.resolveDataset}
+                                    onChange={(d, val) => updateFieldValue("defaultValue", val)} />
+                            </div>
                         </div>
                     </TabPanel>
-                    <TabPanel header="Default values">This option is not yet implemented.</TabPanel>
-                    <TabPanel header="Validations">This option is not yet implemented.</TabPanel>
-                </TabView>
-            </Dialog>
+                    <TabPanel header="Validations">
+                        <div className="field-collection">
+                            <div>
+                                <Checkbox
+                                    inputId="cbAllowNulls"
+                                    checked={parameter.allowNulls}
+                                    onChange={e => updateFieldValue("allowNulls", e.checked)}
+                                />
+                                <label htmlFor="cbAllowNulls">
+                                    <span style={{ marginLeft: '3px' }}>This field is not mandatory</span>
+                                </label>
+                            </div>
+                            {pTypeName === "MASK" && <div className="mandatory">
+                                <label>Mask template</label>
+                                <InputParameter definition={{ type: "TXT" }} value={parameter.mask}
+                                    onChange={(d, val) => updateFieldValue("mask", val)} />
+                            </div>}
+                            {pTypeName === "MASK" && <div>
+                                <label>Slot template</label>
+                                <InputParameter definition={{ type: "TXT" }} value={parameter.slotChar}
+                                    onChange={(d, val) => updateFieldValue("slotChar", val)} />
+                            </div>}
+                            {allowedValidations.indexOf("regex") >= 0 && <div>
+                                <label>Regular expression</label>
+                                <InputParameter definition={{ type: "TXT" }} value={parameter.regex}
+                                    onChange={(d, val) => updateFieldValue("regex", val)} />
+                            </div>}
+                            {allowedValidations.indexOf("keyfilter") >= 0 && <div>
+                                <label>Key filter (Regular expression)</label>
+                                <InputParameter definition={{ type: "TXT" }} value={parameter.keyfilter}
+                                    onChange={(d, val) => updateFieldValue("keyfilter", val)} />
+                            </div>}
+                            {(allowedValidations.indexOf("length") >= 0 || allowedValidations.indexOf("range") >= 0) && <div>
+                                <label>Range of value (length / count)</label>
+                                <div>
+                                    <div className="pull-left" style={{ width: '10%' }}>
+                                        <InputParameter definition={{ type: "INT" }} value={parameter.minVal}
+                                            onChange={(d, val) => updateFieldValue("minVal", val)} /></div>
+                                    <div className="pull-left" style={{ padding: '5px' }}>-</div>
+                                    <div className="pull-left" style={{ width: '10%' }}>
+                                        <InputParameter definition={{ type: "INT" }} value={parameter.maxVal}
+                                            onChange={(d, val) => updateFieldValue("maxVal", val)} />
+                                    </div>
+                                </div>
+                            </div>}
+                            {allowedValidations.indexOf("daterange") >= 0 && <div>
+                                <label>Date ranging between</label>
+                                <InputParameter definition={{ type: "DR" }} value={parameter.maxVal && { fromDate: parameter.minVal, toDate: parameter.maxVal }}
+                                    onChange={(d, val) => { updateFieldValue("minVal", val.fromDate); updateFieldValue("maxVal", val.toDate); }} />
+                            </div>}
+                            <div style={{ clear: 'both' }}></div>
+                        </div>
+                    </TabPanel>
+                </TabView >
+            </Dialog >
         );
     }
 }

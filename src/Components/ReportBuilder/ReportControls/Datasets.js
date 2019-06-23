@@ -99,18 +99,24 @@ class Datasets extends PureComponent {
 
         return (
             <div className="set-list">
-                {datasetList.map(d => (
-                    <div key={d} className="set">
-                        <div className="title">
-                            <div className="pull-left">{datasets[d].name}</div>
-                            <div className="pull-right">
-                                <Button icon="fa fa-edit" type="default" onClick={() => this.editDataset(d)} />
-                                <Button icon="fa fa-times" type="danger" onClick={() => this.deleteDataset(d)} />
+                {datasetList.map(d => {
+                    var ds = datasets[d];
+                    var { definition, name, type } = ds;
+                    var { label, allowEdit } = this.datasetTypes[type];
+
+                    return (
+                        <div key={d} className="set">
+                            <div className="title">
+                                <div className="pull-left" title={label}>{name}</div>
+                                <div className="pull-right">
+                                    {allowEdit !== false && <Button icon="fa fa-edit" type="default" onClick={() => this.editDataset(d)} />}
+                                    <Button icon="fa fa-times" type="danger" onClick={() => this.deleteDataset(d)} />
+                                </div>
                             </div>
+                            <div>{definition && <JsonTree items={definition} />}</div>
                         </div>
-                        <div>{datasets[d].definition && <JsonTree items={datasets[d].definition} />}</div>
-                    </div>
-                ))}
+                    )
+                })}
                 <div style={{ clear: "both" }} />
 
                 {showAddDialog && (!editedDataset || !editedDataset.type) && (
@@ -192,8 +198,8 @@ class DatasetType extends PureComponent {
                 style={{ width: "50vw" }}
                 modal={true}
                 onHide={this.hideAddPopup}>
-                <div>
-                    <div>
+                <div className="padding-15">
+                    <div className="padding-v-15">
                         <label>Dataset name:</label>
                         <input type="text" field="name" value={name} onChange={this.updateValue} />
                     </div>

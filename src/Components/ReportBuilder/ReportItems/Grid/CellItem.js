@@ -3,7 +3,7 @@ import "./CellItem.scss";
 
 class CellItem extends PureComponent {
     render() {
-        var { text, index, itemData } = this.props;
+        var { text, index, itemData, showContext } = this.props;
         var { style } = itemData;
         return (
             <div className="grid-cell-item">
@@ -22,6 +22,7 @@ class CellItem extends PureComponent {
                             e.selections.push({ ctl: this, element: e.currentTarget, data: itemData, index: index });
                             //this.props.selected(index);
                         }}
+                        onContextMenu={showContext}
                         onDoubleClick={() => this.props.beginEdit(index)}>
                         {text || "<<expr>>"}
                     </span>

@@ -52,32 +52,29 @@ class ExpressionList extends PureComponent {
 
                 {!isNewRow && (
                     <td>
-                        <Button type="danger" icon="fa fa-trash" onClick={() => this.removeItem(index)} />
+                        <Button type="danger" icon="fa fa-trash" onClick={() => this.setValue(index)} />
                     </td>
                 )}
             </tr>
         );
     }
 
-    removeItem(index) {
-        var { items } = this.state;
-        items.splice(index, 1);
-        items = [...items];
-        this.setState({ items });
-    }
-
     setValue(index, item) {
         var { items } = this.state;
 
-        if (index) {
-            items[index] = item;
+        if (index != null) {
+            if (item) {
+                items[index] = item;
+            }
+            else {
+                items.splice(index, 1);
+            }
             items = [...items];
 
             this.setState({ items });
+            this.props.onChange(items);
         }
     }
-
-    removeExpression(index) {}
 
     render() {
         var { items } = this.state;

@@ -6,3 +6,5 @@ export const elementTypes = {
 };
 
 export const BuilderContext = createContext({});
+
+export const GridContext = createContext({});

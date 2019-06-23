@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Developers",
+        "users": [
+            {
+                "self": "http://www.example.com/jira/rest/api/2/user?username=shylander",
+                "name": "shylander",
+                "displayName": "Shylander"
+            },
+            {
+                "self": "http://www.example.com/jira/rest/api/2/user?username=shridhar",
+                "name": "shridhar",
+                "displayName": "Shridhar TL"
+            },
+            {
+                "self": "http://www.example.com/jira/rest/api/2/user?username=aakash",
+                "name": "aakash",
+                "displayName": "Aakash Kumar"
+            }
+        ]
+    }
+]

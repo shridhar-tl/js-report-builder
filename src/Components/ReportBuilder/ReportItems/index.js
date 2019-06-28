@@ -1,6 +1,10 @@
 import HorizontalLine from "./HorizontalLine";
-import ImageItem from "./ImageItem";
+import ImageItem from "./Image/ImageItem";
 import Grid from "./Grid/Grid";
+import ChartItem from "./Chart/ChartItem";
+import ContainerItem from "./Container/ContainerItem";
+import PanelContainer from "./Container/PanelContainer";
+import TabViewItem from "./Container/TabViewItem";
 
 export const defaultComponents = [
     { type: 'TBL', icon: 'fa fa-table', text: 'Table', control: Grid },
@@ -8,11 +12,11 @@ export const defaultComponents = [
         type: 'IMG', icon: 'fa fa-image', text: 'Image', control: ImageItem,
         target: ['rpt-items', 'rpt-cntr', 'table-cell']
     },
-    { type: 'TAB', icon: 'fa fa-list-alt', text: 'Tab view' },
+    { type: 'TAB', icon: 'fa fa-list-alt', text: 'Tab view', control: TabViewItem },
     { type: 'TPG', icon: 'fa fa-square', text: 'Tab page' },
-    { type: 'CHT', icon: 'fa fa-bar-chart', text: 'Chart' },
-    { type: 'PNL', icon: 'fa fa-object-group', text: 'Container' },
-    { type: 'CPL', icon: 'fa fa-window-maximize', text: 'Collapsible panel' },
+    { type: 'CHT', icon: 'fa fa-bar-chart', text: 'Chart', control: ChartItem },
+    { type: 'PNL', icon: 'fa fa-object-group', text: 'Container', control: ContainerItem },
+    { type: 'CPL', icon: 'fa fa-window-maximize', text: 'Panel', control: PanelContainer },
     { type: 'HLN', icon: 'fa fa-window-minimize', text: 'Horizontal line', control: HorizontalLine },
     { type: 'MNU', icon: 'fa fa-th-list', text: 'Menu Items' }
 ];

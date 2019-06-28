@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Droppable from './Droppable'
 import { DRAG_TYPE_FILTER, DRAG_TYPE_ACTION } from '../constants'
 
-class DroppableArea extends Component {
+class DroppableArea extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { filters: props.filters, actions: props.actions };

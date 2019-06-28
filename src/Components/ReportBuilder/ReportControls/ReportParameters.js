@@ -51,11 +51,11 @@ class ReportParameters extends ReportControlBase {
     render() {
         var { showAddDialog, parameters, editedParam } = this.state;
         return (
-            <div>
+            <div className="params-list">
                 {parameters.map((param, index) => (
                     <DraggableHandle itemType="RPT_PARM" item={param} key={param.name}>
-                        <div>
-                            <span>{param.name}</span>
+                        <div className="param">
+                            <span title={param.display}>{param.name}</span>
                             <i className="fa fa-edit" onClick={() => this.editClicked(index)} title="Edit parameter properties" />
                             <i className="fa fa-times" onClick={() => this.removeParameter(index)} title="Remove parameter" />
                         </div>

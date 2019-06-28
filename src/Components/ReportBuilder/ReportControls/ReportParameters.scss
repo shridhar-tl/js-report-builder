@@ -1,6 +1,20 @@
-.no-padding {
-}
-
 .p-dialog .p-dialog-content {
     padding: 0px;
+}
+
+div.params-list {
+    div.param {
+        padding: 3px 2px;
+
+        i {
+            float: right;
+            margin: 2px;
+            font-size: 16px;
+            cursor: pointer;
+
+            &.fa-times {
+                color: red;
+            }
+        }
+    }
 }

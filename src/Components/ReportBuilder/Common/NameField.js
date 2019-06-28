@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { InputText } from 'primereact/inputtext';
 
-class NameField extends Component {
+class NameField extends PureComponent {
+    onChange = (e) => {
+        var value = e.currentTarget.value;
+        this.props.onChange(value);
+    }
+
     render() {
-        return (
-            <div>
-                
-            </div>
-        );
+        return <InputText keyfilter="alphanum" value={this.props.value} onChange={this.onChange} />
     }
 }
 

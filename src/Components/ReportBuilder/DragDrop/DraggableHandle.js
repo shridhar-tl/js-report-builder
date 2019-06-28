@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 
@@ -34,7 +34,7 @@ function collect(connect, monitor) {
   }
 }
 
-class DraggableHandle extends Component {
+class DraggableHandle extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {};

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./App.scss";
 import { ReportBuilder, ReportViewer, initReportBuilder } from "./lib";
 import "font-awesome/css/font-awesome.min.css";
@@ -96,10 +96,10 @@ var defaultConfig = {
     }
 };
 
-class App extends Component {
+class App extends PureComponent {
     constructor() {
         super();
-        this.state = { preview: false, reportDefinition: null && userDaywiseReport };
+        this.state = { preview: false, reportDefinition: userDaywiseReport };
     }
 
     componentWillMount() {

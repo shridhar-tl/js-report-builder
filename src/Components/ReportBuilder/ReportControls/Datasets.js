@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import Button from "../../Common/Button";
 import { Dialog } from "primereact/dialog";
+import { RadioButton } from 'primereact/radiobutton';
 import JsonTree from "../../Common/JsonTree";
 import array from "../../../Common/linq";
 import "./Dataset.scss";
@@ -11,6 +12,7 @@ import ExpressionList from "../Common/ExpressionList";
 import ExpressionEditor from "../Common/ExpressionEditor";
 import { getDatasetTypes } from "../../../Common/ReportConfig";
 import { getDatasetDefinition } from "../../../Common/DatasetTypes";
+import NameField from "../Common/NameField";
 
 class Datasets extends PureComponent {
     constructor(props) {
@@ -109,8 +111,8 @@ class Datasets extends PureComponent {
                             <div className="title">
                                 <div className="pull-left" title={label}>{name}</div>
                                 <div className="pull-right">
-                                    {allowEdit !== false && <Button icon="fa fa-edit" type="default" onClick={() => this.editDataset(d)} />}
-                                    <Button icon="fa fa-times" type="danger" onClick={() => this.deleteDataset(d)} />
+                                    {allowEdit !== false && <Button icon="fa fa-edit" type="default" title="Edit this dataset" onClick={() => this.editDataset(d)} />}
+                                    <Button icon="fa fa-times" type="danger" onClick={() => this.deleteDataset(d)} title="Remove this dataset" />
                                 </div>
                             </div>
                             <div>{definition && <JsonTree items={definition} />}</div>
@@ -199,16 +201,15 @@ class DatasetType extends PureComponent {
                 modal={true}
                 onHide={this.hideAddPopup}>
                 <div className="padding-15">
-                    <div className="padding-v-15">
+                    <div className="padding-v-10">
                         <label>Dataset name:</label>
-                        <input type="text" field="name" value={name} onChange={this.updateValue} />
+                        <NameField field="name" onChange={val => this.updateFieldValue("name", val)} />
                     </div>
                     {this.datasetTypes.map((ds, i) => (
-                        <div map={i}>
-                            <label>
-                                <input type="radio" name="datasetType" value={ds.type} field="type" disabled={ds.disabled} onChange={this.updateValue} />
-                                {ds.label}
-                            </label>
+                        <div key={i} className="padding-5">
+                            <RadioButton inputId={"rbDSType_" + ds.type} value={ds.type} name="datasetType" disabled={ds.disabled}
+                                onChange={e => this.updateFieldValue("type", e.value)} checked={this.state.type === ds.type} />
+                            <label htmlFor={"rbDSType_" + ds.type}>{ds.label}</label>
                         </div>
                     ))}
                 </div>

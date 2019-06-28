@@ -9,12 +9,31 @@ class ReportBase extends PureComponent {
             buildMyFunctions: (script) => {
                 var { data } = this.state;
                 var { userScript } = data;
+
                 if (script) {
                     userScript = script;
                 }
+
                 if (userScript) {
+                    var {
+                        commonFunctions,
+                        contextProps: { getDataset: datasets } = {},
+                        state: { parameterValues: parameters, reportState }
+                    } = this;
+
                     var funcScript = userScript + "\n return this;";
-                    var funcObj = compileExpression(funcScript, { noWrap: true, $this: {} });
+
+                    var funcObj = compileExpression(funcScript, {
+                        noWrap: true, $this: {},
+                        commonFunctions, datasets, parameters,
+                        reportState,
+                        setReportState: (object) => {
+                            var { reportState } = this.state;
+                            var newState = { ...reportState, ...object };
+                            this.setState({ reportState: newState });
+                        }
+                    });
+
                     data.myFunctions = Object.keys(funcObj);
                     data.userScript = userScript;
                     this.setState({ data: { ...data } });

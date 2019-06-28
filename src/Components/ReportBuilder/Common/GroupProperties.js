@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import ExpressionEditor from "./ExpressionEditor";
 import Button from "../../Common/Button";
 import { Dialog } from "primereact/dialog";
@@ -8,7 +8,7 @@ import SelectDataset from "./SelectDataset";
 import ExpressionList from "./ExpressionList";
 import array from "../../../Common/linq";
 
-class GroupProperties extends Component {
+class GroupProperties extends PureComponent {
     constructor(props) {
         super(props);
         this.state = { showDialog: true, group: { ...props.group }, isParamValid: this.isModelValid(props.group) };
@@ -77,7 +77,7 @@ class GroupProperties extends Component {
                 <TabView>
                     <TabPanel header="General">
                         <div>
-                            <label>Name:</label>
+                            <label>Name</label>
                             <InputText
                                 keyfilter="alphanum"
                                 value={group.name}
@@ -86,7 +86,7 @@ class GroupProperties extends Component {
                             />
                         </div>
                         <div>
-                            <label>Dataset:</label>
+                            <label>Dataset</label>
                             <SelectDataset
                                 includeExprDS={true}
                                 value={group.dataset}
@@ -95,8 +95,8 @@ class GroupProperties extends Component {
                         </div>
                         {group.dataset === -1 && (
                             <div>
-                                <label>Dataset expression:</label>
-                                <ExpressionEditor
+                                <label>Dataset expression</label>
+                                <ExpressionEditor isStrict={true}
                                     expression={group.expression}
                                     onChange={value => {
                                         this.setValue("expression", value);
@@ -105,16 +105,16 @@ class GroupProperties extends Component {
                             </div>
                         )}
                         <div>
-                            <label>Filter dataset:</label>
+                            <label>Filter dataset</label>
                             <ExpressionEditor
-                                expression={group.filter}
+                                expression={group.filter} isStrict={true}
                                 onChange={value => {
                                     this.setValue("filter", value);
                                 }}
                             />
                         </div>
                         <div>
-                            <label>Sort dataset by:</label>
+                            <label>Sort dataset by</label>
                             <ExpressionEditor
                                 expression={group.sortBy}
                                 onChange={value => {
@@ -123,7 +123,16 @@ class GroupProperties extends Component {
                             />
                         </div>
                         <div>
-                            <label>Group by expression:</label>
+                            <label>Visibility (hide item if expression evaluates to true)</label>
+                            <ExpressionEditor
+                                expression={group.hidden}
+                                onChange={value => {
+                                    this.setValue("hidden", value);
+                                }}
+                            />
+                        </div>
+                        <div>
+                            <label>Group by expression</label>
                             <ExpressionList
                                 valueField="expr"
                                 value={group.keys}

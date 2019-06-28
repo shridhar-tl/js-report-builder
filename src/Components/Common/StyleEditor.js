@@ -1,11 +1,15 @@
 import React, { PureComponent } from "react";
 
-const excludedCSSProps = [];
+const excludedCSSProps = ["resize", "position", "-webkit", "object", "offset", "orphans", "empty", "widows", "will", "zoom", "backface", "column", "grid", "perspective", "shape", "stroke", "paint"];
 
 class StyleEditor extends PureComponent {
     constructor(props) {
         super(props);
         this.state = { element: props.element, styleList: [], elementData: props.elementData };
+    }
+
+    componentWillMount() {
+        this.setStyleProps(this.props.element);
     }
 
     UNSAFE_componentWillReceiveProps(newProps) {
@@ -30,7 +34,7 @@ class StyleEditor extends PureComponent {
         var styleList = [];
         var i = 0;
         while (!!(propName = properties[i++])) {
-            if (~excludedCSSProps.indexOf(propName)) { continue; }
+            if (propName.length <= 2 || excludedCSSProps.some(t => propName.indexOf(t) === 0)) { continue; }
 
             var propValue = properties[propName];
             var jsPropName = this.getJSPropName(propName);

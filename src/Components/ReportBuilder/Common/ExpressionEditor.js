@@ -76,7 +76,7 @@ class ExpressionEditor extends PureComponent {
     };
 
     render() {
-        var { disabled, placeholder, style } = this.props;
+        var { disabled, placeholder, style, className } = this.props;
         var { expression, type } = this.state;
 
         var useTextarea = true; // Revisit: may need to use "multiline" property instead
@@ -93,7 +93,7 @@ class ExpressionEditor extends PureComponent {
                         disabled={disabled}
                         placeholder={placeholder}
                         value={expression || ""}
-                        className={this.props.className}
+                        className={className}
                         ref={input => {
                             this.inputField = input;
                         }}
@@ -108,7 +108,7 @@ class ExpressionEditor extends PureComponent {
                             placeholder={placeholder}
                             type="text"
                             value={expression || ""}
-                            className={this.props.className}
+                            className={className}
                             ref={f => {
                                 this.inputField = f;
                             }}

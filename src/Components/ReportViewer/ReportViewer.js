@@ -46,7 +46,10 @@ class ReportViewer extends ReportBase {
                 contextProps: { getDataset: datasets },
                 state: { parameterValues: parameters }
             } = this;
-            return compileGroup(group, { commonFunctions, myFunctions, datasets, parameters });
+            return compileGroup(group, {
+                commonFunctions, myFunctions, datasets, parameters,
+                reportState: this.state.reportState
+            });
         },
         compileExpression: expr => {
             var {
@@ -55,7 +58,9 @@ class ReportViewer extends ReportBase {
                 contextProps: { getDataset: datasets },
                 state: { parameterValues: parameters }
             } = this;
-            return compileExpression(expr, { commonFunctions, myFunctions, datasets, parameters });
+            return compileExpression(expr, {
+                commonFunctions, myFunctions, datasets, parameters
+            });
         }
     };
 
@@ -67,7 +72,6 @@ class ReportViewer extends ReportBase {
     render() {
         var { showParameters, parameterValues, dataReady } = this.state;
         var { definition } = this;
-        //var { } = definition;
 
         return (
             <ViewerContext.Provider value={this.contextProps}>

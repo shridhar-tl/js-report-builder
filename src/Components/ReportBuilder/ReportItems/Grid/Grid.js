@@ -22,6 +22,8 @@ class Grid extends ReportItemBase {
         };
     }
     componentWillMount() {
+        if (!this.props.data) { this.props.onChange(this.state.data); }
+
         this.sharedProps = {
             builderContext: this.context,
             itemSelected: (e, d, itm) => {
@@ -480,7 +482,6 @@ class Grid extends ReportItemBase {
 
     updateRows = (updated, index, field) => {
         var { data } = this.state;
-
         if (!Array.isArray(updated)) {
             // When group is updated
             var fields = data[field];

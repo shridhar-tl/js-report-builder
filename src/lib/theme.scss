@@ -49,9 +49,27 @@ body {
     .padding-15 {
         padding: 15px;
     }
+
     .padding-v-15 {
         padding-top: 15px;
         padding-bottom: 15px;
+    }
+
+    .padding-v-10 {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .padding-5 {
+        padding: 5px;
+    }
+
+    .padding-l-5 {
+        padding-left: 5px;
+    }
+
+    .p-radiobutton {
+        margin-right: 8px !important;
     }
 
     /*.p-dialog {

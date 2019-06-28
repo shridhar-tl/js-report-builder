@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./ReportDisplay.scss";
 import Droppable from "../DragDrop/Droppable";
 import { componentsMap } from "../ReportItems/index";
 import ReportItemBase from "../ReportItems/ReportItemBase";
 
-class ReportDisplay extends Component {
+class ReportDisplay extends PureComponent {
     constructor(props) {
         super();
         this.state = { addedItems: props.items };
@@ -36,19 +36,15 @@ class ReportDisplay extends Component {
 
         if (!Ctl) { Ctl = ReportItemBase; }
 
-        if (item.attrs) {
-            return <Ctl key={index} index={index} onItemRemoved={this.onItemRemoved} {...item.attrs} />;
-        } else {
-            return (
-                <Ctl
-                    key={index}
-                    index={index}
-                    onItemRemoved={this.onItemRemoved}
-                    data={item.data}
-                    onChange={d => this.onChanged(d, index)}
-                />
-            );
-        }
+        return (
+            <Ctl
+                key={index}
+                index={index}
+                onItemRemoved={this.onItemRemoved}
+                data={item.data}
+                onChange={d => this.onChanged(d, index)}
+            />
+        );
     };
 
     render() {

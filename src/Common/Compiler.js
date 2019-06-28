@@ -79,7 +79,7 @@ export function compileExpression(expression, props) {
                 ";}";
         }
 
-        exprToCompile = "'use strict'; return function(CommonFunctions,MyFunctions,Parameters,Datasets, array, getObjVal) { " + exprToCompile + " }";
+        exprToCompile = "'use strict'; return function(CommonFunctions,MyFunctions,Parameters,Datasets,array,getObjVal,ReportState,setReportState) { " + exprToCompile + " }";
 
         var func = Function(
             "window",
@@ -127,11 +127,11 @@ export function compileExpression(expression, props) {
 
         var result = func();
         if (props) {
-            var { commonFunctions, myFunctions, parameters, datasets, $this } = props;
+            var { commonFunctions, myFunctions, parameters, datasets, $this, reportState, setReportState } = props;
             if ($this) {
                 result = result.bind($this);
             }
-            result = result(commonFunctions, myFunctions, parameters, datasets, array, getObjVal);
+            result = result(commonFunctions, myFunctions, parameters, datasets, array, getObjVal, reportState, setReportState);
         }
         return result;
     } catch (err) {

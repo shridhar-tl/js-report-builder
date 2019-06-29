@@ -169,7 +169,7 @@ class GridCell extends PureComponent {
     getItemHtml = (d, i) => {
         switch (d.itemType) {
             case "IMG":
-                return <img key={i} style={d.style} src={d.src} alt={d.altText} onClick={e => this.itemSelected(e, i, d)} />;
+                return <img key={i} style={d.style} onClick={e => this.itemSelected(e, i, d)} onContextMenu={e => this.showItemContext(e, d, i)} />;
 
             default:
                 return (
@@ -212,7 +212,7 @@ class GridCell extends PureComponent {
                     var { cellData } = this.props;
                     cellData[index] = d;
                     this.dataChanged(cellData, null);
-                });
+                }, () => { /* No need to handle this. This is to avoid unhandled rejection error */ });
                 break;
             default: break;
         }

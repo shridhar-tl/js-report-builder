@@ -13,7 +13,7 @@ class MenuProperties extends PureComponent {
         var { definition } = props;
         definition = { ...definition };
         definition.items = definition.items.map(item => { return { ...item }; });
-        this.state = { definition: { ...definition }, showDialog: true };
+        this.state = { definition, showDialog: true };
     }
 
     hidePopup = () => {

@@ -425,12 +425,13 @@ class Grid extends ReportItemBase {
     };
 
     CellItemContext = () => {
-        var { contextData: { index, data, menuClicked } = {} } = this.state;
+        var { contextData: { index, data = {}, menuClicked } = {} } = this.state;
 
         var menuData = [
             {
                 label: "Edit item",
                 icon: "fa fa-edit",
+                disabled: data.itemType === "IMG",
                 command: () => menuClicked(index, data, "EDIT")
 
             },

@@ -19,7 +19,8 @@ export const defaultComponents = [
     { type: 'CPL', icon: 'fa fa-window-maximize', text: 'Panel', control: PanelContainer },
     { type: 'HLN', icon: 'fa fa-window-minimize', text: 'Horizontal line', control: HorizontalLine },
     { type: 'MNU', icon: 'fa fa-th-list', text: 'Menu items', control: MenuItems },
-    { type: 'TXT', icon: 'fa fa-font', text: 'Text item' },
+    // { type: 'TXT', icon: 'fa fa-font', text: 'Text item' }, //ToDo: need to find appropriate approach
+    { type: 'RPT', icon: 'fa fa-font', text: 'Sub report' }
 ];
 
 export const componentsMap = defaultComponents.reduce((obj, cur, i, src) => { obj[cur.type] = cur; return obj; }, {});

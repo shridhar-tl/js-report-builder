@@ -1,36 +1,40 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
 import BaseContainer from './BaseContainer';
+import TabViewProperties from './TabViewProperties';
 
 class TabViewItem extends BaseContainer {
     constructor(props) {
         super(props);
         var { data } = props;
+
+        if (!data) {
+            data = {};
+            this.definition = data;
+        }
+
         var { items = [
-            { items: [], header: "Tab Page 1" },
-            { items: [], header: "Tab Page 2" },
-            { items: [], header: "Tab Page 3" }
-        ] } = data || {};
+            { items: [], header: "Sheet 1" },
+            { items: [], header: "Sheet 2" }
+        ] } = data;
+        data.items = items;
+
         this.state = { addedItems: items };
+    }
+
+    componentWillMount() {
+        if (this.definition) {
+            this.onChange(this.definition);
+        }
     }
 
     itemChanged = (index, newItem) => {
         var { addedItems } = this.state;
         addedItems[index] = newItem;
-        this.onChange(addedItems);
+        this.itemsChanged(addedItems);
     }
 
-    itemAdded = (item) => {
-        if (item.type === "TPG") {
-            var { addedItems } = this.state;
-            var curIdx = addedItems.length;
-            var newItem = { items: [], header: "Tab Page " + (curIdx + 1) };
-            addedItems.push(newItem);
-            this.itemChanged(curIdx, newItem);
-        }
-    }
-
-    onChange = (addedItems) => {
+    itemsChanged = (addedItems) => {
         var { data = { items: addedItems } } = this.props;
         addedItems = [...addedItems];
         data.items = addedItems;
@@ -38,22 +42,30 @@ class TabViewItem extends BaseContainer {
         this.props.onChange(data);
     }
 
+    onChange = (data) => {
+        this.itemsChanged(data.items);
+        this.hideProperties();
+    }
+
     onItemRemoved = (index) => {
         var { addedItems } = this.state;
         addedItems.splice(index, 1);
-        this.onChange(addedItems);
+        this.itemsChanged(addedItems);
     }
 
     render() {
-        var { addedItems } = this.state;
+        var { addedItems, showPropsDialog } = this.state;
 
         return super.renderBase(
-            <TabView>
-                {addedItems.map((d, i) => (
-                    <TabPanel header={d.header}>
-                        <BaseContainer data={d} onChange={c => this.itemChanged(i, c)} onUnknownItemAdded={this.itemAdded} onItemRemoved={this.onItemRemoved} />
-                    </TabPanel>))}
-            </TabView>
+            <Fragment>
+                <TabView>
+                    {addedItems.map((d, i) => (
+                        <TabPanel header={d.header} key={d._uniqueId}>
+                            <BaseContainer data={d} onChange={c => this.itemChanged(i, c)} onItemRemoved={this.onItemRemoved} />
+                        </TabPanel>))}
+                </TabView>
+                {showPropsDialog && <TabViewProperties definition={this.props.data} onHide={this.hideProperties} onChange={this.onChange} />}
+            </Fragment>
         );
     }
 }

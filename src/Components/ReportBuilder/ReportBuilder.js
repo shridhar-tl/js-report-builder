@@ -49,7 +49,6 @@ class ReportBuilder extends ReportBase {
                 }
                 return list;
             },
-
             editExpression: (item) => {
                 return new Promise((resolve, reject) => {
                     this.setState({ expressionProps: { item, resolve, reject } });

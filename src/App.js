@@ -92,7 +92,23 @@ var defaultConfig = {
         getJiraIssueUrl: { value: function (jiraIssueKey) { } },
         getUserProfileUrl: { value: function (userName) { } },
         getTicketDetails: { value: function (ticketsList, fields) { } },
-        executeJQL: { value: function (jql, fields) { } }
+        executeJQL: { value: function (jql, fields) { } },
+        bookmarkTicket: { value: function (jiraIssueKey) { } },
+        addWorklog: {
+            value: function (jiraIssueKey, defaultValues) {
+                // date, comment, hours
+            }
+        },
+        editWorklog: {
+            value: function (jiraIssueKey, defaultValues) {
+                // date, comment, hours
+            }
+        },
+        saveAsFile: {
+            value: function (content, filename) {
+                // content can be string or byte array
+            }
+        }
     }
 };
 

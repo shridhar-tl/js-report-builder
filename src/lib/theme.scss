@@ -39,7 +39,7 @@ body {
         }
     }
     div.mandatory > label:before,
-    label.mandatory {
+    label.mandatory:before {
         content: "*";
         color: red;
         font-weight: 900;

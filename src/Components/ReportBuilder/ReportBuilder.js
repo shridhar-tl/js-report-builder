@@ -15,6 +15,7 @@ import { BuilderContext } from "./Common/Constants";
 import ExpressionEditor from "./Common/ExpressionEditor";
 import ExpressionList from "./Common/ExpressionList";
 import { getDefaultRptDefinition } from "../../Common/ReportConfig";
+import ImageProperties from "./ReportItems/Image/ImageProperties";
 
 class ReportBuilder extends ReportBase {
     constructor(props) {
@@ -49,9 +50,9 @@ class ReportBuilder extends ReportBase {
                 }
                 return list;
             },
-            editExpression: (item) => {
-                return new Promise((resolve, reject) => {
-                    this.setState({ expressionProps: { item, resolve, reject } });
+            editExpression: (definition) => {
+                return new Promise((onChange, onHide) => {
+                    this.setState({ expressionProps: { definition, isImage: definition.itemType === "IMG", onChange, onHide } });
                 }).finally(() => { this.setState({ expressionProps: null }) });
             },
             getDataset: id => this.state.data.datasets[id],
@@ -111,7 +112,8 @@ class ReportBuilder extends ReportBase {
                         />
                     </div>
                 </div>
-                {expressionProps && <ItemPropertiesPopup {...expressionProps} />}
+                {expressionProps && !expressionProps.isImage && <ItemPropertiesPopup {...expressionProps} />}
+                {expressionProps && expressionProps.isImage && <ImageProperties {...expressionProps} />}
             </BuilderContext.Provider>
         );
     }
@@ -122,19 +124,19 @@ export default DragDropContext(HTML5Backend)(ReportBuilder);
 class ItemPropertiesPopup extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = { showDialog: true, item: { ...props.item } };
+        this.state = { showDialog: true, item: { ...props.definition } };
     }
 
     hidePopup = () => {
-        var { reject } = this.props;
+        var { onHide } = this.props;
         this.setState({ showDialog: false });
-        reject();
+        onHide();
     }
 
     saveProperties = () => {
-        var { resolve } = this.props;
+        var { onChange } = this.props;
         var { item } = this.state;
-        resolve(item);
+        onChange(item);
     }
 
     setValue = (field, value) => {

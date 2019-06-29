@@ -24,6 +24,13 @@ class ReportBuilder extends ReportBase {
         if (!data) {
             data = getDefaultRptDefinition();
         }
+        else {
+            data.datasets = data.datasets || {};
+
+            data.reportItems = data.reportItems || [];
+            data.datasetList = data.datasetList || [];
+            data.parameters = data.parameters || [];
+        }
 
         this.state = { data };
         this.builderProps = {

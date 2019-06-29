@@ -4,8 +4,6 @@ import Droppable from '../../DragDrop/Droppable';
 import ReportItemBase from '../ReportItemBase';
 
 class BaseContainer extends ReportItemBase {
-    unsupportedItems = ["TPG"];
-
     constructor(props) {
         super(props);
         var { data: { items = [] } = {} } = props;

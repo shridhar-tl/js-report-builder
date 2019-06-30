@@ -10,8 +10,10 @@ class TabViewProperties extends PureComponent {
     constructor(props) {
         super(props);
         var { definition } = props;
+
         definition = { ...definition };
         definition.items = definition.items.map(item => { return { ...item }; });
+
         this.state = { definition, showDialog: true };
     }
 
@@ -91,7 +93,7 @@ class TabViewProperties extends PureComponent {
                     header="Tab view properties"
                     visible={showDialog}
                     footer={footer}
-                    style={{ width: "50vw" }}
+                    style={{ width: "75vw" }}
                     modal={true}
                     onHide={this.hidePopup}>
                     <div className="field-collection">
@@ -102,11 +104,11 @@ class TabViewProperties extends PureComponent {
                         </div>
                     </div>
                     <div>
-                        <div className="pull-left" style={{ width: "40%" }}>
+                        <div className="pull-left" style={{ width: "260px" }}>
                             <OrderList dragdrop={true} header="Edit / Reorder pages" value={items} itemTemplate={itemTemplate} onChange={e => setValue("items", e.value)} />
                             <div style={{ padding: "5px 0 70px 70px" }}><Button type="success" icon="fa fa-plus" label="Add new tab page" onClick={addTabPage} /></div>
                         </div>
-                        <div className="pull-left" style={{ width: "59%" }}>
+                        <div className="pull-left" style={{ width: "calc(100% - 270px)" }}>
                             {selectedTab && <TabPageProperties definition={selectedTab} onChange={tabChanged} />}
                         </div>
                         <div style={{ clear: 'both' }}></div>
@@ -164,7 +166,7 @@ class TabPageProperties extends PureComponent {
     render() {
         var { setValue, setBooleanValue, state, props } = this;
         var { definition } = state;
-        var { header, hidden } = definition;
+        var { header, hidden, disabled } = definition;
 
         return (
             <Card title="Tab page properties">
@@ -181,7 +183,7 @@ class TabPageProperties extends PureComponent {
                     </div>
                     <div>
                         <label>Availability (disable tab page if expression evaluates to true)</label>
-                        <ExpressionEditor expression={hidden === true ? "true" : hidden} isStrict={true}
+                        <ExpressionEditor expression={disabled === true ? "true" : disabled} isStrict={true}
                             onChange={(expr, type, prop) => setBooleanValue(expr, "disabled")} />
                     </div>
                     <div>

@@ -80,6 +80,7 @@ class ReportBase extends PureComponent {
 
     isAnyDSUnresolved() {
         var { datasetList } = this.definition;
+        if (!datasetList || !datasetList.length) { return false; }
         return datasetList.some(dsId => !this.isDsResolved(dsId));
     }
 

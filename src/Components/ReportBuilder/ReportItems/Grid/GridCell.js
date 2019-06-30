@@ -33,9 +33,10 @@ class GridCell extends PureComponent {
                     onClick={e => this.cellSelected(null, e)}>
                     {editMode && (
                         <ExpressionEditor
-                            className="expression"
+                            className="grid-cell-expression"
                             expression={editedItem.expression || editedItem.data}
                             type={editedItem.itemType}
+                            noGroups={true}
                             endEdit={this.expressionValueReceived}
                         />
                     )}
@@ -146,14 +147,14 @@ class GridCell extends PureComponent {
         var { cellData } = this.state;
         var newItem = item;
         if (source.itemType === "RPT_DS_PRPS") {
-            newItem = { data: item.key, expression: 'RowGroup.Fields.' + item.path };
+            newItem = { data: item.key, expression: 'Fields.' + item.path };
         } else if (source.itemType === "RPT_ITMS") {
             switch (source.item.type) {
                 case "IMG":
-                    newItem = { itemType: "IMG", style: { height: "16px", width: "16px" } };
+                    newItem = { itemType: "IMG", style: { height: "20px", width: "20px" } };
                     break;
                 default:
-                    newItem = { itemType: "", style: { height: "16px", width: "16px" } };
+                    newItem = { itemType: "", style: {} };
                     break;
             }
         }
@@ -169,7 +170,7 @@ class GridCell extends PureComponent {
     getItemHtml = (d, i) => {
         switch (d.itemType) {
             case "IMG":
-                return <img key={i} style={d.style} onClick={e => this.itemSelected(e, i, d)} onContextMenu={e => this.showItemContext(e, d, i)} />;
+                return <img key={i} style={d.style} alt="" onClick={e => this.itemSelected(e, i, d)} onContextMenu={e => this.showItemContext(e, d, i)} />;
 
             default:
                 return (

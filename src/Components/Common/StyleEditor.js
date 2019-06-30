@@ -5,16 +5,18 @@ const excludedCSSProps = ["resize", "position", "-webkit", "object", "offset", "
 class StyleEditor extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = { element: props.element, styleList: [], elementData: props.elementData };
+        this.state = { element: props.element, styleList: [], style: { ...(props.elementData.style || {}) } };
     }
 
     componentWillMount() {
         this.setStyleProps(this.props.element);
     }
 
-    UNSAFE_componentWillReceiveProps(newProps) {
-        this.setState({ element: newProps.element, elementData: newProps.elementData });
-        this.setStyleProps(newProps.element);
+    UNSAFE_componentWillReceiveProps(newProps, oldProps) {
+        if (newProps.element !== oldProps.element) {
+            this.setState({ element: newProps.element, style: { ...(newProps.elementData.style || {}) } });
+            this.setStyleProps(newProps.element);
+        }
     }
 
     getJSPropName = (name) => {
@@ -44,33 +46,36 @@ class StyleEditor extends PureComponent {
     }
 
     styleChanged = (propName, jsPropName, value, oldValue) => {
-        var { element, elementData } = this.state;
-        var { style } = elementData;
-        if (!style) {
-            style = {};
-            elementData.style = style;
-        }
+        var { element, style } = this.state;
         element.style[propName] = value;
         var newValue = element.style[jsPropName];
         if (newValue && newValue !== oldValue) {
+            style = { ...style };
             style[jsPropName] = newValue;
+            this.props.onChange(style);
+            this.setState({ style });
         }
         return newValue;
     }
 
     render() {
-        var { styleList, element, elementData } = this.state;
-        var { style = {} } = elementData;
-        return <div style={{ width: '100%', height: '300px', overflow: 'auto' }}><table>
-            <thead>
-                <tr><th>Field</th>
-                    <th>Value</th>
-                </tr></thead>
-            <tbody>
-                {styleList.map(s => <tr key={s.key}><td>{s.key}</td>
-                    <td><StyleValueEditor propName={s.prop} attr={s.key} customized={!!style[s.prop]} value={style[s.prop] || s.value} onChange={this.styleChanged} element={element} /></td>
-                </tr>)}</tbody>
-        </table></div>;
+        var { styleList, element, style } = this.state;
+
+        return <div style={{ width: '100%', height: '300px', overflow: 'auto' }}>
+            <table className="table">
+                <thead>
+                    <tr><th>Field</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {styleList.map(s => <tr key={s.key}><td>{s.key}</td>
+                        <td><StyleValueEditor propName={s.prop} attr={s.key} customized={!!style[s.prop]}
+                            value={style[s.prop] || s.value} onChange={this.styleChanged} element={element} /></td>
+                    </tr>)}
+                </tbody>
+            </table>
+        </div>;
     }
 }
 

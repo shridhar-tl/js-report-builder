@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import GridGroup from "./GridGroup";
 import { GridContext } from "../../Common";
+import ImageItem from "../ImageItem";
 
 export default class GridRow extends PureComponent {
     static contextType = GridContext;
@@ -109,7 +110,7 @@ class GridCell extends PureComponent {
                 {cell.map((c, i) => {
                     var { title, style, data: displayValue } = c;
 
-                    switch (c.itemType || "") {
+                    switch ((c.itemType || "").toLowerCase()) {
                         case "":
                         case "expression":
                             var { hidden: hideWhen, $hideWhen, $expression } = c;
@@ -133,7 +134,13 @@ class GridCell extends PureComponent {
                                 title = e;
                             }
                             break;
-                        default: break;
+                        case "img":
+                            return <ImageItem definition={c} execProps={{ fields: rowGroupFields, rowGroup, colGroup, variables: rowGroupVars }} />
+                        case "text": /* already value is binded. no need to do anything here */ break;
+                        default:
+                            displayValue = "#Error: Unsupported";
+                            title = "Unsupported element found inside grid cell";
+                            break;
                     }
 
                     return (

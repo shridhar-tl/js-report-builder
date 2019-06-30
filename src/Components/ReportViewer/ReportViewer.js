@@ -20,7 +20,7 @@ class ReportViewer extends ReportBase {
         this.datasetTypes = getDatasetTypes(true);
         this.commonFunctions = getCommonFunctions(true);
         this.myFunctions = {}; /* ToDo: Need to implement */
-        this.state = { defaultParameters, parameterValues: { ...defaultParameters } };
+        this.state = { hasParameters: false, defaultParameters, parameterValues: { ...defaultParameters } };
     }
 
     componentDidMount() {
@@ -33,6 +33,8 @@ class ReportViewer extends ReportBase {
         } = this;
         if (parameters && parameters.length > 0) {
             this.setState({ hasParameters: true, showParameters: true, dataReady: false });
+        } else {
+            this.updateParameters();
         }
     }
 

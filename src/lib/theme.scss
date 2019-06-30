@@ -29,6 +29,14 @@ body {
         }
     }
 
+    div.no-padding {
+        padding: 0 !important;
+
+        & > .p-accordion-content {
+            padding: 0 !important;
+        }
+    }
+
     div.field-collection {
         & > div {
             padding: 5px;

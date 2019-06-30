@@ -1,10 +1,24 @@
 import React, { PureComponent } from "react";
+import { InputTextarea } from 'primereact/inputtextarea';
+import { InputText } from 'primereact/inputtext';
 import "./ExpressionEditor.scss";
+import Button from "../../Common/Button";
+
+const preIconStyle = { height: "32px", padding: "0px", fontSize: "19px" };
+const inputStyle = { minHeight: "32px", height: "32px" };
+const buttonStyle = { minHeight: "32px" };
 
 class ExpressionEditor extends PureComponent {
     constructor(props) {
         super();
-        var { expression, type } = props;
+        var { expression, type, autoDetect } = props;
+
+        if (typeof expression === "object") {
+            type = null;
+            expression = expression.expression;
+        }
+        else if (autoDetect) { type = "text"; }
+
         this.state = { expression, type, validation: this.validateExpression(expression) };
     }
 
@@ -13,26 +27,47 @@ class ExpressionEditor extends PureComponent {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        var { expression, type } = nextProps;
-        this.setState({ expression, type });
+        var { expression, type, autoDetect } = nextProps;
+
+        if (typeof expression === "object") {
+            type = null;
+            expression = expression.expression;
+        }
+        else if (autoDetect) { type = "text"; }
+
+        var { expression: oldExpression, type: oldType } = this.state;
+
+        if (!type && (expression !== null && expression !== undefined)) { expression = "=" + expression; }
+
+        if (oldExpression && (expression || "").trim() === oldExpression.trim()) { expression = oldExpression; }
+
+        if (expression !== oldExpression || type !== oldType) {
+            this.setState({ expression, type });
+        }
     }
 
     expressionChanged = e => {
         this.isChanged = true;
-        var expression = e.currentTarget.value;
+        var expression = e.target.value;
         var value = expression.trim();
         var type;
-        var validation = null;
+        var validation = { isValid: true };
         if (!value.startsWith("=") && !this.props.isStrict) {
             type = "text";
         } else {
+            if (value.startsWith("=")) { value = value.substring(1).trim(); }
             validation = this.validateExpression(value);
+            if (this.props.autoDetect) {
+                value = { expression: value };
+            }
         }
-        var { onChange } = this.props;
-        if (onChange) {
-            onChange(value, type, validation);
-        }
-        this.setState({ expression, type, validation });
+
+        this.setState({ expression, type, validation }, () => {
+            var { onChange } = this.props;
+            if (onChange) {
+                onChange(value, type, validation);
+            }
+        });
     };
 
     validateExpression(expression) {
@@ -42,8 +77,9 @@ class ExpressionEditor extends PureComponent {
 
     validateKeys = e => {
         var { keyCode } = e;
-        var { multiline, wordWrap } = this.props;
-        if (keyCode === 13 && (!multiline || wordWrap)) {
+        var { wordWrap } = this.props;
+
+        if (keyCode === 13 && wordWrap !== true) {
             // When Enter key is pressed
             this.endEdit();
             e.preventDefault();
@@ -76,47 +112,74 @@ class ExpressionEditor extends PureComponent {
     };
 
     render() {
-        var { disabled, placeholder, style, className } = this.props;
-        var { expression, type } = this.state;
+        var { disabled, placeholder, style, className, isStrict, noGroups } = this.props;
+        var { expression, type, validation: { isValid } = {} } = this.state;
+
+        if (!placeholder && !noGroups) {
+            placeholder = isStrict ? "provide an expression here..." : "provide a value or expression here...";
+        }
 
         var useTextarea = true; // Revisit: may need to use "multiline" property instead
 
-        if (!type && expression && !expression.startsWith("=")) {
-            expression = "=" + expression;
+        var inputField = useTextarea ? (
+            <InputTextarea
+                style={style || inputStyle}
+                disabled={disabled}
+                placeholder={placeholder}
+                value={expression || ""}
+                className={className}
+                ref={input => {
+                    this.inputField = (input || {}).element;
+                }}
+                autoResize={true}
+                onChange={this.expressionChanged}
+                onKeyDown={this.validateKeys}
+                onBlur={() => this.endEdit()}
+            />
+        ) : (
+                <InputText
+                    style={style || inputStyle}
+                    disabled={disabled}
+                    placeholder={placeholder}
+                    type="text"
+                    value={expression || ""}
+                    className={className}
+                    ref={f => {
+                        this.inputField = (f || {}).element;
+                    }}
+                    onChange={this.expressionChanged}
+                    onKeyDown={this.validateKeys}
+                    onBlur={() => this.endEdit()}
+                />
+            );
+
+        if (noGroups) {
+            return inputField;
+        }
+
+        var hasValue = !!expression;
+
+        if (!type && expression) {
+            if (!expression.startsWith("=")) {
+                expression = "=" + expression;
+                hasValue = true;
+            }
+            else {
+                hasValue = expression.length > 1;
+            }
         }
 
         return (
             <div className="expression-editor">
-                {useTextarea ? (
-                    <textarea
-                        style={style}
-                        disabled={disabled}
-                        placeholder={placeholder}
-                        value={expression || ""}
-                        className={className}
-                        ref={input => {
-                            this.inputField = input;
-                        }}
-                        onChange={this.expressionChanged}
-                        onKeyDown={this.validateKeys}
-                        onBlur={() => this.endEdit()}
-                    />
-                ) : (
-                        <input
-                            style={style}
-                            disabled={disabled}
-                            placeholder={placeholder}
-                            type="text"
-                            value={expression || ""}
-                            className={className}
-                            ref={f => {
-                                this.inputField = f;
-                            }}
-                            onChange={this.expressionChanged}
-                            onKeyDown={this.validateKeys}
-                            onBlur={() => this.endEdit()}
-                        />
-                    )}
+                <div className="p-inputgroup">
+                    <span className="p-inputgroup-addon" style={preIconStyle}>
+                        <i className={"fa " + (type ? "fa-font" : "fa-code")} />
+                    </span>
+                    {inputField}
+                    <Button type={(hasValue ? (isValid ? "success" : "danger") : null)}
+                        title="Edit expression in a seperate popup"
+                        style={buttonStyle} icon="fa fa-external-link" />
+                </div>
             </div>
         );
     }

@@ -84,7 +84,7 @@ class ImageProperties extends PureComponent {
                     header="Image properties"
                     visible={showDialog}
                     footer={footer}
-                    style={{ width: "50vw" }}
+                    style={{ width: "60vw" }}
                     modal={true}
                     onHide={this.hidePopup}>
                     <TabView>
@@ -96,7 +96,7 @@ class ImageProperties extends PureComponent {
                                     <RadioButton inputId="rbEmbededImg" checked={srcMode === 2} onChange={e => setValue("srcMode", 2)} /> <label htmlFor="rbEmbededImg">Embedded image</label>
                                 </div>
                                 <div className="mandatory">
-                                    {srcMode === 1 && <label>External image url or expression evaluating to same</label>}
+                                    {srcMode !== 2 && <label>External image url or expression evaluating to same</label>}
                                     {srcMode === 2 && <label>Embedded image resource name or expression evaluating to same</label>}
                                     <ExpressionEditor expression={src} type={srcType}
                                         onChange={(expr, type, prop) => setValue("src", type ? expr : { expression: expr })} />

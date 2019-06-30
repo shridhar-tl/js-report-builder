@@ -1,4 +1,19 @@
 import GridItem from "./GridItem/GridItem";
 import ImageItem from "./ImageItem";
+import TabItem from "./TabItem";
+import ContainerItem from "./ContainerItem";
+import PanelItem from "./PanelItem";
+import HorizontalLine from "./HorizontalLine";
+import MenuItem from "./MenuItem";
+import ChartItem from "./ChartItem";
 
-export default { TBL: GridItem, IMG: ImageItem };
+export default {
+    TBL: GridItem,
+    IMG: ImageItem,
+    TAB: TabItem,
+    CTR: ContainerItem,
+    PNL: PanelItem,
+    HLN: HorizontalLine,
+    MNU: MenuItem,
+    CHT: ChartItem
+};

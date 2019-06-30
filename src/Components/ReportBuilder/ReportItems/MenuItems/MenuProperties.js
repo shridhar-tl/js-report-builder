@@ -205,12 +205,12 @@ class MenuItemProperties extends PureComponent {
                         <InputText disabled={!label} value={icon} maxLength={50} keyfilter={/^[A-z0-9 _-]+$/} onChange={e => setValue("icon", e.target.value)} />
                     </div>
                     <div>
-                        <label>Visibility (hide tab page if expression evaluates to true)</label>
+                        <label>Visibility (hide menu item if expression evaluates to true)</label>
                         <ExpressionEditor expression={hidden === true ? "true" : hidden} isStrict={true}
                             onChange={(expr, type, prop) => setBooleanValue(expr)} />
                     </div>
                     <div>
-                        <label>Availability (disable tab page if expression evaluates to true)</label>
+                        <label>Availability (disable menu item if expression evaluates to true)</label>
                         <ExpressionEditor expression={disabled === true ? "true" : disabled} isStrict={true}
                             onChange={(expr, type, prop) => setBooleanValue(expr, "disabled")} />
                     </div>

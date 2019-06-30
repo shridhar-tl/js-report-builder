@@ -34,7 +34,16 @@ export default class GridGroup extends PureComponent {
         });
 
         if (!$group.data) {
-            var data = $group.$expression(parentGroupFields, rowGroup, colGroup, this.variables);
+            var dataset = group.dataset;
+            var data;
+
+            if (dataset === -1) {
+                data = $group.$expression(parentGroupFields, rowGroup, colGroup, this.variables);
+            }
+            else {
+                data = this.context.getDataset(dataset);
+            }
+
             if (data) {
                 var { filter, keys, sortBy } = $group;
                 if (filter) {

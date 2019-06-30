@@ -7,7 +7,7 @@ import ReportControlBase from "./ReportControlBase";
 class ReportItems extends ReportControlBase {
     render() {
         return (
-            <div className="report-items">
+            <div className="report-items-list">
                 {defaultComponents.map(c => (
                     <DraggableHandle itemType="RPT_ITMS" item={c} key={c.type}>
                         <div className="report-item">

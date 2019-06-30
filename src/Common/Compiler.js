@@ -19,6 +19,9 @@ export function compileGroup(group, props) {
     var $sortBy = sortBy ? compileExpression(getWrapperFunction(sortBy), props) : undefined;
     var $variables = compileVariables(variables, props);
     var varFunc = (function (varObj) {
+        if (!varObj) {
+            return function () { return function () { } }
+        }
         return function (props) {
             var keysList = Object.keys(varObj);
             var valueObj = keysList.reduce((obj, varName) => {

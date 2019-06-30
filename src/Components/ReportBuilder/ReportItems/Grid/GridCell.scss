@@ -1,7 +1,10 @@
-.expression {
-  border: 0;
-  width: 100%;
+.grid-cell-expression {
+    border: 0;
+    width: 100%;
 }
-.expression:focus {
-  outline: none;
+.grid-cell-expression:focus {
+    outline: none;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }

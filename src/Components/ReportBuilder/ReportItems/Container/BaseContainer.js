@@ -6,8 +6,9 @@ import ReportItemBase from '../ReportItemBase';
 class BaseContainer extends ReportItemBase {
     constructor(props) {
         super(props);
-        var { data: { items = [] } = {} } = props;
-        this.state = { addedItems: items || [] };
+        var { data: definition = {} } = props;
+        var { items = [] } = definition;
+        this.state = { definition, addedItems: items || [] };
     }
 
     onItemAdded = item => {
@@ -20,27 +21,26 @@ class BaseContainer extends ReportItemBase {
         }
         this.setState({ addedItems });
 
-        var { data = {} } = this.props;
-        data.items = addedItems;
-        this.props.onChange(data);
+        var { definition } = this.state;
+        definition.items = addedItems;
+        this.props.onChange(definition);
     };
 
     onItemRemoved = index => {
-        var { addedItems } = this.state;
+        var { addedItems, definition } = this.state;
         addedItems.splice(index, 1);
         addedItems = [...this.state.addedItems];
         this.setState({ addedItems });
-        var { data = {} } = this.props;
-        data.items = addedItems;
-        this.props.onChange(data);
+        
+        definition.items = addedItems;
+        this.props.onChange(definition);
     };
 
     onChanged = (itemData, index) => {
-        var { data = {} } = this.props;
-        var { addedItems } = this.state;
+        var { addedItems, definition } = this.state;
         addedItems[index].data = itemData;
-        data.items = addedItems;
-        this.props.onChange(data);
+        definition.items = addedItems;
+        this.props.onChange(definition);
     };
 
     getControl = (item, index) => {

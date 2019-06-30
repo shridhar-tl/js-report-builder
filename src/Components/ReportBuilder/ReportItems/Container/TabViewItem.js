@@ -6,20 +6,20 @@ import TabViewProperties from './TabViewProperties';
 class TabViewItem extends BaseContainer {
     constructor(props) {
         super(props);
-        var { data } = props;
+        var { data: definition } = props;
 
-        if (!data) {
-            data = {};
-            this.definition = data;
+        if (!definition) {
+            definition = {};
+            this.definition = definition;
         }
 
         var { items = [
             { items: [], header: "Sheet 1" },
             { items: [], header: "Sheet 2" }
-        ] } = data;
-        data.items = items;
+        ] } = definition;
+        definition.items = items;
 
-        this.state = { addedItems: items };
+        this.state = { definition, addedItems: items };
     }
 
     componentWillMount() {
@@ -35,15 +35,16 @@ class TabViewItem extends BaseContainer {
     }
 
     itemsChanged = (addedItems) => {
-        var { data = { items: addedItems } } = this.props;
+        var { definition } = this.state;
         addedItems = [...addedItems];
-        data.items = addedItems;
+        definition.items = addedItems;
         this.setState({ addedItems });
-        this.props.onChange(data);
+        this.props.onChange(definition);
     }
 
-    onChange = (data) => {
-        this.itemsChanged(data.items);
+    onChange = (definition) => {
+        this.props.onChange(definition);
+        this.setState({ definition, addedItems: definition.items });
         this.hideProperties();
     }
 
@@ -54,7 +55,7 @@ class TabViewItem extends BaseContainer {
     }
 
     render() {
-        var { addedItems, showPropsDialog } = this.state;
+        var { addedItems, showPropsDialog, definition } = this.state;
 
         return super.renderBase(
             <Fragment>
@@ -64,7 +65,7 @@ class TabViewItem extends BaseContainer {
                             <BaseContainer data={d} onChange={c => this.itemChanged(i, c)} onItemRemoved={this.onItemRemoved} />
                         </TabPanel>))}
                 </TabView>
-                {showPropsDialog && <TabViewProperties definition={this.props.data} onHide={this.hideProperties} onChange={this.onChange} />}
+                {showPropsDialog && <TabViewProperties definition={definition} onHide={this.hideProperties} onChange={this.onChange} />}
             </Fragment>
         );
     }

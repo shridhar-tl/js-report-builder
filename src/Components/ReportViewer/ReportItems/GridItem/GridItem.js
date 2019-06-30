@@ -17,12 +17,11 @@ export default class GridItem extends PureComponent {
 
     render() {
         var { definition } = this.props;
-        var { data } = definition;
-        var { columns, head, body } = data;
+        var { columns, head, body, style } = definition || {};
 
         return (
             <GridContext.Provider value={this.commonContext}>
-                <table className="table table-striped">
+                <table className="table table-striped" style={style}>
                     <thead>
                         <GridRowRepeator isHeader={true} columns={columns} rows={head} />
                     </thead>
@@ -58,7 +57,7 @@ class GridRowRepeator extends PureComponent {
     }
 
     render() {
-        var { columns, rows, isHeader, rowGroupFields } = this.props;
+        var { columns, rows = [], isHeader, rowGroupFields } = this.props;
         return rows.map((row, iRow) => {
             if (row.type === 1) {
                 return <GridRow key={iRow} isHeader={isHeader} definition={row} rowGroup={this.rowGroup} columns={columns} />;

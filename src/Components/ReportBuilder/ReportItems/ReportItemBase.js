@@ -30,6 +30,7 @@ class ReportItemBase extends PureComponent {
 
     saveProperties = (definition) => {
         this.setState({ definition, showPropsDialog: false });
+        this.props.onChange(definition);
     }
 
     showContext = (e) => {

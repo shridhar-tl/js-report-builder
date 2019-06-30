@@ -610,14 +610,10 @@ class Grid extends ReportItemBase {
 
         var expressionEditor = (
             <div key="0" className="jsr-expr-container inline">
-                <div className="status">
-                    f<sub>x</sub>
-                </div>
                 <div className="field">
                     <ExpressionEditor
                         disabled={!selected}
                         multiline={true}
-                        wordWrap={true}
                         expression={cellItem.itemType ? cellItem.data : cellItem.expression}
                         type={cellItem.itemType}
                         endEdit={this.expressionChanged}

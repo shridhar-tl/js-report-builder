@@ -126,8 +126,10 @@ class ReportControls extends PureComponent {
                     </AccordionTab>
                     <AccordionTab header="Resources">
                     </AccordionTab>
-                    <AccordionTab header="Styles">
-                        {selectedItem && <StyleEditor element={selectedItem.element} elementData={selectedItem.data} />}
+                    <AccordionTab header="Styles" contentClassName="no-padding">
+                        {selectedItem && <StyleEditor element={selectedItem.element} elementData={selectedItem.data} onChange={(newStyle) => {
+                            selectedItem.data.style = newStyle;
+                        }} />}
                     </AccordionTab>
                 </Accordion>
             </div>

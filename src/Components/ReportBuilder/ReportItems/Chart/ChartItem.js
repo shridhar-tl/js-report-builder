@@ -8,6 +8,7 @@ import ExpressionEditor from '../../Common/ExpressionEditor';
 import { Dropdown } from 'primereact/dropdown';
 import Button from '../../../Common/Button';
 import { clone } from '../../../../Common/HelperFunctions';
+import { Checkbox } from 'primereact/checkbox';
 import './ChartItem.scss'
 
 class ChartItem extends ReportItemBase {
@@ -33,12 +34,15 @@ class ChartItem extends ReportItemBase {
     render() {
         var { state } = this;
         var { definition, showPropsDialog } = state;
-        var { type } = definition;
+        var { type, responsive, width, height } = definition;
         var { data, options } = this.getChartData();
+
+        if (typeof width !== "string") { width = null; }
+        if (typeof height !== "string") { height = null; }
 
         return super.renderBase(
             <div>
-                <Chart type={type} data={data} options={options} />
+                <Chart type={type} data={data} options={options} responsive={responsive} width={width} height={height} />
                 {showPropsDialog && <ChartItemProperties definition={definition} onChange={this.saveProperties} hideDialog={this.hideProperties} />}
             </div>
         );
@@ -52,7 +56,8 @@ class ChartItemProperties extends PureComponent {
     constructor(props) {
         super(props);
         var { definition } = props;
-        this.state = { definition: { ...definition }, showDialog: true };
+        definition = { ...definition };
+        this.state = { definition, showDialog: true };
     }
 
     setValue(field, value) {
@@ -79,7 +84,7 @@ class ChartItemProperties extends PureComponent {
 
     render() {
         var { showDialog, definition, isParamValid } = this.state;
-        var { type, data, options, hidden } = definition;
+        var { type, data, options, hidden, width, height, responsive } = definition;
         if (!data) {
             //data = defaultChartDefinition[type].data;
             //data = JSON.stringify(data);
@@ -118,15 +123,29 @@ class ChartItemProperties extends PureComponent {
 
                                 <div>
                                     <label>Visibility (hide graph if expression evaluates to true)</label>
-                                    <ExpressionEditor value={hidden} isStrict={true} onChange={(val) => this.setValue("hidden", val)} />
+                                    <ExpressionEditor expression={hidden} isStrict={true} onChange={(val) => this.setValue("hidden", val)} />
+                                </div>
+
+                                <div>
+                                    <Checkbox inputId="cbChartResponsive" onChange={e => this.setValue("responsive", e.checked)} checked={responsive} />
+                                    <label htmlFor="cbChartResponsive">Make the chart responsive</label>
+                                </div>
+
+                                <div>
+                                    <label>Width</label>
+                                    <ExpressionEditor disabled={responsive} autoDetect={true} expression={width} onChange={(val) => this.setValue("width", val)} />
+                                </div>
+                                <div>
+                                    <label>Height</label>
+                                    <ExpressionEditor disabled={responsive} autoDetect={true} expression={height} onChange={(val) => this.setValue("height", val)} />
                                 </div>
                             </div>
                         </TabPanel>
                         <TabPanel header="Chart data">
-                            <ExpressionEditor className="huge-textarea" expression={data} isStrict={true} onChange={(val) => this.setValue("data", val)} />
+                            <ExpressionEditor className="huge-textarea" expression={data} isStrict={true} wordWrap={true} multiline={true} onChange={(val) => this.setValue("data", val)} />
                         </TabPanel>
                         <TabPanel header="Chart Options">
-                            <ExpressionEditor className="huge-textarea" expression={options} isStrict={true} onChange={(val) => this.setValue("options", val)} />
+                            <ExpressionEditor className="huge-textarea" expression={options} isStrict={true} wordWrap={true} multiline={true} onChange={(val) => this.setValue("options", val)} />
                         </TabPanel>
                     </TabView >
                 </Dialog >

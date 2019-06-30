@@ -11,7 +11,7 @@ class PanelContainer extends ContainerItem {
         super(props);
         var { data: definition } = props;
         if (!definition) {
-            definition = { toggleable: true, collapsed: false, header: "Panel header" };
+            definition = {items:[], toggleable: true, collapsed: false, header: "Panel header" };
         }
         this.state.definition = definition;
         this.state.collapsed = definition.collapsed;

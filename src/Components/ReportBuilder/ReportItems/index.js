@@ -15,8 +15,8 @@ export const defaultComponents = [
     },
     { type: 'TAB', icon: 'fa fa-list-alt', text: 'Tab view', control: TabViewItem },
     { type: 'CHT', icon: 'fa fa-bar-chart', text: 'Chart', control: ChartItem },
-    { type: 'PNL', icon: 'fa fa-object-group', text: 'Container', control: ContainerItem },
-    { type: 'CPL', icon: 'fa fa-window-maximize', text: 'Panel', control: PanelContainer },
+    { type: 'CTR', icon: 'fa fa-object-group', text: 'Container', control: ContainerItem },
+    { type: 'PNL', icon: 'fa fa-window-maximize', text: 'Panel', control: PanelContainer },
     { type: 'HLN', icon: 'fa fa-window-minimize', text: 'Horizontal line', control: HorizontalLine },
     { type: 'MNU', icon: 'fa fa-th-list', text: 'Menu items', control: MenuItems },
     // { type: 'TXT', icon: 'fa fa-font', text: 'Text item' }, //ToDo: need to find appropriate approach

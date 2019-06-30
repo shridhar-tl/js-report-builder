@@ -1,28 +1,8 @@
 import React, { PureComponent } from "react";
-import ReportItems from "../ReportItems";
 import "./ReportDisplay.scss";
+import ItemsContainer from "../ReportItems/ItemsContainer";
 
 class ReportDisplay extends PureComponent {
-    getReportItemComponent(item, i) {
-        var { type } = item;
-        var ItemType = ReportItems[type];
-
-        var itemHtml = null;
-        if (ItemType) {
-            itemHtml = <ItemType definition={item} />;
-        } else {
-            itemHtml = (
-                <div style={{ width: "100%", border: "1px solid grey", padding: "4px 12px" }}>This is an unknown element</div>
-            );
-        }
-
-        return (
-            <div key={i} className="report-item">
-                {itemHtml}
-            </div>
-        );
-    }
-
     render() {
         var {
             definition: { reportItems }
@@ -30,7 +10,8 @@ class ReportDisplay extends PureComponent {
 
         return (
             <div className="report-viewer">
-                <div className="report-items">{reportItems.map(this.getReportItemComponent)}</div>
+                {reportItems && reportItems.length > 0 && <div className="report-items"><ItemsContainer items={reportItems} /></div>}
+                {(!reportItems || reportItems.length === 0) && <div className="no-report-items">No report ui components added to report</div>}
             </div>
         );
     }

@@ -94,17 +94,8 @@
 
 .jsr-expr-container {
     width: 100%;
-
-    .status {
-        font-size: 20px;
-        width: 18px;
-        font-style: italic;
-        float: left;
-    }
-
     .field {
-        width: calc(100% - 19px);
-        display: inline-block;
+        width: 100%;
 
         textarea {
             width: 100%;

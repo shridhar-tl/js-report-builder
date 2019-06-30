@@ -20,6 +20,8 @@ class ReportParameters extends PureComponent {
 
     parameterValueChanged = (param, value) => {
         var { values } = this.state;
+        var existingValue = values[param.name];
+        if (existingValue === value) { return; }
         values[param.name] = value;
         values = { ...values };
         var state = this.validateParameters(values);
@@ -41,7 +43,7 @@ class ReportParameters extends PureComponent {
 
             if (!paramValue) { isParamsValid = false; break; }
             else if (allowMultiple && Array.isArray(paramValue)) {
-                if (paramValue.length) { isParamsValid = false; break; }
+                if (!paramValue.length) { isParamsValid = false; break; }
             }
         }
 

@@ -6,7 +6,7 @@ import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";
-import { userDaywiseReport, datasets, userList, projects, issuetypes, customfields, rapidview } from './testdata'
+import { userDaywiseReport, datasets, userList, projects, issuetypes, customfields, rapidview, tempData } from './testdata'
 
 var defaultConfig = {
     parameterTypes: {
@@ -18,7 +18,7 @@ var defaultConfig = {
                     "span",
                     {
                         onClick: () => {
-                            props.onChange(userList);
+                            props.onChange(props.definition, userList);
                             alert("This is dummy parameter");
                         },
                         className: "ctl-ug"

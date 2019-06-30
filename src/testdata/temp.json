@@ -1,0 +1,90 @@
+{
+    "datasets": {},
+    "reportItems": [
+        {
+            "type": "TBL",
+            "data": {
+                "columns": [
+                    {
+                        "type": 1,
+                        "children": [],
+                        "style": {
+                            "width": "100px"
+                        }
+                    },
+                    {
+                        "type": 1,
+                        "children": [],
+                        "style": {
+                            "width": "100px"
+                        }
+                    },
+                    {
+                        "type": 1,
+                        "children": [],
+                        "style": {
+                            "width": "100px"
+                        }
+                    }
+                ],
+                "head": [
+                    {
+                        "type": 1,
+                        "children": [[], [], []]
+                    }
+                ],
+                "body": [
+                    {
+                        "type": 1,
+                        "children": [
+                            [
+                                {
+                                    "data": "sometext",
+                                    "itemType": "text"
+                                }
+                            ],
+                            [
+                                {
+                                    "itemType": "IMG",
+                                    "style": {
+                                        "height": "28px",
+                                        "width": "18px"
+                                    }
+                                }
+                            ],
+                            []
+                        ]
+                    },
+                    {
+                        "type": 1,
+                        "children": [
+                            [],
+                            [
+                                {
+                                    "expression": "100===200",
+                                    "isHTML": false
+                                }
+                            ],
+                            []
+                        ]
+                    },
+                    {
+                        "type": 1,
+                        "children": [
+                            [],
+                            [],
+                            [
+                                {
+                                    "data": "another text",
+                                    "itemType": "text"
+                                }
+                            ]
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "datasetList": [],
+    "parameters": []
+}

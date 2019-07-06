@@ -4,19 +4,29 @@ import { InputText } from "primereact/inputtext";
 import ExpressionEditor from "./ExpressionEditor";
 import "./ExpressionList.scss";
 import { clone } from '../../../Common/HelperFunctions'
+import { Dropdown } from "primereact/dropdown";
 
 class ExpressionList extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = { items: clone(props.value || []) };
+        var { value, nameFieldSet } = props;
+        if (nameFieldSet) {
+            this.nameFieldSet = nameFieldSet.map(n => { return { name: n }; })
+            this.nameFieldValues = this.nameFieldSet.reduce((obj, cur) => { obj[cur.name] = cur; return obj; }, {});
+        }
+        else {
+
+        }
+        this.state = { items: clone(value || []), newItem: {} };
     }
 
     getExpressionRow(index, item, isNewRow) {
-        var { namePlaceholder, valuePlaceholder, nameField, valueField } = this.props;
+        var { nameFieldSet } = this;
+        var { namePlaceholder, valuePlaceholder, nameField, valueField, autoDetect } = this.props;
 
         return (
             <tr key={index}>
-                {nameField && (
+                {nameField && !nameFieldSet && (
                     <td>
                         <InputText
                             keyfilter="alphanum"
@@ -31,10 +41,29 @@ class ExpressionList extends PureComponent {
                         />
                     </td>
                 )}
+                {nameField && nameFieldSet && (
+                    <td>
+                        <Dropdown
+                            optionLabel="name"
+                            value={this.nameFieldValues[item[nameField]] || undefined}
+                            options={nameFieldSet}
+                            onChange={e => {
+                                item[nameField] = e.value.name;
+                                if (!isNewRow) {
+                                    this.setValue(index, item);
+                                } else {
+                                    this.setState({ newItem: { ...item } })
+                                }
+                            }}
+                        />
+                    </td>
+                )}
                 <td>
                     <ExpressionEditor
                         placeholder={valuePlaceholder}
                         expression={item[valueField]}
+                        autoDetect={autoDetect}
+                        isStrict={!autoDetect}
                         onChange={value => {
                             item[valueField] = value;
                             if (!isNewRow) {
@@ -60,31 +89,39 @@ class ExpressionList extends PureComponent {
     }
 
     setValue(index, item) {
-        var { items } = this.state;
+        var { items, newItem } = this.state;
 
         if (index != null) {
             if (item) {
                 items[index] = item;
+                newItem = item === newItem ? {} : newItem
             }
             else {
                 items.splice(index, 1);
             }
             items = [...items];
 
-            this.setState({ items });
+            this.setState({ items, newItem });
             this.props.onChange(items);
         }
     }
 
     render() {
-        var { items } = this.state;
+        var { items, newItem } = this.state;
+        var { nameHeader, valueHeader } = this.props;
 
         return (
             <div className="expression-list">
-                <table>
+                <table className="table table-bordered">
+                    {(nameHeader || valueHeader) && <thead>
+                        <tr>
+                            <th>{nameHeader}</th>
+                            <th colSpan={2}>{valueHeader}</th>
+                        </tr>
+                    </thead>}
                     <tbody>
                         {items.map((item, i) => this.getExpressionRow(i, { ...item }))}
-                        {this.getExpressionRow(items.length, {}, true)}
+                        {this.getExpressionRow(items.length, newItem, true)}
                     </tbody>
                 </table>
             </div>

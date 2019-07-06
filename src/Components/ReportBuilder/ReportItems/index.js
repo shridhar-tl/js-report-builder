@@ -20,7 +20,8 @@ export const defaultComponents = [
     { type: 'HLN', icon: 'fa fa-window-minimize', text: 'Horizontal line', control: HorizontalLine },
     { type: 'MNU', icon: 'fa fa-th-list', text: 'Menu items', control: MenuItems },
     // { type: 'TXT', icon: 'fa fa-font', text: 'Text item' }, //ToDo: need to find appropriate approach
+    { type: 'REP', icon: 'fa fa-repeat', text: 'Repeator', control: ContainerItem },
     { type: 'RPT', icon: 'fa fa-font', text: 'Sub report' }
 ];
 
-export const componentsMap = defaultComponents.reduce((obj, cur, i, src) => { obj[cur.type] = cur; return obj; }, {});
+export const componentsMap = defaultComponents.reduce((obj, cur) => { obj[cur.type] = cur; return obj; }, {});

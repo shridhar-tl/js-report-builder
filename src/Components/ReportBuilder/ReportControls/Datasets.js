@@ -21,7 +21,7 @@ class Datasets extends PureComponent {
         this.state = { datasets: props.datasets || {}, datasetList: props.datasetList || [] };
     }
 
-    showAddPopup = () => {
+    showPopup = () => {
         this.setState({ showAddDialog: true, editedDataset: {} });
     };
 
@@ -287,7 +287,7 @@ class ExpressionDataset extends PureComponent {
                 style={{ width: "50vw" }}
                 modal={true}
                 onHide={this.hideAddPopup}>
-                <div>
+                <div className="field-collection">
                     <div>
                         <label>Dependencies:</label>
                         <MultiSelect
@@ -300,7 +300,6 @@ class ExpressionDataset extends PureComponent {
                     <div>
                         <label>Expression:</label>
                         <ExpressionEditor
-                            style={{ height: "100px" }}
                             expression={expression}
                             onChange={expr => this.updateFieldValue("expression", expr)}
                         />
@@ -315,7 +314,6 @@ class FlatternDataset extends PureComponent {
     constructor(props) {
         super(props);
         var { datasets, datasetList, dataset } = props;
-        console.log(props);
 
         var datasetsArr = array(datasetList.map(ds => datasets[ds]))
             .sortBy("name")
@@ -379,7 +377,7 @@ class FlatternDataset extends PureComponent {
                 style={{ width: "50vw" }}
                 modal={true}
                 onHide={this.hideAddPopup}>
-                <div>
+                <div className="field-collection">
                     <div>
                         <label>Source dataset:</label>
                         <SelectDataset

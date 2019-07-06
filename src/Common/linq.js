@@ -220,8 +220,17 @@ var arrayInitFunc = (function () {
                     obj.values.push(item);
                 }
             }
+
             source = result;
             return prototype;
+        };
+
+        prototype.addDistinct = function (item) {
+            if (!~source.indexOf(item)) {
+                source[source.length] = item;
+                return true;
+            }
+            return false;
         };
 
         function getObject(row, clause, curItem, propPrefix) {
@@ -615,13 +624,6 @@ function getProtoFunc() {
     prototype.InsertRangeAt = function (index, items) {
         this.splice(index, 0, ...items);
         return this;
-    };
-    prototype.AddDistinct = function (item) {
-        if (!this.Any(item)) {
-            this[this.length] = item;
-            return true;
-        }
-        return false;
     };
 
     prototype.AddDistinctRange = function (items) {

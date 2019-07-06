@@ -1,9 +1,12 @@
 import { PureComponent } from 'react';
 import { compileExpression } from '../Common/Compiler';
+import { getDatasetTypes } from '../Common/ReportConfig';
 
 class ReportBase extends PureComponent {
     constructor(props) {
         super(props);
+
+        this.datasetTypes = getDatasetTypes(true);
 
         this.sharedProps = {
             buildMyFunctions: (script) => {
@@ -47,6 +50,7 @@ class ReportBase extends PureComponent {
                 return this.myFunctions;
             },
             resolveDataset: (dsId) => {
+                this.datasets = this.datasets || {};
                 if (this.isDsResolved(dsId)) {
                     return Promise.resolve(this.datasets[dsId]);
                 }
@@ -102,7 +106,7 @@ class ReportBase extends PureComponent {
     }
 
     async resolveDataset(dsId, refresh, resolveDependency) {
-        let { definition: { datasets, parameters } } = this;
+        let { definition: { datasets, parameters } = this.state.data } = this;
 
         let dataset = datasets[dsId];
         var dependency = dataset.dependencies || [];

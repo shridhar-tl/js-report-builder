@@ -4,6 +4,7 @@ import ExpressionEditor from '../../Common/ExpressionEditor';
 import Button from '../../../Common/Button';
 import { Dialog } from 'primereact/dialog';
 import { TabView, TabPanel } from 'primereact/tabview';
+import ActionProperties from '../../Common/ActionProperties';
 
 class ImageProperties extends PureComponent {
     constructor(props) {
@@ -118,6 +119,9 @@ class ImageProperties extends PureComponent {
                                         onChange={(expr, type, prop) => setHiddenValue(expr)} />
                                 </div>
                             </div>
+                        </TabPanel>
+                        <TabPanel header="Click action">
+                            <ActionProperties definition={definition} setValue={setValue} />
                         </TabPanel>
                     </TabView >
                 </Dialog >

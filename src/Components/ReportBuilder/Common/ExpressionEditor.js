@@ -19,6 +19,8 @@ class ExpressionEditor extends PureComponent {
         }
         else if (autoDetect) { type = "text"; }
 
+        if (!type && (expression !== null && expression !== undefined)) { expression = "=" + expression; }
+
         this.state = { expression, type, validation: this.validateExpression(expression) };
     }
 
@@ -104,6 +106,12 @@ class ExpressionEditor extends PureComponent {
         if (field) {
             this.setState({ expression, type });
         }
+        expression = (expression || "").trim();
+
+        if (!type) {
+            expression = expression.substring(1).trim();
+        }
+
         endEdit(expression, type, field ? { isCanceled: true } : { validation, isCanceled: !this.isChanged });
 
         this.disableBlurEvent = true;

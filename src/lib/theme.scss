@@ -26,6 +26,9 @@ body {
     .p-dialog {
         .p-dialog-content {
             padding: 0 !important;
+            max-height: 75vh;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
     }
 

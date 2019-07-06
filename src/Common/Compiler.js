@@ -30,7 +30,6 @@ export function compileGroup(group, props) {
             }, {});
 
             var $varFunc = function (varName) {
-                //console.log("Variable data for ", varName, " requested from ", valueObj);
                 return valueObj["$" + varName];
             };
 
@@ -130,11 +129,11 @@ export function compileExpression(expression, props) {
 
         var result = func();
         if (props) {
-            var { commonFunctions, myFunctions, parameters, datasets, $this, reportState, setReportState } = props;
+            var { commonFunctions, myFunctions, parameters, datasets, $this, setReportState, getReportState } = props;
             if ($this) {
                 result = result.bind($this);
             }
-            result = result(commonFunctions, myFunctions, parameters, datasets, array, getObjVal, reportState, setReportState);
+            result = result(commonFunctions, myFunctions, parameters, datasets, array, getObjVal, getReportState, setReportState);
         }
         return result;
     } catch (err) {

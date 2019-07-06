@@ -9,9 +9,7 @@ export default class GridItem extends PureComponent {
 
     UNSAFE_componentWillMount() {
         this.commonContext = {
-            ...this.context,
-            compileGroup: this.context.compileGroup,
-            compileExpression: this.context.compileExpression
+            ...this.context
         };
     }
 

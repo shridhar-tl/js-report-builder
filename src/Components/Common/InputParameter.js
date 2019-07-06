@@ -24,14 +24,26 @@ export default class InputParameter extends PureComponent {
         if (newProps.value) {
             this.setState({ value: newProps.value });
         }
+        if (newProps.definition.dataset) {
+            if (this.state.dsId !== newProps.definition.dataset) {
+                this.resolveDataset();
+            }
+        }
+        else {
+            this.setState({ dataset: null });
+        }
     }
 
     componentWillMount() {
+        this.resolveDataset();
+    }
+
+    resolveDataset() {
         var { definition, value } = this.props;
-        var { dataset, displayField, valueField } = definition;
-        if (dataset && displayField) {
-            this.props.resolveDataset(dataset).then(dataset => {
-                var state = { dataset };
+        var { dataset: dsId, displayField, valueField } = definition;
+        if (dsId && displayField) {
+            this.props.resolveDataset(dsId).then(dataset => {
+                var state = { dataset, dsId };
                 var newValue;
 
                 if (valueField && value) {
@@ -56,6 +68,7 @@ export default class InputParameter extends PureComponent {
 
                     if (newValue) { state.value = newValue; }
                 }
+
                 this.setState(state);
             });
         }
@@ -164,11 +177,11 @@ export default class InputParameter extends PureComponent {
             case "NUM":
                 return <InputText keyfilter="num" value={value} onChange={this.valueChanged} className={className} />;
             case "DDL":
-                return <Dropdown optionLabel={displayField} value={value} options={dataset} onChange={this.targetValueChanged} className={className} />;
+                return <Dropdown optionLabel={displayField} value={dataset ? value : ""} options={dataset} onChange={this.targetValueChanged} className={className} />;
             case "AC":
                 return (
                     <AutoComplete
-                        value={value}
+                        value={dataset ? value : ""}
                         completeMethod={this.filterDataset}
                         suggestions={filteredDataset}
                         field={displayField}
@@ -217,6 +230,7 @@ export default class InputParameter extends PureComponent {
 
     getMultiValueField(value, setValue, valueChanged) {
         var { mask, slotChar, type, displayField } = this.props.definition;
+        var { dataset } = this.state;
 
         var className = "param-ctl param-multctl-" + type.toLowerCase();
 
@@ -231,12 +245,13 @@ export default class InputParameter extends PureComponent {
                 return <InputText keyfilter="num" value={value} onChange={valueChanged} className={className} />;
             case "DDL":
                 return (
-                    <MultiSelect value={value} options={[]} onChange={this.targetValueChanged} style={{ minWidth: "12em" }} filter={true} className={className} />
+                    <MultiSelect value={dataset ? value : []} optionLabel={displayField} options={dataset}
+                        onChange={this.targetValueChanged} style={{ minWidth: "12em" }} filter={true} className={className} />
                 );
             case "AC":
                 return (
                     <AutoComplete
-                        value={value}
+                        value={dataset ? value : []}
                         completeMethod={this.filterDataset}
                         suggestions={this.state.filteredDataset}
                         field={displayField}

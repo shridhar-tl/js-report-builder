@@ -11,6 +11,7 @@ import SelectDataset from "../Common/SelectDataset";
 import { getParamTypes } from "../../../Common/ReportConfig";
 import { Checkbox } from "primereact/checkbox";
 import InputParameter from "../../Common/InputParameter";
+import { BuilderContext } from "../Common/Constants";
 
 class ReportParameters extends ReportControlBase {
     constructor(props) {
@@ -18,11 +19,11 @@ class ReportParameters extends ReportControlBase {
         this.state = { parameters: props.parameters || [], editedParam: null, editIndex: null };
     }
 
-    showAddPopup = () => {
+    showPopup = () => {
         this.setState({ showAddDialog: true, editedParam: {}, editIndex: this.state.parameters.length });
     };
 
-    hideAddPopup = () => {
+    onHide = () => {
         this.setState({ showAddDialog: false, editedParam: null, editIndex: null });
     };
 
@@ -62,7 +63,7 @@ class ReportParameters extends ReportControlBase {
                     </DraggableHandle>
                 ))}
                 {showAddDialog && (
-                    <EditParameter parameter={editedParam} hideAddPopup={this.hideAddPopup} onChange={this.saveParameter} />
+                    <EditParameter parameter={editedParam} onHide={this.onHide} onChange={this.saveParameter} />
                 )}
             </div>
         );
@@ -72,6 +73,8 @@ class ReportParameters extends ReportControlBase {
 export default ReportParameters;
 
 class EditParameter extends PureComponent {
+    static contextType = BuilderContext
+
     constructor(props) {
         super(props);
         var { parameter = {} } = props;
@@ -84,8 +87,8 @@ class EditParameter extends PureComponent {
         this.props.onChange(this.state.parameter);
     };
 
-    hideAddPopup = () => {
-        this.props.hideAddPopup();
+    onHide = () => {
+        this.props.onHide();
         this.setState({ showDialog: false });
     };
 
@@ -104,12 +107,13 @@ class EditParameter extends PureComponent {
     updateFieldValue = (field, value) => {
         var { parameter } = this.state;
         parameter[field] = value;
-        parameter = { ...parameter };
 
         if (!parameter.dataset) {
             delete parameter.displayField;
             delete parameter.valueField;
         }
+
+        parameter = { ...parameter };
 
         var isParamValid = this.isParamValid(parameter);
         this.setState({ parameter, isParamValid });
@@ -150,8 +154,7 @@ class EditParameter extends PureComponent {
     }
 
     resolveDataset = (dsId) => {
-        return Promise.resolve([]);
-        // ToDo: Resolve dataset implementation need to be done
+        return this.context.resolveDataset(dsId);
     }
 
     render() {
@@ -160,7 +163,7 @@ class EditParameter extends PureComponent {
         var { value: pTypeName, allowedValidations = [] } = paramType || {};
         var footer = (
             <div>
-                <Button type="default" icon="fa fa-times" onClick={this.hideAddPopup} label="Cancel" />
+                <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveParameter} disabled={!isParamValid} label="Save" />
             </div>
         );

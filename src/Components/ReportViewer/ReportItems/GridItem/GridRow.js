@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import GridGroup from "./GridGroup";
 import { GridContext } from "../../Common";
 import ImageItem from "../ImageItem";
+import GridCellItem from "./GridCellItem";
 
 export default class GridRow extends PureComponent {
     static contextType = GridContext;
@@ -96,58 +97,34 @@ class GridCell extends PureComponent {
         this.cellType = isHeader ? "th" : "td";
     }
 
+    componentWillMount() {
+        var { colGroup, rowGroup } = this.props;
+
+        var fields = (rowGroup || {}).Fields;
+        var variables = (rowGroup || {}).Variables;
+
+        this.execProps = { fields, rowGroup, colGroup, variables };
+    }
+
     render() {
         var {
             cellType: CellType,
-            props,
-            context: { compileExpression }
+            props: { cell }
         } = this;
-        var { column, cell, colGroup, rowGroup } = props;
-        var rowGroupFields = (rowGroup || {}).Fields;
-        var rowGroupVars = (rowGroup || {}).Variables;
+
         return (
             <CellType>
                 {cell.map((c, i) => {
-                    var { title, style, data: displayValue } = c;
-
                     switch ((c.itemType || "").toLowerCase()) {
                         case "":
                         case "expression":
-                            var { hidden: hideWhen, $hideWhen, $expression } = c;
-                            if (!$expression) {
-                                var { expression, template } = c;
-                                $expression = compileExpression(expression);
-                                c.$expression = $expression;
-                            }
-                            if (!$hideWhen && hideWhen) {
-                                $hideWhen = compileExpression(hideWhen);
-                                c.$hideWhen = $hideWhen;
-                            }
-                            if ($hideWhen && $hideWhen()) {
-                                return false;
-                            }
-
-                            try {
-                                displayValue = $expression(rowGroupFields, rowGroup, colGroup, rowGroupVars);
-                            } catch (e) {
-                                displayValue = "#Error";
-                                title = e;
-                            }
-                            break;
+                        case "text":
+                            return <GridCellItem key={i} definition={c} />
                         case "img":
-                            return <ImageItem definition={c} execProps={{ fields: rowGroupFields, rowGroup, colGroup, variables: rowGroupVars }} />
-                        case "text": /* already value is binded. no need to do anything here */ break;
+                            return <ImageItem key={i} definition={c} execProps={this.execProps} />
                         default:
-                            displayValue = "#Error: Unsupported";
-                            title = "Unsupported element found inside grid cell";
-                            break;
+                            return <span key={i} title="Unsupported element found inside grid cell">#Error: Unsupported</span>
                     }
-
-                    return (
-                        <span key={i} style={style} title={title}>
-                            {displayValue}
-                        </span>
-                    );
                 })}
             </CellType>
         );

@@ -76,70 +76,72 @@ class GroupProperties extends PureComponent {
                 onHide={this.hidePopup}>
                 <TabView>
                     <TabPanel header="General">
-                        <div>
-                            <label>Name</label>
-                            <InputText
-                                keyfilter="alphanum"
-                                value={group.name}
-                                placeholder="Unique group name"
-                                onChange={e => this.setValue("name", e.currentTarget.value)}
-                            />
-                        </div>
-                        <div>
-                            <label>Dataset</label>
-                            <SelectDataset
-                                includeExprDS={true}
-                                value={group.dataset}
-                                onChange={id => this.setValue("dataset", id)}
-                            />
-                        </div>
-                        {group.dataset === -1 && (
+                        <div className="field-collection">
                             <div>
-                                <label>Dataset expression</label>
-                                <ExpressionEditor isStrict={true}
-                                    expression={group.expression}
+                                <label>Name</label>
+                                <InputText
+                                    keyfilter="alphanum"
+                                    value={group.name}
+                                    placeholder="Unique group name"
+                                    onChange={e => this.setValue("name", e.currentTarget.value)}
+                                />
+                            </div>
+                            <div>
+                                <label>Dataset</label>
+                                <SelectDataset
+                                    includeExprDS={true}
+                                    value={group.dataset}
+                                    onChange={id => this.setValue("dataset", id)}
+                                />
+                            </div>
+                            {group.dataset === -1 && (
+                                <div>
+                                    <label>Dataset expression</label>
+                                    <ExpressionEditor isStrict={true}
+                                        expression={group.expression}
+                                        onChange={value => {
+                                            this.setValue("expression", value);
+                                        }}
+                                    />
+                                </div>
+                            )}
+                            <div>
+                                <label>Filter dataset</label>
+                                <ExpressionEditor
+                                    expression={group.filter} isStrict={true}
                                     onChange={value => {
-                                        this.setValue("expression", value);
+                                        this.setValue("filter", value);
                                     }}
                                 />
                             </div>
-                        )}
-                        <div>
-                            <label>Filter dataset</label>
-                            <ExpressionEditor
-                                expression={group.filter} isStrict={true}
-                                onChange={value => {
-                                    this.setValue("filter", value);
-                                }}
-                            />
-                        </div>
-                        <div>
-                            <label>Sort dataset by</label>
-                            <ExpressionEditor
-                                expression={group.sortBy}
-                                onChange={value => {
-                                    this.setValue("sortBy", value);
-                                }}
-                            />
-                        </div>
-                        <div>
-                            <label>Visibility (hide item if expression evaluates to true)</label>
-                            <ExpressionEditor
-                                expression={group.hidden}
-                                onChange={value => {
-                                    this.setValue("hidden", value);
-                                }}
-                            />
-                        </div>
-                        <div>
-                            <label>Group by expression</label>
-                            <ExpressionList
-                                valueField="expr"
-                                value={group.keys}
-                                onChange={value => {
-                                    this.setValue("keys", value);
-                                }}
-                            />
+                            <div>
+                                <label>Sort dataset by</label>
+                                <ExpressionEditor
+                                    expression={group.sortBy}
+                                    onChange={value => {
+                                        this.setValue("sortBy", value);
+                                    }}
+                                />
+                            </div>
+                            <div>
+                                <label>Visibility (hide item if expression evaluates to true)</label>
+                                <ExpressionEditor
+                                    expression={group.hidden}
+                                    onChange={value => {
+                                        this.setValue("hidden", value);
+                                    }}
+                                />
+                            </div>
+                            <div>
+                                <label>Group by expression</label>
+                                <ExpressionList
+                                    valueField="expr"
+                                    value={group.keys}
+                                    onChange={value => {
+                                        this.setValue("keys", value);
+                                    }}
+                                />
+                            </div>
                         </div>
                     </TabPanel>
                     <TabPanel header="Variables">

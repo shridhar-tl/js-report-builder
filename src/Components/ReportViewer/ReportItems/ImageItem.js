@@ -3,24 +3,33 @@ import ItemsBase from "./ItemsBase";
 
 class ImageItem extends ItemsBase {
     getStateObject = () => {
-        var { definition: { srcMode, src, altText, tooltip, hidden, disabled, style } } = this.props;
+        var { definition } = this.props;
+
+        var { style, tooltip, hidden, disabled, clickAction, actionProps } = this.processDefaultProps(definition);
+        var { srcMode, src, altText } = definition;
 
         src = this.tryParseExpression(src);
         altText = this.tryParseExpression(altText);
-        tooltip = this.tryParseExpression(tooltip);
-        hidden = this.parseExpr(hidden);
-        disabled = this.parseExpr(disabled);
 
         if (srcMode === 2) {
             // ToDo: based on srcMode take image from resource
         }
 
-        return { style, src, altText, tooltip, hidden, disabled };
+        return { style, src, altText, tooltip, hidden, disabled, clickAction, actionProps };
     }
 
-    renderChild = () => {
-        var { src, altText, tooltip, disabled, style } = this.state;
-        return <img style={style} src={src} alt={altText} disabled={disabled} title={tooltip} />;
+    renderChild() {
+        var { src, altText, tooltip, style, disabled, displayValue, clickAction, actionProps } = this.state;
+
+        if (!clickAction) {
+            return <span style={style} title={tooltip}>{displayValue}</span>
+        }
+        else if (clickAction === "LNK") {
+            return <a title={tooltip} href={actionProps} disabled={disabled} target="_blank"><img style={style} src={src} alt={altText} /></a>
+        }
+        else {
+            return <img style={style} src={src} alt={altText} disabled={disabled} title={tooltip} onClick={this.callAction} />
+        }
     }
 }
 

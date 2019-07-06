@@ -9,6 +9,7 @@ import StyleEditor from "../../Common/StyleEditor";
 import { getBuiltInFields, getCommonFunctions } from "../../../Common/ReportConfig";
 import { BuilderContext } from "../Common/Constants";
 import { Dialog } from "primereact/dialog";
+import ExpressionList from "../Common/ExpressionList";
 
 class ReportControls extends PureComponent {
     static contextType = BuilderContext;
@@ -16,11 +17,15 @@ class ReportControls extends PureComponent {
     constructor(props) {
         super(props);
         var { data, selectedItems } = props;
-        var { parameters, datasetList } = data;
+        var { parameters, datasetList, reportState } = data;
+
         if (!selectedItems) {
             selectedItems = [];
         }
-        this.state = { data, activeIndex: [], parameters, datasetList, selectedItems };
+
+        reportState = reportState || [];
+
+        this.state = { data, activeIndex: [], parameters, reportState, datasetList, selectedItems };
     }
 
     UNSAFE_componentWillReceiveProps(newProps) {
@@ -32,11 +37,12 @@ class ReportControls extends PureComponent {
         this.setState({ data, parameters, datasetList, selectedItems });
     }
 
-    editFunctions = e => this.showAddPopup(e, 1, this.ctlFunctions);
-    addParam = e => this.showAddPopup(e, 2, this.ctlParameters);
-    addDataset = e => this.showAddPopup(e, 3, this.ctlDatasets);
+    editFields = e => this.showPopup(e, 0, this.ctlFields);
+    editFunctions = e => this.showPopup(e, 1, this.ctlFunctions);
+    addParam = e => this.showPopup(e, 2, this.ctlParameters);
+    addDataset = e => this.showPopup(e, 3, this.ctlDatasets);
 
-    showAddPopup(e, index, ctl) {
+    showPopup(e, index, ctl) {
         e.preventDefault();
         e.stopPropagation();
         var { activeIndex } = this.state;
@@ -44,7 +50,7 @@ class ReportControls extends PureComponent {
             activeIndex.push(index);
             this.setState({ activeIndex: [...activeIndex] });
         }
-        ctl.showAddPopup();
+        ctl.showPopup();
     }
 
     parameterModified = parameters => {
@@ -62,33 +68,47 @@ class ReportControls extends PureComponent {
         this.props.onChange(data);
     };
 
+    reportStateModified = (reportState) => {
+        var { data } = this.state;
+        data.reportState = reportState;
+        this.setState({ reportState });
+        this.props.onChange(data);
+    };
+
     tabChanged = e => {
         this.setState({ activeIndex: e.index });
     };
 
     render() {
-        var { data, parameters = [], datasetList = [], activeIndex, selectedItems } = this.state;
+        var { data, parameters = [], datasetList = [], activeIndex, selectedItems, reportState } = this.state;
         var { datasets = {}, myFunctions, userScript } = data;
         var [selectedItem] = selectedItems;
+
+        var fieldsHeader = (
+            <div style={{ width: "100%" }}>
+                Global fields
+                <Button type="success" icon="fa fa-edit" className="pull-right" onClick={this.editFields} title="Edit report state items" />
+            </div>
+        );
 
         var functionsHeader = (
             <div style={{ width: "100%" }}>
                 Utility Functions
-                <Button type="success" icon="fa fa-edit" className="pull-right" onClick={this.editFunctions} />
+                <Button type="success" icon="fa fa-edit" className="pull-right" onClick={this.editFunctions} title="Add / edit custom functions" />
             </div>
         );
 
         var parameterHeader = (
             <div style={{ width: "100%" }}>
                 Parameters ({parameters.length})
-                <Button type="success" icon="fa fa-plus" className="pull-right" onClick={this.addParam} />
+                <Button type="success" icon="fa fa-plus" className="pull-right" onClick={this.addParam} title="Add new report parameter" />
             </div>
         );
 
         var datasetHeader = (
             <div style={{ width: "100%" }}>
                 Datasets ({datasetList.length})
-                <Button type="success" icon="fa fa-plus" className="pull-right" onClick={this.addDataset} />
+                <Button type="success" icon="fa fa-plus" className="pull-right" onClick={this.addDataset} title="Add new report dataset" />
             </div>
         );
 
@@ -99,8 +119,9 @@ class ReportControls extends PureComponent {
                     activeIndex={activeIndex}
                     className="report-controls-ctr"
                     onTabChange={this.tabChanged}>
-                    <AccordionTab header="Built in fields">
-                        <BuiltinFields />
+                    <AccordionTab header={fieldsHeader}>
+                        <BuiltinFields ref={c => (this.ctlFields = c)} reportState={reportState}
+                            onChange={this.reportStateModified} />
                     </AccordionTab>
                     <AccordionTab header={functionsHeader}>
                         <FunctionsList
@@ -140,15 +161,104 @@ class ReportControls extends PureComponent {
 export default ReportControls;
 
 class BuiltinFields extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = { reportState: this.props.reportState };
+    }
+
+    showPopup = () => {
+        this.setState({ showDialog: true });
+    };
+
+    onHide = () => {
+        this.setState({ showDialog: false });
+    };
+
+    onChange = (reportState) => {
+        this.setState({ reportState, showDialog: false });
+        this.props.onChange(reportState);
+    }
+
     render() {
+        var { reportState, showDialog } = this.state;
+
         return (
             <div className="builtin-fields">
+                <div className="header">Report fields</div>
                 {getBuiltInFields().map(f => (
                     <div className="field" key={f.field} title={f.helpText}>
                         {f.field}
                     </div>
                 ))}
+                <div className="header">Report state</div>
+                {reportState.map(f => (
+                    <div className="field" key={f.name}>
+                        {f.name}
+                    </div>
+                ))}
+
+                {showDialog && (
+                    <ReportStateProperties definition={reportState} onHide={this.onHide} onChange={this.onChange} />
+                )}
             </div>
+        );
+    }
+}
+
+class ReportStateProperties extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = { showDialog: true, reportState: props.definition.map(d => { return { ...d } }) };
+    }
+
+    updateFieldValue = (field, value) => {
+        this.setState({ [field]: value }, () => {
+            this.setState({
+                isValid: true
+            });
+        });
+    };
+
+    onDone = () => {
+        this.props.onChange(this.state.reportState);
+    }
+
+    onHide = () => {
+        this.setState({ showDialog: false })
+        this.props.onHide();
+    }
+
+    render() {
+        var { showDialog, reportState, isValid } = this.state;
+
+        var footer = (
+            <div>
+                <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
+                <Button type="primary" icon="fa fa-check" onClick={this.onDone} disabled={!isValid} label="Save" />
+            </div>
+        );
+
+        return (
+
+            <Dialog
+                header="Edit default report state"
+                visible={showDialog}
+                footer={footer}
+                style={{ width: "70vw" }}
+                modal={true}
+                onHide={this.onHide}>
+                <ExpressionList
+                    nameField="name"
+                    valueField="value"
+                    nameHeader="State name"
+                    valueHeader="State default value"
+                    value={reportState}
+                    autoDetect={true}
+                    onChange={value => {
+                        this.updateFieldValue("reportState", value);
+                    }}
+                />
+            </Dialog>
         );
     }
 }
@@ -161,7 +271,7 @@ class FunctionsList extends PureComponent {
         this.state = {};
     }
 
-    showAddPopup = () => {
+    showPopup = () => {
         this.setState({ showDialog: true, userScript: this.props.userScript || "" });
     };
 

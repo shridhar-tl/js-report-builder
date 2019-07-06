@@ -25,7 +25,7 @@ class ImageItem extends ItemsBase {
             return <span style={style} title={tooltip}>{displayValue}</span>
         }
         else if (clickAction === "LNK") {
-            return <a title={tooltip} href={actionProps} disabled={disabled} target="_blank"><img style={style} src={src} alt={altText} /></a>
+            return <a title={tooltip} href={actionProps} disabled={disabled} target="_blank" rel="noopener noreferrer"><img style={style} src={src} alt={altText} /></a>
         }
         else {
             return <img style={style} src={src} alt={altText} disabled={disabled} title={tooltip} onClick={this.callAction} />

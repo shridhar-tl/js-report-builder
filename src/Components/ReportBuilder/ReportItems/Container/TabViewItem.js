@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
 import BaseContainer from './BaseContainer';
 import TabViewProperties from './TabViewProperties';
+import ReportItemBase from '../ReportItemBase';
 
-class TabViewItem extends BaseContainer {
+class TabViewItem extends ReportItemBase {
     constructor(props) {
         super(props);
         var { data: definition } = props;
@@ -58,7 +59,7 @@ class TabViewItem extends BaseContainer {
         var { addedItems, showPropsDialog, definition } = this.state;
 
         return super.renderBase(
-            <Fragment>
+            <>
                 <TabView>
                     {addedItems.map((d, i) => (
                         <TabPanel header={d.header} key={d._uniqueId}>
@@ -66,7 +67,7 @@ class TabViewItem extends BaseContainer {
                         </TabPanel>))}
                 </TabView>
                 {showPropsDialog && <TabViewProperties definition={definition} onHide={this.hideProperties} onChange={this.onChange} />}
-            </Fragment>
+            </>
         );
     }
 }

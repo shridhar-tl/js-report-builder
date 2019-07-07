@@ -3,16 +3,29 @@ import "./ReportDisplay.scss";
 import Droppable from "../DragDrop/Droppable";
 import { componentsMap } from "../ReportItems/index";
 import ReportItemBase from "../ReportItems/ReportItemBase";
+import DraggableHandle from "../DragDrop/DraggableHandle";
+import { getUniqueId } from "../Common/HelperFunctions";
 
 class ReportDisplay extends PureComponent {
     constructor(props) {
         super();
         this.state = { addedItems: props.items };
+        this.containerId = getUniqueId();
     }
 
-    onItemAdded = item => {
-        var addedItems = this.state.addedItems.map(i => i);
-        addedItems.push({ type: item.type }); // ToDo: attrs property need to be added
+    onItemAdded = (item, drg, index) => {
+        var { addedItems } = this.state;
+
+        if (index >= 0) {
+            addedItems.splice(index, 0, item);
+        }
+        else {
+            var newItem = { type: item.type }; // ToDo: attrs property need to be added
+            addedItems.push(newItem);
+        }
+
+        addedItems = [...addedItems];
+
         this.setState({ addedItems });
         this.props.onChange(addedItems);
     };
@@ -24,6 +37,22 @@ class ReportDisplay extends PureComponent {
         this.setState({ addedItems });
         this.props.onChange(addedItems);
     };
+
+    moveItem = (srcIndex, destIndex, item) => {
+        if (item.itemType === "EXST_ITMS") {
+            var { addedItems } = this.state;
+
+            var [movedItem] = addedItems.splice(srcIndex, 1);
+            addedItems.splice(destIndex, 0, movedItem);
+            addedItems = [...addedItems];
+
+            this.setState({ addedItems });
+            this.props.onChange(addedItems);
+        } else {
+            this.onItemAdded({ type: item.item.type }, null, destIndex); // ToDo: attrs property need to be added
+        }
+        return true;
+    }
 
     onChanged = (data, index) => {
         var { addedItems } = this.state;
@@ -37,13 +66,20 @@ class ReportDisplay extends PureComponent {
         if (!Ctl) { Ctl = ReportItemBase; }
 
         return (
-            <Ctl
-                key={index}
-                index={index}
-                onItemRemoved={this.onItemRemoved}
-                data={item.data}
-                onChange={d => this.onChanged(d, index)}
-            />
+            <DraggableHandle className="cmp-drg" index={index} itemType="EXST_ITMS" item={item} key={item._uniqueId} containerId={this.containerId} onItemRemoved={this.onItemRemoved}>
+                {({ connectDragSource }) => (
+                    <Ctl
+                        dragSource={connectDragSource}
+                        onItemMoved={this.moveItem}
+                        onItemAdded={this.onItemAdded}
+                        containerId={this.containerId}
+                        index={index}
+                        onItemRemoved={this.onItemRemoved}
+                        data={item.data}
+                        onChange={d => this.onChanged(d, index)}
+                    />)
+                }
+            </DraggableHandle>
         );
     };
 
@@ -51,7 +87,7 @@ class ReportDisplay extends PureComponent {
         var { addedItems } = this.state;
         return (
             <div className="report-display">
-                <Droppable className="drop-grp" type="RPT_ITMS" onItemAdded={this.onItemAdded}>
+                <Droppable className="drop-grp" type="RPT_ITMS" onItemAdded={this.onItemAdded} containerId={this.containerId}>
                     {!addedItems.length && (
                         <div className="message-no-items">
                             Drag and drop report items from left hand side to start building a report

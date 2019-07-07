@@ -6,30 +6,28 @@ const dragSource = {
   beginDrag(props, monitor, component) {
     return props;
   }
-  //endDrag(props, monitor, component) {
-  //  if (!monitor.didDrop()) {
-  //    // You can check whether the drop was successful
-  //    // or if the drag ended but nobody handled the drop
-  //    return;
-  //  }
+  /*endDrag(props, monitor, component) {
+    if (!monitor.didDrop()) {
+      // You can check whether the drop was successful
+      // or if the drag ended but nobody handled the drop
+      return;
+    }
 
-  //  // When dropped on a compatible target, do something.
-  //  // Read the original dragged item from getItem():
-  //  const item = monitor.getItem();
+    // When dropped on a compatible target, do something.
+    // Read the original dragged item from getItem():
+    const item = monitor.getItem();
 
-  //  // You may also read the drop result from the drop target
-  //  // that handled the drop, if it returned an object from
-  //  // its drop() method.
-  //  const dropResult = monitor.getDropResult();
-
-  //  // This is a good place to call some Flux action
-  //  //CardActions.moveCardToList(item.id, dropResult.listId);
-  //}
+    // You may also read the drop result from the drop target
+    // that handled the drop, if it returned an object from
+    // its drop() method.
+    const dropResult = monitor.getDropResult();
+  }*/
 };
 
 function collect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
     isDragging: monitor.isDragging()
   }
 }
@@ -42,17 +40,23 @@ class DraggableHandle extends PureComponent {
 
 
   render() {
-    const { connectDragSource, isDragging } = this.props;
+    var { children, connectDragSource, connectDragPreview, isDragging, className } = this.props;
 
-    return connectDragSource(
-      <div style={{ opacity: isDragging ? 0.5 : 1 }}>{this.props.children}</div>
-    );
+    if (typeof children === "function") {
+      return connectDragPreview(<div className={className} style={{ opacity: isDragging ? 0.5 : 1 }}>{children({ connectDragSource, isDragging })}</div>
+      );
+    }
+    else {
+      return connectDragSource(<div className={className} style={{ opacity: isDragging ? 0.5 : 1 }}>{children}</div>
+      );
+    }
   }
 }
 
 DraggableHandle.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
-  isDragging: PropTypes.bool.isRequired
+  isDragging: PropTypes.bool.isRequired,
+  index: PropTypes.number.isRequired
 };
 
 export default DragSource((prop) => prop.itemType, dragSource, collect)(DraggableHandle);

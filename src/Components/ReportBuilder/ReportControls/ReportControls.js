@@ -298,7 +298,7 @@ class FunctionsList extends PureComponent {
             </div>
         );
         return (
-            <React.Fragment>
+            <>
                 <div className="func-list">
                     <div className="func-grp">
                         <div className="header">Common functions</div>
@@ -328,7 +328,7 @@ class FunctionsList extends PureComponent {
                     onHide={this.hidePopup}>
                     <textarea style={{ height: "334px", width: "100%" }} value={userScript} onChange={(e) => this.setState({ userScript: e.target.value })}></textarea>
                 </Dialog>}
-            </React.Fragment>
+            </>
         );
     }
 }

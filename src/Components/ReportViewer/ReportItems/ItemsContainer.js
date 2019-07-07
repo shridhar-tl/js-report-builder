@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import ReportItems from '.';
 
 class ItemsContainer extends PureComponent {
@@ -24,7 +24,7 @@ class ItemsContainer extends PureComponent {
 
     render() {
         var { items } = this.props;
-        return <Fragment>{items.map(this.getReportItemComponent)}</Fragment>
+        return <>{items.map(this.getReportItemComponent)}</>
     }
 }
 

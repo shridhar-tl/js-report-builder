@@ -96,6 +96,12 @@ class Datasets extends PureComponent {
         return editIndex;
     };
 
+    isNameUnique = (name) => {
+        var { datasetList, datasets } = this.state;
+        name = name.toLowerCase();
+        return !datasetList.some(dn => datasets[dn].name.toLowerCase() === name);
+    }
+
     render() {
         var { datasets, datasetList, showAddDialog, editedDataset } = this.state;
 
@@ -122,7 +128,7 @@ class Datasets extends PureComponent {
                 <div style={{ clear: "both" }} />
 
                 {showAddDialog && (!editedDataset || !editedDataset.type) && (
-                    <DatasetType parameter={editedDataset} onHide={this.onHide} onChange={this.typeSelected} />
+                    <DatasetType parameter={editedDataset} onHide={this.onHide} onChange={this.typeSelected} isNameUnique={this.isNameUnique} />
                 )}
 
                 {showAddDialog && (editedDataset && editedDataset.type === "EXP") && (
@@ -171,19 +177,28 @@ class DatasetType extends PureComponent {
     };
 
     updateFieldValue = (field, value) => {
-        this.setState({ [field]: value }, () => {
-            this.setState({ isPropsValid: !!(this.state.name && this.state.type && this.state.name.length > 3) });
+        var { duplicateName } = this.state;
+        if (field === "name") { duplicateName = false; }
+
+        this.setState({ [field]: value, duplicateName }, () => {
+            this.setState({ isPropsValid: !duplicateName && !!(this.state.name && this.state.type && this.state.name.length > 3) });
         });
     };
 
     done = () => {
-        this.setState({ showDialog: false });
         var { type, name } = this.state;
+
+        if (!this.props.isNameUnique(name)) {
+            this.setState({ duplicateName: true, isPropsValid: false });
+            return;
+        }
+
+        this.setState({ showDialog: false });
         this.props.onChange(type, name);
     };
 
     render() {
-        var { showDialog, isPropsValid } = this.state;
+        var { showDialog, isPropsValid, duplicateName } = this.state;
 
         var footer = (
             <div>
@@ -204,6 +219,7 @@ class DatasetType extends PureComponent {
                     <div className="padding-v-10">
                         <label>Dataset name:</label>
                         <NameField field="name" onChange={val => this.updateFieldValue("name", val)} />
+                        {duplicateName && <span className="error-message">Dataset name must be unique</span>}
                     </div>
                     {this.datasetTypes.map((ds, i) => (
                         <div key={i} className="padding-5">

@@ -192,15 +192,7 @@ class EditParameter extends PureComponent {
                 onHide={this.onHide}>
                 <TabView>
                     <TabPanel header="General" contentClassName="no-padding" className="no-padding">
-                        <div className="field-collection">
-                            <div className="mandatory">
-                                <label>Name:</label>
-                                <InputText keyfilter="alphanum" field="name" value={parameter.name} onChange={updateValue} />
-                            </div>
-                            <div className="mandatory">
-                                <label>Display text:</label>
-                                <InputText field="display" value={parameter.display} onChange={updateValue} />
-                            </div>
+                        <div className="field-collection" style={{ height: "240px" }}>
                             <div className="mandatory">
                                 <label>Param type:</label>
                                 <Dropdown
@@ -216,6 +208,14 @@ class EditParameter extends PureComponent {
                                     }}
                                     placeholder="Select a Parameter type"
                                 />
+                            </div>
+                            <div className="mandatory">
+                                <label>Name:</label>
+                                <InputText keyfilter="alphanum" field="name" value={parameter.name} onChange={updateValue} />
+                            </div>
+                            <div className="mandatory">
+                                <label>Display text:</label>
+                                <InputText field="display" value={parameter.display} onChange={updateValue} />
                             </div>
                             <div>
                                 <Checkbox

@@ -19,10 +19,10 @@ class ImageItem extends ReportItemBase {
         }
 
         return super.renderBase(
-            <React.Fragment>
+            <>
                 <img alt={altText} style={{ width: '80px', height: '50px' }} />
                 {showPropsDialog && <ImageProperties definition={definition} onChange={this.saveProperties} onHide={this.hideProperties} />}
-            </React.Fragment>);
+            </>);
     }
 }
 

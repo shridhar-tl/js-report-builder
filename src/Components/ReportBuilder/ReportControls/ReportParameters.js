@@ -12,6 +12,7 @@ import { getParamTypes } from "../../../Common/ReportConfig";
 import { Checkbox } from "primereact/checkbox";
 import InputParameter from "../../Common/InputParameter";
 import { BuilderContext } from "../Common/Constants";
+import Droppable from "../DragDrop/Droppable";
 
 class ReportParameters extends ReportControlBase {
     constructor(props) {
@@ -49,23 +50,36 @@ class ReportParameters extends ReportControlBase {
         this.props.onChange(parameters);
     };
 
+    moveItem = (srcIndex, destIndex) => {
+        var { parameters } = this.state;
+        var [movedItem] = parameters.splice(srcIndex, 1);
+        parameters.splice(destIndex, 0, movedItem);
+        parameters = [...parameters];
+        this.setState({ parameters });
+        this.props.onChange(parameters);
+    }
+
     render() {
         var { showAddDialog, parameters, editedParam } = this.state;
         return (
-            <div className="params-list">
-                {parameters.map((param, index) => (
-                    <DraggableHandle itemType="RPT_PARM" item={param} key={param.name}>
-                        <div className="param">
-                            <span title={param.display}>{param.name}</span>
-                            <i className="fa fa-edit" onClick={() => this.editClicked(index)} title="Edit parameter properties" />
-                            <i className="fa fa-times" onClick={() => this.removeParameter(index)} title="Remove parameter" />
-                        </div>
-                    </DraggableHandle>
-                ))}
+            <>
+                <div className="params-list">
+                    {parameters.map((param, index) => (
+                        <DraggableHandle index={index} itemType="RPT_PARM" item={param} key={param.name}>
+                            {({ connectDragSource }) => <Droppable index={index} type={["RPT_PARM"]} onItemMoved={this.moveItem}>
+                                <div className="param">
+                                    {connectDragSource(<span className="cr-move" title={param.display}>{param.name}</span>)}
+                                    <i className="fa fa-edit" onClick={() => this.editClicked(index)} title="Edit parameter properties" />
+                                    <i className="fa fa-times" onClick={() => this.removeParameter(index)} title="Remove parameter" />
+                                </div>
+                            </Droppable>}
+                        </DraggableHandle>
+                    ))}
+                </div>
                 {showAddDialog && (
                     <EditParameter parameter={editedParam} onHide={this.onHide} onChange={this.saveParameter} />
                 )}
-            </div>
+            </>
         );
     }
 }
@@ -175,7 +189,7 @@ class EditParameter extends PureComponent {
                 footer={footer}
                 style={{ width: "50vw" }}
                 modal={true}
-                onHide={this.hideAddPopup}>
+                onHide={this.onHide}>
                 <TabView>
                     <TabPanel header="General" contentClassName="no-padding" className="no-padding">
                         <div className="field-collection">

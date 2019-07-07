@@ -1,15 +1,15 @@
+.cmp-drg:first-child {
+    & > .component > .header-cntr {
+        position: absolute;
+    }
+}
+
 .component {
     &.selected {
         border: 3px solid #217346;
     }
 
-    &:first-child {
-        .header-cntr {
-            position: absolute;
-        }
-    }
-
-    .header-cntr {
+    & > .header-cntr {
         position: relative;
         width: 300px;
     }

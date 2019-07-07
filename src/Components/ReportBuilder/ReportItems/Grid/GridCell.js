@@ -24,7 +24,7 @@ class GridCell extends PureComponent {
         var CellType = isHeaderCell ? "th" : "td";
 
         return (
-            <Droppable type={["GRID_ITEM", "RPT_ITMS", "RPT_DS_PRPS"]} onItemAdded={this.cellItem_Added}>
+            <Droppable type={["GRID_ITEM", "RPT_ITMS", "RPT_DS_PRPS", "RPT_PARM"]} onItemAdded={this.cellItem_Added}>
                 <CellType
                     className={selected ? "selected" : ""}
                     title={index}
@@ -146,9 +146,14 @@ class GridCell extends PureComponent {
     cellItem_Added = (item, source) => {
         var { cellData } = this.state;
         var newItem = item;
+
         if (source.itemType === "RPT_DS_PRPS") {
-            newItem = { data: item.key, expression: 'Fields.' + item.path };
-        } else if (source.itemType === "RPT_ITMS") {
+            newItem = { data: "[" + item.key + "]", expression: 'Fields.' + item.path };
+        }
+        else if (source.itemType === "RPT_PARM") {
+            newItem = { data: "$[" + item.display + "]", expression: 'Parameters.' + item.name };
+        }
+        else if (source.itemType === "RPT_ITMS") {
             switch (source.item.type) {
                 case "IMG":
                     newItem = { itemType: "IMG", style: { height: "20px", width: "20px" } };

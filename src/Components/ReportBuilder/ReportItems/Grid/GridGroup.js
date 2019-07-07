@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 import GridRow from "./GridRow";
 import { getUniqueGroupName } from "../../Common/HelperFunctions";
 
@@ -133,7 +133,7 @@ class GridGroup extends PureComponent {
         }
 
         return (
-            <Fragment>
+            <>
                 {children &&
                     children.map((item, i) => {
                         var commonProps = {
@@ -153,7 +153,7 @@ class GridGroup extends PureComponent {
                             return <GridGroup group={item} {...commonProps} />;
                         } // ToDo: Implement details group
                     })}
-            </Fragment>
+            </>
         );
     }
 }

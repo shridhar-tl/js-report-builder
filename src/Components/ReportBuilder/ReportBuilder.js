@@ -1,5 +1,5 @@
 import React from "react";
-import { DragDropContext } from "react-dnd";
+import { DndProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import "./ReportBuilder.scss";
 import array from "../../Common/linq";
@@ -84,29 +84,31 @@ class ReportBuilder extends ReportBase {
         return (
             <BuilderContext.Provider value={this.builderProps}>
                 <div className="report-builder">
-                    <div className="report-controls-cntr">
-                        <ReportControls
-                            data={data}
-                            selectedItems={selections}
-                            onChange={d => {
-                                this.setState({ data: d });
-                                if (this.props.onChange) {
-                                    this.props.onChange(d);
-                                }
-                            }}
-                        />
-                    </div>
-                    <div className="report-display-cntr" onClick={this.itemSelected} onContextMenu={this.showContextMenu}>
-                        <ReportDisplay
-                            items={data.reportItems}
-                            onChange={d => {
-                                data.reportItems = d;
-                                if (this.props.onChange) {
-                                    this.props.onChange(data);
-                                }
-                            }}
-                        />
-                    </div>
+                    <DndProvider backend={HTML5Backend}>
+                        <div className="report-controls-cntr">
+                            <ReportControls
+                                data={data}
+                                selectedItems={selections}
+                                onChange={d => {
+                                    this.setState({ data: d });
+                                    if (this.props.onChange) {
+                                        this.props.onChange(d);
+                                    }
+                                }}
+                            />
+                        </div>
+                        <div className="report-display-cntr" onClick={this.itemSelected} onContextMenu={this.showContextMenu}>
+                            <ReportDisplay
+                                items={data.reportItems}
+                                onChange={d => {
+                                    data.reportItems = d;
+                                    if (this.props.onChange) {
+                                        this.props.onChange(data);
+                                    }
+                                }}
+                            />
+                        </div>
+                    </DndProvider>
                 </div>
                 {expressionProps && !expressionProps.isImage && <ItemPropertiesPopup {...expressionProps} />}
                 {expressionProps && expressionProps.isImage && <ImageProperties {...expressionProps} />}
@@ -115,4 +117,4 @@ class ReportBuilder extends ReportBase {
     }
 }
 
-export default DragDropContext(HTML5Backend)(ReportBuilder);
+export default ReportBuilder;

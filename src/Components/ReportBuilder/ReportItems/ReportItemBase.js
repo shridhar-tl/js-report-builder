@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import './ReportItemBase.scss'
 import { Menu } from 'primereact/menu';
+import Droppable from '../DragDrop/Droppable';
 
 class ReportItemBase extends PureComponent {
     menuModel = [
@@ -39,20 +40,25 @@ class ReportItemBase extends PureComponent {
     }
 
     renderBase(...children) {
+        var { index, onItemMoved, onItemAdded, onItemRemoved, dragSource, containerId } = this.props;
         var childItems;
         if (children && children.length < 2) { childItems = children[0]; }
         else { childItems = children; }
-        return <div className="component">
+
+        var header = <div className="header" onContextMenu={this.showContext}>
+            <div className="pull-left"></div>
+            <div className="pull-right"><i className="fa fa-times" onClick={() => onItemRemoved(index)}
+                title="Remove this report item permenantly"></i></div>
+        </div>
+
+        return <Droppable className="component" index={index} type={["RPT_ITMS", "EXST_ITMS"]} containerId={containerId}
+            onItemMoved={onItemMoved} onItemAdded={onItemAdded}>
             <div className="header-cntr">
-                <div className="header" onContextMenu={this.showContext}>
-                    <div className="pull-left"></div>
-                    <div className="pull-right"><i className="fa fa-times" onClick={() => this.props.onItemRemoved(this.props.index)}
-                        title="Remove this report item permenantly"></i></div>
-                </div>
+                {dragSource ? dragSource(header) : header}
             </div>
             <Menu model={this.menuModel} popup={true} ref={el => (this.itemContext = el)} />
             {childItems}
-        </div >;
+        </Droppable>;
     }
 
     render() {

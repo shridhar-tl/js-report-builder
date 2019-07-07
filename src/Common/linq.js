@@ -193,6 +193,36 @@ var arrayInitFunc = (function () {
             return value;
         };
 
+        prototype.first = function (clause) {
+            if (clause != null) {
+                return source.filter(clause, 1)[0];
+            }
+            else {
+                // If no clause was specified, then return the First element in the Array
+                if (source.length > 0)
+                    return source[0];
+                else
+                    return null;
+            }
+        }
+        prototype.last = function (clause) {
+            if (clause != null) {
+                var newArr = source.filter(clause);
+                if (newArr.length) {
+                    return newArr[newArr.length - 1];
+                } else {
+                    return null;
+                }
+            }
+            else {
+                // If no clause was specified, then return the Last element in the Array
+                if (source.length > 0)
+                    return source[source.length - 1];
+                else
+                    return null;
+            }
+        }
+
         prototype.groupBy = function (clause, filter) {
             var result = [];
             var valObj = {};
@@ -497,30 +527,6 @@ function getProtoFunc() {
         for (var index = this.length - 1; index > -1; index--)
             retVal[retVal.length] = this[index];
         return retVal;
-    }
-    prototype.First = function (clause) {
-        if (clause != null) {
-            return this.where(clause, 1).First();
-        }
-        else {
-            // If no clause was specified, then return the First element in the Array
-            if (this.length > 0)
-                return this[0];
-            else
-                return null;
-        }
-    }
-    prototype.Last = function (clause) {
-        if (clause != null) {
-            return this.where(clause).Last();
-        }
-        else {
-            // If no clause was specified, then return the First element in the Array
-            if (this.length > 0)
-                return this[this.length - 1];
-            else
-                return null;
-        }
     }
     prototype.ElementAt = function (index) {
         return this[index];

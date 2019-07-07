@@ -6,6 +6,8 @@ import Droppable from "../../DragDrop/Droppable";
 import "./GridCell.scss";
 import { GridContext } from "../../Common/Constants";
 
+const rxIsValidName = /^[A-Za-z_]+[A-Za-z0-9_]*$/;
+
 class GridCell extends PureComponent {
     static contextType = GridContext;
 
@@ -148,7 +150,7 @@ class GridCell extends PureComponent {
         var newItem = item;
 
         if (source.itemType === "RPT_DS_PRPS") {
-            newItem = { data: "[" + item.key + "]", expression: 'Fields.' + item.path };
+            newItem = { data: "[" + item.key + "]", expression: rxIsValidName.test(item.path) ? 'Fields.' + item.path : "Field('" + item.path + "')" };
         }
         else if (source.itemType === "RPT_PARM") {
             newItem = { data: "$[" + item.display + "]", expression: 'Parameters.' + item.name };

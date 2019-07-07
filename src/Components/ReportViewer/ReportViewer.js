@@ -16,12 +16,17 @@ class ReportViewer extends ReportBase {
 
     constructor(props) {
         super(props);
-        var { defaultParameters = {}, definition } = props;
+        var { defaultParameters, definition } = props;
         var { datasets, reportItems, parameters, datasetList, userScript, reportState } = definition;
         reportItems = clone(reportItems, true);
         this.definition = { datasets, reportItems, parameters, datasetList, userScript, reportState };
         this.commonFunctions = getCommonFunctions(true);
         this.myFunctions = {}; /* ToDo: Need to implement */
+
+        if (typeof defaultParameters !== "object") {
+            defaultParameters = {};
+        }
+
         this.state = { hasParameters: false, defaultParameters, parameterValues: { ...defaultParameters } };
         this.reportStateChanged = new EventEmitter();
     }
@@ -41,6 +46,7 @@ class ReportViewer extends ReportBase {
                 this.setState({ showParameters: true });
             }
         },
+        getParameters: () => this.state.parameterValues,
         canShowParams: () => this.state.hasParameters && !this.state.showParameters,
         isParamsMode: () => this.state.showParameters,
         hasParameters: () => this.state.hasParameters
@@ -48,9 +54,19 @@ class ReportViewer extends ReportBase {
 
     initParameters() {
         var {
-            definition: { parameters }
+            definition: { parameters },
+            state: { parameterValues }
         } = this;
+
         if (parameters && parameters.length > 0) {
+            parameterValues = parameters.reduce((prms, p) => {
+                if (prms[p.name] === undefined) {
+                    prms[p.name] = p.defaultValue;
+                }
+                return prms;
+            }, parameterValues);
+            parameterValues = { ...parameterValues };
+
             this.setState({ hasParameters: true, showParameters: true, dataReady: false });
         } else {
             this.updateParameters();
@@ -163,7 +179,12 @@ class ReportViewer extends ReportBase {
         if (typeof item !== "object") { return item; }
         if (item.expression) {
             var pfunc = this.parseExpr(item.expression);
-            return pfunc();
+            if (typeof pfunc === "function") {
+                return pfunc();
+            }
+            else {
+                return pfunc;
+            }
         }
     }
 

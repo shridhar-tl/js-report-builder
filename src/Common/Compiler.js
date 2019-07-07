@@ -155,5 +155,6 @@ export function compileVariables(variables, props, initVars) {
 }
 
 function getWrapperFunction(expr) {
-    return "function(Fields){ return " + expr + "; }";
+    var fieldFunc = (expr || "").indexOf("Field(") >= 0 ? "Field=function(key){return getObjVal(Fields,key)};" : "";
+    return "function(Fields){ " + fieldFunc + " return " + expr + "; }";
 }

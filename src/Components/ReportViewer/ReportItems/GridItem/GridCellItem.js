@@ -13,7 +13,6 @@ class GridCellItem extends ItemsBase {
             template
         } = definition;
 
-
         if (expression && !$expression) {
             $expression = this.parseExpr(expression, true);
             definition.$expression = $expression;

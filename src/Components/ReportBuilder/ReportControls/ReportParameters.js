@@ -59,6 +59,12 @@ class ReportParameters extends ReportControlBase {
         this.props.onChange(parameters);
     }
 
+    isNameUnique = (name) => {
+        var { parameters } = this.state;
+        name = name.toLowerCase();
+        return !parameters.some(p => p.name.toLowerCase() === name);
+    }
+
     render() {
         var { showAddDialog, parameters, editedParam } = this.state;
         return (
@@ -77,7 +83,7 @@ class ReportParameters extends ReportControlBase {
                     ))}
                 </div>
                 {showAddDialog && (
-                    <EditParameter parameter={editedParam} onHide={this.onHide} onChange={this.saveParameter} />
+                    <EditParameter parameter={editedParam} onHide={this.onHide} onChange={this.saveParameter} isNameUnique={this.isNameUnique} />
                 )}
             </>
         );
@@ -97,7 +103,11 @@ class EditParameter extends PureComponent {
     }
 
     saveParameter = () => {
-        this.setState({ showDialog: true });
+        if (this.state.parameter.name !== (this.props.parameter || {}).name && !this.props.isNameUnique(this.state.parameter.name)) {
+            this.setState({ duplicateName: true, isParamValid: false });
+            return;
+        }
+        this.setState({ showDialog: false });
         this.props.onChange(this.state.parameter);
     };
 
@@ -119,8 +129,12 @@ class EditParameter extends PureComponent {
     };
 
     updateFieldValue = (field, value) => {
-        var { parameter } = this.state;
+        var { parameter, duplicateName } = this.state;
         parameter[field] = value;
+
+        if (field === "name") {
+            duplicateName = false;
+        }
 
         if (!parameter.dataset) {
             delete parameter.displayField;
@@ -130,7 +144,7 @@ class EditParameter extends PureComponent {
         parameter = { ...parameter };
 
         var isParamValid = this.isParamValid(parameter);
-        this.setState({ parameter, isParamValid });
+        this.setState({ parameter, isParamValid, duplicateName });
     };
 
     isParamValid(param) {
@@ -172,7 +186,7 @@ class EditParameter extends PureComponent {
     }
 
     render() {
-        var { showDialog, parameter, isParamValid, noMultiValue, paramType } = this.state;
+        var { showDialog, parameter, isParamValid, noMultiValue, paramType, duplicateName } = this.state;
         var { updateValue, updateFieldValue } = this;
         var { value: pTypeName, allowedValidations = [] } = paramType || {};
         var footer = (
@@ -212,6 +226,7 @@ class EditParameter extends PureComponent {
                             <div className="mandatory">
                                 <label>Name:</label>
                                 <InputText keyfilter="alphanum" field="name" value={parameter.name} onChange={updateValue} />
+                                {duplicateName && <span className="error-message">Parameter name must be unique</span>}
                             </div>
                             <div className="mandatory">
                                 <label>Display text:</label>

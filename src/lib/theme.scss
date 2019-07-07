@@ -92,6 +92,17 @@ body {
         cursor: move;
     }
 
+    span.error-message {
+        color: red;
+
+        &:before {
+            content: "\f071";
+            font-family: FontAwesome;
+            font-size: 18px;
+            margin: 5px;
+        }
+    }
+
     /*.p-dialog {
         border-radius: 3px;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);

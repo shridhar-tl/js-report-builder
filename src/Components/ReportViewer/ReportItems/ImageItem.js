@@ -22,7 +22,7 @@ class ImageItem extends ItemsBase {
         var { src, altText, tooltip, style, disabled, displayValue, clickAction, actionProps } = this.state;
 
         if (!clickAction) {
-            return <span style={style} title={tooltip}>{displayValue}</span>
+            return <img style={style} src={src} alt={altText} disabled={disabled} title={tooltip} />
         }
         else if (clickAction === "LNK") {
             return <a title={tooltip} href={actionProps} disabled={disabled} target="_blank" rel="noopener noreferrer"><img style={style} src={src} alt={altText} /></a>

@@ -2,8 +2,15 @@ import React, { PureComponent } from 'react';
 import { RadioButton } from 'primereact/radiobutton';
 import ExpressionList from "./ExpressionList";
 import ExpressionEditor from "./ExpressionEditor";
+import { BuilderContext } from './Constants';
 
 class ActionProperties extends PureComponent {
+    static contextType = BuilderContext;
+
+    componentWillMount() {
+        this.stateList = this.context.getStateItems();
+    }
+
     render() {
         var { definition: { clickAction, actionProps }, setValue } = this.props;
 

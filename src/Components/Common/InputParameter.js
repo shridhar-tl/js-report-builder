@@ -16,13 +16,13 @@ export default class InputParameter extends PureComponent {
     constructor(props) {
         super(props);
         var { definition, value } = props;
-        var { allowMultiple } = definition;
-        this.state = { value: value || (allowMultiple ? [] : "") };
+        var { allowMultiple, valueField } = definition;
+        this.state = { value: this.setIncommingValue(value || (allowMultiple ? [] : ""), valueField) };
     }
 
     UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.value) {
-            this.setState({ value: newProps.value });
+            this.setState({ value: this.setIncommingValue(newProps.value, newProps.definition.valueField) });
         }
         if (newProps.definition.dataset) {
             if (this.state.dsId !== newProps.definition.dataset) {
@@ -38,36 +38,46 @@ export default class InputParameter extends PureComponent {
         this.resolveDataset();
     }
 
+    setIncommingValue(value, valueField, dataset) {
+        var newValue;
+
+        if (valueField && value) {
+            if (!dataset && this.state) { dataset = this.state.dataset; }
+
+            if (dataset) {
+                if (Array.isArray(value)) {
+                    var firstVal = value[0];
+                    if (typeof (firstVal) != "object") {
+                        newValue = dataset.filter(d => value.indexOf(d[valueField]) >= 0);
+                    }
+                    else if (firstVal instanceof Date) {
+                        var vTicks = value.map(v => v.getTime());
+                        newValue = dataset.filter(d => vTicks.indexOf(convertToDate(d[valueField]).getTime()) >= 0);
+                    }
+                    if (newValue.length === 0) { newValue = null; }
+                }
+                else if (typeof (value) != "object") {
+                    newValue = array(dataset).first(d => d[valueField] === value);
+                }
+                else if (value instanceof Date) {
+                    var valTicks = value.getTime();
+                    newValue = array(dataset).first(d => convertToDate(d[valueField]).getTime() === valTicks);
+                }
+            }
+        }
+
+        return newValue || value;
+    }
+
     resolveDataset() {
         var { definition, value } = this.props;
         var { dataset: dsId, displayField, valueField } = definition;
         if (dsId && displayField) {
             this.props.resolveDataset(dsId).then(dataset => {
                 var state = { dataset, dsId };
-                var newValue;
+                var newValue = this.setIncommingValue(value, valueField, dataset);
 
-                if (valueField && value) {
-                    if (Array.isArray(value)) {
-                        var firstVal = value[0];
-                        if (typeof (firstVal) != "object") {
-                            newValue = dataset.filter(d => value.indexOf(d[valueField]) >= 0);
-                        }
-                        else if (firstVal instanceof Date) {
-                            var vTicks = value.map(v => v.getTime());
-                            newValue = dataset.filter(d => vTicks.indexOf(convertToDate(d[valueField]).getTime()) >= 0);
-                        }
-                        if (newValue.length === 0) { newValue = null; }
-                    }
-                    else if (typeof (value) != "object") {
-                        newValue = array(dataset).first(d => d[valueField] === value);
-                    }
-                    else if (value instanceof Date) {
-                        var valTicks = value.getTime();
-                        newValue = array(dataset).first(d => convertToDate(d[valueField]).getTime() === valTicks);
-                    }
-
-                    if (newValue) { state.value = newValue; }
-                }
+                if (newValue !== value) { state.value = newValue; }
 
                 this.setState(state);
             });

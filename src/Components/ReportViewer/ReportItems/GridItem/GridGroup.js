@@ -58,7 +58,7 @@ export default class GridGroup extends PureComponent {
         if (data) {
             var { filter, keys, sortBy } = $group;
             if (filter) {
-                data = data.filter(d => filter(d, rowGroup, colGroup, this.variables));
+                data = data.filter(filter(null, rowGroup, colGroup, this.variables));
             }
 
             if (keys) {
@@ -72,7 +72,14 @@ export default class GridGroup extends PureComponent {
                 data = array(data).groupBy(groupKey)();
             }
 
-            //ToDo: sortBy functionality need to be implemented
+            if (sortBy) {
+                if (typeof sortBy === "function") {
+                    data = array(data).sortBy(sortBy(null, rowGroup, colGroup, this.variables))();
+                }
+                else if (typeof sortBy === "string") {
+                    data = array(data).sortBy(f => f[sortBy])();
+                }
+            }
         } else {
             console.error("Unable to resolve data for " + (isRowGroup ? "row" : "col") + " group: ", group.name);
         }
@@ -91,12 +98,13 @@ export default class GridGroup extends PureComponent {
             data &&
             data.map((Fields, i) => {
                 var grpData = { Fields, Variables };
+
                 if (isDataGrouped) {
                     grpData.Fields = Fields.values;
                     grpData[keyPropName] = Fields.key;
                     grpData.values = Fields.values;
                 }
-                return children(grpData, i);
+                return children(grpData, grpData.Fields._uniqueId);
             })
         );
     }

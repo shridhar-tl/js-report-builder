@@ -8,15 +8,9 @@ import { BuilderContext } from './Constants';
 import ActionProperties from './ActionProperties';
 
 class ItemPropertiesPopup extends PureComponent {
-    static contextType = BuilderContext;
-
     constructor(props) {
         super(props);
         this.state = { showDialog: true, item: { ...props.definition } };
-    }
-
-    componentWillMount() {
-        this.stateList = this.context.getStateItems();
     }
 
     hidePopup = () => {

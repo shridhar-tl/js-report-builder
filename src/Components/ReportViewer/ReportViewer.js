@@ -59,13 +59,13 @@ class ReportViewer extends ReportBase {
         } = this;
 
         if (parameters && parameters.length > 0) {
-            parameterValues = parameters.reduce((prms, p) => {
+            var newParamValues = parameters.reduce((prms, p) => {
                 if (prms[p.name] === undefined) {
                     prms[p.name] = p.defaultValue;
                 }
                 return prms;
             }, parameterValues);
-            parameterValues = { ...parameterValues };
+            parameterValues = { ...newParamValues };
 
             this.setState({ hasParameters: true, showParameters: true, dataReady: false });
         } else {

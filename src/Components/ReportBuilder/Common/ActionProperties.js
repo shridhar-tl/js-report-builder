@@ -11,14 +11,14 @@ class ActionProperties extends PureComponent {
             <div className="field-collection">
                 <div><RadioButton inputId="clickAction_None" onChange={(e) => setValue("clickAction", null)} checked={!clickAction} />
                     <label htmlFor="clickAction_None">None</label></div>
-                <div><RadioButton inputId="clickAction_RPT" onChange={(e) => setValue("clickAction", "RPT")} checked={clickAction === "RPT"} />
-                    <label htmlFor="clickAction_RPT">Navigate to report</label></div>
                 <div><RadioButton inputId="clickAction_FNC" onChange={(e) => setValue("clickAction", "FNC")} checked={clickAction === "FNC"} />
                     <label htmlFor="clickAction_FNC">Call my function</label></div>
                 <div><RadioButton inputId="clickAction_RST" onChange={(e) => setValue("clickAction", "RST")} checked={clickAction === "RST"} />
                     <label htmlFor="clickAction_RST">Set report state</label></div>
+                {/*<div><RadioButton inputId="clickAction_RPT" onChange={(e) => setValue("clickAction", "RPT")} checked={clickAction === "RPT"} />
+                    <label htmlFor="clickAction_RPT">Navigate to report</label></div>
                 <div><RadioButton inputId="clickAction_BKM" onChange={(e) => setValue("clickAction", "BKM")} checked={clickAction === "BKM"} />
-                    <label htmlFor="clickAction_BKM">Go to bookmark</label></div>
+                    <label htmlFor="clickAction_BKM">Go to bookmark</label></div>*/}
                 <div><RadioButton inputId="clickAction_LNK" onChange={(e) => setValue("clickAction", "LNK")} checked={clickAction === "LNK"} />
                     <label htmlFor="clickAction_LNK">Use it as hyperlink to external url</label></div >
 

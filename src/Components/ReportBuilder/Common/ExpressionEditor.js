@@ -29,13 +29,13 @@ class ExpressionEditor extends PureComponent {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        var { expression, type, autoDetect } = nextProps;
+        var { expression, type, autoDetect, isStrict } = nextProps;
 
         if (typeof expression === "object") {
             type = null;
             expression = expression.expression;
         }
-        else if (autoDetect) { type = "text"; }
+        else if (autoDetect && !isStrict) { type = "text"; }
 
         var { expression: oldExpression, type: oldType } = this.state;
 
@@ -59,7 +59,7 @@ class ExpressionEditor extends PureComponent {
         } else {
             if (value.startsWith("=")) { value = value.substring(1).trim(); }
             validation = this.validateExpression(value);
-            if (this.props.autoDetect) {
+            if (this.props.autoDetect && !this.props.isStrict) {
                 value = { expression: value };
             }
         }
@@ -129,6 +129,18 @@ class ExpressionEditor extends PureComponent {
 
         var useTextarea = true; // Revisit: may need to use "multiline" property instead
 
+        var hasValue = !!expression;
+
+        if (!type && expression) {
+            if (!expression.startsWith("=")) {
+                expression = "=" + expression;
+                hasValue = true;
+            }
+            else {
+                hasValue = expression.length > 1;
+            }
+        }
+
         var inputField = useTextarea ? (
             <InputTextarea
                 style={style || inputStyle}
@@ -165,23 +177,11 @@ class ExpressionEditor extends PureComponent {
             return inputField;
         }
 
-        var hasValue = !!expression;
-
-        if (!type && expression) {
-            if (!expression.startsWith("=")) {
-                expression = "=" + expression;
-                hasValue = true;
-            }
-            else {
-                hasValue = expression.length > 1;
-            }
-        }
-
         return (
             <div className="expression-editor">
                 <div className="p-inputgroup">
                     <span className="p-inputgroup-addon" style={preIconStyle}>
-                        <i className={"fa " + (type ? "fa-font" : "fa-code")} />
+                        <i className={"fa " + (!isStrict && type ? "fa-font" : "fa-code")} />
                     </span>
                     {inputField}
                     <Button type={(hasValue ? (isValid ? "success" : "danger") : null)}

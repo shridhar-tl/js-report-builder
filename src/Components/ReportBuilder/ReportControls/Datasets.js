@@ -25,7 +25,7 @@ class Datasets extends PureComponent {
         this.setState({ showAddDialog: true, editedDataset: {} });
     };
 
-    hideAddPopup = () => {
+    onHide = () => {
         this.setState({ showAddDialog: false, editedDataset: null, editIndex: null });
     };
 
@@ -122,7 +122,7 @@ class Datasets extends PureComponent {
                 <div style={{ clear: "both" }} />
 
                 {showAddDialog && (!editedDataset || !editedDataset.type) && (
-                    <DatasetType parameter={editedDataset} hideAddPopup={this.hideAddPopup} onChange={this.typeSelected} />
+                    <DatasetType parameter={editedDataset} onHide={this.onHide} onChange={this.typeSelected} />
                 )}
 
                 {showAddDialog && (editedDataset && editedDataset.type === "EXP") && (
@@ -130,7 +130,7 @@ class Datasets extends PureComponent {
                         datasets={datasets}
                         datasetList={datasetList}
                         dataset={editedDataset}
-                        hideAddPopup={this.hideAddPopup}
+                        onHide={this.onHide}
                         onChange={this.saveDataset}
                     />
                 )}
@@ -140,7 +140,7 @@ class Datasets extends PureComponent {
                         datasets={datasets}
                         datasetList={datasetList}
                         dataset={editedDataset}
-                        hideAddPopup={this.hideAddPopup}
+                        onHide={this.onHide}
                         onChange={this.saveDataset}
                     />
                 )}
@@ -158,8 +158,8 @@ class DatasetType extends PureComponent {
         this.state = { showDialog: true };
     }
 
-    hideAddPopup = () => {
-        this.props.hideAddPopup();
+    onHide = () => {
+        this.props.onHide();
         this.setState({ showDialog: false });
     };
 
@@ -183,11 +183,11 @@ class DatasetType extends PureComponent {
     };
 
     render() {
-        var { showDialog, isPropsValid, name } = this.state;
+        var { showDialog, isPropsValid } = this.state;
 
         var footer = (
             <div>
-                <Button type="default" icon="fa fa-times" onClick={this.hideAddPopup} label="Cancel" />
+                <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.done} disabled={!isPropsValid} label="Next" />
             </div>
         );
@@ -199,7 +199,7 @@ class DatasetType extends PureComponent {
                 footer={footer}
                 style={{ width: "50vw" }}
                 modal={true}
-                onHide={this.hideAddPopup}>
+                onHide={this.onHide}>
                 <div className="padding-15">
                     <div className="padding-v-10">
                         <label>Dataset name:</label>
@@ -241,8 +241,8 @@ class ExpressionDataset extends PureComponent {
         };
     }
 
-    hideAddPopup = () => {
-        this.props.hideAddPopup();
+    onHide = () => {
+        this.props.onHide();
         this.setState({ showDialog: false });
     };
 
@@ -274,7 +274,7 @@ class ExpressionDataset extends PureComponent {
 
         var footer = (
             <div>
-                <Button type="default" icon="fa fa-times" onClick={this.hideAddPopup} label="Cancel" />
+                <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.done} disabled={!isPropsValid} label="Save" />
             </div>
         );
@@ -286,7 +286,7 @@ class ExpressionDataset extends PureComponent {
                 footer={footer}
                 style={{ width: "50vw" }}
                 modal={true}
-                onHide={this.hideAddPopup}>
+                onHide={this.onHide}>
                 <div className="field-collection">
                     <div>
                         <label>Dependencies:</label>
@@ -331,8 +331,8 @@ class FlatternDataset extends PureComponent {
         };
     }
 
-    hideAddPopup = () => {
-        this.props.hideAddPopup();
+    onHide = () => {
+        this.props.onHide();
         this.setState({ showDialog: false });
     };
 
@@ -364,7 +364,7 @@ class FlatternDataset extends PureComponent {
 
         var footer = (
             <div>
-                <Button type="default" icon="fa fa-times" onClick={this.hideAddPopup} label="Cancel" />
+                <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.done} disabled={!isPropsValid} label="Save" />
             </div>
         );
@@ -376,7 +376,7 @@ class FlatternDataset extends PureComponent {
                 footer={footer}
                 style={{ width: "50vw" }}
                 modal={true}
-                onHide={this.hideAddPopup}>
+                onHide={this.onHide}>
                 <div className="field-collection">
                     <div>
                         <label>Source dataset:</label>

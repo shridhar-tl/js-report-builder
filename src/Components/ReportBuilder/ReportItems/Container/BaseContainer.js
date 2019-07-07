@@ -92,12 +92,11 @@ class BaseContainer extends ReportItemBase {
             </DraggableHandle>);
     };
 
-    getDroppableContainer(addedItems, onItemAdded) {
-        if (!addedItems) {
-            addedItems = this.state.addedItems;
-        }
+    getDroppableContainer() {
+        var { addedItems } = this.state;
 
-        return <Droppable className="drop-grp" type="RPT_ITMS" onItemAdded={onItemAdded || this.onItemAdded} containerId={this.containerId}>
+        return <Droppable className="drop-grp" type={["RPT_ITMS", "EXST_ITMS"]} index={addedItems.length} containerId={this.containerId}
+            onItemAdded={this.onItemAdded} onItemMoved={this.moveItem}>
             {!addedItems.length && (
                 <div className="message-no-items">
                     Drag and drop report items here

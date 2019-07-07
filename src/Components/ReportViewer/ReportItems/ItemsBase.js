@@ -78,11 +78,22 @@ class ItemsBase extends PureComponent {
                     }
                     break;
 
+                case "FNC":
+                    if (actionProps && !$actionProps) {
+                        $actionProps = this.parseExpr(actionProps, true);
+                        definition.$actionProps = $actionProps;
+                    }
+
+                    this.actionProps = $actionProps;
+                    actionProps = null;
+                    break;
+
                 case "RST":
                     if (actionProps && !$actionProps) {
                         $actionProps = actionProps.map(ap => { return { name: ap.name, value: this.tryParseExpression(ap.value, true) } });
                         definition.$actionProps = $actionProps;
                     }
+
                     this.actionProps = $actionProps;
                     actionProps = null;
                     break;
@@ -107,6 +118,11 @@ class ItemsBase extends PureComponent {
             });
 
             this.context.setReportState(newRProps);
+        }
+        else if (this.state.clickAction === "FNC") {
+            if (typeof this.actionProps === "function") {
+                this.executeExpr(this.actionProps);
+            }
         }
     }
 

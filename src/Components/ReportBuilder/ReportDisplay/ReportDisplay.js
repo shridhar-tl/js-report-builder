@@ -87,7 +87,8 @@ class ReportDisplay extends PureComponent {
         var { addedItems } = this.state;
         return (
             <div className="report-display">
-                <Droppable className="drop-grp" type="RPT_ITMS" onItemAdded={this.onItemAdded} containerId={this.containerId}>
+                <Droppable className="drop-grp" type="RPT_ITMS" index={addedItems.length} containerId={this.containerId}
+                    onItemAdded={this.onItemAdded} onItemMoved={this.moveItem}>
                     {!addedItems.length && (
                         <div className="message-no-items">
                             Drag and drop report items from left hand side to start building a report

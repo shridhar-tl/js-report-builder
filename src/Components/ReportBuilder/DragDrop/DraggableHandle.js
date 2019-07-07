@@ -43,11 +43,11 @@ class DraggableHandle extends PureComponent {
     var { children, connectDragSource, connectDragPreview, isDragging, className } = this.props;
 
     if (typeof children === "function") {
-      return connectDragPreview(<div className={className} style={{ opacity: isDragging ? 0.5 : 1 }}>{children({ connectDragSource, isDragging })}</div>
+      return connectDragPreview(<div className={className}>{!isDragging && children({ connectDragSource, isDragging })}</div>
       );
     }
     else {
-      return connectDragSource(<div className={className} style={{ opacity: isDragging ? 0.5 : 1 }}>{children}</div>
+      return connectDragSource(<div className={className}>{!isDragging && children}</div>
       );
     }
   }

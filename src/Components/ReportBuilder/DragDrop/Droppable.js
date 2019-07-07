@@ -52,7 +52,7 @@ class Droppable extends PureComponent {
 
         if (className) {
             result = (
-                <div style={{ width: "100%", height: "100%", backgroundColor: isOver ? "yellow" : "", opacity: isOver ? 0.3 : null }} className={className}>
+                <div style={{ width: "100%", height: "100%", opacity: isOver ? 0.7 : null }} className={className}>
                     {result}
                 </div>
             );

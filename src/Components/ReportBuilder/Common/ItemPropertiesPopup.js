@@ -4,7 +4,6 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { TabPanel, TabView } from "primereact/tabview";
 import ExpressionEditor from "./ExpressionEditor";
-import { BuilderContext } from './Constants';
 import ActionProperties from './ActionProperties';
 
 class ItemPropertiesPopup extends PureComponent {

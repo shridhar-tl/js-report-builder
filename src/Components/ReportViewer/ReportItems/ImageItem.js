@@ -19,7 +19,7 @@ class ImageItem extends ItemsBase {
     }
 
     renderChild() {
-        var { src, altText, tooltip, style, disabled, displayValue, clickAction, actionProps } = this.state;
+        var { src, altText, tooltip, style, disabled, clickAction, actionProps } = this.state;
 
         if (!clickAction) {
             return <img style={style} src={src} alt={altText} disabled={disabled} title={tooltip} />

@@ -205,13 +205,15 @@ class ReportViewer extends ReportBase {
     updateParameters = parameterValues => {
         this.setState({ parameterValues, showParameters: false });
         this.resolveDatasets().then(r => {
-            this.initCustomFunctions();
             this.initReportState();
+            this.initCustomFunctions();
             this.setState({ dataReady: true });
         });
     };
 
-    initCustomFunctions() { }
+    initCustomFunctions() {
+        this.myFunctions = this.compileMyFunctions(this.definition.userScript);
+    }
 
     initReportState() {
         var { reportState } = this.definition;

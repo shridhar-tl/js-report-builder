@@ -184,4 +184,15 @@ export function getDefaultRptDefinition() {
     return reportDefinition;
 }
 
+export const myFuncPlaceholder = `// Write your own functions here and you can use it in expressions like MyFunctions.yourFunctionName('param value')
+// Mutating parameters, any existing datasets or objects would result in an unexpected behaviour.
+
+this.yourFunction1 = function yourFunction1(param1) {
+  return param1;
+}
+
+this.yourFunction2 = function yourFunction2(paramA, paramB) {
+  return paramA + paramB;
+}`;
+
 // #endregion

@@ -10,7 +10,7 @@ class ReportBase extends PureComponent {
 
         this.sharedProps = {
             buildMyFunctions: (script) => {
-                var { data } = this.state;
+                var { data = this.definition } = this.state;
                 var { userScript } = data;
 
                 if (script) {
@@ -18,24 +18,7 @@ class ReportBase extends PureComponent {
                 }
 
                 if (userScript) {
-                    var {
-                        commonFunctions,
-                        contextProps: { getDataset: datasets } = {},
-                        state: { parameterValues: parameters, reportState }
-                    } = this;
-
-                    var funcScript = userScript + "\n return this;";
-
-                    var funcObj = compileExpression(funcScript, {
-                        noWrap: true, $this: {},
-                        commonFunctions, datasets, parameters,
-                        reportState,
-                        setReportState: (object) => {
-                            var { reportState } = this.state;
-                            var newState = { ...reportState, ...object };
-                            this.setState({ reportState: newState });
-                        }
-                    });
+                    var funcObj = this.compileMyFunctions(userScript);
 
                     data.myFunctions = Object.keys(funcObj);
                     data.userScript = userScript;
@@ -59,6 +42,27 @@ class ReportBase extends PureComponent {
                 }
             },
         };
+    }
+
+    compileMyFunctions(userScript) {
+        if (!userScript) { return {}; }
+
+        var {
+            commonFunctions,
+            contextProps: { getDataset: datasets } = {},
+            state: { parameterValues: parameters, reportState }
+        } = this;
+
+        var funcScript = userScript + "\n return this;";
+
+        var funcObj = compileExpression(funcScript, {
+            noWrap: true, $this: {},
+            commonFunctions, datasets, parameters,
+            reportState,
+            setReportState: this.setReportState ? this.setReportState.bind(this) : () => { console.log("Report state is not available currently") }
+        });
+
+        return funcObj;
     }
 
     resolveDatasets(refresh) {

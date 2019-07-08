@@ -6,7 +6,7 @@ import Button from "../../Common/Button";
 import ReportParameters from "./ReportParameters";
 import Datasets from "./Datasets";
 import StyleEditor from "../../Common/StyleEditor";
-import { getBuiltInFields, getCommonFunctions } from "../../../Common/ReportConfig";
+import { getBuiltInFields, getCommonFunctions, myFuncPlaceholder } from "../../../Common/ReportConfig";
 import { BuilderContext } from "../Common/Constants";
 import { Dialog } from "primereact/dialog";
 import ExpressionList from "../Common/ExpressionList";
@@ -326,7 +326,7 @@ class FunctionsList extends PureComponent {
                     style={{ width: "65vw" }}
                     modal={true}
                     onHide={this.hidePopup}>
-                    <textarea style={{ height: "334px", width: "100%" }} value={userScript} onChange={(e) => this.setState({ userScript: e.target.value })}></textarea>
+                    <textarea style={{ height: "334px", width: "100%" }} placeholder={myFuncPlaceholder} value={userScript} onChange={(e) => this.setState({ userScript: e.target.value })}></textarea>
                 </Dialog>}
             </>
         );

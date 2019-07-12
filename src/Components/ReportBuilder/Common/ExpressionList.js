@@ -5,13 +5,18 @@ import ExpressionEditor from "./ExpressionEditor";
 import "./ExpressionList.scss";
 import { clone } from '../../../Common/HelperFunctions'
 import { Dropdown } from "primereact/dropdown";
+import array from '../../../Common/linq'
 
 class ExpressionList extends PureComponent {
     constructor(props) {
         super(props);
         var { value, nameFieldSet } = props;
         if (nameFieldSet) {
-            this.nameFieldSet = nameFieldSet.map(n => { return { name: n }; })
+            if (typeof nameFieldSet[0] === "string") {
+                this.nameFieldSet = nameFieldSet.map(n => { return { name: n }; });
+            } else {
+                this.nameFieldSet = nameFieldSet;
+            }
             this.nameFieldValues = this.nameFieldSet.reduce((obj, cur) => { obj[cur.name] = cur; return obj; }, {});
         }
         else {
@@ -22,7 +27,7 @@ class ExpressionList extends PureComponent {
 
     getExpressionRow(index, item, isNewRow) {
         var { nameFieldSet } = this;
-        var { namePlaceholder, valuePlaceholder, nameField, valueField, autoDetect } = this.props;
+        var { namePlaceholder, valuePlaceholder, nameField, valueField, autoDetect, fieldSetLabel } = this.props;
 
         return (
             <tr key={index}>
@@ -44,7 +49,7 @@ class ExpressionList extends PureComponent {
                 {nameField && nameFieldSet && (
                     <td>
                         <Dropdown
-                            optionLabel="name"
+                            optionLabel={fieldSetLabel || "name"}
                             value={this.nameFieldValues[item[nameField]] || undefined}
                             options={nameFieldSet}
                             onChange={e => {
@@ -52,7 +57,7 @@ class ExpressionList extends PureComponent {
                                 if (!isNewRow) {
                                     this.setValue(index, item);
                                 } else {
-                                    this.setState({ newItem: { ...item } })
+                                    this.setState({ newItem: { ...item }, addEnabled: !!(item[nameField] && item[valueField]) })
                                 }
                             }}
                         />
@@ -68,6 +73,8 @@ class ExpressionList extends PureComponent {
                             item[valueField] = value;
                             if (!isNewRow) {
                                 this.setValue(index, item);
+                            } else {
+                                this.setState({ addEnabled: !!(item[nameField] && item[valueField]) })
                             }
                         }}
                     />
@@ -75,7 +82,7 @@ class ExpressionList extends PureComponent {
 
                 {isNewRow && (
                     <td>
-                        <Button type="success" icon="fa fa-plus" onClick={() => this.setValue(index, item)} />
+                        <Button type="success" icon="fa fa-plus" disabled={!this.state.addEnabled} onClick={() => this.setValue(index, item)} />
                     </td>
                 )}
 
@@ -104,6 +111,20 @@ class ExpressionList extends PureComponent {
             this.setState({ items, newItem });
             this.props.onChange(items);
         }
+    }
+
+    hasEmptyData = () => {
+        var { items } = this.state;
+        var { nameField, valueField } = this.props;
+
+        return items && items.length > 0 && items.some(i => !i[nameField] || !i[valueField])
+    }
+
+    hasDuplicateData = () => {
+        var { items } = this.state;
+        var { nameField } = this.props;
+
+        return items && items.length > 0 && array(items).hasDuplicates(nameField)
     }
 
     render() {

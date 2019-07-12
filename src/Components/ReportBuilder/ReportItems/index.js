@@ -6,6 +6,7 @@ import ContainerItem from "./Container/ContainerItem";
 import PanelContainer from "./Container/PanelContainer";
 import TabViewItem from "./Container/TabViewItem";
 import MenuItems from "./MenuItems/MenuItems";
+import SubReport from "./SubReport";
 
 export const defaultComponents = [
     { type: 'TBL', icon: 'fa fa-table', text: 'Table', control: Grid },
@@ -21,7 +22,7 @@ export const defaultComponents = [
     { type: 'MNU', icon: 'fa fa-th-list', text: 'Menu items', control: MenuItems },
     // { type: 'TXT', icon: 'fa fa-font', text: 'Text item' }, //ToDo: need to find appropriate approach
     { type: 'REP', icon: 'fa fa-repeat', text: 'Repeator', control: ContainerItem },
-    { type: 'RPT', icon: 'fa fa-font', text: 'Sub report' }
+    { type: 'RPT', icon: 'fa fa-font', text: 'Sub report', control: SubReport }
 ];
 
 export const componentsMap = defaultComponents.reduce((obj, cur) => { obj[cur.type] = cur; return obj; }, {});

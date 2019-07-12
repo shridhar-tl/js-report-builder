@@ -4,7 +4,7 @@ import { clone, cloneArray } from "./HelperFunctions";
 var arrayInitFunc = (function () {
     var arrayFunc = function arrayFunc(array) {
         if (!array) {
-            throw { message: "No input received. Expected an array." };
+            throw new Error("No input received. Expected an array.");
         }
         var source = array;
 
@@ -265,28 +265,29 @@ var arrayInitFunc = (function () {
 
         prototype.hasDuplicates = function (clause) {
             var srcLen = source.length - 1;
+            var item, lpItem, j;
             if (typeof clause === "function") {
                 for (var i = 0; i < srcLen; i++) {
-                    var item = clause(source[i]);
-                    for (var j = i + 1; j < srcLen + 1; j++) {
-                        var lpItem = clause[source[j]];
+                    item = clause(source[i]);
+                    for (j = i + 1; j < srcLen + 1; j++) {
+                        lpItem = clause[source[j]];
                         if (item === lpItem) { return true; }
                     }
                 }
             }
             else if (typeof clause === "string") {
-                for (var i = 0; i < srcLen; i++) {
-                    var item = source[i][clause];
-                    for (var j = i + 1; j < srcLen + 1; j++) {
-                        var lpItem = source[j][clause];
+                for (var a = 0; a < srcLen; a++) {
+                    item = source[a][clause];
+                    for (j = a + 1; j < srcLen + 1; j++) {
+                        lpItem = source[j][clause];
                         if (item === lpItem) { return true; }
                     }
                 }
             }
             else {
-                for (var i = 0; i < srcLen; i++) {
-                    var itm = source[i];
-                    if (~source.indexOf(itm, i + 1)) { return true; }
+                for (var x = 0; x < srcLen; x++) {
+                    var itm = source[x];
+                    if (~source.indexOf(itm, x + 1)) { return true; }
                 }
             }
 
@@ -358,7 +359,7 @@ var arrayInitFunc = (function () {
         function getColsArr(obj) {
             var cols = Object.keys(obj);
             if (cols.filter(c => c.startsWith("~~")).length > 1) {
-                throw Error("#Error: Multiple array recurssion not allowed");
+                throw new Error("#Error: Multiple array recurssion not allowed");
             } // check to see if their are more than one ~~ item
             cols = arrayFunc(cols).orderBy(c => (c.startsWith("~~") ? 2 : 1))(); //sort ~~ at end
             return cols;

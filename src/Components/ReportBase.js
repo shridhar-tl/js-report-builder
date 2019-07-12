@@ -72,7 +72,7 @@ class ReportBase extends PureComponent {
         } else {
             promises = this.iterateAndResolveDS(refresh);
             if (!promises || promises.length === 0) {
-                throw Error("No datasets to resolve. This could be caused due to the circular dependency!");
+                throw new Error("No datasets to resolve. This could be caused due to the circular dependency!");
             }
         }
 
@@ -119,7 +119,7 @@ class ReportBase extends PureComponent {
         }
 
         if (~dependency.indexOf(dsId)) {
-            throw { message: "A dataset cannot depend on itself. Malformed report definition" };
+            throw new Error("A dataset cannot depend on itself. Malformed report definition");
         }
 
         // ToDo: Correct following check to loop through dependency in datasetList and see if it is valid

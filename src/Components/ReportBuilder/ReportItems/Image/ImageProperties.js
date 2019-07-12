@@ -13,7 +13,7 @@ class ImageProperties extends PureComponent {
         this.state = { definition: { ...definition }, showDialog: true };
     }
 
-    hidePopup = () => {
+    onHide = () => {
         this.setState({ showDialog: false });
         this.props.onHide();
     }
@@ -74,7 +74,7 @@ class ImageProperties extends PureComponent {
 
         var footer = (
             <div>
-                <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
+                <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} disabled={!isParamValid} label="Save" />
             </div>
         );
@@ -87,7 +87,7 @@ class ImageProperties extends PureComponent {
                     footer={footer}
                     style={{ width: "60vw" }}
                     modal={true}
-                    onHide={this.hidePopup}>
+                    onHide={this.onHide}>
                     <TabView>
                         <TabPanel header="General" contentClassName="no-padding" className="no-padding">
                             <div className="field-collection">

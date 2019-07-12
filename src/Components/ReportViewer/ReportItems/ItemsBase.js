@@ -43,22 +43,22 @@ class ItemsBase extends PureComponent {
             definition.$tooltip = $tooltip;
         }
 
+        if (typeof $tooltip === "function") {
+            tooltip = this.executeExpr($tooltip);
+        }
+
         if (hidden && !$hidden) {
             $hidden = this.parseExpr(hidden, true);
             definition.$hidden = $hidden;
         }
 
+        if (typeof $hidden === "function") {
+            hidden = this.executeExpr($hidden);
+        }
+
         if (disabled && !$disabled) {
             $disabled = this.parseExpr(disabled, true);
             definition.$disabled = $disabled;
-        }
-
-        if (typeof $tooltip === "function") {
-            tooltip = this.executeExpr($tooltip);
-        }
-
-        if (typeof $hidden === "function") {
-            hidden = this.executeExpr($hidden);
         }
 
         if (typeof $disabled === "function") {
@@ -90,7 +90,7 @@ class ItemsBase extends PureComponent {
 
                 case "RST":
                     if (actionProps && !$actionProps) {
-                        $actionProps = actionProps.map(ap => { return { name: ap.name, value: this.tryParseExpression(ap.value, true) } });
+                        $actionProps = this.parseArray(actionProps);
                         definition.$actionProps = $actionProps;
                     }
 
@@ -105,17 +105,32 @@ class ItemsBase extends PureComponent {
         return { style, tooltip, hidden, disabled, clickAction, actionProps };
     }
 
+    parseArray(arr) {
+        return arr.map(ap => { return { name: ap.name, value: this.tryParseExpression(ap.value, true) } });
+    }
+
+    executeArray(arr, reduce) {
+        var result = arr.map(itm => {
+            var { name, value } = itm;
+
+            if (typeof value === "function") {
+                value = this.executeExpr(value);
+            }
+
+            return { name, value };
+        });
+        if (reduce) {
+            result = result.reduce((obj, cur) => {
+                obj[cur.name] = cur.value;
+                return obj;
+            }, {});
+        }
+        return result;
+    }
+
     callAction = () => {
         if (this.state.clickAction === "RST") {
-            var newRProps = this.actionProps.map(itm => {
-                var { name, value } = itm;
-
-                if (typeof value === "function") {
-                    value = this.executeExpr(value);
-                }
-
-                return { name, value };
-            });
+            var newRProps = this.executeArray(this.actionProps);
 
             this.context.setReportState(newRProps);
         }

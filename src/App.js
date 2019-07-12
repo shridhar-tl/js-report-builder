@@ -8,6 +8,11 @@ import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";
 import { userDaywiseReport, datasets, userList, projects, issuetypes, customfields, rapidview, tempData } from './testdata'
 
+var subReports = [
+    { id: 1, name: "User daywise report", definition: userDaywiseReport },
+    { id: 2, name: "Temp report", definition: tempData }
+];
+
 var defaultConfig = {
     parameterTypes: {
         UG: {
@@ -109,13 +114,17 @@ var defaultConfig = {
                 // content can be string or byte array
             }
         }
+    },
+    subReports,
+    resolveReportDefinition: (reportId) => {
+        return Promise.resolve((subReports.filter(r => r.id === reportId)[0] || {}).definition);
     }
 };
 
 class App extends PureComponent {
     constructor() {
         super();
-        this.state = { preview: false, reportDefinition: userDaywiseReport };
+        this.state = { preview: false, reportDefinition: tempData || userDaywiseReport };
     }
 
     componentWillMount() {

@@ -263,6 +263,36 @@ var arrayInitFunc = (function () {
             return false;
         };
 
+        prototype.hasDuplicates = function (clause) {
+            var srcLen = source.length - 1;
+            if (typeof clause === "function") {
+                for (var i = 0; i < srcLen; i++) {
+                    var item = clause(source[i]);
+                    for (var j = i + 1; j < srcLen + 1; j++) {
+                        var lpItem = clause[source[j]];
+                        if (item === lpItem) { return true; }
+                    }
+                }
+            }
+            else if (typeof clause === "string") {
+                for (var i = 0; i < srcLen; i++) {
+                    var item = source[i][clause];
+                    for (var j = i + 1; j < srcLen + 1; j++) {
+                        var lpItem = source[j][clause];
+                        if (item === lpItem) { return true; }
+                    }
+                }
+            }
+            else {
+                for (var i = 0; i < srcLen; i++) {
+                    var itm = source[i];
+                    if (~source.indexOf(itm, i + 1)) { return true; }
+                }
+            }
+
+            return false;
+        }
+
         function getObject(row, clause, curItem, propPrefix) {
             propPrefix = propPrefix || "";
             var cols = getColsArr(clause);

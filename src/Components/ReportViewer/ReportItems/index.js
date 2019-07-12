@@ -6,6 +6,7 @@ import PanelItem from "./PanelItem";
 import HorizontalLine from "./HorizontalLine";
 import MenuItem from "./MenuItem";
 import ChartItem from "./ChartItem";
+import SubReport from "./SubReport";
 
 export default {
     TBL: GridItem,
@@ -15,5 +16,6 @@ export default {
     PNL: PanelItem,
     HLN: HorizontalLine,
     MNU: MenuItem,
-    CHT: ChartItem
+    CHT: ChartItem,
+    RPT: SubReport
 };

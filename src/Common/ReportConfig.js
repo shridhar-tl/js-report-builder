@@ -4,11 +4,12 @@ import inbuiltFunctions from "./CommonFunctions";
 import inbuiltDatasets from "./DatasetTypes";
 
 export function initReportBuilder(config) {
-    var { parameterTypes, datasetTypes, builtInFields, commonFunctions } = config;
+    var { parameterTypes, datasetTypes, builtInFields, commonFunctions, subReports, resolveReportDefinition } = config;
     initParamTypes(parameterTypes);
     initDatasetTypes(datasetTypes);
     initBuiltinFields(builtInFields);
     initCommonFunctions(commonFunctions);
+    initSubReports(subReports, resolveReportDefinition);
     return Promise.resolve({ parameterTypes: getParamTypes(true) });
 }
 
@@ -194,5 +195,38 @@ this.yourFunction1 = function yourFunction1(param1) {
 this.yourFunction2 = function yourFunction2(paramA, paramB) {
   return paramA + paramB;
 }`;
+
+// #endregion
+
+// #region Sub Reports
+
+var subReportsList = [];
+var resolveReportDefinition = null;
+
+export function getReportsList() { return subReportsList; }
+
+export function resolveReport(reportId) {
+    return resolveReportDefinition(reportId).then(def => {
+        if (!def) {
+            this.setState({ reportError: "Unable to fetch report details" });
+            console.error("Report definition was not resolved");
+            return;
+        }
+
+        return def;
+    });
+}
+
+function initSubReports(subReports, resolver) {
+    if (!subReports) { return; }
+    if (!Array.isArray(subReports)) { throw Error("'subReports' must contain an array of objects with id & name properties"); }
+    if (typeof resolver !== "function") { throw Error("Expecting 'resolveReportDefinition' to be a function resolving report definition"); }
+    resolveReportDefinition = resolver;
+    subReportsList = subReports.map(r => {
+        var { id, name } = r;
+        if (!id || !name) { throw Error("id & name properties are expected in subReports"); }
+        return { id, name };
+    });
+}
 
 // #endregion

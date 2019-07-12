@@ -16,7 +16,7 @@ class ReportViewer extends ReportBase {
 
     constructor(props) {
         super(props);
-        var { defaultParameters, definition } = props;
+        var { parameterValues: defaultParameters, definition } = props;
         var { datasets, reportItems, parameters, datasetList, userScript, reportState } = definition;
         reportItems = clone(reportItems, true);
         this.definition = { datasets, reportItems, parameters, datasetList, userScript, reportState };

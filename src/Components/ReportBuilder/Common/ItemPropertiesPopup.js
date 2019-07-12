@@ -12,7 +12,7 @@ class ItemPropertiesPopup extends PureComponent {
         this.state = { showDialog: true, item: { ...props.definition } };
     }
 
-    hidePopup = () => {
+    onHide = () => {
         var { onHide } = this.props;
         this.setState({ showDialog: false });
         onHide();
@@ -70,7 +70,7 @@ class ItemPropertiesPopup extends PureComponent {
 
         var footer = (
             <div>
-                <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
+                <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} disabled={!isFieldsValid} label="Save" />
             </div>
         );
@@ -83,7 +83,7 @@ class ItemPropertiesPopup extends PureComponent {
                     footer={footer}
                     style={{ width: "50vw" }}
                     modal={true}
-                    onHide={this.hidePopup}>
+                    onHide={this.onHide}>
                     <TabView>
                         <TabPanel header="General" contentClassName="no-padding" className="no-padding">
                             <div className="field-collection">

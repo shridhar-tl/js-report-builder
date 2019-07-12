@@ -36,6 +36,7 @@ class StyleEditor extends PureComponent {
         var styleList = [];
         var i = 0;
         while (!!(propName = properties[i++])) {
+            // eslint-disable-next-line no-loop-func
             if (propName.length <= 2 || excludedCSSProps.some(t => propName.indexOf(t) === 0)) { continue; }
 
             var propValue = properties[propName];

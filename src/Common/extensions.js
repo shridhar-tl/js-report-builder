@@ -1,5 +1,6 @@
 (function () {
     var id_counter = 1;
+    // eslint-disable-next-line no-extend-native
     Object.defineProperty(Object.prototype, "_uniqueId", {
         get: function () {
             if (this.__objectId__ === undefined) {

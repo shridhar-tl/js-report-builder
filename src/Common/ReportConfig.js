@@ -219,12 +219,12 @@ export function resolveReport(reportId) {
 
 function initSubReports(subReports, resolver) {
     if (!subReports) { return; }
-    if (!Array.isArray(subReports)) { throw Error("'subReports' must contain an array of objects with id & name properties"); }
-    if (typeof resolver !== "function") { throw Error("Expecting 'resolveReportDefinition' to be a function resolving report definition"); }
+    if (!Array.isArray(subReports)) { throw new Error("'subReports' must contain an array of objects with id & name properties"); }
+    if (typeof resolver !== "function") { throw new Error("Expecting 'resolveReportDefinition' to be a function resolving report definition"); }
     resolveReportDefinition = resolver;
     subReportsList = subReports.map(r => {
         var { id, name } = r;
-        if (!id || !name) { throw Error("id & name properties are expected in subReports"); }
+        if (!id || !name) { throw new Error("id & name properties are expected in subReports"); }
         return { id, name };
     });
 }

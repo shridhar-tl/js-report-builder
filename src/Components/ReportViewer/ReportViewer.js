@@ -133,7 +133,7 @@ class ReportViewer extends ReportBase {
     }
 
     setReportState(name, value) {
-        if (!this.reportState) { throw Error("Report state is not available in this scope"); }
+        if (!this.reportState) { throw new Error("Report state is not available in this scope"); }
 
         var changedStates = [];
 
@@ -157,7 +157,7 @@ class ReportViewer extends ReportBase {
     }
 
     setReportStateValue(name, value) {
-        if (!~this.reportStateKeys.indexOf(name)) { throw Error("Invalid report state item: ", name); }
+        if (!~this.reportStateKeys.indexOf(name)) { throw new Error("Invalid report state item: ", name); }
         var oldValue = this.reportState[name];
         if (oldValue !== value) {
             this.reportState[name] = value;
@@ -166,7 +166,7 @@ class ReportViewer extends ReportBase {
     }
 
     getReportState = (name) => {
-        if (!this.reportState) { throw Error("Report state is not available in this scope"); }
+        if (!this.reportState) { throw new Error("Report state is not available in this scope"); }
         this.reportStateRequested(name);
         return this.reportState[name];
     }
@@ -218,7 +218,7 @@ class ReportViewer extends ReportBase {
     initReportState() {
         var { reportState } = this.definition;
         if (!reportState) { this.reportState = {}; this.reportStateKeys = []; return; }
-        if (!Array.isArray(reportState)) { throw Error("Report definition is invalid. Report state corrupted"); }
+        if (!Array.isArray(reportState)) { throw new Error("Report definition is invalid. Report state corrupted"); }
         if (!reportState.length) { this.reportState = {}; this.reportStateKeys = []; return; }
         var newReportState = reportState.reduce((stt, val) => {
             var value = this.tryParseExpression(val.value);

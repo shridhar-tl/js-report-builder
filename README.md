@@ -39,6 +39,7 @@ This function expects an object with known set of properties and need to be call
 ### Sample property
 
     var defaultConfig = {
+	    compiler: function (code, sandbox) { return Function(...sandbox, code)(); },
         parameterTypes: {
             ULIST: {
                 label: "Users List",

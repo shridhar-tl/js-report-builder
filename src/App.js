@@ -6,6 +6,7 @@ import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";
+import axios from "axios";
 import { userDaywiseReport, datasets, userList, projects, issuetypes, customfields, rapidview, tempData } from './testdata'
 
 var subReports = [
@@ -123,6 +124,13 @@ var defaultConfig = {
     subReports,
     resolveReportDefinition: (reportId) => {
         return Promise.resolve((subReports.filter(r => r.id === reportId)[0] || {}).definition);
+    },
+    resolveHttpRequest: (method, url, data, headers) => {
+        var params = data;
+        if ((method || "GET").toUpperCase() === "GET") { data = undefined; }
+        else { params = undefined; }
+
+        return axios({ method, url, params, data, headers }).then(d => d.data);
     }
 };
 

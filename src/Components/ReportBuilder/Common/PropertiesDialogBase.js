@@ -5,10 +5,11 @@ import Button from '../../Common/Button';
 import ExpressionEditor from './ExpressionEditor'
 
 class PropertiesDialogBase extends PureComponent {
-    constructor(props, title, style) {
+    constructor(props, title, style, maximizable) {
         super(props);
         this.title = title;
         this.style = style || { width: "70vw" };
+        this.maximizable = maximizable;
 
         var { definition } = props;
         this.state = { definition: { ...definition }, showDialog: true };
@@ -68,7 +69,7 @@ class PropertiesDialogBase extends PureComponent {
     }
 
     renderBase(children) {
-        var { title, style, onHide, saveProperties, state: { showDialog, isPropsValid } } = this;
+        var { title, style, onHide, saveProperties, maximizable, state: { showDialog, isPropsValid } } = this;
 
         var footer = (
             <div>
@@ -77,7 +78,7 @@ class PropertiesDialogBase extends PureComponent {
             </div>
         );
 
-        return <Dialog header={title} visible={showDialog} footer={footer} style={style} modal={true} onHide={onHide}>{children}</Dialog>
+        return <Dialog header={title} maximizable={maximizable} visible={showDialog} footer={footer} style={style} modal={true} onHide={onHide}>{children}</Dialog>
     }
 }
 

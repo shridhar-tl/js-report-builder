@@ -33,9 +33,9 @@ class SelectDataset extends PureComponent {
         var { datasets = [], selItems } = this.state;
 
         if (multiselect) {
-            return <MultiSelect optionLabel="name" value={selItems} options={datasets} onChange={this.selectionChanged} />;
+            return <MultiSelect appendTo={document.body} optionLabel="name" value={selItems} options={datasets} onChange={this.selectionChanged} />;
         } else {
-            return <Dropdown optionLabel="name" value={selItems} options={datasets} onChange={this.selectionChanged} />;
+            return <Dropdown appendTo={document.body} optionLabel="name" value={selItems} options={datasets} onChange={this.selectionChanged} />;
         }
     }
 }

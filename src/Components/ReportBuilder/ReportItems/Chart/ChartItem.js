@@ -112,6 +112,7 @@ class ChartItemProperties extends PureComponent {
                                 <div className="mandatory">
                                     <label>Chart type:</label>
                                     <Dropdown
+                                        appendTo={document.body}
                                         value={type}
                                         options={getChartTypes()}
                                         onChange={e => {

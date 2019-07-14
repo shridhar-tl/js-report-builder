@@ -49,6 +49,7 @@ class ExpressionList extends PureComponent {
                 {nameField && nameFieldSet && (
                     <td>
                         <Dropdown
+                            appendTo={document.body}
                             optionLabel={fieldSetLabel || "name"}
                             value={this.nameFieldValues[item[nameField]] || undefined}
                             options={nameFieldSet}

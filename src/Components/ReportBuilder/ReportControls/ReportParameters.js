@@ -219,6 +219,7 @@ class EditParameter extends PureComponent {
                             <div className="mandatory">
                                 <label>Param type:</label>
                                 <Dropdown
+                                    appendTo={document.body}
                                     value={parameter.type}
                                     options={getParamTypes()}
                                     onChange={e => {

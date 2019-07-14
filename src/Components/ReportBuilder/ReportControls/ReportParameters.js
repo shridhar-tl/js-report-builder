@@ -8,7 +8,7 @@ import Button from "../../Common/Button";
 import DraggableHandle from "../DragDrop/DraggableHandle";
 import "./ReportParameters.scss";
 import SelectDataset from "../Common/SelectDataset";
-import { getParamTypes } from "../../../Common/ReportConfig";
+import { getParamTypes, supportedFileTypes } from "../../../Common/ReportConfig";
 import { Checkbox } from "primereact/checkbox";
 import InputParameter from "../../Common/InputParameter";
 import { BuilderContext } from "../Common/Constants";
@@ -135,6 +135,14 @@ class EditParameter extends PureComponent {
         if (field === "name") {
             duplicateName = false;
         }
+        else if (field === "type") {
+            delete parameter.fileTypes;
+            delete parameter.defaultValue;
+            delete parameter.mask;
+            delete parameter.slotChar;
+            delete parameter.minVal;
+            delete parameter.maxVal;
+        }
 
         if (!parameter.dataset) {
             delete parameter.displayField;
@@ -186,9 +194,10 @@ class EditParameter extends PureComponent {
     }
 
     render() {
-        var { showDialog, parameter, isParamValid, noMultiValue, paramType, duplicateName } = this.state;
+        var { showDialog, parameter, isParamValid, noMultiValue, paramType, duplicateName, allowedFileTypes } = this.state;
         var { updateValue, updateFieldValue } = this;
         var { value: pTypeName, allowedValidations = [] } = paramType || {};
+
         var footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
@@ -216,7 +225,7 @@ class EditParameter extends PureComponent {
                                         var paramType = this.paramTypes[e.value];
                                         this.setState({
                                             paramType, noMultiValue: paramType.supportMultiValue === false,
-                                            defaultValue: null, mask: null, slotChar: null, minVal: null, maxVal: null
+                                            allowedFileTypes: null
                                         });
                                         updateFieldValue("type", e.value);
                                     }}
@@ -243,7 +252,7 @@ class EditParameter extends PureComponent {
                             </div>
                         </div>
                     </TabPanel>
-                    <TabPanel header="Available values" disabled={!parameter.type}>
+                    <TabPanel header="Available values" disabled={!parameter.type || parameter.type === "FILE"}>
                         <div className="field-collection">
                             <div>
                                 <label>Dataset</label>
@@ -295,6 +304,15 @@ class EditParameter extends PureComponent {
                                 <label>Key filter (Regular expression)</label>
                                 <InputParameter definition={{ type: "TXT" }} value={parameter.keyfilter}
                                     onChange={(d, val) => updateFieldValue("keyfilter", val)} />
+                            </div>}
+                            {allowedValidations.indexOf("filetypes") >= 0 && <div>
+                                <label>Allowed file types</label>
+                                <InputParameter definition={{
+                                    type: "DDL", allowMultiple: true, valueField: "value", displayField: "label",
+                                    placeholder: "All known files are allowed"
+                                }}
+                                    value={parameter.fileTypes} dataset={supportedFileTypes}
+                                    onChange={(d, val) => updateFieldValue("fileTypes", val)} />
                             </div>}
                             {(allowedValidations.indexOf("length") >= 0 || allowedValidations.indexOf("range") >= 0) && <div>
                                 <label>Range of value (length / count)</label>

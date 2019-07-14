@@ -11,13 +11,19 @@ import { Chips } from "primereact/chips";
 import array from '../../Common/linq'
 import { convertToDate } from "../../Common/CommonFunctions";
 import Button from "./Button";
+import { supportedFileTypes } from "../../Common/ReportConfig";
+import { parseCSV } from "../../Common/HelperFunctions";
 
 export default class InputParameter extends PureComponent {
     constructor(props) {
         super(props);
-        var { definition, value } = props;
-        var { allowMultiple, valueField } = definition;
-        this.state = { value: this.setIncommingValue(value || (allowMultiple ? [] : ""), valueField) };
+        var { definition, value, dataset } = props;
+        var { allowMultiple, valueField, fileTypes } = definition;
+        if (fileTypes) {
+            fileTypes = fileTypes.map(t => supportedFileTypes[t - 1].type).join(',');
+        }
+
+        this.state = { dataset, fileTypes, value: this.setIncommingValue(value || (allowMultiple ? [] : ""), valueField, dataset) };
     }
 
     UNSAFE_componentWillReceiveProps(newProps) {
@@ -30,7 +36,7 @@ export default class InputParameter extends PureComponent {
             }
         }
         else {
-            this.setState({ dataset: null });
+            this.setState({ dataset: newProps.dataset || null });
         }
     }
 
@@ -155,19 +161,68 @@ export default class InputParameter extends PureComponent {
         }, 0);
     }
 
-    onFileSelected = e => { };
+    onFileSelected = e => {
+        var len = e.files.length;
+        var fileObj = [];
+
+        var readFunc = (funcName, f) => {
+            return new Promise((resolve, reject) => {
+                if (!isCsv && !isJSON && funcName === "readAsText") { reject("This is not a text file."); return; }
+
+                var reader = new FileReader();
+                reader.onload = (e) => {
+                    resolve(e.target.result);
+                }
+                reader.onerror = (e) => {
+                    reject(e);
+                }
+
+                reader[funcName](f);
+            });
+        }
+
+        var readAsJson = (f, file) => {
+            return readFunc("readAsText", f).then(data => {
+                if (file.isJSON) { return JSON.parse(data); }
+                else if (file.isCsv) { return parseCSV(data); }
+            });
+        }
+
+        for (var i = 0; i < len; i++) {
+            var f = e.files[i];
+            var nameLower = f.name.toLowerCase();
+            var isImage = f.type.indexOf("image") >= 0;
+            var isCsv = nameLower.endsWith(".csv");
+            var isJSON = nameLower.endsWith(".json");
+            var isExcel = nameLower.endsWith(".xls") || nameLower.endsWith(".xlsx");
+
+            var resultObj = {
+                name: f.name,
+                size: f.size,
+                type: f.type,
+                isImage, isCsv, isExcel, isJSON,
+                getAsText: () => readFunc("readAsText", f),
+                getAsDataURL: () => readFunc("readAsDataURL", f),
+                getAsJSON: () => readAsJson(f, resultObj)
+            };
+
+            fileObj[i] = resultObj;
+        }
+        var { allowMultiple } = this.props.definition;
+        this.setValue(allowMultiple ? fileObj : fileObj[0]);
+    };
 
     getSingleValueField() {
-        var { name, mask, slotChar, display, type, displayField } = this.props.definition;
-        var { value, dataset, filteredDataset } = this.state;
+        var { name, mask, slotChar, display, type, displayField, placeholder } = this.props.definition;
+        var { value, dataset, filteredDataset, fileTypes } = this.state;
 
         var className = "param-ctl param-ctl-" + type.toLowerCase();
 
         switch (type) {
             default:
-                return <InputText value={value} onChange={this.valueChanged} className={className} />;
+                return <InputText value={value} onChange={this.valueChanged} className={className} placeholder={placeholder} />;
             case "MASK":
-                return <InputMask mask={mask || ""} slotChar={slotChar} value={value} onChange={this.valueChanged} className={className} />;
+                return <InputMask mask={mask || ""} slotChar={slotChar} value={value} onChange={this.valueChanged} className={className} placeholder={placeholder} />;
             case "CHK":
                 return (
                     <div className={className}>
@@ -183,11 +238,12 @@ export default class InputParameter extends PureComponent {
                     </div>
                 );
             case "INT":
-                return <InputText keyfilter="int" value={value} onChange={this.valueChanged} className={className} />;
+                return <InputText keyfilter="int" value={value} onChange={this.valueChanged} className={className} placeholder={placeholder} />;
             case "NUM":
-                return <InputText keyfilter="num" value={value} onChange={this.valueChanged} className={className} />;
+                return <InputText keyfilter="num" value={value} onChange={this.valueChanged} className={className} placeholder={placeholder} />;
             case "DDL":
-                return <Dropdown optionLabel={displayField} value={dataset ? value : ""} options={dataset} onChange={this.targetValueChanged} className={className} />;
+                return <Dropdown optionLabel={displayField} value={dataset ? value : ""} options={dataset} placeholder={placeholder}
+                    onChange={this.targetValueChanged} className={className} />;
             case "AC":
                 return (
                     <AutoComplete
@@ -199,10 +255,11 @@ export default class InputParameter extends PureComponent {
                         dropdown={true}
                         onChange={this.targetValueChanged}
                         className={className}
+                        placeholder={placeholder}
                     />
                 );
             case "DTE":
-                return <Calendar value={value} onChange={this.valueChanged} className={className} />;
+                return <Calendar value={value} onChange={this.valueChanged} className={className} placeholder={placeholder} />;
             case "DR":
                 var rValue = [];
                 if (value) {
@@ -233,30 +290,31 @@ export default class InputParameter extends PureComponent {
                         onSelect={this.onFileSelected}
                         auto={true}
                         chooseLabel="Browse"
+                        accept={fileTypes}
                     />
                 );
         }
     }
 
     getMultiValueField(value, setValue, valueChanged) {
-        var { mask, slotChar, type, displayField } = this.props.definition;
-        var { dataset } = this.state;
+        var { mask, slotChar, type, displayField, placeholder } = this.props.definition;
+        var { dataset, fileTypes } = this.state;
 
         var className = "param-ctl param-multctl-" + type.toLowerCase();
 
         switch (type) {
             default:
-                return <Chips value={value} onChange={valueChanged} className={className} />;
+                return <Chips value={value} onChange={valueChanged} className={className} placeholder={placeholder} />;
             case "MASK":
-                return <InputMask mask={mask || ""} slotChar={slotChar} value={value} onChange={valueChanged} className={className} />;
+                return <InputMask mask={mask || ""} slotChar={slotChar} value={value} onChange={valueChanged} className={className} placeholder={placeholder} />;
             case "INT":
-                return <InputText keyfilter="int" value={value} onChange={valueChanged} className={className} />;
+                return <InputText keyfilter="int" value={value} onChange={valueChanged} className={className} placeholder={placeholder} />;
             case "NUM":
-                return <InputText keyfilter="num" value={value} onChange={valueChanged} className={className} />;
+                return <InputText keyfilter="num" value={value} onChange={valueChanged} className={className} placeholder={placeholder} />;
             case "DDL":
                 return (
-                    <MultiSelect value={dataset ? value : []} optionLabel={displayField} options={dataset}
-                        onChange={this.targetValueChanged} style={{ minWidth: "12em" }} filter={true} className={className} />
+                    <MultiSelect value={dataset ? value : []} optionLabel={displayField} options={dataset} appendTo={document.body} placeholder={placeholder}
+                        onChange={this.targetValueChanged} style={{ minWidth: "12em" }} filter={(dataset || []).length > 12} className={className} />
                 );
             case "AC":
                 return (
@@ -270,10 +328,11 @@ export default class InputParameter extends PureComponent {
                         multiple={true}
                         onChange={this.targetValueChanged}
                         className={className}
+                        placeholder={placeholder}
                     />
                 );
             case "DTE":
-                return <Calendar value={value} onChange={valueChanged} selectionMode="multiple" readonlyInput={true} className={className} />;
+                return <Calendar value={value} onChange={valueChanged} selectionMode="multiple" readonlyInput={true} className={className} placeholder={placeholder} />;
             case "FILE":
                 return (
                     <FileUpload
@@ -284,6 +343,7 @@ export default class InputParameter extends PureComponent {
                         multiple={true}
                         chooseLabel="Browse"
                         className={className}
+                        accept={fileTypes}
                     />
                 );
         }

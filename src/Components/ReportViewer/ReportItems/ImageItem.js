@@ -15,6 +15,13 @@ class ImageItem extends ItemsBase {
             // ToDo: based on srcMode take image from resource
         }
 
+        if (typeof src === "object" && typeof src.then === "function") {
+            src.then(data => {
+                this.setState({ src: data });
+            });
+            src = null;
+        }
+
         return { style, src, altText, tooltip, hidden, disabled, clickAction, actionProps };
     }
 

@@ -96,7 +96,7 @@ class SubReportProperties extends PropertiesDialogBase {
                     <div className="field-collection">
                         <div className="mandatory">
                             <label>Choose sub report</label>
-                            <Dropdown optionLabel="name" value={report} options={reportsList} onChange={(e) => this.reportSelected(e.value)} placeholder="Select a report" />
+                            <Dropdown appendTo={document.body} optionLabel="name" value={report} options={reportsList} onChange={(e) => this.reportSelected(e.value)} placeholder="Select a report" />
                         </div>
                         <div>
                             <label>Visibility (hide report if expression evaluates to true)</label>

@@ -242,7 +242,7 @@ export default class InputParameter extends PureComponent {
             case "NUM":
                 return <InputText keyfilter="num" value={value} onChange={this.valueChanged} className={className} placeholder={placeholder} />;
             case "DDL":
-                return <Dropdown optionLabel={displayField} value={dataset ? value : ""} options={dataset} placeholder={placeholder}
+                return <Dropdown appendTo={document.body} optionLabel={displayField} value={dataset ? value : ""} options={dataset} placeholder={placeholder}
                     onChange={this.targetValueChanged} className={className} />;
             case "AC":
                 return (

@@ -121,7 +121,7 @@ var defaultConfig = {
             }
         }
     },
-    subReports,
+    subReports: () => Promise.resolve(subReports),
     resolveReportDefinition: (reportId) => {
         return Promise.resolve((subReports.filter(r => r.id === reportId)[0] || {}).definition);
     },

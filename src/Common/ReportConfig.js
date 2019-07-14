@@ -225,7 +225,22 @@ this.yourFunction2 = function yourFunction2(paramA, paramB) {
 var subReportsList = [];
 var resolveReportDefinition = null;
 
-export function getReportsList() { return subReportsList; }
+export function getReportsList(definition) {
+    if (Array.isArray(subReportsList)) {
+        return Promise.resolve(subReportsList);
+    }
+    else {
+        return subReportsList(definition).then(prepareReportsList);
+    }
+}
+
+function prepareReportsList(subReports) {
+    return subReports.map(r => {
+        var { id, name } = r;
+        if (!id || !name) { throw new Error("id & name properties are expected in subReports"); }
+        return { id, name };
+    });
+}
 
 export function resolveReport(reportId) {
     return resolveReportDefinition(reportId).then(def => {
@@ -241,14 +256,15 @@ export function resolveReport(reportId) {
 
 function initSubReports(subReports, resolver) {
     if (!subReports) { return; }
-    if (!Array.isArray(subReports)) { throw new Error("'subReports' must contain an array of objects with id & name properties"); }
+    if (!Array.isArray(subReports) && typeof subReports !== "function") { throw new Error("'subReports' must resolve an array of objects with id & name properties"); }
     if (typeof resolver !== "function") { throw new Error("Expecting 'resolveReportDefinition' to be a function resolving report definition"); }
     resolveReportDefinition = resolver;
-    subReportsList = subReports.map(r => {
-        var { id, name } = r;
-        if (!id || !name) { throw new Error("id & name properties are expected in subReports"); }
-        return { id, name };
-    });
+    if (Array.isArray(subReports)) {
+        subReportsList = prepareReportsList(subReports);
+    }
+    else {
+        subReportsList = subReports;
+    }
 }
 
 // #endregion

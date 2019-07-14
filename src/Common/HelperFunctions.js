@@ -81,3 +81,8 @@ export const UUID = (function() {
     };
     return self;
 })();
+
+
+export function parseCSV(text) {
+    return [];
+}

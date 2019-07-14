@@ -13,6 +13,7 @@ var subReports = [
     { id: 2, name: "Temp report", definition: tempData }
 ];
 
+// This is the default configuration object to be passed to "initReportBuilder" function.
 var defaultConfig = {
     parameterTypes: {
         UG: {
@@ -84,7 +85,10 @@ var defaultConfig = {
                 return Promise.resolve(props);
             },
             resolveData: props => { Promise.resolve(null) }
-        }
+        },
+        HTP: true,
+        FIL: true,
+        STC: true
     },
     builtInFields: {
         UserDateFormat: { value: "", helpText: "Provides the date format of the current user" },
@@ -182,7 +186,7 @@ class App extends PureComponent {
                             }}
                         />
                     )}
-                    {preview && <ReportViewer definition={reportDefinition} defaultParameters={{ userList }} />}
+                    {preview && <ReportViewer definition={reportDefinition} parameterValues={{ userList }} />}
                 </div>
             </div>
         );

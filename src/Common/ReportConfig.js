@@ -26,7 +26,14 @@ const inbuiltParamTypes = [
     { label: "Autocomplete", value: "AC", allowedValidations: ["length"] },
     { label: "Date", value: "DTE", allowedValidations: ["daterange"] },
     { label: "Date Range", value: "DR", handleMultivalue: true, allowedValidations: ["daterange"] },
-    { label: "File browser", value: "FILE", supportDefaultValue: false, allowedValidations: ["length"] }
+    { label: "File browser", value: "FILE", supportDefaultValue: false, allowedValidations: ["length", "filetypes"] }
+];
+
+export const supportedFileTypes = [
+    { value: 1, label: "All known images", type: "image/*" },
+    { value: 2, label: "JSON Files", type: ".json" },
+    { value: 3, label: "CSV Files", type: ".csv" },
+    { value: 4, label: "Excel documents", type: ".xlsx,.xls" }
 ];
 
 var paramTypes = [...inbuiltParamTypes];
@@ -95,8 +102,18 @@ function initDatasetTypes(customTypes) {
             var ds = customTypes[k];
 
             if (ds === false) {
-                $datasetTypes.removeAll(p => p.value === k);
+                $datasetTypes.removeAll(p => p.type === k);
                 return;
+            }
+
+            if (ds === true) {
+                var idx = $datasetTypes.findIndex(p => p.type === k)[0];
+                if (idx >= 0) {
+                    var dsToOrder = datasetTypes[idx];
+                    datasetTypes.splice(idx, 1);
+                    datasetTypes.push(dsToOrder);
+                    return;
+                }
             }
 
             var { label, allowEdit, resolveSchema, resolveData } = ds;

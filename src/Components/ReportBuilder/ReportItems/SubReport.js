@@ -13,12 +13,21 @@ const subReportStyle = {
 class SubReport extends ReportItemBase {
     constructor(props) {
         super(props, SubReportProperties);
+        this.reportsList = getReportsList();
     }
 
     render() {
+        var {
+            reportsList,
+            state: { definition: { reportId } }
+        } = this;
+        var report = reportsList.filter(r => r.id === reportId)[0];
+
         return super.renderBase(
             <div className="sub-report" style={subReportStyle}>
-                <span>Selected subreport will be rendered here at runtime. Set parameter values and data for dataset</span>
+                {!reportId && <span>Select a sub report to be rendered from properties and set the parameter values to be passed</span>}
+                {reportId && !report && <span>Selected sub report is invalid or has been deleted.</span>}
+                {report && <span>'{report.name}' will be rendered here at runtime</span>}
             </div>
         );
     }

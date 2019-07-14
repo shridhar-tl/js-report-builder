@@ -5,6 +5,7 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import { Dropdown } from 'primereact/dropdown';
 import { getReportsList, resolveReport } from '../../../Common/ReportConfig';
 import ExpressionList from '../Common/ExpressionList';
+import { BuilderContext } from '../Common/Constants';
 
 const subReportStyle = {
     fontSize: '20px', padding: '22px'
@@ -13,15 +14,14 @@ const subReportStyle = {
 class SubReport extends ReportItemBase {
     constructor(props) {
         super(props, SubReportProperties);
-        this.reportsList = getReportsList();
+        getReportsList().then(reportsList => this.setState({ reportsList }));
     }
 
     render() {
         var {
-            reportsList,
-            state: { definition: { reportId } }
+            state: { reportsList, definition: { reportId } }
         } = this;
-        var report = reportsList.filter(r => r.id === reportId)[0];
+        var report = (reportsList || []).filter(r => r.id === reportId)[0];
 
         return super.renderBase(
             <div className="sub-report" style={subReportStyle}>
@@ -36,12 +36,20 @@ class SubReport extends ReportItemBase {
 export default SubReport;
 
 class SubReportProperties extends PropertiesDialogBase {
+    static contextType = BuilderContext
+
     constructor(props) {
         super(props, "Sub Report properties");
-        this.reportsList = getReportsList();
-        var { definition: { reportId } } = props;
-        var report = this.reportsList.filter(r => r.id === reportId)[0];
-        this.reportSelected(report);
+    }
+
+    componentDidMount() {
+        var { definition: { reportId } } = this.props;
+        getReportsList(this.context.getDefinition()).then(reportsList => {
+            this.setState({ reportsList });
+
+            var report = reportsList.filter(r => r.id === reportId)[0];
+            this.reportSelected(report);
+        });
     }
 
     reportSelected(report) {
@@ -78,8 +86,7 @@ class SubReportProperties extends PropertiesDialogBase {
     render() {
         var {
             setValue,
-            reportsList,
-            state: { definition, report, paramsMessage }
+            state: { reportsList, definition, report, paramsMessage }
         } = this;
         var { reportId, parameters, hidden } = definition;
 

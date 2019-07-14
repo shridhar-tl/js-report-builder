@@ -44,6 +44,7 @@ class ReportBuilder extends ReportBase {
                 }
                 return list;
             },
+            getDefinition: () => this.props.definition,
             getParametersList: () => {
                 return this.state.data.parameters;
             },

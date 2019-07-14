@@ -1,12 +1,13 @@
 import array from "./linq";
 import { compileExpression, compileVariables } from "./Compiler";
+import { httpRequest } from "./CommonFunctions";
 
 var inbuiltDatasets = [
-    { type: "HTP", label: "Online dataset (http request)", resolve: resolve_HTP, disabled: true },
-    { type: "FIL", label: "File dataset (CSV, EXCEL or JSON files)", resolve: resolve_FIL, disabled: true },
-    { type: "STC", label: "Static dataset (manually input value in a table)", resolve: resolve_STC, disabled: true },
+    { type: "HTP", label: "Online dataset (http request)", resolve: resolve_HTP },
     { type: "FLT", label: "Flatern dataset (generate dataset by flatening other dataset)", resolve: resolve_FLT },
-    { type: "EXP", label: "Expression dataset (generate dataset using other dataset)", resolve: resolve_EXP }
+    { type: "EXP", label: "Expression dataset (generate dataset using other dataset)", resolve: resolve_EXP },
+    { type: "FIL", label: "File dataset (CSV, EXCEL or JSON files)", resolve: resolve_FIL, disabled: true },
+    { type: "STC", label: "Static dataset (manually input value in a table)", resolve: resolve_STC, disabled: true }
 ];
 
 export default inbuiltDatasets;
@@ -69,10 +70,62 @@ function resolve_FIL(props, getDatasetData) {
     });
 }
 
-function resolve_HTP() {
+function resolve_HTP(props, getDatasetData) {
     return new Promise(function (resolve, reject) {
         try {
-            resolve({});
+            var { dataset, parameters, commonFunctions, myFunctions } = props;
+            var { url, method, body, params, headers } = dataset;
+
+            var parseExpr = function (expr) {
+                if (!expr) { return expr; }
+
+                return compileExpression(expr, {
+                    commonFunctions, myFunctions, datasets: getDatasetData, parameters
+                })();
+            }
+
+            var tryParseExpression = function (item) {
+                if (typeof item !== "object") { return item; }
+                if (item.expression) {
+                    var pfunc = parseExpr(item.expression);
+                    if (typeof pfunc === "function") {
+                        return pfunc();
+                    }
+                    else {
+                        return pfunc;
+                    }
+                }
+            }
+
+            url = tryParseExpression(url);
+
+            var data;
+
+            if (method !== "GET" && !!body) {
+                data = tryParseExpression(body);
+            }
+
+            if (!data && params && params.length > 0) {
+                data = params.reduce((obj, cur) => {
+                    var { name, value } = cur;
+                    value = tryParseExpression(value);
+                    obj[name] = value;
+                    return obj;
+                }, {});
+            }
+
+            if (headers && headers.length > 0) {
+                headers = headers.reduce((obj, cur) => {
+                    var { name, value } = cur;
+                    value = tryParseExpression(value);
+                    obj[name] = value;
+                    return obj;
+                }, {});
+            } else {
+                headers = null;
+            }
+
+            resolve(httpRequest(method, url, data, headers));
         } catch (err) {
             reject(err);
         }

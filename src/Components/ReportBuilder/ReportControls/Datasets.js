@@ -2,16 +2,20 @@ import React, { PureComponent } from "react";
 import Button from "../../Common/Button";
 import { Dialog } from "primereact/dialog";
 import { RadioButton } from 'primereact/radiobutton';
+import { SplitButton } from 'primereact/splitbutton';
+import { TabView, TabPanel } from 'primereact/tabview';
 import JsonTree from "../../Common/JsonTree";
 import array from "../../../Common/linq";
 import "./Dataset.scss";
 import { MultiSelect } from "primereact/multiselect";
 import { UUID } from "../../../Common/HelperFunctions";
 import SelectDataset from "../Common/SelectDataset";
+import SelectParameter from "../Common/SelectParameter";
 import ExpressionList from "../Common/ExpressionList";
 import ExpressionEditor from "../Common/ExpressionEditor";
 import { getDatasetTypes } from "../../../Common/ReportConfig";
 import { getDatasetDefinition } from "../../../Common/DatasetTypes";
+import PropertiesDialogBase from "../Common/PropertiesDialogBase";
 import NameField from "../Common/NameField";
 
 class Datasets extends PureComponent {
@@ -150,6 +154,14 @@ class Datasets extends PureComponent {
                         onChange={this.saveDataset}
                     />
                 )}
+
+                {showAddDialog && (editedDataset && editedDataset.type === "HTP") && (
+                    <HttpDataset
+                        definition={editedDataset}
+                        onHide={this.onHide}
+                        onChange={this.saveDataset}
+                    />
+                )}
             </div>
         );
     }
@@ -278,15 +290,15 @@ class ExpressionDataset extends PureComponent {
     };
 
     done = () => {
-        var { expression, dependencies } = this.state;
+        var { expression, dependencies, paramDependency } = this.state;
         var { dataset } = this.props;
-        dataset = { ...dataset, expression, dependencies: dependencies.map(d => d.id) };
+        dataset = { ...dataset, expression, paramDependency, dependencies: dependencies.map(d => d.id) };
         this.setState({ showDialog: false });
         this.props.onChange(dataset);
     };
 
     render() {
-        var { showDialog, isPropsValid, expression, datasets, dependencies } = this.state;
+        var { showDialog, isPropsValid, expression, datasets, dependencies, paramDependency } = this.state;
 
         var footer = (
             <div>
@@ -305,18 +317,24 @@ class ExpressionDataset extends PureComponent {
                 onHide={this.onHide}>
                 <div className="field-collection">
                     <div>
-                        <label>Dependencies:</label>
+                        <label>Dataset dependencies:</label>
                         <MultiSelect
                             optionLabel="name"
                             value={dependencies}
                             options={datasets}
                             onChange={e => this.updateFieldValue("dependencies", e.value)}
+                            placeholder="Choose one or more datasets"
                         />
+                    </div>
+                    <div>
+                        <label>Parameter dependencies</label>
+                        <SelectParameter value={paramDependency} multiselect={true} onChange={val => this.updateFieldValue("paramDependency", val)} />
                     </div>
                     <div>
                         <label>Expression:</label>
                         <ExpressionEditor
                             expression={expression}
+                            isStrict={true}
                             onChange={expr => this.updateFieldValue("expression", expr)}
                         />
                     </div>
@@ -430,6 +448,66 @@ class FlatternDataset extends PureComponent {
                     </div>
                 </div>
             </Dialog>
+        );
+    }
+}
+
+class HttpDataset extends PropertiesDialogBase {
+    constructor(props) {
+        super(props, "HTTP dataset properties", null, true);
+        this.state.definition.method = this.state.definition.method || "GET";
+    }
+
+    httpVerbs = [
+        { label: "GET", command: () => this.setValue("method", "GET") },
+        { label: "POST", command: () => this.setValue("method", "POST") }
+    ];
+
+    validateField(definition) {
+        var isPropsValid = true;
+        return { definition, isPropsValid };
+    }
+
+    render() {
+        var { setValue, state: { definition: { url, paramDependency, method, body, params, headers } } } = this;
+
+        return super.renderBase(
+            <div className="field-collection">
+                <div>
+                    <label>Parameter dependencies</label>
+                    <SelectParameter value={paramDependency} multiselect={true} onChange={val => setValue("paramDependency", val)} />
+                </div>
+                <div>
+                    <label>Request method & url</label>
+                    <div>
+                        <SplitButton appendTo={document.body} className="p-button-secondary pull-left" label={method} model={this.httpVerbs}></SplitButton>
+                        <ExpressionEditor
+                            className="pull-left"
+                            expression={url}
+                            autoDetect={true}
+                            onChange={expr => setValue("url", expr)}
+                        />
+                    </div>
+                </div>
+                <div>
+                    <TabView>
+                        <TabPanel header="Params">
+                            <ExpressionList autoDetect={true} value={params} nameField="name" valueField="value" onChange={list => setValue("params", list)} />
+                        </TabPanel>
+                        <TabPanel header="Body" disabled={method === "GET"}>
+                            <ExpressionEditor
+                                expression={body}
+                                wordWrap={true}
+                                autoDetect={true}
+                                onChange={expr => setValue("body", expr)}
+                            />
+                        </TabPanel>
+                        <TabPanel header="Header">
+                            <ExpressionList autoDetect={true} value={headers} nameField="name" valueField="value" onChange={list => setValue("headers", list)} />
+                        </TabPanel>
+                    </TabView>
+                </div>
+            </div>
         );
     }
 }

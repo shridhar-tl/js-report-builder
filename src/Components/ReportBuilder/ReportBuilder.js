@@ -44,6 +44,9 @@ class ReportBuilder extends ReportBase {
                 }
                 return list;
             },
+            getParametersList: () => {
+                return this.state.data.parameters;
+            },
             editExpression: (definition) => {
                 return new Promise((onChange, onHide) => {
                     this.setState({ expressionProps: { definition, isImage: definition.itemType === "IMG", onChange, onHide } });

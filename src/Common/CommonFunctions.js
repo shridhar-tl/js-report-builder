@@ -25,10 +25,31 @@ var inbuiltFunctions = [
         name: "numPad",
         helpText: "",
         value: numPad
+    },
+    {
+        name: "httpGet",
+        helpText: "",
+        value: httpGet
+    },
+    {
+        name: "httpPost",
+        helpText: "",
+        value: httpPost
     }
 ];
 
 export default inbuiltFunctions;
+
+var httpProxy = function () { console.error("Http proxy not set!"); }
+
+export function setHttpProxy(proxy) { httpProxy = proxy; }
+
+export function httpRequest(method, url, data, headers) {
+    return httpProxy(method, url, data, headers);
+}
+
+function httpGet(url, params, headers) { return httpRequest("GET", url, params, headers); }
+function httpPost(url, data, headers) { return httpRequest("POST", url, data, headers); }
 
 function getDateRange(fromDate, toDate) {
     return getDateArray(fromDate, toDate).map(d => {

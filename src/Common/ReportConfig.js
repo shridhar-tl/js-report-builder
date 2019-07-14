@@ -2,9 +2,12 @@ import "./extensions";
 import array from "./linq";
 import inbuiltFunctions from "./CommonFunctions";
 import inbuiltDatasets from "./DatasetTypes";
+import { setCompiler, setParser } from "./Compiler";
 
 export function initReportBuilder(config) {
-    var { parameterTypes, datasetTypes, builtInFields, commonFunctions, subReports, resolveReportDefinition } = config;
+    var { parameterTypes, datasetTypes, builtInFields, commonFunctions, subReports, resolveReportDefinition, compiler, parser } = config;
+    setCompiler(compiler);
+    setParser(parser);
     initParamTypes(parameterTypes);
     initDatasetTypes(datasetTypes);
     initBuiltinFields(builtInFields);

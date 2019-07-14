@@ -1,5 +1,24 @@
 import array, { getObjVal } from "./linq";
 
+var compiler = function () { console.error("Script Compiler is not initialized!!"); }
+var parser = function () { console.error("Script Parser is not initialized!!"); return { isValid: true }; }
+
+export function setCompiler(comp) {
+    if (typeof comp === "function") {
+        compiler = comp;
+    }
+}
+
+export function setParser(prsr) {
+    if (typeof prsr === "function") {
+        parser = prsr;
+    }
+}
+
+export function parseScript(script) {
+    return parser(script);
+}
+
 export function compileGroup(group, props) {
     let { filter, keys, sortBy, variables, dataset, expression } = group;
 
@@ -70,6 +89,46 @@ export function wrapWithFunction(obj) {
     }
 }*/
 
+const sandbox = ["window",
+    "global",
+    "document",
+    "navigator",
+    "Function",
+    "localStorage",
+    "sessionStorage",
+    "history",
+    "Element",
+    "Event",
+    "location",
+    "screen",
+    "locationbar",
+    "alert",
+    "blur",
+    "clearInterval",
+    "clearTimeout",
+    "close",
+    "confirm",
+    "focus",
+    "getComputedStyle",
+    "getSelection",
+    "matchMedia",
+    "moveBy",
+    "moveTo",
+    "open",
+    "print",
+    "prompt",
+    "resizeBy",
+    "resizeTo",
+    "scroll",
+    "scrollBy",
+    "scrollTo",
+    "setInterval",
+    "setTimeout",
+    "stop",
+    "$",
+    " jQuery",
+    "console"] //'eval', // eval couldn't be used a parameter
+
 export function compileExpression(expression, props) {
     try {
         var isNoWrap = props && props.noWrap === true;
@@ -83,51 +142,9 @@ export function compileExpression(expression, props) {
 
         exprToCompile = "'use strict'; return function(CommonFunctions,MyFunctions,Parameters,Datasets,array,getObjVal,ReportState,setReportState) { " + exprToCompile + " }";
 
-        var func = Function(
-            "window",
-            "global",
-            "document",
-            "navigator",
-            "Function",
-            "localStorage",
-            "sessionStorage",
-            "history",
-            "Element",
-            "Event",
-            "location",
-            "screen",
-            "locationbar",
-            "alert",
-            "blur",
-            "clearInterval",
-            "clearTimeout",
-            "close",
-            "confirm",
-            "focus",
-            "getComputedStyle",
-            "getSelection",
-            "matchMedia",
-            "moveBy",
-            "moveTo",
-            "open",
-            "print",
-            "prompt",
-            "resizeBy",
-            "resizeTo",
-            "scroll",
-            "scrollBy",
-            "scrollTo",
-            "setInterval",
-            "setTimeout",
-            "stop",
-            "$",
-            " jQuery",
-            "console", //'eval', // eval couldn't be used a parameter
+        var result = compiler(exprToCompile, sandbox);
 
-            exprToCompile
-        );
-
-        var result = func();
+        //var result = func();
         if (props) {
             var { commonFunctions, myFunctions, parameters, datasets, $this, setReportState, getReportState } = props;
             if ($this) {

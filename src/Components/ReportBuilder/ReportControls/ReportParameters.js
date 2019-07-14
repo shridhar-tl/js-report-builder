@@ -194,7 +194,7 @@ class EditParameter extends PureComponent {
     }
 
     render() {
-        var { showDialog, parameter, isParamValid, noMultiValue, paramType, duplicateName, allowedFileTypes } = this.state;
+        var { showDialog, parameter, isParamValid, noMultiValue, paramType, duplicateName } = this.state;
         var { updateValue, updateFieldValue } = this;
         var { value: pTypeName, allowedValidations = [] } = paramType || {};
 
@@ -224,8 +224,7 @@ class EditParameter extends PureComponent {
                                     onChange={e => {
                                         var paramType = this.paramTypes[e.value];
                                         this.setState({
-                                            paramType, noMultiValue: paramType.supportMultiValue === false,
-                                            allowedFileTypes: null
+                                            paramType, noMultiValue: paramType.supportMultiValue === false
                                         });
                                         updateFieldValue("type", e.value);
                                     }}

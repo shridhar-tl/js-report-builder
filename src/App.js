@@ -15,6 +15,7 @@ var subReports = [
 
 // This is the default configuration object to be passed to "initReportBuilder" function.
 var defaultConfig = {
+    compiler: function (code, sandbox) { return Function(...sandbox, code)(); },
     parameterTypes: {
         UG: {
             label: "User group",

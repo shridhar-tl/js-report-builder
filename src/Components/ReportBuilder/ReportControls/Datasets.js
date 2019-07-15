@@ -417,7 +417,7 @@ class FlatternDataset extends PureComponent {
                         <SelectDataset
                             value={dependencies}
                             options={datasets}
-                            onChange={e => this.updateFieldValue("dependencies", e.value)}
+                            onChange={e => this.updateFieldValue("dependencies", e)}
                         />
                     </div>
                     <div>
@@ -492,7 +492,7 @@ class HttpDataset extends PropertiesDialogBase {
                 <div>
                     <TabView>
                         <TabPanel header="Params">
-                            <ExpressionList autoDetect={true} value={params} nameField="name" valueField="value" onChange={list => setValue("params", list)} />
+                            <ExpressionList autoDetect={true} value={params} nameField="name" valueField="value" onChange={list => setValue("params", list)} nameKeyFilter={/[A-Za-z0-9-_]/} />
                         </TabPanel>
                         <TabPanel header="Body" disabled={method === "GET"}>
                             <ExpressionEditor
@@ -503,7 +503,7 @@ class HttpDataset extends PropertiesDialogBase {
                             />
                         </TabPanel>
                         <TabPanel header="Header">
-                            <ExpressionList autoDetect={true} value={headers} nameField="name" valueField="value" onChange={list => setValue("headers", list)} />
+                            <ExpressionList autoDetect={true} value={headers} nameField="name" valueField="value" onChange={list => setValue("headers", list)} nameKeyFilter={/[A-Za-z0-9-_]/} />
                         </TabPanel>
                     </TabView>
                 </div>

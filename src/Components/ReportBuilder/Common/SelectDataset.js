@@ -11,8 +11,17 @@ class SelectDataset extends PureComponent {
     }
 
     componentDidMount() {
-        var { value, multiselect, includeExprDS } = this.props;
+        var { value, multiselect, includeExprDS, excludeDS, allowUnselect } = this.props;
         var datasets = this.context.getDatasetList(!!includeExprDS);
+
+        if (excludeDS) {
+            datasets = datasets.filter(ds => ds.id !== excludeDS);
+        }
+
+        if (!multiselect && allowUnselect !== false) {
+            datasets.splice(0, 0, { id: null, name: "(none)" })
+        }
+
         if (!value) {
             value = [];
         }
@@ -29,13 +38,13 @@ class SelectDataset extends PureComponent {
     };
 
     render() {
-        var { multiselect } = this.props;
+        var { multiselect, placeholder } = this.props;
         var { datasets = [], selItems } = this.state;
 
         if (multiselect) {
-            return <MultiSelect appendTo={document.body} optionLabel="name" value={selItems} options={datasets} onChange={this.selectionChanged} />;
+            return <MultiSelect appendTo={document.body} optionLabel="name" value={selItems} options={datasets} onChange={this.selectionChanged} placeholder={placeholder || "Select one or more dataset"} />;
         } else {
-            return <Dropdown appendTo={document.body} optionLabel="name" value={selItems} options={datasets} onChange={this.selectionChanged} />;
+            return <Dropdown appendTo={document.body} optionLabel="name" value={selItems} options={datasets} onChange={this.selectionChanged} placeholder={placeholder || "Select a dataset"} />;
         }
     }
 }

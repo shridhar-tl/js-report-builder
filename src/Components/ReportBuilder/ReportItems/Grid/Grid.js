@@ -582,7 +582,7 @@ class Grid extends ReportItemBase {
             return null;
         }
         return (
-            <GroupProperties
+            <GroupProperties key="grpPps"
                 group={editedGroup}
                 onChange={this.updateGroup}
                 onHide={() => {

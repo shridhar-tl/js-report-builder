@@ -27,14 +27,14 @@ class ExpressionList extends PureComponent {
 
     getExpressionRow(index, item, isNewRow) {
         var { nameFieldSet } = this;
-        var { namePlaceholder, valuePlaceholder, nameField, valueField, autoDetect, fieldSetLabel } = this.props;
+        var { namePlaceholder, valuePlaceholder, nameField, valueField, autoDetect, fieldSetLabel, nameKeyFilter } = this.props;
 
         return (
             <tr key={index}>
                 {nameField && !nameFieldSet && (
                     <td>
                         <InputText
-                            keyfilter="alphanum"
+                            keyfilter={nameKeyFilter || "alphanum"}
                             value={item[nameField]}
                             placeholder={namePlaceholder}
                             onChange={e => {

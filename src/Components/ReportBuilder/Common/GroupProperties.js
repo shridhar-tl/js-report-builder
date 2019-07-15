@@ -90,6 +90,7 @@ class GroupProperties extends PureComponent {
                                 <label>Dataset</label>
                                 <SelectDataset
                                     includeExprDS={true}
+                                    allowUnselect={false}
                                     value={group.dataset}
                                     onChange={id => this.setValue("dataset", id)}
                                 />

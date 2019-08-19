@@ -40,7 +40,7 @@ export default class InputParameter extends PureComponent {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.resolveDataset();
     }
 

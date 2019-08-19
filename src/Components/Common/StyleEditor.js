@@ -8,7 +8,7 @@ class StyleEditor extends PureComponent {
         this.state = { element: props.element, styleList: [], style: { ...(props.elementData.style || {}) } };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.setStyleProps(this.props.element);
     }
 

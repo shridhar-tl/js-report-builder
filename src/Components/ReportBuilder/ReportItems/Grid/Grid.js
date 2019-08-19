@@ -21,7 +21,7 @@ class Grid extends ReportItemBase {
             data: props.data || getDefaultGridData()
         };
     }
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         if (!this.props.data) { this.props.onChange(this.state.data); }
 
         this.sharedProps = {

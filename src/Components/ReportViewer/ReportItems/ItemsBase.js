@@ -9,7 +9,7 @@ class ItemsBase extends PureComponent {
         this.state = {};
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.deallocateTracker = this.context.trackState((tracker) => {
             this.stateTracker = tracker;
             try {

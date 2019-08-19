@@ -140,7 +140,7 @@ class App extends PureComponent {
         this.state = { preview: false, reportDefinition: tempData || userDaywiseReport };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         initReportBuilder(defaultConfig);
     }
 

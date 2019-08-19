@@ -20,11 +20,7 @@ class ReportBuilder extends ReportBase {
             data = getDefaultRptDefinition();
         }
         else {
-            data.datasets = data.datasets || {};
-
-            data.reportItems = data.reportItems || [];
-            data.datasetList = data.datasetList || [];
-            data.parameters = data.parameters || [];
+            data = this.prepareReportDefinition(data);
         }
 
         this.state = { data };
@@ -44,7 +40,7 @@ class ReportBuilder extends ReportBase {
                 }
                 return list;
             },
-            getDefinition: () => this.props.definition,
+            getDefinition: () => this.state.data,
             getParametersList: () => {
                 return this.state.data.parameters;
             },
@@ -70,6 +66,20 @@ class ReportBuilder extends ReportBase {
         this.builderProps.buildMyFunctions();
     }
 
+    UNSAFE_componentWillReceiveProps(newProps) {
+        this.setState({ data: this.prepareReportDefinition(newProps.definition) });
+    }
+
+    prepareReportDefinition(data) {
+        data.datasets = data.datasets || {};
+
+        data.reportItems = data.reportItems || [];
+        data.datasetList = data.datasetList || [];
+        data.parameters = data.parameters || [];
+
+        return data;
+    }
+
     externalApi = {
         getReportDefinition: () => this.state.data
     };
@@ -91,6 +101,7 @@ class ReportBuilder extends ReportBase {
                     <DndProvider backend={HTML5Backend}>
                         <div className="report-controls-cntr">
                             <ReportControls
+                                key={data._uniqueId}
                                 data={data}
                                 selectedItems={selections}
                                 onChange={d => {
@@ -103,6 +114,7 @@ class ReportBuilder extends ReportBase {
                         </div>
                         <div className="report-display-cntr" onClick={this.itemSelected} onContextMenu={this.showContextMenu}>
                             <ReportDisplay
+                                key={data.reportItems._uniqueId}
                                 items={data.reportItems}
                                 onChange={d => {
                                     data.reportItems = d;

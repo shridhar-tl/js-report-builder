@@ -1,6 +1,6 @@
 This package contains a ReportBuilder component which can be used by end users to build custom reports from browser. The output of the ReportBuilder component is the report definition which need to be passed to the ReportViewer component to render the report. You can optionally save this definition for further use.
 
-Notes: This is still in development and not ready for public use. A public usable version of package is expected to be available at the end of July, 2019.
+Notes: This is still in development and not ready for public use. A public usable version of package is expected to be available at the end of Sep, 2019.
 
 # Live demo:
 
@@ -14,7 +14,7 @@ Youtube demo: [Not yet available]
 
 If you have an existing react application, run the following commands to download Report Builder and other dependent packages.
 
-    npm install font-awesome classnames@latest primeflex@latest primeicons@latest primereact@latest moment@latest chart.js@latest jsd-report@latest --save
+    npm install font-awesome classnames@latest primeflex@latest primeicons@latest primereact@latest moment@latest chart.js@latest react-dnd@latest react-dnd-html5-backend@latest jsd-report@latest --save
 
 # Setup
 

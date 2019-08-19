@@ -7,7 +7,7 @@ import { BuilderContext } from './Constants';
 class ActionProperties extends PureComponent {
     static contextType = BuilderContext;
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.stateList = this.context.getStateItems();
     }
 

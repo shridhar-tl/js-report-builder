@@ -97,7 +97,7 @@ class GridCell extends PureComponent {
         this.cellType = isHeader ? "th" : "td";
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         var { colGroup, rowGroup } = this.props;
 
         var fields = (rowGroup || {}).Fields;

@@ -23,7 +23,7 @@ class TabViewItem extends ReportItemBase {
         this.state = { definition, addedItems: items };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         if (this.definition) {
             this.onChange(this.definition);
         }

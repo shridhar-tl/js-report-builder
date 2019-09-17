@@ -25,6 +25,8 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var nodeExternals = require('webpack-node-externals');
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -33,6 +35,8 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
+
+const analyseBundle = process.env.ANALYSE_BUNDLE === 'true';
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
@@ -147,7 +151,8 @@ module.exports = function(webpackEnv) {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     ].filter(Boolean),
-    output: {
+    externals: [nodeExternals()], // Remove all dependencies from bundle
+	output: {
       /// Begin: Customized code
       library: isEnvProduction ? '' : undefined,
       libraryTarget: isEnvProduction ? 'commonjs' : undefined,
@@ -480,6 +485,13 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
+      // Modified: Added to analyze the size of the package
+      analyseBundle && new BundleAnalyzerPlugin({
+        analyzerMode: "static",
+        generateStatsFile: true,
+        openAnalyzer: true
+      }),
+	  
       // Generates an `index.html` file with the <script> injected.
       isEnvDevelopment && new HtmlWebpackPlugin( // OldCode: added isEnvDevelopment check additionaly
         Object.assign(

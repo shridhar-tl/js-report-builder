@@ -39,6 +39,8 @@ This function expects an object with known set of properties and need to be call
 ### Sample property
 
     var defaultConfig = {
+		// The compiler used to compile the expressions and custom functions added by the user.
+		// You can let the end user to use your own syntax instead of javascript in report builder and use this function to compile the expressions.
 	    compiler: function (code, sandbox) { return Function(...sandbox, code)(); },
         parameterTypes: {
             ULIST: {
@@ -58,14 +60,14 @@ This function expects an object with known set of properties and need to be call
                 // These properties will be sent back to this callback function as second param when the end user tries to edit the dataset again in future.
                 resolveSchema: (name, props, promise) => {
 
-                    promise.resolve(rapidview); // Optionally use this to resolve data of the dataset along with schema
+                    promise.resolve(statesList); // Optionally use this to resolve data of the dataset along with schema
 
                     return Promise.resolve(props); // Return a promise which should resolve to the schema of the dataset.
                 },
 
                 // While the end user tries to preview the report, this callback function would be triggered.
                 // Return a promise which resolves the data which can be used by the end user in report.
-                resolveData: props => Promise.resolve(rapidview)
+                resolveData: props => Promise.resolve(statesList)
             }
         },
 
@@ -77,19 +79,21 @@ This function expects an object with known set of properties and need to be call
         },
 
         commonFunctions: {
-            // Pass in the all the common functions which would be required by the end user
+            // Pass in all the common functions which would be required by the end user
             getMyProfileInfo: {
                 helpText:"This function will return profile info.",
                 value: function () { return profileInfo; }
             },
         },
-        customFunctions: false, // Pass it as false if you done want the end user to write their own functions
+        customFunctions: false, // Pass it as false if you dont want the end user to write their own functions
 
-        // Pass list of sub reports available for the users
+        // Pass list of sub reports available for the users.
+		// This list would be basically the collection of all the reports saved by the user so that they can add some existing report as sub report to current report.
         subReports: [
             {id:1, name:"My sub report 1"},
             {id:2, name:"My sub report 2"}
         ],
+		// When the user tries to generate report (having some report), this callback would be triggered to get the definition of sub report.
         resolveReportDefinition: (reportId) => {
             return Promise.resolve(getReportDefinition(reportId));
         }
@@ -113,7 +117,7 @@ This component can be used in your page where you would like the report builder 
     <ReportBuilder
         definition={reportDefinition}
         api={api => (this.builderAPI = api)}
-        onChange={data => {this.setState({ reportDefinition: data });}}
+        onChange={data => this.setState({ reportDefinition: data })}
     />
 
 ## ReportViewer:

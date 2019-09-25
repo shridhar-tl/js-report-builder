@@ -68,7 +68,7 @@ class ReportItemBase extends PureComponent {
                 <div className="header-cntr">
                     {dragSource ? dragSource(header) : header}
                 </div>
-                <Menu model={this.menuModel} popup={true} ref={el => (this.itemContext = el)} />
+                <Menu appendTo={document.body} model={this.menuModel} popup={true} ref={el => (this.itemContext = el)} />
                 {childItems}
             </Droppable>
             {showPropsDialog && PropsDialog && <PropsDialog definition={definition} onChange={this.saveProperties} onHide={this.hideProperties} />}

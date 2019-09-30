@@ -29,7 +29,6 @@ class GridCell extends PureComponent {
             <Droppable type={["GRID_ITEM", "RPT_ITMS", "RPT_DS_PRPS", "RPT_PARM"]} onItemAdded={this.cellItem_Added}>
                 <CellType
                     className={selected ? "selected" : ""}
-                    title={index}
                     style={style}
                     onDoubleClick={() => this.beginEdit(-1)}
                     onClick={e => this.cellSelected(null, e)}>

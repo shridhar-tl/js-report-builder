@@ -144,7 +144,7 @@ class Grid extends ReportItemBase {
             }
         ];
 
-        return <Menu model={menuModel} popup={true} ref={el => (this.rowContext = el)} />;
+        return <Menu appendTo={document.body} model={menuModel} popup={true} ref={el => (this.rowContext = el)} />;
     };
 
     gridDataChanged() {
@@ -249,7 +249,7 @@ class Grid extends ReportItemBase {
                 }
             }
         ];
-        return <Menu model={menuModel} popup={true} ref={el => (this.colContext = el)} />;
+        return <Menu appendTo={document.body} model={menuModel} popup={true} ref={el => (this.colContext = el)} />;
     };
 
     RowGroupContext = () => {
@@ -318,7 +318,7 @@ class Grid extends ReportItemBase {
                 }
             }
         ];
-        return <Menu model={menuModel} popup={true} ref={el => (this.rowGroupContext = el)} />;
+        return <Menu appendTo={document.body} model={menuModel} popup={true} ref={el => (this.rowGroupContext = el)} />;
     };
 
     ColGroupContext = () => {
@@ -421,7 +421,7 @@ class Grid extends ReportItemBase {
                 }
             }
         ];
-        return <Menu model={menuModel} popup={true} ref={el => (this.colGroupContext = el)} />;
+        return <Menu appendTo={document.body} model={menuModel} popup={true} ref={el => (this.colGroupContext = el)} />;
     };
 
     CellItemContext = () => {
@@ -449,7 +449,7 @@ class Grid extends ReportItemBase {
             }
         ];
 
-        return <Menu model={menuData} popup={true} ref={el => (this.cellItemContext = el)} />
+        return <Menu appendTo={document.body} model={menuData} popup={true} ref={el => (this.cellItemContext = el)} />
     }
 
     expressionChanged = (value, type, validation) => {
@@ -528,7 +528,6 @@ class Grid extends ReportItemBase {
                         return (
                             <th
                                 key={i + index}
-                                title={i + index}
                                 className="builder-head-col"
                                 rowSpan={colGrpDepth}
                                 onContextMenu={e => this.sharedProps.showColHeaderContext(e, i + index, parent, c)}

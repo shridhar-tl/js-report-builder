@@ -528,7 +528,6 @@ class Grid extends ReportItemBase {
                         return (
                             <th
                                 key={i + index}
-                                title={i + index}
                                 className="builder-head-col"
                                 rowSpan={colGrpDepth}
                                 onContextMenu={e => this.sharedProps.showColHeaderContext(e, i + index, parent, c)}

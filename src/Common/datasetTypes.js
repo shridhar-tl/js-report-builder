@@ -146,16 +146,23 @@ export function getDatasetDefinition(data, datasetId, path) {
     if (!data) {
         return undefined;
     }
-    if (Array.isArray(data)) {
-        data = data[0];
+
+    let obj = data;
+    data = null;
+
+    if (Array.isArray(obj)) {
+        data = obj;
+        obj = obj[0];
     }
-    return getItems(data, datasetId, path);
+
+    return getItems(obj, datasetId, path, data);
 }
 
-function getItems(obj, set, prefix) {
+function getItems(obj, set, prefix, dataset) {
     if (!obj) {
         return null;
     }
+
     let items = Object.keys(obj);
     if (prefix) {
         prefix += ".";
@@ -163,18 +170,24 @@ function getItems(obj, set, prefix) {
         prefix = "";
     }
     return items.map(key => {
-        let type = getItemType(obj[key]);
+        let curProp = obj[key];
+        if (!curProp && dataset) {
+            curProp = array(dataset).first(d => !!d[key]);
+        }
+
+        let type = getItemType(curProp);
         if (!type) {
             return null;
         }
+
         let path = prefix + key;
         var childrens;
 
         if (type === "object") {
-            childrens = getItems(obj[key], set, path);
+            childrens = getItems(curProp, set, path);
         } else if (type === "array") {
             path += "[0]";
-            childrens = getDatasetDefinition(obj[key], set, path);
+            childrens = getDatasetDefinition(curProp, set, path);
         }
 
         let itm = { set, key, path, type, children: childrens };

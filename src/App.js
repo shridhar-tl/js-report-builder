@@ -7,7 +7,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";
 import axios from "axios";
-import { userDaywiseReport, datasets, userList, projects, issuetypes, customfields, rapidview, tempData } from './testdata'
+import { userDaywiseReport, datasets, myOpenTickets, userList, projects, issuetypes, customfields, rapidview, tempData } from './testdata'
 
 var subReports = [
     { id: 1, name: "User daywise report", definition: userDaywiseReport },
@@ -41,11 +41,11 @@ var defaultConfig = {
         JQL: {
             label: "JQL search result",
             resolveSchema: (name, props, promise) => {
-                promise.resolve(datasets.JQL);
-                return Promise.resolve(props);
+                promise.resolve(myOpenTickets.data);//datasets.JQL
+                return Promise.resolve(myOpenTickets.schema); //props
             },
             resolveData: props => {
-                return Promise.resolve(datasets.JQL);
+                return Promise.resolve(myOpenTickets.data);//datasets.JQL
             }
         },
         PLS: {

@@ -36,6 +36,7 @@ class JsonTree extends PureComponent {
 
     render() {
         var { items } = this.state;
+
         return (
             <div className="tree" style={{ height: (this.props.height || 200) + "px" }}>
                 {this.getNode(items)}
@@ -58,9 +59,13 @@ class JsonTreeNode extends PureComponent {
 
     render() {
         var { node } = this.props;
+
+        if (!node) { return null; }
+
         var { children } = node;
         var { expanded } = this.state;
         var hasChildren = children && children.length;
+
         return (
             <div className="node">
                 <DraggableHandle itemType="RPT_DS_PRPS" item={node}>

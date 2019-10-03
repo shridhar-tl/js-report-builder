@@ -85,7 +85,7 @@ class Datasets extends PureComponent {
         }
 
         var { datasets } = this.state;
-        datasets[editIndex] = dataset;
+        datasets[editIndex] = { ...dataset };
         datasets = { ...datasets };
         var datasetList = Object.keys(datasets);
         this.setState({
@@ -117,7 +117,7 @@ class Datasets extends PureComponent {
                     var { label, allowEdit } = this.datasetTypes[type];
 
                     return (
-                        <div key={d} className="set">
+                        <div key={ds._uniqueId} className="set">
                             <div className="title">
                                 <div className="pull-left" title={label}>{name}</div>
                                 <div className="pull-right">

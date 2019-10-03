@@ -172,7 +172,7 @@ function getItems(obj, set, prefix, dataset) {
     return items.map(key => {
         let curProp = obj[key];
         if (!curProp && dataset) {
-            curProp = array(dataset).first(d => !!d[key]);
+            curProp = array(dataset).first(d => !!d[key])[key];
         }
 
         let type = getItemType(curProp);

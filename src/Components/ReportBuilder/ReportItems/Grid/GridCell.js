@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
 import CellItem from "./CellItem";
 import ExpressionEditor from "../../Common/ExpressionEditor";
-import DraggableHandle from "../../DragDrop/DraggableHandle";
-import Droppable from "../../DragDrop/Droppable";
+import Sortable from "../../DragDrop/Sortable";
 import "./GridCell.scss";
 import { GridContext } from "../../Common/Constants";
 
 const rxIsValidName = /^[A-Za-z_]+[A-Za-z0-9_]*$/;
+
+const gridCellAccepts = ["GRID_ITEM", "RPT_CMPN", "RPT_DS_PRPS", "RPT_PARM"];
 
 class GridCell extends PureComponent {
     static contextType = GridContext;
@@ -21,29 +22,33 @@ class GridCell extends PureComponent {
     }
 
     render() {
-        var { index, style, isHeaderCell } = this.props;
+        var { style, isHeaderCell } = this.props;
         var { editMode, editedItem, selected, cellData } = this.state;
         var CellType = isHeaderCell ? "th" : "td";
 
         return (
-            <Droppable type={["GRID_ITEM", "RPT_ITMS", "RPT_DS_PRPS", "RPT_PARM"]} onItemAdded={this.cellItem_Added}>
-                <CellType
-                    className={selected ? "selected" : ""}
-                    style={style}
-                    onDoubleClick={() => this.beginEdit(-1)}
-                    onClick={e => this.cellSelected(null, e)}>
-                    {editMode && (
-                        <ExpressionEditor
-                            className="grid-cell-expression"
-                            expression={editedItem.expression || editedItem.data}
-                            type={editedItem.itemType}
-                            noGroups={true}
-                            endEdit={this.expressionValueReceived}
-                        />
-                    )}
-                    {!editMode && this.getDataHTML(cellData)}
-                </CellType>
-            </Droppable>
+            <Sortable items={cellData} itemType="GRID_ITEM" accepts={gridCellAccepts}
+                useCustomContainer={true} onItemAdded={this.cellItem_Added} onChange={this.updateCellData}>
+                {(renderItems) => (
+                    <CellType
+                        className={selected ? "selected" : ""}
+                        style={style}
+                        onDoubleClick={() => this.beginEdit(-1)}
+                        onClick={e => this.cellSelected(null, e)}>
+                        {editMode && (
+                            <ExpressionEditor
+                                className="grid-cell-expression"
+                                expression={editedItem.expression || editedItem.data}
+                                type={editedItem.itemType}
+                                noGroups={true}
+                                endEdit={this.expressionValueReceived}
+                            />
+                        )}
+                        {!editMode && renderItems(this.getItemHtml)}
+                    </CellType>
+                )}
+
+            </Sortable>
         );
     }
 
@@ -140,13 +145,19 @@ class GridCell extends PureComponent {
 
     dataChanged(cellData, editedItem) {
         cellData = [...cellData];
+        this.updateCellData(cellData, editedItem);
+    }
+
+    updateCellData = (cellData, editedItem) => {
         this.props.onChange(cellData);
         this.setState({ cellData, editedItem });
     }
 
-    cellItem_Added = (item, source) => {
+    cellItem_Added = (source) => {
         var { cellData } = this.state;
-        var newItem = item;
+        const { item } = source;
+
+        let newItem = item;
 
         if (source.itemType === "RPT_DS_PRPS") {
             newItem = { data: "[" + item.key + "]", expression: rxIsValidName.test(item.path) ? 'Fields.' + item.path : "Field('" + item.path + "')" };
@@ -154,10 +165,13 @@ class GridCell extends PureComponent {
         else if (source.itemType === "RPT_PARM") {
             newItem = { data: "$[" + item.display + "]", expression: 'Parameters.' + item.name };
         }
-        else if (source.itemType === "RPT_ITMS") {
-            switch (source.item.type) {
+        else if (source.itemType === "RPT_CMPN") {
+            switch (item.type) {
                 case "IMG":
                     newItem = { itemType: "IMG", style: { height: "20px", width: "20px" } };
+                    break;
+                case "MNU":
+                    newItem = { itemType: "MNU", style: {} };
                     break;
                 default:
                     newItem = { itemType: "", style: {} };
@@ -173,10 +187,15 @@ class GridCell extends PureComponent {
         this.removeItem(index);
     };
 
-    getItemHtml = (d, i) => {
+    getItemHtml = (d, i, dropHndl) => {
         switch (d.itemType) {
             case "IMG":
-                return <img key={i} style={d.style} alt="" onClick={e => this.itemSelected(e, i, d)} onContextMenu={e => this.showItemContext(e, d, i)} />;
+                return <img key={i} ref={dropHndl.dropConnector} style={d.style} alt=""
+                    onClick={e => this.itemSelected(e, i, d)} onContextMenu={e => this.showItemContext(e, d, i)} />;
+
+            case "MNU":
+                return <span key={i} ref={dropHndl.dropConnector} style={d.style} className="fa fa-ellipsis-v"
+                    onClick={e => this.itemSelected(e, i, d)} onContextMenu={e => this.showItemContext(e, d, i)} />;
 
             default:
                 return (
@@ -189,22 +208,12 @@ class GridCell extends PureComponent {
                         onRemove={this.removeItem}
                         beginEdit={this.beginEdit}
                         endEdit={this.endEdit}
+                        dropHndl={dropHndl}
                         showContext={e => this.showItemContext(e, d, i)}
                     />
                 );
         }
     };
-
-    getDataHTML(cellData) {
-        return (
-            cellData &&
-            cellData.map((d, i) => (
-                <DraggableHandle itemType="GRID_ITEM" item={d} key={i} index={i} onMoved={this.cellItem_Moved}>
-                    {this.getItemHtml(d, i)}
-                </DraggableHandle>
-            ))
-        );
-    }
 
     showItemContext = (e, d, i) => {
         this.context.showCellItemContext(e, i, d, this.menuClicked);

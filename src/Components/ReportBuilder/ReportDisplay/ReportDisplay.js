@@ -1,10 +1,12 @@
 import React, { PureComponent } from "react";
 import "./ReportDisplay.scss";
-import Droppable from "../DragDrop/Droppable";
 import { componentsMap } from "../ReportItems/index";
 import ReportItemBase from "../ReportItems/ReportItemBase";
-import DraggableHandle from "../DragDrop/DraggableHandle";
 import { getUniqueId } from "../Common/HelperFunctions";
+import Sortable from "../DragDrop/Sortable";
+
+const noReportItemsPlaceholder = <div className="message-no-items">Drag and drop report items from left hand side to start building a report</div>;
+const accepts = ["RPT_ITMS", "RPT_CMPN"];
 
 class ReportDisplay extends PureComponent {
     constructor(props) {
@@ -13,22 +15,27 @@ class ReportDisplay extends PureComponent {
         this.containerId = getUniqueId();
     }
 
-    onItemAdded = (item, drg, index) => {
-        var { addedItems } = this.state;
-
-        if (index >= 0) {
-            addedItems.splice(index, 0, item);
-        }
-        else {
-            var newItem = { type: item.type }; // ToDo: attrs property need to be added
-            addedItems.push(newItem);
-        }
-
+    onItemAdded = (source, target) => {
+        const { item } = source;
+        let { index } = target;
+        let { addedItems } = this.state;
         addedItems = [...addedItems];
 
+        const newItem = { type: item.type }; // ToDo: attrs property need to be added
+        if ((index !== 0 && !index) || index >= addedItems.length) {
+            addedItems.push(newItem);
+        }
+        else {
+            addedItems.splice(index, 0, newItem);
+        }
+
+        this.itemsChanged(addedItems);
+    };
+
+    itemsChanged = (addedItems) => {
         this.setState({ addedItems });
         this.props.onChange(addedItems);
-    };
+    }
 
     onItemRemoved = index => {
         var { addedItems } = this.state;
@@ -38,64 +45,35 @@ class ReportDisplay extends PureComponent {
         this.props.onChange(addedItems);
     };
 
-    moveItem = (srcIndex, destIndex, item) => {
-        if (item.itemType === "EXST_ITMS") {
-            var { addedItems } = this.state;
-
-            var [movedItem] = addedItems.splice(srcIndex, 1);
-            addedItems.splice(destIndex, 0, movedItem);
-            addedItems = [...addedItems];
-
-            this.setState({ addedItems });
-            this.props.onChange(addedItems);
-        } else {
-            this.onItemAdded({ type: item.item.type }, null, destIndex); // ToDo: attrs property need to be added
-        }
-        return true;
-    }
-
     onChanged = (data, index) => {
         var { addedItems } = this.state;
         addedItems[index].data = data;
         this.props.onChange(addedItems);
     };
 
-    getControl = (item, index) => {
+    getControl = (item, index, drpHndl, drgSrc) => {
         var Ctl = componentsMap[item.type].control;
 
         if (!Ctl) { Ctl = ReportItemBase; }
 
         return (
-            <DraggableHandle className="cmp-drg" index={index} itemType="EXST_ITMS" item={item} key={item._uniqueId} containerId={this.containerId} onItemRemoved={this.onItemRemoved}>
-                {({ connectDragSource }) => (
-                    <Ctl
-                        dragSource={connectDragSource}
-                        onItemMoved={this.moveItem}
-                        onItemAdded={this.onItemAdded}
-                        containerId={this.containerId}
-                        index={index}
-                        onItemRemoved={this.onItemRemoved}
-                        data={item.data}
-                        onChange={d => this.onChanged(d, index)}
-                    />)
-                }
-            </DraggableHandle>
+            <Ctl
+                dragSource={drgSrc.dragHandle}
+                dropHandle={drpHndl.dropConnector}
+                index={index}
+                onItemRemoved={this.onItemRemoved}
+                data={item.data}
+                onChange={d => this.onChanged(d, index)}
+            />
         );
     };
 
     render() {
-        var { addedItems } = this.state;
         return (
             <div className="report-display">
-                <Droppable className="drop-grp" type="RPT_ITMS" index={addedItems.length} containerId={this.containerId}
-                    onItemAdded={this.onItemAdded} onItemMoved={this.moveItem}>
-                    {!addedItems.length && (
-                        <div className="message-no-items">
-                            Drag and drop report items from left hand side to start building a report
-                        </div>
-                    )}
-                    {addedItems.map(this.getControl)}
-                </Droppable>
+                <Sortable className="drop-grp" draggableClassName="component" itemType="RPT_ITMS" accepts={accepts} keyName="_uniqueId"
+                    useDragHandle items={this.state.addedItems} onChange={this.itemsChanged} placeholder={noReportItemsPlaceholder}
+                    onItemAdded={this.onItemAdded}>{this.getControl}</Sortable>
             </div>
         );
     }

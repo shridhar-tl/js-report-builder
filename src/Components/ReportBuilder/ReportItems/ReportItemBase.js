@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import './ReportItemBase.scss'
 import { Menu } from 'primereact/menu';
-import Droppable from '../DragDrop/Droppable';
 
 class ReportItemBase extends PureComponent {
     constructor(props, propsDialog) {
@@ -51,7 +50,7 @@ class ReportItemBase extends PureComponent {
 
     renderBase(...children) {
         var { propsDialog: PropsDialog, state: { showPropsDialog, definition } } = this;
-        var { index, onItemMoved, onItemAdded, onItemRemoved, dragSource, containerId } = this.props;
+        var { index, onItemRemoved, dragSource, dropHandle } = this.props;
         var childItems;
         if (children && children.length < 2) { childItems = children[0]; }
         else { childItems = children; }
@@ -62,17 +61,14 @@ class ReportItemBase extends PureComponent {
                 title="Remove this report item permenantly"></i></div>
         </div>
 
-        return <>
-            <Droppable className="component" index={index} type={["RPT_ITMS", "EXST_ITMS"]} containerId={containerId}
-                onItemMoved={onItemMoved} onItemAdded={onItemAdded}>
-                <div className="header-cntr">
-                    {dragSource ? dragSource(header) : header}
-                </div>
-                <Menu appendTo={document.body} model={this.menuModel} popup={true} ref={el => (this.itemContext = el)} />
-                {childItems}
-            </Droppable>
+        return <div className="component" ref={dropHandle}>
+            <div className="header-cntr">
+                {dragSource ? dragSource(header) : header}
+            </div>
+            <Menu appendTo={document.body} model={this.menuModel} popup={true} ref={el => (this.itemContext = el)} />
+            {childItems}
             {showPropsDialog && PropsDialog && <PropsDialog definition={definition} onChange={this.saveProperties} onHide={this.hideProperties} />}
-        </>;
+        </div>;
     }
 
     render() {

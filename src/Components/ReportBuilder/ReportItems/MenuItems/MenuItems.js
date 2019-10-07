@@ -37,7 +37,7 @@ class MenuItems extends ReportItemBase {
 
         return super.renderBase(
             <div>
-                <Menu appendTo={document.body} model={items} />
+                <Menu model={items} />
                 {showPropsDialog && <MenuProperties definition={definition} onChange={this.onChange} onHide={super.hideProperties} />}
             </div>
         );

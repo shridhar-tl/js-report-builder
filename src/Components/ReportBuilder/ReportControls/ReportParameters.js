@@ -5,14 +5,15 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from "primereact/dropdown";
 import ReportControlBase from "./ReportControlBase";
 import Button from "../../Common/Button";
-import DraggableHandle from "../DragDrop/DraggableHandle";
 import "./ReportParameters.scss";
 import SelectDataset from "../Common/SelectDataset";
 import { getParamTypes, supportedFileTypes } from "../../../Common/ReportConfig";
 import { Checkbox } from "primereact/checkbox";
 import InputParameter from "../../Common/InputParameter";
 import { BuilderContext } from "../Common/Constants";
-import Droppable from "../DragDrop/Droppable";
+import Sortable from "../DragDrop/Sortable";
+
+const itemTarget = ["GRID_ITEM"];
 
 class ReportParameters extends ReportControlBase {
     constructor(props) {
@@ -50,40 +51,38 @@ class ReportParameters extends ReportControlBase {
         this.props.onChange(parameters);
     };
 
-    moveItem = (srcIndex, destIndex) => {
-        var { parameters } = this.state;
-        var [movedItem] = parameters.splice(srcIndex, 1);
-        parameters.splice(destIndex, 0, movedItem);
-        parameters = [...parameters];
-        this.setState({ parameters });
-        this.props.onChange(parameters);
-    }
-
     isNameUnique = (name) => {
         var { parameters } = this.state;
         name = name.toLowerCase();
         return !parameters.some(p => p.name.toLowerCase() === name);
     }
 
+    paramsSorted = (parameters) => {
+        this.setState({ parameters });
+        this.props.onChange(parameters);
+    }
+
+    renderParams = (param, index, dropHndl, dragSrc) => {
+        return dropHndl.dropConnector(<div className="param">
+            {dragSrc.dragHandle(<span className="cr-move" title={param.display}>{param.name}</span>)}
+            <i className="fa fa-edit" onClick={() => this.editClicked(index)} title="Edit parameter properties" />
+            <i className="fa fa-times" onClick={() => this.removeParameter(index)} title="Remove parameter" />
+        </div>)
+    };
+
     render() {
-        var { showAddDialog, parameters, editedParam } = this.state;
+        const { showAddDialog, parameters, editedParam } = this.state;
+
         return (
             <>
                 <div className="params-list">
-                    {parameters.map((param, index) => (
-                        <DraggableHandle index={index} itemType="RPT_PARM" item={param} key={param.name}>
-                            {({ connectDragSource }) => <Droppable index={index} type={["RPT_PARM"]} onItemMoved={this.moveItem}>
-                                <div className="param">
-                                    {connectDragSource(<span className="cr-move" title={param.display}>{param.name}</span>)}
-                                    <i className="fa fa-edit" onClick={() => this.editClicked(index)} title="Edit parameter properties" />
-                                    <i className="fa fa-times" onClick={() => this.removeParameter(index)} title="Remove parameter" />
-                                </div>
-                            </Droppable>}
-                        </DraggableHandle>
-                    ))}
+                    <Sortable items={parameters} nonRemovable itemType="RPT_PARM" itemTarget={itemTarget} useDragHandle onChange={this.paramsSorted}>
+                        {this.renderParams}
+                    </Sortable>
                 </div>
                 {showAddDialog && (
-                    <EditParameter parameter={editedParam} onHide={this.onHide} onChange={this.saveParameter} isNameUnique={this.isNameUnique} />
+                    <EditParameter parameter={editedParam} isNameUnique={this.isNameUnique}
+                        onHide={this.onHide} onChange={this.saveParameter} />
                 )}
             </>
         );

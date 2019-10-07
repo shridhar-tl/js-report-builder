@@ -1,6 +1,12 @@
-.cmp-drg:first-child {
-    & > .component > .header-cntr {
+.drop-grp > .component:first-child {
+    & > .header-cntr {
         position: absolute;
+    }
+}
+
+.drop-grp{
+    .drop-grp{
+        position: relative;
     }
 }
 

@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
 import "./JsonTree.scss";
-import DraggableHandle from "../ReportBuilder/DragDrop/DraggableHandle";
+import Draggable from "../ReportBuilder/DragDrop/Draggable";
+
+const itemTarget = ["GRID_ITEM"];
 
 class JsonTree extends PureComponent {
     constructor(props) {
@@ -68,7 +70,7 @@ class JsonTreeNode extends PureComponent {
 
         return (
             <div className="node">
-                <DraggableHandle itemType="RPT_DS_PRPS" item={node}>
+                <Draggable itemType="RPT_DS_PRPS" item={node} itemTarget={itemTarget}>
                     <div className="text">
                         {hasChildren && (
                             <i
@@ -81,7 +83,7 @@ class JsonTreeNode extends PureComponent {
                         <span className="key">{node.key}</span>
                         <span className="sub">({node.type})</span>
                     </div>
-                </DraggableHandle>
+                </Draggable>
                 {expanded && children && children.map((item, i) => <JsonTreeNode key={i} node={item} />)}
             </div>
         );

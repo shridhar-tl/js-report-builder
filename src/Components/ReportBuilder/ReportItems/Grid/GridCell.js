@@ -2,8 +2,9 @@ import React, { PureComponent } from "react";
 import CellItem from "./CellItem";
 import ExpressionEditor from "../../Common/ExpressionEditor";
 import Sortable from "../../DragDrop/Sortable";
-import "./GridCell.scss";
 import { GridContext } from "../../Common/Constants";
+import classNames from "classnames";
+import "./GridCell.scss";
 
 const rxIsValidName = /^[A-Za-z_]+[A-Za-z0-9_]*$/;
 
@@ -27,11 +28,11 @@ class GridCell extends PureComponent {
         var CellType = isHeaderCell ? "th" : "td";
 
         return (
-            <Sortable items={cellData} itemType="GRID_ITEM" accepts={gridCellAccepts}
-                useCustomContainer={true} onItemAdded={this.cellItem_Added} onChange={this.updateCellData}>
-                {(renderItems) => (
+            <Sortable items={cellData} moduleName="GridCell" itemType="GRID_ITEM" accepts={gridCellAccepts}
+                useCustomContainer onItemAdded={this.cellItem_Added} onChange={this.updateCellData}>
+                {(renderItems, dropProps) => (
                     <CellType
-                        className={selected ? "selected" : ""}
+                        className={classNames({ "drop-active": dropProps.isActive, selected })}
                         style={style}
                         onDoubleClick={() => this.beginEdit(-1)}
                         onClick={e => this.cellSelected(null, e)}>

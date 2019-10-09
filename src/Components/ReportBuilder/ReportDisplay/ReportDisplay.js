@@ -6,6 +6,7 @@ import { getUniqueId } from "../Common/HelperFunctions";
 import Sortable from "../DragDrop/Sortable";
 
 const noReportItemsPlaceholder = <div className="message-no-items">Drag and drop report items from left hand side to start building a report</div>;
+const droppablePlaceholder = <div className="message-no-items">Drag and drop more report items here</div>;
 const accepts = ["RPT_ITMS", "RPT_CMPN"];
 
 class ReportDisplay extends PureComponent {
@@ -52,7 +53,7 @@ class ReportDisplay extends PureComponent {
     };
 
     getControl = (item, index, drpHndl, drgSrc) => {
-        var Ctl = componentsMap[item.type].control;
+        var { control: Ctl, icon, text } = componentsMap[item.type];
 
         if (!Ctl) { Ctl = ReportItemBase; }
 
@@ -60,6 +61,8 @@ class ReportDisplay extends PureComponent {
             <Ctl
                 dragSource={drgSrc.dragHandle}
                 dropHandle={drpHndl.dropConnector}
+                icon={icon}
+                text={text}
                 index={index}
                 onItemRemoved={this.onItemRemoved}
                 data={item.data}
@@ -69,10 +72,14 @@ class ReportDisplay extends PureComponent {
     };
 
     render() {
+        const { addedItems } = this.state;
+        const hasReportItems = addedItems && addedItems.length > 0;
+
         return (
             <div className="report-display">
                 <Sortable className="drop-grp" draggableClassName="component" itemType="RPT_ITMS" accepts={accepts} keyName="_uniqueId"
-                    useDragHandle items={this.state.addedItems} onChange={this.itemsChanged} placeholder={noReportItemsPlaceholder}
+                    useDragHandle items={addedItems} onChange={this.itemsChanged}
+                    placeholder={hasReportItems ? droppablePlaceholder : noReportItemsPlaceholder}
                     onItemAdded={this.onItemAdded}>{this.getControl}</Sortable>
             </div>
         );

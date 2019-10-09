@@ -103,6 +103,14 @@ body {
         }
     }
 
+    .drop-allowed {
+        background-color: #f7f96e;
+    }
+
+    .drop-active {
+        background-color: #def3cb;
+    }
+
     /*.p-dialog {
         border-radius: 3px;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);

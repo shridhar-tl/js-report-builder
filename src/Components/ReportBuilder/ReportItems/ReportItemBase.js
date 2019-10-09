@@ -49,20 +49,20 @@ class ReportItemBase extends PureComponent {
     }
 
     renderBase(...children) {
-        var { propsDialog: PropsDialog, state: { showPropsDialog, definition } } = this;
-        var { index, onItemRemoved, dragSource, dropHandle } = this.props;
-        var childItems;
+        const { propsDialog: PropsDialog, state: { showPropsDialog, definition } } = this;
+        const { index, onItemRemoved, dragSource, dropHandle, icon, text } = this.props;
+        let childItems;
         if (children && children.length < 2) { childItems = children[0]; }
         else { childItems = children; }
 
-        var header = <div className="header" onContextMenu={this.showContext}>
-            <div className="pull-left"></div>
+        const header = <div className="header" onContextMenu={this.showContext}>
+            <div className="pull-left"><span className={icon} /> <span>{text}</span></div>
             <div className="pull-right"><i className="fa fa-times" onClick={() => onItemRemoved(index)}
                 title="Remove this report item permenantly"></i></div>
         </div>
 
-        return <div className="component" ref={dropHandle}>
-            <div className="header-cntr">
+        return <div className="component">
+            <div ref={dropHandle} className="header-cntr">
                 {dragSource ? dragSource(header) : header}
             </div>
             <Menu appendTo={document.body} model={this.menuModel} popup={true} ref={el => (this.itemContext = el)} />

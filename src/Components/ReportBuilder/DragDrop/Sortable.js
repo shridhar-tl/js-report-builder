@@ -80,8 +80,15 @@ class Sortable extends PureComponent {
         return this.renderItem(c, i, children);
     }
 
+    getDropableContainer = (itemsToRender) => {
+        const { containerId, props: { items, itemType, accepts = itemType } } = this;
+        return <Droppable containerId={containerId} accepts={accepts} itemType={itemType} index={items.length} onDrop={this.handleDrop}>
+            {itemsToRender}
+        </Droppable>;
+    }
+
     render() {
-        const { containerId, props: { useCustomContainer, items, children, itemType, accepts = itemType, className, placeholder } } = this;
+        const { props: { useCustomContainer, items, children, className, placeholder } } = this;
 
         let itemsToRender = null;
         if (useCustomContainer) {
@@ -89,18 +96,18 @@ class Sortable extends PureComponent {
                 throw new Error("When useCustomContainer=true, children must be a function");
             }
 
-            itemsToRender = children(this.renderItems);
+            itemsToRender = this.getDropableContainer((connectDropTarget, isOver, canDrop, isActive) => connectDropTarget(children(this.renderItems, { isOver, canDrop, isActive })));
         }
         else if (items && items.length > 0) {
-            itemsToRender = <div className={className}>{items.map(this.renderChildren)}</div>;
+            itemsToRender = <div className={className}>{items.map(this.renderChildren)}
+                {placeholder && this.getDropableContainer(placeholder)}
+            </div>;
         }
         else {
-            itemsToRender = placeholder;
+            itemsToRender = this.getDropableContainer(placeholder);
         }
 
-        return <Droppable containerId={containerId} accepts={accepts} itemType={itemType} index={items.length} onDrop={this.handleDrop}>
-            {itemsToRender}
-        </Droppable>;
+        return itemsToRender;
     }
 }
 

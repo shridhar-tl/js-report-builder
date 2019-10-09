@@ -5,8 +5,8 @@ import { DropTarget } from "react-dnd";
 
 class Droppable extends PureComponent {
     render() {
-        const { isOver, canDrop, connectDropTarget, children } = this.props;
-        const isActive = isOver && canDrop;
+        const { isOver, isOverCurrent, canDrop, connectDropTarget, children } = this.props;
+        const isActive = isOverCurrent && canDrop;
 
         if (typeof children === "function") {
             return children(connectDropTarget, isOver, canDrop, isActive);
@@ -64,6 +64,7 @@ function collect(connect, monitor) {
     return {
         connectDropTarget: connect.dropTarget(),
         isOver: monitor.isOver(),
+        isOverCurrent: monitor.isOver({ shallow: true }),
         canDrop: monitor.canDrop()
     };
 }

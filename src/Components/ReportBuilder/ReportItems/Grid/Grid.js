@@ -483,15 +483,17 @@ class Grid extends ReportItemBase {
 
     updateRows = (updated, index, field) => {
         var { data } = this.state;
+        data = { ...data };
         if (!Array.isArray(updated)) {
             // When group is updated
             var fields = data[field];
+            fields = [...fields];
             updated = { ...updated };
             fields[index] = updated;
+            data[field] = fields;
         } else {
             data[field] = updated = [...updated]; // When rows are updated
         }
-        data = { ...data };
         this.setState({ data });
         this.props.onChange(data);
         return updated;

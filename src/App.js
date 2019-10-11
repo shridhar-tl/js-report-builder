@@ -137,7 +137,7 @@ var defaultConfig = {
 class App extends PureComponent {
     constructor() {
         super();
-        this.state = { preview: false, reportDefinition: tempData || userDaywiseReport };
+        this.state = { preview: false, reportDefinition: myOpenTickets.definition || userDaywiseReport };
     }
 
     UNSAFE_componentWillMount() {

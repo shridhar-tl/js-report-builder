@@ -150,7 +150,7 @@ class GridCell extends PureComponent {
     }
 
     updateCellData = (cellData, editedItem) => {
-        this.props.onChange(cellData);
+        this.props.onChange(cellData, this.props.index);
         this.setState({ cellData, editedItem });
     }
 

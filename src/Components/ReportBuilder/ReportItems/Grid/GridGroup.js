@@ -108,6 +108,15 @@ class GridGroup extends PureComponent {
         }
     };
 
+    childrenChanged = (data, index) => {
+        let { group, index: groupIndex, updateParent, onChange = updateParent } = this.props;
+        let { children } = group;
+        children = [...children];
+        children[index] = data;
+        group = { ...group, children };
+        onChange(group, groupIndex);
+    }
+
     render() {
         var { columns, isHeaderRow, parent, updateParent } = this.props;
         var { group, headSpan, rowSpans = [] } = this.state;
@@ -145,7 +154,8 @@ class GridGroup extends PureComponent {
                             isHeaderRow,
                             rowSpans: !i ? rowSpans : [],
                             grid: this.props.grid,
-                            updateParent: this.updateGroupItems
+                            updateParent: this.updateGroupItems,
+                            onChange: this.childrenChanged
                         };
                         if (item.type === 1) {
                             return <GridRow isDetailsRow={type === 3} rowData={item} {...commonProps} />;

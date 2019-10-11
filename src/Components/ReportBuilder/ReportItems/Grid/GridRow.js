@@ -53,6 +53,15 @@ class GridRow extends PureComponent {
         return result;
     }
 
+    cellDataChanged = (cellData, index) => {
+        let { rowData, updateParent, onChange = updateParent, index: parentIndex } = this.props;
+        let { children = [] } = rowData || {};
+        children = [...children];
+        children[index] = cellData;
+        rowData = { ...rowData, children };
+        onChange(rowData, parentIndex);
+    }
+
     tdRepeator(index, col) {
         var { rowData: { children } = {} } = this.state;
         var { grid, isHeaderRow } = this.props;
@@ -70,7 +79,7 @@ class GridRow extends PureComponent {
                 colData={col}
                 cellData={cellData}
                 style={col.style}
-                onChange={data => (children[index] = data)}
+                onChange={this.cellDataChanged}
             />
         ); //ToDo: write contextmenu event
     }

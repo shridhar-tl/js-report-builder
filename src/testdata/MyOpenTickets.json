@@ -1,4 +1,522 @@
 {
+    "definition": {
+        "datasets": {
+            "c4181175-3f77-481b-b7c5-f1f2230d517b": {
+                "type": "JQL",
+                "name": "ticketsList",
+                "props": {
+                    "fields": {},
+                    "filterFields": [],
+                    "outputFields": [
+                        {
+                            "id": "issuekey",
+                            "name": "Key",
+                            "custom": false,
+                            "type": "string"
+                        },
+                        {
+                            "id": "issuetype",
+                            "name": "Issue Type",
+                            "custom": false,
+                            "knownObj": true,
+                            "type": "issuetype"
+                        },
+                        {
+                            "id": "summary",
+                            "name": "Summary",
+                            "custom": false,
+                            "type": "string"
+                        },
+                        {
+                            "id": "reporter",
+                            "name": "Reporter",
+                            "custom": false,
+                            "knownObj": true,
+                            "type": "user"
+                        },
+                        {
+                            "id": "priority",
+                            "name": "Priority",
+                            "custom": false,
+                            "knownObj": true,
+                            "type": "priority"
+                        },
+                        {
+                            "id": "status",
+                            "name": "Status",
+                            "custom": false,
+                            "knownObj": true,
+                            "type": "status"
+                        },
+                        {
+                            "id": "resolution",
+                            "name": "Resolution",
+                            "custom": false,
+                            "knownObj": true,
+                            "type": "resolution"
+                        },
+                        {
+                            "id": "created",
+                            "name": "Created",
+                            "custom": false,
+                            "type": "datetime"
+                        },
+                        {
+                            "id": "updated",
+                            "name": "Updated",
+                            "custom": false,
+                            "type": "datetime"
+                        }
+                    ],
+                    "jql": "assignee=currentUser()"
+                },
+                "definition": [
+                    {
+                        "key": "summary",
+                        "path": "summary",
+                        "type": "string"
+                    },
+                    {
+                        "key": "issuetype",
+                        "path": "issuetype",
+                        "type": "object",
+                        "children": [
+                            {
+                                "key": "self",
+                                "path": "issuetype.self",
+                                "type": "string"
+                            },
+                            {
+                                "key": "id",
+                                "path": "issuetype.id",
+                                "type": "string"
+                            },
+                            {
+                                "key": "description",
+                                "path": "issuetype.description",
+                                "type": "string"
+                            },
+                            {
+                                "key": "iconUrl",
+                                "path": "issuetype.iconUrl",
+                                "type": "string"
+                            },
+                            {
+                                "key": "name",
+                                "path": "issuetype.name",
+                                "type": "string"
+                            },
+                            {
+                                "key": "subtask",
+                                "path": "issuetype.subtask",
+                                "type": "boolean"
+                            },
+                            {
+                                "key": "avatarId",
+                                "path": "issuetype.avatarId",
+                                "type": "number"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "created",
+                        "path": "created",
+                        "type": "string"
+                    },
+                    {
+                        "key": "reporter",
+                        "path": "reporter",
+                        "type": "object",
+                        "children": [
+                            {
+                                "key": "self",
+                                "path": "reporter.self",
+                                "type": "string"
+                            },
+                            {
+                                "key": "name",
+                                "path": "reporter.name",
+                                "type": "string"
+                            },
+                            {
+                                "key": "key",
+                                "path": "reporter.key",
+                                "type": "string"
+                            },
+                            {
+                                "key": "emailAddress",
+                                "path": "reporter.emailAddress",
+                                "type": "string"
+                            },
+                            {
+                                "key": "avatarUrls",
+                                "path": "reporter.avatarUrls",
+                                "type": "object",
+                                "children": [
+                                    {
+                                        "key": "48x48",
+                                        "path": "reporter.avatarUrls.48x48",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "key": "24x24",
+                                        "path": "reporter.avatarUrls.24x24",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "key": "16x16",
+                                        "path": "reporter.avatarUrls.16x16",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "key": "32x32",
+                                        "path": "reporter.avatarUrls.32x32",
+                                        "type": "string"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "displayName",
+                                "path": "reporter.displayName",
+                                "type": "string"
+                            },
+                            {
+                                "key": "active",
+                                "path": "reporter.active",
+                                "type": "boolean"
+                            },
+                            {
+                                "key": "timeZone",
+                                "path": "reporter.timeZone",
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "priority",
+                        "path": "priority",
+                        "type": "object",
+                        "children": [
+                            {
+                                "key": "self",
+                                "path": "priority.self",
+                                "type": "string"
+                            },
+                            {
+                                "key": "iconUrl",
+                                "path": "priority.iconUrl",
+                                "type": "string"
+                            },
+                            {
+                                "key": "name",
+                                "path": "priority.name",
+                                "type": "string"
+                            },
+                            {
+                                "key": "id",
+                                "path": "priority.id",
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "resolution",
+                        "path": "resolution",
+                        "type": "object",
+                        "children": [
+                            {
+                                "key": "self",
+                                "path": "resolution.self",
+                                "type": "string"
+                            },
+                            {
+                                "key": "id",
+                                "path": "resolution.id",
+                                "type": "string"
+                            },
+                            {
+                                "key": "description",
+                                "path": "resolution.description",
+                                "type": "string"
+                            },
+                            {
+                                "key": "name",
+                                "path": "resolution.name",
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "updated",
+                        "path": "updated",
+                        "type": "string"
+                    },
+                    {
+                        "key": "status",
+                        "path": "status",
+                        "type": "object",
+                        "children": [
+                            {
+                                "key": "self",
+                                "path": "status.self",
+                                "type": "string"
+                            },
+                            {
+                                "key": "description",
+                                "path": "status.description",
+                                "type": "string"
+                            },
+                            {
+                                "key": "iconUrl",
+                                "path": "status.iconUrl",
+                                "type": "string"
+                            },
+                            {
+                                "key": "name",
+                                "path": "status.name",
+                                "type": "string"
+                            },
+                            {
+                                "key": "id",
+                                "path": "status.id",
+                                "type": "string"
+                            },
+                            {
+                                "key": "statusCategory",
+                                "path": "status.statusCategory",
+                                "type": "object",
+                                "children": [
+                                    {
+                                        "key": "self",
+                                        "path": "status.statusCategory.self",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "key": "id",
+                                        "path": "status.statusCategory.id",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "key": "key",
+                                        "path": "status.statusCategory.key",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "key": "colorName",
+                                        "path": "status.statusCategory.colorName",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "key": "name",
+                                        "path": "status.statusCategory.name",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "key": "key",
+                        "path": "key",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "reportItems": [
+            {
+                "type": "TBL",
+                "data": {
+                    "columns": [
+                        {
+                            "type": 1,
+                            "children": [],
+                            "style": {
+                                "width": "100px"
+                            }
+                        },
+                        {
+                            "type": 1,
+                            "children": [],
+                            "style": {
+                                "width": "100px"
+                            }
+                        },
+                        {
+                            "type": 1,
+                            "children": [],
+                            "style": {
+                                "width": "100px"
+                            }
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        }
+                    ],
+                    "head": [
+                        {
+                            "type": 1,
+                            "children": [
+                                [
+                                    {
+                                        "data": "Ticket No",
+                                        "itemType": "text"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "data": "Type",
+                                        "itemType": "text"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "data": "Summary",
+                                        "itemType": "text"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "data": "Reporter",
+                                        "itemType": "text"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "data": "Priority",
+                                        "itemType": "text"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "data": "Status",
+                                        "itemType": "text"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "data": "Resolution",
+                                        "itemType": "text"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "data": "Created",
+                                        "itemType": "text"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "data": "Updated",
+                                        "itemType": "text"
+                                    }
+                                ]
+                            ]
+                        }
+                    ],
+                    "body": [
+                        {
+                            "type": 3,
+                            "name": "ticketList",
+                            "children": [
+                                {
+                                    "type": 1,
+                                    "children": [
+                                        [
+                                            {
+                                                "data": "[key]",
+                                                "expression": "Fields.key"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "data": "[name]",
+                                                "expression": "Field('issuetype.name')"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "data": "[summary]",
+                                                "expression": "Fields.summary"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "data": "[name]",
+                                                "expression": "Field('reporter.name')"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "data": "[name]",
+                                                "expression": "Field('priority.name')"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "data": "[name]",
+                                                "expression": "Field('status.name')"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "data": "[name]",
+                                                "expression": "Field('resolution.name')"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "data": "[created]",
+                                                "expression": "Field('resolution.created')"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "data": "[updated]",
+                                                "expression": "Field('resolution.updated')"
+                                            }
+                                        ]
+                                    ]
+                                }
+                            ],
+                            "dataset": "c4181175-3f77-481b-b7c5-f1f2230d517b"
+                        }
+                    ]
+                }
+            }
+        ],
+        "datasetList": [
+            "c4181175-3f77-481b-b7c5-f1f2230d517b"
+        ],
+        "parameters": [],
+        "advanced": true,
+        "queryName": "My Open Tickets",
+        "uniqueId": "cc97ba43-df23-4e48-97f6-d7206c11d5de",
+        "dateCreated": "2019-10-02T14:09:54.754Z",
+        "updateId": "b4986bf6-3623-4dc1-9598-e37ced4bee4b",
+        "dateUpdated": "2019-10-02T14:09:54.758Z"
+    },
     "schema": {
         "fields": {},
         "filterFields": [],

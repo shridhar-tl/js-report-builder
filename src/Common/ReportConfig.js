@@ -188,8 +188,8 @@ function initCommonFunctions(funcs) {
         Object.keys(funcs).forEach(k => {
             commonFuncs.push({
                 name: k,
-                helpText: funcs.helpText,
-                value: funcs.value
+                helpText: funcs[k].helpText,
+                value: funcs[k].value
             });
         });
     }

@@ -37,6 +37,7 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
 const analyseBundle = process.env.ANALYSE_BUNDLE === 'true';
+const minimizeOutput = process.env.MINIMIZE_BUNDLE !== 'false';
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
@@ -186,7 +187,7 @@ module.exports = function(webpackEnv) {
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
     },
     optimization: {
-      minimize: isEnvProduction,
+      minimize: isEnvProduction && minimizeOutput,
       minimizer: [
         // This is only used in production mode
         new TerserPlugin({

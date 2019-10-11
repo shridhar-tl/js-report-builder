@@ -446,7 +446,11 @@
                                         [
                                             {
                                                 "data": "[key]",
-                                                "expression": "Fields.key"
+                                                "expression": "Fields.key",
+                                                "clickAction": "LNK",
+                                                "actionProps": {
+                                                    "expression": "CommonFunctions.getJiraIssueUrl(Fields.key)"
+                                                }
                                             }
                                         ],
                                         [
@@ -533,7 +537,8 @@
                                                 },
                                                 "altText": {
                                                     "expression": "Field('resolution.name')"
-                                                }
+                                                },
+                                                "autoHide": true
                                             },
                                             {
                                                 "data": "[name]",

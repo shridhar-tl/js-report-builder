@@ -100,7 +100,7 @@ var defaultConfig = {
     },
     commonFunctions: {
         getUsersFromGroup: { value: function (group) { } },
-        getJiraIssueUrl: { value: function (jiraIssueKey) { } },
+        getJiraIssueUrl: { value: function (jiraIssueKey) { return "http://jira-ja.attlassian.com/browse/" + jiraIssueKey } },
         getUserProfileUrl: { value: function (userName) { } },
         getTicketDetails: { value: function (ticketsList, fields) { } },
         executeJQL: { value: function (jql, fields) { } },

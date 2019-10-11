@@ -3,6 +3,7 @@ import { RadioButton } from 'primereact/radiobutton';
 import ExpressionEditor from '../../Common/ExpressionEditor';
 import Button from '../../../Common/Button';
 import { Dialog } from 'primereact/dialog';
+import { Checkbox } from 'primereact/checkbox';
 import { TabView, TabPanel } from 'primereact/tabview';
 import ActionProperties from '../../Common/ActionProperties';
 
@@ -56,7 +57,7 @@ class ImageProperties extends PureComponent {
     render() {
         var { state, setValue, setHiddenValue } = this;
         var { definition, showDialog, isParamValid } = state;
-        var { srcMode, src, altText, tooltip, hidden } = definition;
+        var { srcMode, src, altText, tooltip, hidden, autoHide } = definition;
         var srcType = "text", altType = "text", tooltipType = "text";
 
         if (typeof src === "object") {
@@ -117,6 +118,10 @@ class ImageProperties extends PureComponent {
                                     <label>Visibility (hide image if expression evaluates to true)</label>
                                     <ExpressionEditor expression={hidden === true ? "true" : hidden} isStrict={true}
                                         onChange={(expr, type, prop) => setHiddenValue(expr)} />
+                                </div>
+                                <div>
+                                    <Checkbox inputId="chk_autoHide" checked={autoHide} onChange={(e) => setValue("autoHide", e.checked)} />
+                                    <label htmlFor="chk_autoHide">Auto hide image when unavailable</label>
                                 </div>
                             </div>
                         </TabPanel>

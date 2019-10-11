@@ -6,7 +6,7 @@ class ImageItem extends ItemsBase {
         var { definition } = this.props;
 
         var { style, tooltip, hidden, disabled, clickAction, actionProps } = this.processDefaultProps(definition);
-        var { srcMode, src, altText } = definition;
+        var { srcMode, src, altText, autoHide } = definition;
 
         src = this.tryParseExpression(src);
         altText = this.tryParseExpression(altText);
@@ -15,11 +15,14 @@ class ImageItem extends ItemsBase {
             // ToDo: based on srcMode take image from resource
         }
 
-        if (typeof src === "object" && typeof src.then === "function") {
+        if (src && typeof src.then === "function") {
             src.then(data => {
                 this.setState({ src: data });
             });
             src = null;
+        }
+        else if (!src && autoHide) {
+            hidden = true;
         }
 
         return { style, src, altText, tooltip, hidden, disabled, clickAction, actionProps };

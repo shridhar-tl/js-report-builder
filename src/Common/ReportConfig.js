@@ -186,6 +186,7 @@ function initCommonFunctions(funcs) {
     if (funcs) {
         commonFuncs = [...inbuiltFunctions];
         Object.keys(funcs).forEach(k => {
+            array(commonFuncs).removeAll(f => f.name === k); // Remove inbuild function with same name
             commonFuncs.push({
                 name: k,
                 helpText: funcs[k].helpText,

@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import "./App.scss";
-import { ReportBuilder, ReportViewer, initReportBuilder } from "./lib";
+import { ReportBuilder, ReportViewer, initReportBuilder, ContextMenu } from "./lib";
 import "font-awesome/css/font-awesome.min.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -17,6 +17,7 @@ var subReports = [
 // This is the default configuration object to be passed to "initReportBuilder" function.
 var defaultConfig = {
     compiler: function (code, sandbox) { return Function(...sandbox, code)(); },
+    useExternalDnDProvider: false,
     parameterTypes: {
         UG: {
             label: "User group",
@@ -104,7 +105,7 @@ var defaultConfig = {
         getUserProfileUrl: { value: function (userName) { } },
         getTicketDetails: { value: function (ticketsList, fields) { } },
         executeJQL: { value: function (jql, fields) { } },
-        bookmarkTicket: { value: function (jiraIssueKey) { } },
+        bookmarkTicket: { value: function (jiraIssueKey) { alert(jiraIssueKey); } },
         addWorklog: {
             value: function (jiraIssueKey, defaultValues) {
                 // date, comment, hours
@@ -178,6 +179,7 @@ class App extends PureComponent {
 
     render() {
         var { preview, reportDefinition } = this.state;
+
         return (
             <div className="report-builder-container">
                 <div style={{ width: "100%", height: "45px" }}>
@@ -197,6 +199,7 @@ class App extends PureComponent {
                     )}
                     {preview && <ReportViewer definition={reportDefinition} parameterValues={{ userList }} />}
                 </div>
+                <ContextMenu />
             </div>
         );
     }

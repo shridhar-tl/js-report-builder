@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { ViewerContext } from '../Common';
+import { showContextMenu } from "../../Common/ContextMenu";
 
 class ItemsBase extends PureComponent {
     static contextType = ViewerContext;
@@ -29,6 +30,7 @@ class ItemsBase extends PureComponent {
 
     processDefaultProps(definition) {
         var {
+            itemType, className,
             tooltip, $tooltip,
             hidden, $hidden,
             disabled, $disabled,
@@ -37,6 +39,12 @@ class ItemsBase extends PureComponent {
             clickAction, actionProps, $actionProps
         } = definition;
 
+
+        if (itemType === "MNU") {
+            if (!className) {
+                className = "fa fa-ellipsis-v";
+            }
+        }
 
         if (tooltip && !$tooltip) {
             $tooltip = this.tryParseExpression(tooltip, true);
@@ -98,11 +106,27 @@ class ItemsBase extends PureComponent {
                     actionProps = null;
                     break;
 
-                default: /* do nothing */ break;
+                default: this.actionProps = actionProps; break;
             }
         }
 
-        return { style, tooltip, hidden, disabled, clickAction, actionProps };
+        return { className, style, tooltip, hidden, disabled, clickAction, actionProps };
+    }
+
+    parseBooleanExpr(definition, propName) {
+        let value = definition[propName];
+        let $value = definition["$" + propName];
+
+        if (value && !$value) {
+            $value = this.parseExpr(value, true);
+            definition["$" + propName] = $value;
+        }
+
+        if (typeof $value === "function") {
+            value = this.executeExpr($value);
+        }
+
+        return value;
     }
 
     parseArray(arr) {
@@ -128,7 +152,7 @@ class ItemsBase extends PureComponent {
         return result;
     }
 
-    callAction = () => {
+    callAction = (e) => {
         if (this.state.clickAction === "RST") {
             var newRProps = this.executeArray(this.actionProps);
 
@@ -138,6 +162,24 @@ class ItemsBase extends PureComponent {
             if (typeof this.actionProps === "function") {
                 this.executeExpr(this.actionProps);
             }
+        }
+        else if (this.state.clickAction === "MNU") {
+            const menuItems = this.context.getMenuItems(this.actionProps);
+
+            const items = menuItems.map(item => {
+                const { expression, icon, label } = item;
+                const disabled = this.parseBooleanExpr(item, "disabled");
+                const hidden = this.parseBooleanExpr(item, "hidden");
+
+                // ToDo: parse expression
+                if (hidden === true) {
+                    return null;
+                }
+
+                return { label, icon, disabled, command: () => { debugger; this.executeExpr(expression); } };
+            }).filter(Boolean);
+
+            showContextMenu(e, items);
         }
     }
 

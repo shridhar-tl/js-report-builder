@@ -119,6 +119,7 @@ class GridCell extends PureComponent {
                         case "":
                         case "expression":
                         case "text":
+                        case "mnu":
                             return <GridCellItem key={i} definition={c} execProps={this.execProps} />
                         case "img":
                             return <ImageItem key={i} definition={c} execProps={this.execProps} />

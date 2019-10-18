@@ -7,7 +7,7 @@ import ReportBase from "../ReportBase";
 import ReportControls from "./ReportControls/ReportControls";
 import ReportDisplay from "./ReportDisplay/ReportDisplay";
 import { BuilderContext } from "./Common/Constants";
-import { getDefaultRptDefinition } from "../../Common/ReportConfig";
+import { getDefaultRptDefinition, options } from "../../Common/ReportConfig";
 import ImageProperties from "./ReportItems/Image/ImageProperties";
 import ItemPropertiesPopup from "./Common/ItemPropertiesPopup";
 
@@ -53,6 +53,10 @@ class ReportBuilder extends ReportBase {
             selectControl: (selElement, elementData) => {
                 this.setState({ selElement, elementData });
             },
+            getMenuList: () => {
+                const items = this.state.data.reportItems;
+                return items.filter(i => i.type === "MNU").map(({ data: i }) => ({ value: i.id, label: i.name }));
+            },
             getStateItems: () => (this.state.data.reportState || []).map(r => r.name)
             //getState: itemName => (itemName ? this.state[itemName] : this.state) // ToDo: Check if this is required
         };
@@ -95,36 +99,39 @@ class ReportBuilder extends ReportBase {
     render() {
         var { data, selections, expressionProps } = this.state;
 
+        const reportBody = <>
+            <div className="report-controls-cntr">
+                <ReportControls
+                    key={data._uniqueId}
+                    data={data}
+                    selectedItems={selections}
+                    onChange={d => {
+                        this.setState({ data: d });
+                        if (this.props.onChange) {
+                            this.props.onChange(d);
+                        }
+                    }}
+                />
+            </div>
+            <div className="report-display-cntr" onClick={this.itemSelected} onContextMenu={this.showContextMenu}>
+                <ReportDisplay
+                    key={data.reportItems._uniqueId}
+                    items={data.reportItems}
+                    onChange={d => {
+                        data.reportItems = d;
+                        if (this.props.onChange) {
+                            this.props.onChange(data);
+                        }
+                    }}
+                />
+            </div>
+        </>;
+
         return (
             <BuilderContext.Provider value={this.builderProps}>
                 <div className="report-builder">
-                    <DndProvider backend={HTML5Backend}>
-                        <div className="report-controls-cntr">
-                            <ReportControls
-                                key={data._uniqueId}
-                                data={data}
-                                selectedItems={selections}
-                                onChange={d => {
-                                    this.setState({ data: d });
-                                    if (this.props.onChange) {
-                                        this.props.onChange(d);
-                                    }
-                                }}
-                            />
-                        </div>
-                        <div className="report-display-cntr" onClick={this.itemSelected} onContextMenu={this.showContextMenu}>
-                            <ReportDisplay
-                                key={data.reportItems._uniqueId}
-                                items={data.reportItems}
-                                onChange={d => {
-                                    data.reportItems = d;
-                                    if (this.props.onChange) {
-                                        this.props.onChange(data);
-                                    }
-                                }}
-                            />
-                        </div>
-                    </DndProvider>
+                    {!options.useExternalDnDProvider && <DndProvider backend={HTML5Backend}>{reportBody}</DndProvider>}
+                    {options.useExternalDnDProvider && reportBody}
                 </div>
                 {expressionProps && !expressionProps.isImage && <ItemPropertiesPopup {...expressionProps} />}
                 {expressionProps && expressionProps.isImage && <ImageProperties {...expressionProps} />}

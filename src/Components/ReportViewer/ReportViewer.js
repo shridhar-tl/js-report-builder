@@ -89,7 +89,16 @@ class ReportViewer extends ReportBase {
         compileExpression: this.compileExpression.bind(this),
         parseExpr: this.parseExpr.bind(this),
         setReportState: this.setReportState.bind(this),
-        trackState: this.trackState.bind(this)
+        trackState: this.trackState.bind(this),
+        getMenuItems: (menuId) => {
+            const { reportItems } = this.definition;
+            const menuModel = reportItems.filter(r => r.type === "MNU" && r.data.id === menuId)[0];
+            if (!menuModel) {
+                return [];
+            }
+            const { items } = menuModel.data;
+            return items;
+        }
     };
 
     trackState(callback) {

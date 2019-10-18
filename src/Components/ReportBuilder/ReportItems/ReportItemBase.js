@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import './ReportItemBase.scss'
-import { Menu } from 'primereact/menu';
+import './ReportItemBase.scss';
+import { showContextMenu } from '../../../lib';
 
 class ReportItemBase extends PureComponent {
     constructor(props, propsDialog) {
@@ -44,8 +44,7 @@ class ReportItemBase extends PureComponent {
     }
 
     showContext = (e) => {
-        e.preventDefault();
-        this.itemContext.toggle(e);
+        showContextMenu(e, this.menuModel);
     }
 
     renderBase(...children) {
@@ -65,7 +64,6 @@ class ReportItemBase extends PureComponent {
             <div ref={dropHandle} className="header-cntr">
                 {dragSource ? dragSource(header) : header}
             </div>
-            <Menu appendTo={document.body} model={this.menuModel} popup={true} ref={el => (this.itemContext = el)} />
             {childItems}
             {showPropsDialog && PropsDialog && <PropsDialog definition={definition} onChange={this.saveProperties} onHide={this.hideProperties} />}
         </div>;

@@ -36,10 +36,11 @@ class ItemPropertiesPopup extends PureComponent {
     }
 
     validateField(item) {
-        var isFieldsValid = true;
-        var { expression, data, clickAction, actionProps } = item;
+        let isFieldsValid = true;
+        const { itemType, expression, data, clickAction, actionProps } = item;
+        const isMenu = itemType === "MNU";
 
-        if ((!expression && !data) || (clickAction && (!actionProps || (Array.isArray(actionProps) && !actionProps.length)))) { isFieldsValid = false; }
+        if ((!isMenu && !expression && !data) || (clickAction && (!actionProps || (Array.isArray(actionProps) && !actionProps.length)))) { isFieldsValid = false; }
 
         return { item: { ...item }, isFieldsValid };
     }
@@ -59,7 +60,9 @@ class ItemPropertiesPopup extends PureComponent {
     render() {
         var { state, setValue, setHiddenValue } = this;
         var { showDialog, isFieldsValid, item } = state;
-        var { expression, data, tooltip, hidden, isHTML } = item;
+        var { itemType, expression, data, tooltip, hidden, isHTML } = item;
+
+        const isMenu = itemType === "MNU";
 
         var tooltipType = null;
         if (typeof tooltip === "object") {
@@ -87,16 +90,16 @@ class ItemPropertiesPopup extends PureComponent {
                     <TabView>
                         <TabPanel header="General" contentClassName="no-padding" className="no-padding">
                             <div className="field-collection">
-                                <div className="mandatory">
+                                {!isMenu && <div className="mandatory">
                                     <label>Expression</label>
                                     <ExpressionEditor expression={expression} isStrict={true}
                                         onChange={(expr, type, prop) => setValue("expression", expr)} />
-                                </div>
-                                <div>
+                                </div>}
+                                {!isMenu && <div>
                                     {!expression && <label className="mandatory">Display text</label>}
                                     {expression && <label>Design time display text</label>}
                                     <input value={data} onChange={e => this.setValue("data", e.target.value)} />
-                                </div>
+                                </div>}
                                 <div>
                                     <label>Tooltip text or expression</label>
                                     <ExpressionEditor expression={tooltip} type={tooltipType}
@@ -107,10 +110,10 @@ class ItemPropertiesPopup extends PureComponent {
                                     <ExpressionEditor expression={hidden === true ? "true" : hidden} isStrict={true}
                                         onChange={(expr, type, prop) => setHiddenValue(expr)} />
                                 </div>
-                                <div>
+                                {!isMenu && <div>
                                     <Checkbox inputId="chkIntrHTML" checked={isHTML} onChange={(e) => setValue("isHTML", e.checked)} />
                                     <label htmlFor="chkIntrHTML"> Allow html interpretation</label>
-                                </div>
+                                </div>}
                             </div>
                         </TabPanel>
                         <TabPanel header="Click action">

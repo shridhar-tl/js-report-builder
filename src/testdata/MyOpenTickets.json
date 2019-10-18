@@ -445,6 +445,12 @@
                                     "children": [
                                         [
                                             {
+                                                "itemType": "MNU",
+                                                "style": {},
+                                                "clickAction": "MNU",
+                                                "actionProps": "Menub29e5b337620"
+                                            },
+                                            {
                                                 "data": "[key]",
                                                 "expression": "Fields.key",
                                                 "clickAction": "LNK",
@@ -561,6 +567,29 @@
                                 }
                             ],
                             "dataset": "c4181175-3f77-481b-b7c5-f1f2230d517b"
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "MNU",
+                "data": {
+                    "id": "Menub29e5b337620",
+                    "name": "Menub29e5b337620",
+                    "items": [
+                        {
+                            "label": "Add worklog",
+                            "icon": "fa fa-clock-o",
+                            "hidden": false,
+                            "disabled": false,
+                            "expression": ""
+                        },
+                        {
+                            "label": "Bookmark",
+                            "icon": "fa fa-bookmark",
+                            "hidden": false,
+                            "disabled": false,
+                            "expression": "CommonFunctions.bookmarkTicket(Fields.key)"
                         }
                     ]
                 }

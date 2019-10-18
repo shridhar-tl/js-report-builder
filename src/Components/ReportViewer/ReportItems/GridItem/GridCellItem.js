@@ -5,7 +5,7 @@ class GridCellItem extends ItemsBase {
     getStateObject = (reportState) => {
         var { definition } = this.props;
 
-        var { style, tooltip, hidden, disabled, clickAction, actionProps } = this.processDefaultProps(definition);
+        var { className, style, tooltip, hidden, disabled, clickAction, actionProps } = this.processDefaultProps(definition);
 
         var {
             expression, $expression,
@@ -27,20 +27,20 @@ class GridCellItem extends ItemsBase {
             }
         }
 
-        return { style, tooltip, hidden, disabled, clickAction, actionProps, displayValue };
+        return { className, style, tooltip, hidden, disabled, clickAction, actionProps, displayValue };
     }
 
     renderChild() {
-        var { tooltip, style, displayValue, clickAction, actionProps } = this.state;
+        const { tooltip, className, style, displayValue, clickAction, actionProps } = this.state;
 
         if (!clickAction) {
-            return <span style={style} title={tooltip}>{displayValue}</span>
+            return <span className={className} style={style} title={tooltip}>{displayValue}</span>
         }
         else if (clickAction === "LNK") {
             return <a style={style} title={tooltip} href={actionProps} target="_blank" rel="noopener noreferrer">{displayValue}</a>
         }
         else {
-            return <span style={style} title={tooltip} onClick={this.callAction}>{displayValue}</span>
+            return <span className={className} style={style} title={tooltip} onClick={this.callAction}>{displayValue}</span>
         }
     }
 }

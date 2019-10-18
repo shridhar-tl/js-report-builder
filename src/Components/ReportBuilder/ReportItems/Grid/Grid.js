@@ -5,11 +5,11 @@ import GridRow from "./GridRow";
 import GridGroup from "./GridGroup";
 import { getNestingDepth, getDefaultGridData, getUniqueGroupName } from "../../Common/HelperFunctions";
 import ExpressionEditor from "../../Common/ExpressionEditor";
-import { Menu } from "primereact/menu";
 import array from "../../../../Common/linq";
 import GroupProperties from "../../Common/GroupProperties";
 import { cloneObject } from "../../../../Common/HelperFunctions";
 import { BuilderContext, GridContext } from "../../Common/Constants";
+import { showContextMenu } from "../../../../lib";
 
 class Grid extends ReportItemBase {
     static contextType = BuilderContext
@@ -39,29 +39,24 @@ class Grid extends ReportItemBase {
                 this.setState({ selected });
             },
             showRowHeaderContext: (e, index, parent, updateParent) => {
-                e.preventDefault();
-                this.setState({ contextData: { index, parent, updateParent } });
-                this.rowContext.toggle(e);
+                var menuItems = this.getRowContext({ index, parent, updateParent });
+                showContextMenu(e, menuItems);
             },
             showRowGroupContext: (e, index, data, updateParent) => {
-                e.preventDefault();
-                this.setState({ contextData: { index, data, updateParent } });
-                this.rowGroupContext.toggle(e);
+                var menuItems = this.getRowGroupContext({ index, data, updateParent });
+                showContextMenu(e, menuItems);
             },
             showColHeaderContext: (e, index, parent, realObj) => {
-                e.preventDefault();
-                this.setState({ contextData: { index, parent, realObj } });
-                this.colContext.toggle(e);
+                var menuItems = this.getColContext({ index, parent, realObj });
+                showContextMenu(e, menuItems);
             },
             showColGroupContext: (e, index, parent, group, grpSpan) => {
-                e.preventDefault();
-                this.setState({ contextData: { index, parent, group, grpSpan } });
-                this.colGroupContext.toggle(e);
+                var menuItems = this.getColGroupContext({ index, parent, group, grpSpan });
+                showContextMenu(e, menuItems);
             },
             showCellItemContext: (e, index, data, menuClicked) => {
-                e.preventDefault();
-                this.setState({ contextData: { index, data, menuClicked } });
-                this.cellItemContext.toggle(e);
+                var menuItems = this.getCellItemContext({ index, data, menuClicked });
+                showContextMenu(e, menuItems);
             }
         };
     }
@@ -70,8 +65,7 @@ class Grid extends ReportItemBase {
 
     }
 
-    RowContext = () => {
-        var { contextData = {} } = this.state;
+    getRowContext(contextData) {
         var { index = 0, parent = [], updateParent } = contextData;
 
         var data = parent;
@@ -143,8 +137,7 @@ class Grid extends ReportItemBase {
                 }
             }
         ];
-
-        return <Menu appendTo={document.body} model={menuModel} popup={true} ref={el => (this.rowContext = el)} />;
+        return menuModel;
     };
 
     gridDataChanged() {
@@ -178,8 +171,7 @@ class Grid extends ReportItemBase {
         this.gridDataChanged();
     };
 
-    ColContext = () => {
-        var { contextData = {} } = this.state;
+    getColContext = (contextData) => {
         var { index = 0, parent = [], realObj } = contextData;
 
         var data = parent;
@@ -212,7 +204,7 @@ class Grid extends ReportItemBase {
             this.gridDataChanged();
         };
 
-        var menuModel = [
+        return [
             {
                 label: "Insert column",
                 items: [
@@ -249,11 +241,9 @@ class Grid extends ReportItemBase {
                 }
             }
         ];
-        return <Menu appendTo={document.body} model={menuModel} popup={true} ref={el => (this.colContext = el)} />;
     };
 
-    RowGroupContext = () => {
-        var { contextData = {} } = this.state;
+    getRowGroupContext = (contextData) => {
         var { data = {} } = contextData;
         var { group, addRow, removeGroup, insertGroup, updateGroup } = data;
 
@@ -318,11 +308,11 @@ class Grid extends ReportItemBase {
                 }
             }
         ];
-        return <Menu appendTo={document.body} model={menuModel} popup={true} ref={el => (this.rowGroupContext = el)} />;
+
+        return menuModel;
     };
 
-    ColGroupContext = () => {
-        var { contextData = {} } = this.state;
+    getColGroupContext = (contextData) => {
         var { index = 0, parent = [], group, grpSpan } = contextData;
         var columns = parent;
         if (columns && !Array.isArray(columns)) {
@@ -364,7 +354,7 @@ class Grid extends ReportItemBase {
             this.gridDataChanged();
         };
 
-        var menuModel = [
+        return [
             {
                 label: "Insert column",
                 items: [
@@ -421,13 +411,10 @@ class Grid extends ReportItemBase {
                 }
             }
         ];
-        return <Menu appendTo={document.body} model={menuModel} popup={true} ref={el => (this.colGroupContext = el)} />;
     };
 
-    CellItemContext = () => {
-        var { contextData: { index, data = {}, menuClicked } = {} } = this.state;
-
-        var menuData = [
+    getCellItemContext = ({ index, data = {}, menuClicked } = {}) => {
+        return [
             {
                 label: "Edit item",
                 icon: "fa fa-edit",
@@ -448,8 +435,6 @@ class Grid extends ReportItemBase {
 
             }
         ];
-
-        return <Menu appendTo={document.body} model={menuData} popup={true} ref={el => (this.cellItemContext = el)} />
     }
 
     expressionChanged = (value, type, validation) => {
@@ -651,11 +636,6 @@ class Grid extends ReportItemBase {
         return super.renderBase(
             expressionEditor,
             <GridContext.Provider key="1" value={this.sharedProps}>
-                <this.RowContext />
-                <this.RowGroupContext />
-                <this.ColContext />
-                <this.ColGroupContext />
-                <this.CellItemContext />
                 {table}
             </GridContext.Provider>,
             this.getGroupProperties()

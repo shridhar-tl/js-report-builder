@@ -171,12 +171,13 @@ class ItemsBase extends PureComponent {
                 const disabled = this.parseBooleanExpr(item, "disabled");
                 const hidden = this.parseBooleanExpr(item, "hidden");
 
-                // ToDo: parse expression
+                const $expression = this.parseExpr(expression, true);
+
                 if (hidden === true) {
                     return null;
                 }
 
-                return { label, icon, disabled, command: () => { debugger; this.executeExpr(expression); } };
+                return { label, icon, disabled, command: () => { this.executeExpr($expression); } };
             }).filter(Boolean);
 
             showContextMenu(e, items);

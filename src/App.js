@@ -108,7 +108,7 @@ var defaultConfig = {
         bookmarkTicket: { value: function (jiraIssueKey) { alert(jiraIssueKey); } },
         addWorklog: {
             value: function (jiraIssueKey, defaultValues) {
-                // date, comment, hours
+                alert("Add worklog called");
             }
         },
         editWorklog: {

@@ -448,7 +448,7 @@
                                                 "itemType": "MNU",
                                                 "style": {},
                                                 "clickAction": "MNU",
-                                                "actionProps": "Menub29e5b337620"
+                                                "actionProps": "Menub35812f181bb"
                                             },
                                             {
                                                 "data": "[key]",
@@ -554,13 +554,13 @@
                                         [
                                             {
                                                 "data": "[created]",
-                                                "expression": "Field('resolution.created')"
+                                                "expression": "CommonFunctions.formatDateTime(Fields.created)"
                                             }
                                         ],
                                         [
                                             {
                                                 "data": "[updated]",
-                                                "expression": "Field('resolution.updated')"
+                                                "expression": "CommonFunctions.formatDateTime(Fields.updated)"
                                             }
                                         ]
                                     ]
@@ -574,15 +574,15 @@
             {
                 "type": "MNU",
                 "data": {
-                    "id": "Menub29e5b337620",
-                    "name": "Menub29e5b337620",
+                    "id": "Menub35812f181bb",
+                    "name": "ticketMenu",
                     "items": [
                         {
                             "label": "Add worklog",
                             "icon": "fa fa-clock-o",
                             "hidden": false,
                             "disabled": false,
-                            "expression": ""
+                            "expression": "CommonFunctions.addWorklog(Fields.key)"
                         },
                         {
                             "label": "Bookmark",
@@ -602,9 +602,9 @@
         "advanced": true,
         "queryName": "My Open Tickets",
         "uniqueId": "cc97ba43-df23-4e48-97f6-d7206c11d5de",
-        "dateCreated": "2019-10-11T04:19:31.744Z",
-        "updateId": "6d82ba59-b8ee-4fea-bd26-55ecee5cc771",
-        "dateUpdated": "2019-10-11T04:19:31.752Z"
+        "dateCreated": "2019-10-18T04:25:06.054Z",
+        "updateId": "a4f0e596-0161-4918-9b32-9680d3cbf472",
+        "dateUpdated": "2019-10-18T04:25:06.060Z"
     },
     "schema": {
         "fields": {},

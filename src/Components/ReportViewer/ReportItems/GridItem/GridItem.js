@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import GridRow from "./GridRow";
 import { GridContext, ViewerContext } from "../../Common";
+import { ScrollableTable, THead, TBody } from "../../../Common/ScrollableTable/ScrollableTable"
 import GridGroup from "./GridGroup";
 import "./GridItem.scss";
 
@@ -19,14 +20,14 @@ export default class GridItem extends PureComponent {
 
         return (
             <GridContext.Provider value={this.commonContext}>
-                <table className="table table-striped" style={style}>
-                    <thead>
+                <ScrollableTable style={style}>
+                    <THead>
                         <GridRowRepeator isHeader={true} columns={columns} rows={head} />
-                    </thead>
-                    <tbody>
+                    </THead>
+                    <TBody>
                         <GridRowRepeator columns={columns} rows={body} />
-                    </tbody>
-                </table>
+                    </TBody>
+                </ScrollableTable>
             </GridContext.Provider>
         );
     }

@@ -45,7 +45,7 @@ var defaultConfig = {
                 promise.resolve(myOpenTickets.data);//datasets.JQL
                 return Promise.resolve(myOpenTickets.schema); //props
             },
-            resolveData: props => {
+            resolveData: (props, params, arg) => {
                 return Promise.resolve(myOpenTickets.data);//datasets.JQL
             }
         },

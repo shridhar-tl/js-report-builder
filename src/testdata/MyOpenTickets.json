@@ -1,19 +1,13 @@
 {
     "definition": {
         "datasets": {
-            "c4181175-3f77-481b-b7c5-f1f2230d517b": {
+            "e7b49993-cc31-470b-adee-8c8e006e0e85": {
                 "type": "JQL",
                 "name": "ticketsList",
                 "props": {
                     "fields": {},
                     "filterFields": [],
                     "outputFields": [
-                        {
-                            "id": "issuekey",
-                            "name": "Key",
-                            "custom": false,
-                            "type": "string"
-                        },
                         {
                             "id": "issuetype",
                             "name": "Issue Type",
@@ -68,7 +62,7 @@
                             "type": "datetime"
                         }
                     ],
-                    "jql": "assignee=currentUser()"
+                    "jql": "assignee=currentUser() and status != \"Closed\" and issueType in (@Parameters.issueType.value|Story$)"
                 },
                 "definition": [
                     {
@@ -144,6 +138,11 @@
                                 "type": "string"
                             },
                             {
+                                "key": "accountId",
+                                "path": "reporter.accountId",
+                                "type": "string"
+                            },
+                            {
                                 "key": "emailAddress",
                                 "path": "reporter.emailAddress",
                                 "type": "string"
@@ -188,6 +187,11 @@
                             {
                                 "key": "timeZone",
                                 "path": "reporter.timeZone",
+                                "type": "string"
+                            },
+                            {
+                                "key": "accountType",
+                                "path": "reporter.accountType",
                                 "type": "string"
                             }
                         ]
@@ -321,6 +325,47 @@
                         "type": "string"
                     }
                 ]
+            },
+            "068893bb-9837-4377-810f-940cade33cac": {
+                "type": "ITL",
+                "name": "issueTypes",
+                "definition": [
+                    {
+                        "key": "self",
+                        "path": "self",
+                        "type": "string"
+                    },
+                    {
+                        "key": "id",
+                        "path": "id",
+                        "type": "string"
+                    },
+                    {
+                        "key": "description",
+                        "path": "description",
+                        "type": "string"
+                    },
+                    {
+                        "key": "iconUrl",
+                        "path": "iconUrl",
+                        "type": "string"
+                    },
+                    {
+                        "key": "name",
+                        "path": "name",
+                        "type": "string"
+                    },
+                    {
+                        "key": "subtask",
+                        "path": "subtask",
+                        "type": "boolean"
+                    },
+                    {
+                        "key": "avatarId",
+                        "path": "avatarId",
+                        "type": "number"
+                    }
+                ]
             }
         },
         "reportItems": [
@@ -344,34 +389,34 @@
                         },
                         {
                             "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
+                            "style": {}
+                        },
+                        {
+                            "type": 1,
                             "children": [],
                             "style": {
                                 "width": "100px"
                             }
-                        },
-                        {
-                            "type": 1,
-                            "style": {}
-                        },
-                        {
-                            "type": 1,
-                            "style": {}
-                        },
-                        {
-                            "type": 1,
-                            "style": {}
-                        },
-                        {
-                            "type": 1,
-                            "style": {}
-                        },
-                        {
-                            "type": 1,
-                            "style": {}
-                        },
-                        {
-                            "type": 1,
-                            "style": {}
                         }
                     ],
                     "head": [
@@ -438,7 +483,7 @@
                     "body": [
                         {
                             "type": 3,
-                            "name": "ticketList",
+                            "name": "ticketGroup",
                             "children": [
                                 {
                                     "type": 1,
@@ -448,15 +493,11 @@
                                                 "itemType": "MNU",
                                                 "style": {},
                                                 "clickAction": "MNU",
-                                                "actionProps": "Menub35812f181bb"
+                                                "actionProps": "Menua77dd1e620af"
                                             },
                                             {
                                                 "data": "[key]",
-                                                "expression": "Fields.key",
-                                                "clickAction": "LNK",
-                                                "actionProps": {
-                                                    "expression": "CommonFunctions.getJiraIssueUrl(Fields.key)"
-                                                }
+                                                "expression": "Fields.key"
                                             }
                                         ],
                                         [
@@ -469,12 +510,7 @@
                                                 "src": {
                                                     "expression": "Field('issuetype.iconUrl')"
                                                 },
-                                                "altText": {
-                                                    "expression": "Field('issuetype.name')"
-                                                },
-                                                "tooltip": {
-                                                    "expression": "Field('issuetype.name')"
-                                                }
+                                                "autoHide": true
                                             },
                                             {
                                                 "data": "[name]",
@@ -489,8 +525,8 @@
                                         ],
                                         [
                                             {
-                                                "data": "[name]",
-                                                "expression": "Field('reporter.name')"
+                                                "data": "[displayName]",
+                                                "expression": "Field('reporter.displayName')"
                                             }
                                         ],
                                         [
@@ -503,9 +539,7 @@
                                                 "src": {
                                                     "expression": "Field('priority.iconUrl')"
                                                 },
-                                                "altText": {
-                                                    "expression": "Field('priority.name')"
-                                                }
+                                                "autoHide": true
                                             },
                                             {
                                                 "data": "[name]",
@@ -522,9 +556,7 @@
                                                 "src": {
                                                     "expression": "Field('status.iconUrl')"
                                                 },
-                                                "altText": {
-                                                    "expression": "Field('status.name')"
-                                                }
+                                                "autoHide": true
                                             },
                                             {
                                                 "data": "[name]",
@@ -540,9 +572,6 @@
                                                 },
                                                 "src": {
                                                     "expression": "Field('resolution.iconUrl')"
-                                                },
-                                                "altText": {
-                                                    "expression": "Field('resolution.name')"
                                                 },
                                                 "autoHide": true
                                             },
@@ -566,7 +595,7 @@
                                     ]
                                 }
                             ],
-                            "dataset": "c4181175-3f77-481b-b7c5-f1f2230d517b"
+                            "dataset": "e7b49993-cc31-470b-adee-8c8e006e0e85"
                         }
                     ]
                 }
@@ -574,8 +603,8 @@
             {
                 "type": "MNU",
                 "data": {
-                    "id": "Menub35812f181bb",
-                    "name": "ticketMenu",
+                    "id": "Menua77dd1e620af",
+                    "name": "ticketsMenu",
                     "items": [
                         {
                             "label": "Add worklog",
@@ -585,7 +614,7 @@
                             "expression": "CommonFunctions.addWorklog(Fields.key)"
                         },
                         {
-                            "label": "Bookmark",
+                            "label": "Bookmark ticket",
                             "icon": "fa fa-bookmark",
                             "hidden": false,
                             "disabled": false,
@@ -596,15 +625,26 @@
             }
         ],
         "datasetList": [
-            "c4181175-3f77-481b-b7c5-f1f2230d517b"
+            "e7b49993-cc31-470b-adee-8c8e006e0e85",
+            "068893bb-9837-4377-810f-940cade33cac"
         ],
-        "parameters": [],
+        "parameters": [
+            {
+                "type": "DDL",
+                "name": "issueTypes",
+                "display": "Issue Types",
+                "allowMultiple": true,
+                "dataset": "068893bb-9837-4377-810f-940cade33cac",
+                "displayField": "name",
+                "valueField": "id"
+            }
+        ],
         "advanced": true,
         "queryName": "My Open Tickets",
-        "uniqueId": "cc97ba43-df23-4e48-97f6-d7206c11d5de",
-        "dateCreated": "2019-10-18T04:25:06.054Z",
-        "updateId": "a4f0e596-0161-4918-9b32-9680d3cbf472",
-        "dateUpdated": "2019-10-18T04:25:06.060Z"
+        "uniqueId": "5c288352-bf56-4a9b-b817-ec155fc6dabe",
+        "dateCreated": "2019-10-25T16:00:56.857Z",
+        "updateId": "329602b8-d0ab-4778-bab6-91bd1c2d964b",
+        "dateUpdated": "2019-10-25T16:00:56.859Z"
     },
     "schema": {
         "fields": {},

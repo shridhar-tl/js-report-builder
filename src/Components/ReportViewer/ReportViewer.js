@@ -212,11 +212,12 @@ class ReportViewer extends ReportBase {
     // #endregion
 
     updateParameters = parameterValues => {
-        this.setState({ parameterValues, showParameters: false });
-        this.resolveDatasets().then(r => {
-            this.initReportState();
-            this.initCustomFunctions();
-            this.setState({ dataReady: true });
+        this.setState({ parameterValues, showParameters: false }, () => {
+            this.resolveDatasets().then(r => {
+                this.initReportState();
+                this.initCustomFunctions();
+                this.setState({ dataReady: true });
+            });
         });
     };
 

@@ -139,7 +139,7 @@ class ReportBase extends PureComponent {
         if (refresh || !this.datasets[dsId]) {
             var props = {
                 dataset,
-                parameters: this.parameterValues,
+                parameters: this.state.parameterValues,
                 parameterTemplate: parameters,
                 getDataset: dsId => {
                     return datasets[dsId];

@@ -112,6 +112,14 @@ class ReportBase extends PureComponent {
     async resolveDataset(dsId, refresh, resolveDependency) {
         let { definition: { datasets, parameters } = this.state.data } = this;
 
+        let parameterTemplate = {};
+        if (parameters && Array.isArray(parameters)) {
+            parameterTemplate = parameters.reduce((tmpl, param) => {
+                tmpl[param.name] = param;
+                return tmpl;
+            }, parameterTemplate);
+        }
+
         let dataset = datasets[dsId];
         var dependency = dataset.dependencies || [];
         if (!Array.isArray(dependency)) {
@@ -140,7 +148,7 @@ class ReportBase extends PureComponent {
             var props = {
                 dataset,
                 parameters: this.state.parameterValues,
-                parameterTemplate: parameters,
+                parameterTemplate,
                 getDataset: dsId => {
                     return datasets[dsId];
                 },

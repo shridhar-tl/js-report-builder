@@ -1,14 +1,14 @@
-This package contains a ReportBuilder component which can be used by end users to build custom reports from browser. The output of the ReportBuilder component is the report definition which need to be passed to the ReportViewer component to render the report. You can optionally save this definition for further use.
+This package contains a Report Builder component which can be used by end users to build custom reports from browser. The output of the ReportBuilder component is the report definition which need to be passed to the ReportViewer component to render the report. You can optionally save this definition for further use.
 
-Notes: This is still in development and not ready for public use. A public usable version of package is expected to be available at the end of Sep, 2019.
+Notes: This is still in development and you may see breaking changes in future release.
 
 # Live demo:
 
-This component is used in following chrome extension for generating advanced reports and custom gadgets:
+This component is used in following chrome extension for generating custom reports and gadgets:
 
 https://chrome.google.com/webstore/detail/jira-assistant/momjbjbjpbcbnepbgkkiaofkgimihbii?hl=en
 
-Youtube demo: [Not yet available]
+Youtube demo playlist: https://www.youtube.com/playlist?list=PLxDBQLgpBhsB_4Q2CGsViLCvfulmVuLAL
 
 # Installation:
 

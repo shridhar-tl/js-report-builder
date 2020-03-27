@@ -714,21 +714,20 @@
     },
     "data": [
         {
-            "summary": "As a user, I'd like a historical story to show in reports",
+            "summary": "This is upload test bug",
             "issuetype": {
-                "self": "https://jira-ja.atlassian.net/rest/api/2/issuetype/10001",
-                "id": "10001",
-                "description": "Functionality or a feature expressed as a user goal.",
-                "iconUrl": "https://jira-ja.atlassian.net/secure/viewavatar?size=medium&avatarId=10315&avatarType=issuetype",
-                "name": "Story",
+                "self": "https://jira-ja.atlassian.net/rest/api/2/issuetype/10004",
+                "id": "10004",
+                "description": "A problem or error.",
+                "iconUrl": "https://jira-ja.atlassian.net/secure/viewavatar?size=medium&avatarId=10303&avatarType=issuetype",
+                "name": "Bug",
                 "subtask": false,
-                "avatarId": 10315
+                "avatarId": 10303
             },
-            "created": "2019-08-24T00:26:38.505+0530",
+            "created": "2019-10-29T18:11:17.567+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -742,6 +741,122 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
+            "priority": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/priority/2",
+                "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/high.svg",
+                "name": "High",
+                "id": "2"
+            },
+            "updated": "2019-12-21T10:55:30.494+0530",
+            "resolution": null,
+            "status": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/status/10000",
+                "description": "",
+                "iconUrl": "https://jira-ja.atlassian.net/",
+                "name": "To Do",
+                "id": "10000",
+                "statusCategory": {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/statuscategory/2",
+                    "id": 2,
+                    "key": "new",
+                    "colorName": "blue-gray",
+                    "name": "To Do"
+                }
+            },
+            "key": "JAS-25"
+        },
+        {
+            "summary": "This is upload test story",
+            "issuetype": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/issuetype/10001",
+                "id": "10001",
+                "description": "Functionality or a feature expressed as a user goal.",
+                "iconUrl": "https://jira-ja.atlassian.net/secure/viewavatar?size=medium&avatarId=10315&avatarType=issuetype",
+                "name": "Story",
+                "subtask": false,
+                "avatarId": 10315
+            },
+            "duedate": null,
+            "created": "2019-10-29T18:11:16.376+0530",
+            "reporter": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
+                "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
+                "emailAddress": "shridhar.tl@gmail.com",
+                "avatarUrls": {
+                    "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=48&s=48",
+                    "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=24&s=24",
+                    "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=16&s=16",
+                    "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=32&s=32"
+                },
+                "displayName": "Shridhar TL",
+                "active": true,
+                "timeZone": "Asia/Kolkata",
+                "accountType": "atlassian"
+            },
+            "fixVersions": [],
+            "priority": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/priority/2",
+                "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/high.svg",
+                "name": "High",
+                "id": "2"
+            },
+            "updated": "2019-12-01T17:06:02.239+0530",
+            "resolution": null,
+            "status": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/status/10000",
+                "description": "",
+                "iconUrl": "https://jira-ja.atlassian.net/",
+                "name": "To Do",
+                "id": "10000",
+                "statusCategory": {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/statuscategory/2",
+                    "id": 2,
+                    "key": "new",
+                    "colorName": "blue-gray",
+                    "name": "To Do"
+                }
+            },
+            "key": "JAS-24"
+        },
+        {
+            "summary": "As a user, I'd like a historical story to show in reports",
+            "issuetype": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/issuetype/10001",
+                "id": "10001",
+                "description": "Functionality or a feature expressed as a user goal.",
+                "iconUrl": "https://jira-ja.atlassian.net/secure/viewavatar?size=medium&avatarId=10315&avatarType=issuetype",
+                "name": "Story",
+                "subtask": false,
+                "avatarId": 10315
+            },
+            "duedate": null,
+            "created": "2019-08-24T00:26:38.505+0530",
+            "reporter": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
+                "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
+                "emailAddress": "shridhar.tl@gmail.com",
+                "avatarUrls": {
+                    "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=48&s=48",
+                    "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=24&s=24",
+                    "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=16&s=16",
+                    "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=32&s=32"
+                },
+                "displayName": "Shridhar TL",
+                "active": true,
+                "timeZone": "Asia/Kolkata",
+                "accountType": "atlassian"
+            },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10000",
+                    "id": "10000",
+                    "name": "Version 1.0",
+                    "archived": false,
+                    "released": true,
+                    "releaseDate": "2019-09-06"
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
@@ -754,7 +869,7 @@
                 "description": "Work has been completed on this issue.",
                 "name": "Done"
             },
-            "updated": "2019-09-05T09:01:38.505+0530",
+            "updated": "2019-12-21T11:20:24.469+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -783,10 +898,9 @@
                 "avatarId": 10315
             },
             "created": "2019-08-24T00:26:38.505+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -800,19 +914,29 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10000",
+                    "id": "10000",
+                    "name": "Version 1.0",
+                    "archived": false,
+                    "released": true,
+                    "releaseDate": "2019-09-06"
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-03T07:23:38.505+0530",
             "resolution": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/resolution/10000",
                 "id": "10000",
                 "description": "Work has been completed on this issue.",
                 "name": "Done"
             },
+            "updated": "2019-10-20T17:10:26.292+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -841,10 +965,9 @@
                 "avatarId": 10315
             },
             "created": "2019-08-24T00:26:38.505+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -858,19 +981,29 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10000",
+                    "id": "10000",
+                    "name": "Version 1.0",
+                    "archived": false,
+                    "released": true,
+                    "releaseDate": "2019-09-06"
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-08-31T16:03:38.505+0530",
             "resolution": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/resolution/10000",
                 "id": "10000",
                 "description": "Work has been completed on this issue.",
                 "name": "Done"
             },
+            "updated": "2019-08-31T16:03:38.505+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -898,11 +1031,10 @@
                 "subtask": false,
                 "avatarId": 10315
             },
+            "duedate": null,
             "created": "2019-08-24T00:26:38.505+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -916,13 +1048,23 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10000",
+                    "id": "10000",
+                    "name": "Version 1.0",
+                    "archived": false,
+                    "released": true,
+                    "releaseDate": "2019-09-06"
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-08-29T09:25:38.505+0530",
+            "updated": "2019-11-24T10:37:12.926+0530",
             "resolution": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/resolution/10000",
                 "id": "10000",
@@ -956,11 +1098,10 @@
                 "subtask": false,
                 "avatarId": 10315
             },
+            "duedate": null,
             "created": "2019-08-24T00:26:38.504+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -974,19 +1115,29 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10001",
+                    "id": "10001",
+                    "name": "Version 2.0",
+                    "archived": false,
+                    "released": false,
+                    "releaseDate": "2019-09-20"
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
+            "updated": "2019-10-20T17:10:26.280+0530",
             "resolution": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/resolution/10000",
                 "id": "10000",
                 "description": "Work has been completed on this issue.",
                 "name": "Done"
             },
-            "updated": "2019-08-27T20:50:38.504+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -1014,11 +1165,10 @@
                 "subtask": false,
                 "avatarId": 10315
             },
+            "duedate": null,
             "created": "2019-08-24T00:26:38.504+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1032,6 +1182,16 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10001",
+                    "id": "10001",
+                    "name": "Version 2.0",
+                    "archived": false,
+                    "released": false,
+                    "releaseDate": "2019-09-20"
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
@@ -1072,11 +1232,10 @@
                 "subtask": false,
                 "avatarId": 10303
             },
+            "duedate": null,
             "created": "2019-09-07T01:36:38.503+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1090,19 +1249,20 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
+            "updated": "2019-10-20T17:10:26.249+0530",
             "resolution": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/resolution/10000",
                 "id": "10000",
                 "description": "Work has been completed on this issue.",
                 "name": "Done"
             },
-            "updated": "2019-09-10T18:12:38.503+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -1130,11 +1290,10 @@
                 "subtask": false,
                 "avatarId": 10315
             },
+            "duedate": null,
             "created": "2019-09-13T06:36:38.498+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1148,13 +1307,14 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-13T06:36:38.498+0530",
+            "updated": "2020-02-15T20:47:03.685+0530",
             "resolution": null,
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10000",
@@ -1183,11 +1343,10 @@
                 "subtask": false,
                 "avatarId": 10303
             },
+            "duedate": null,
             "created": "2019-09-07T01:36:38.498+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1201,6 +1360,16 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10001",
+                    "id": "10001",
+                    "name": "Version 2.0",
+                    "archived": false,
+                    "released": false,
+                    "releaseDate": "2019-09-20"
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
@@ -1208,7 +1377,7 @@
                 "id": "3"
             },
             "resolution": null,
-            "updated": "2019-09-07T01:36:38.498+0530",
+            "updated": "2020-03-14T17:04:06.909+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10000",
                 "description": "",
@@ -1236,11 +1405,10 @@
                 "subtask": true,
                 "avatarId": 10316
             },
+            "duedate": null,
             "created": "2019-09-10T13:38:38.498+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1254,14 +1422,24 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10001",
+                    "id": "10001",
+                    "name": "Version 2.0",
+                    "archived": false,
+                    "released": false,
+                    "releaseDate": "2019-09-20"
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-14T10:46:40.885+0530",
             "resolution": null,
+            "updated": "2019-10-20T17:10:26.353+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/3",
                 "description": "This issue is being actively worked on at the moment by the assignee.",
@@ -1290,10 +1468,9 @@
                 "avatarId": 10315
             },
             "created": "2019-09-07T01:36:38.497+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1307,6 +1484,16 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10001",
+                    "id": "10001",
+                    "name": "Version 2.0",
+                    "archived": false,
+                    "released": false,
+                    "releaseDate": "2019-09-20"
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
@@ -1314,7 +1501,7 @@
                 "id": "3"
             },
             "resolution": null,
-            "updated": "2019-09-07T01:36:38.497+0530",
+            "updated": "2019-10-20T17:10:26.242+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/3",
                 "description": "This issue is being actively worked on at the moment by the assignee.",
@@ -1343,10 +1530,9 @@
                 "avatarId": 10316
             },
             "created": "2019-09-14T10:46:40.486+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1360,14 +1546,15 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-14T10:46:40.558+0530",
             "resolution": null,
+            "updated": "2019-10-20T17:10:26.196+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10000",
                 "description": "",
@@ -1385,21 +1572,20 @@
             "key": "JAS-7"
         },
         {
-            "summary": "Issues like this one that are marked as fixed in a released version do not show up in Work mode but are included in the reports",
+            "summary": "This is upload test bug",
             "issuetype": {
-                "self": "https://jira-ja.atlassian.net/rest/api/2/issuetype/10002",
-                "id": "10002",
-                "description": "A small, distinct pieces of work.",
-                "iconUrl": "https://jira-ja.atlassian.net/secure/viewavatar?size=medium&avatarId=10318&avatarType=issuetype",
-                "name": "Task",
+                "self": "https://jira-ja.atlassian.net/rest/api/2/issuetype/10004",
+                "id": "10004",
+                "description": "A problem or error.",
+                "iconUrl": "https://jira-ja.atlassian.net/secure/viewavatar?size=medium&avatarId=10303&avatarType=issuetype",
+                "name": "Bug",
                 "subtask": false,
-                "avatarId": 10318
+                "avatarId": 10303
             },
-            "created": "2019-08-31T04:17:44.106+0530",
+            "duedate": null,
+            "created": "2019-10-29T18:11:18.019+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1413,14 +1599,129 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
+            "priority": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/priority/2",
+                "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/high.svg",
+                "name": "High",
+                "id": "2"
+            },
+            "resolution": null,
+            "updated": "2019-10-29T18:11:18.019+0530",
+            "status": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/status/10002",
+                "description": "",
+                "iconUrl": "https://jira-ja.atlassian.net/",
+                "name": "Backlog",
+                "id": "10002",
+                "statusCategory": {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/statuscategory/2",
+                    "id": 2,
+                    "key": "new",
+                    "colorName": "blue-gray",
+                    "name": "To Do"
+                }
+            },
+            "key": "JAK-18"
+        },
+        {
+            "summary": "This is upload test story",
+            "issuetype": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/issuetype/10001",
+                "id": "10001",
+                "description": "Functionality or a feature expressed as a user goal.",
+                "iconUrl": "https://jira-ja.atlassian.net/secure/viewavatar?size=medium&avatarId=10315&avatarType=issuetype",
+                "name": "Story",
+                "subtask": false,
+                "avatarId": 10315
+            },
+            "duedate": null,
+            "created": "2019-10-29T18:11:17.790+0530",
+            "reporter": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
+                "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
+                "emailAddress": "shridhar.tl@gmail.com",
+                "avatarUrls": {
+                    "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=48&s=48",
+                    "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=24&s=24",
+                    "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=16&s=16",
+                    "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=32&s=32"
+                },
+                "displayName": "Shridhar TL",
+                "active": true,
+                "timeZone": "Asia/Kolkata",
+                "accountType": "atlassian"
+            },
+            "fixVersions": [],
+            "priority": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/priority/2",
+                "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/high.svg",
+                "name": "High",
+                "id": "2"
+            },
+            "updated": "2019-10-29T18:11:17.790+0530",
+            "resolution": null,
+            "status": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/status/10002",
+                "description": "",
+                "iconUrl": "https://jira-ja.atlassian.net/",
+                "name": "Backlog",
+                "id": "10002",
+                "statusCategory": {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/statuscategory/2",
+                    "id": 2,
+                    "key": "new",
+                    "colorName": "blue-gray",
+                    "name": "To Do"
+                }
+            },
+            "key": "JAK-17"
+        },
+        {
+            "summary": "Issues like this one that are marked as fixed in a released version do not show up in Work mode but are included in the reports",
+            "issuetype": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/issuetype/10002",
+                "id": "10002",
+                "description": "A small, distinct pieces of work.",
+                "iconUrl": "https://jira-ja.atlassian.net/secure/viewavatar?size=medium&avatarId=10318&avatarType=issuetype",
+                "name": "Task",
+                "subtask": false,
+                "avatarId": 10318
+            },
+            "duedate": null,
+            "created": "2019-08-31T04:17:44.106+0530",
+            "reporter": {
+                "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
+                "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
+                "emailAddress": "shridhar.tl@gmail.com",
+                "avatarUrls": {
+                    "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=48&s=48",
+                    "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=24&s=24",
+                    "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=16&s=16",
+                    "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:29a14ee4-7343-4514-8dd9-0815732b7af7/e22ad3e5-d996-4212-b3c2-bc26f2ca842d/128?size=32&s=32"
+                },
+                "displayName": "Shridhar TL",
+                "active": true,
+                "timeZone": "Asia/Kolkata",
+                "accountType": "atlassian"
+            },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10003",
+                    "id": "10003",
+                    "name": "1.0",
+                    "archived": false,
+                    "released": true
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-09T12:11:44.107+0530",
             "resolution": null,
+            "updated": "2019-10-20T14:56:55.303+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -1448,11 +1749,10 @@
                 "subtask": false,
                 "avatarId": 10318
             },
+            "duedate": null,
             "created": "2019-08-29T04:45:44.100+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1466,14 +1766,23 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10003",
+                    "id": "10003",
+                    "name": "1.0",
+                    "archived": false,
+                    "released": true
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-07T16:47:44.100+0530",
             "resolution": null,
+            "updated": "2019-10-20T14:56:54.829+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -1502,10 +1811,9 @@
                 "avatarId": 10318
             },
             "created": "2019-08-25T20:39:44.100+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1519,6 +1827,15 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10003",
+                    "id": "10003",
+                    "name": "1.0",
+                    "archived": false,
+                    "released": true
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
@@ -1526,7 +1843,7 @@
                 "id": "3"
             },
             "resolution": null,
-            "updated": "2019-09-06T16:15:44.100+0530",
+            "updated": "2020-03-14T20:24:04.656+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -1555,10 +1872,9 @@
                 "avatarId": 10318
             },
             "created": "2019-08-27T20:24:44.099+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1572,14 +1888,23 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10003",
+                    "id": "10003",
+                    "name": "1.0",
+                    "archived": false,
+                    "released": true
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
+            "updated": "2019-10-20T14:56:54.938+0530",
             "resolution": null,
-            "updated": "2019-09-08T13:19:44.099+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -1608,10 +1933,9 @@
                 "avatarId": 10318
             },
             "created": "2019-08-31T22:04:44.099+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1625,13 +1949,22 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10003",
+                    "id": "10003",
+                    "name": "1.0",
+                    "archived": false,
+                    "released": true
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-10T01:02:44.099+0530",
+            "updated": "2020-03-24T21:55:23.048+0530",
             "resolution": null,
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
@@ -1660,11 +1993,10 @@
                 "subtask": false,
                 "avatarId": 10318
             },
+            "duedate": null,
             "created": "2019-09-04T06:25:44.099+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1678,14 +2010,23 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [
+                {
+                    "self": "https://jira-ja.atlassian.net/rest/api/2/version/10003",
+                    "id": "10003",
+                    "name": "1.0",
+                    "archived": false,
+                    "released": true
+                }
+            ],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-11T03:00:44.099+0530",
             "resolution": null,
+            "updated": "2019-10-20T14:56:55.490+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -1714,10 +2055,9 @@
                 "avatarId": 10315
             },
             "created": "2019-09-06T10:47:44.095+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1731,13 +2071,14 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-12T09:47:44.095+0530",
+            "updated": "2020-02-15T21:00:45.475+0530",
             "resolution": null,
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
@@ -1766,11 +2107,10 @@
                 "subtask": false,
                 "avatarId": 10303
             },
+            "duedate": null,
             "created": "2019-09-08T10:47:44.095+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1784,13 +2124,14 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-13T10:25:44.095+0530",
+            "updated": "2019-10-20T17:10:26.888+0530",
             "resolution": null,
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
@@ -1819,11 +2160,10 @@
                 "subtask": false,
                 "avatarId": 10303
             },
+            "duedate": null,
             "created": "2019-09-10T10:47:44.094+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1837,14 +2177,15 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-14T09:52:44.094+0530",
             "resolution": null,
+            "updated": "2019-10-21T22:06:04.905+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10001",
                 "description": "",
@@ -1872,11 +2213,10 @@
                 "subtask": false,
                 "avatarId": 10303
             },
+            "duedate": null,
             "created": "2019-09-10T10:47:44.094+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1890,6 +2230,7 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
@@ -1897,7 +2238,7 @@
                 "id": "3"
             },
             "resolution": null,
-            "updated": "2019-09-13T00:47:44.094+0530",
+            "updated": "2019-10-20T17:10:26.263+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/3",
                 "description": "This issue is being actively worked on at the moment by the assignee.",
@@ -1925,11 +2266,10 @@
                 "subtask": false,
                 "avatarId": 10303
             },
+            "duedate": null,
             "created": "2019-09-06T00:47:44.094+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1943,14 +2283,15 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
+            "updated": "2019-10-20T17:10:26.246+0530",
             "resolution": null,
-            "updated": "2019-09-12T06:10:44.094+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/3",
                 "description": "This issue is being actively worked on at the moment by the assignee.",
@@ -1979,10 +2320,9 @@
                 "avatarId": 10303
             },
             "created": "2019-09-05T10:47:44.094+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -1996,6 +2336,7 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
@@ -2003,7 +2344,7 @@
                 "id": "3"
             },
             "resolution": null,
-            "updated": "2019-09-05T10:47:44.094+0530",
+            "updated": "2019-10-20T17:10:26.309+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10002",
                 "description": "",
@@ -2032,10 +2373,9 @@
                 "avatarId": 10303
             },
             "created": "2019-09-02T10:47:44.094+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -2049,13 +2389,14 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-11T08:42:44.094+0530",
+            "updated": "2019-10-20T17:10:26.272+0530",
             "resolution": null,
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10002",
@@ -2085,10 +2426,9 @@
                 "avatarId": 10303
             },
             "created": "2019-09-14T10:47:45.999+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -2102,14 +2442,15 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/3",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/medium.svg",
                 "name": "Medium",
                 "id": "3"
             },
-            "updated": "2019-09-14T10:47:45.999+0530",
             "resolution": null,
+            "updated": "2019-12-01T17:16:54.348+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10002",
                 "description": "",
@@ -2138,10 +2479,9 @@
                 "avatarId": 10318
             },
             "created": "2019-09-13T10:47:44.093+0530",
+            "duedate": null,
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -2155,14 +2495,15 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/1",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/highest.svg",
                 "name": "Highest",
                 "id": "1"
             },
-            "updated": "2019-09-14T05:35:44.094+0530",
             "resolution": null,
+            "updated": "2019-10-20T17:10:26.245+0530",
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10003",
                 "description": "",
@@ -2190,11 +2531,10 @@
                 "subtask": false,
                 "avatarId": 10318
             },
+            "duedate": null,
             "created": "2019-09-14T08:11:44.093+0530",
             "reporter": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/user?accountId=557058%3A29a14ee4-7343-4514-8dd9-0815732b7af7",
-                "name": "admin",
-                "key": "admin",
                 "accountId": "557058:29a14ee4-7343-4514-8dd9-0815732b7af7",
                 "emailAddress": "shridhar.tl@gmail.com",
                 "avatarUrls": {
@@ -2208,13 +2548,14 @@
                 "timeZone": "Asia/Kolkata",
                 "accountType": "atlassian"
             },
+            "fixVersions": [],
             "priority": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/priority/1",
                 "iconUrl": "https://jira-ja.atlassian.net/images/icons/priorities/highest.svg",
                 "name": "Highest",
                 "id": "1"
             },
-            "updated": "2019-09-14T08:11:44.093+0530",
+            "updated": "2019-10-20T17:10:26.236+0530",
             "resolution": null,
             "status": {
                 "self": "https://jira-ja.atlassian.net/rest/api/2/status/10002",

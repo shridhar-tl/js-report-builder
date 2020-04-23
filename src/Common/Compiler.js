@@ -1,18 +1,22 @@
 import array, { getObjVal } from "./linq";
 
-var compiler = function () { console.error("Script Compiler is not initialized!!"); }
-var parser = function () { console.error("Script Parser is not initialized!!"); return { isValid: true }; }
+let compiler = function () { console.error("Script Compiler is not initialized!!"); }
+let parser = function () { console.error("Script Parser is not initialized!!"); return { isValid: true }; }
+let handleScriptExecution = true;
 
-export function setCompiler(comp) {
+export function setCompilerOptions(comp, prsr, selfHandleScriptExecution) {
     if (typeof comp === "function") {
         compiler = comp;
     }
-}
 
-export function setParser(prsr) {
     if (typeof prsr === "function") {
         parser = prsr;
     }
+
+    handleScriptExecution = selfHandleScriptExecution !== true;
+}
+
+export function setParser(prsr) {
 }
 
 export function parseScript(script) {
@@ -127,9 +131,13 @@ const sandbox = ["window",
     "stop",
     "$",
     " jQuery",
-    "console"] //'eval', // eval couldn't be used a parameter
+    "console"]
 
 export function compileExpression(expression, props) {
+    if (!handleScriptExecution) {
+        return compiler(expression, props, { sandbox, array, getObjVal });
+    }
+
     try {
         var isNoWrap = props && props.noWrap === true;
         var exprToCompile = expression;
@@ -142,7 +150,7 @@ export function compileExpression(expression, props) {
 
         exprToCompile = "'use strict'; return function(CommonFunctions,MyFunctions,Parameters,Datasets,array,getObjVal,ReportState,setReportState) { " + exprToCompile + " }";
 
-        var result = compiler(exprToCompile, sandbox);
+        var result = compiler(exprToCompile, sandbox, props);
 
         //var result = func();
         if (props) {

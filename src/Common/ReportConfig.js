@@ -2,15 +2,14 @@ import "./extensions";
 import array from "./linq";
 import inbuiltFunctions, { setHttpProxy } from "./CommonFunctions";
 import inbuiltDatasets from "./DatasetTypes";
-import { setCompiler, setParser } from "./Compiler";
+import { setCompilerOptions } from "./Compiler";
 
 export const options = { useExternalDnDProvider: false };
 
 export function initReportBuilder(config) {
-    var { parameterTypes, datasetTypes, builtInFields, commonFunctions, subReports, resolveReportDefinition, resolveHttpRequest, compiler, parser } = config;
+    var { parameterTypes, datasetTypes, builtInFields, commonFunctions, subReports, resolveReportDefinition, resolveHttpRequest, compiler, parser, selfHandleScriptExecution } = config;
     options.useExternalDnDProvider = config.useExternalDnDProvider === true;
-    setCompiler(compiler);
-    setParser(parser);
+    setCompilerOptions(compiler, parser, selfHandleScriptExecution);
     setHttpProxy(resolveHttpRequest);
 
     initParamTypes(parameterTypes);

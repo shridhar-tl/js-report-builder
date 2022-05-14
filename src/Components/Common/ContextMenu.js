@@ -18,8 +18,8 @@ export default class ContextMenu extends PureComponent {
     componentDidMount() {
         contextHandler = (event, contextItems) => {
             if (!event) {
-                this.menu.hide();
-                this.contextMenu.hide();
+                this.menu.hide(event);
+                this.contextMenu.hide(event);
                 return;
             }
             const isContextMenu = event.type === "contextmenu";
@@ -28,23 +28,28 @@ export default class ContextMenu extends PureComponent {
                 contextItems = contextItems.filter(c => !c.disabled || !c.items || c.items.length === 0);
             }
 
-            this.setState({ contextItems });
+            if (!this.state.contextItems?.length || this.state.contextItems !== contextItems) {
+                this.setState({ contextItems });
+            }
 
             if (isContextMenu) {
-                this.menu.hide();
+                this.menu.hide(event);
                 this.contextMenu.show(event);
             }
             else {
-                this.contextMenu.hide();
-                this.menu.show(event);
+                this.contextMenu.hide(event);
+                this.menu.toggle(event);
             }
         };
     }
 
+    setMenuRef = el => this.menu = el;
+    setContextMenuRef = el => this.contextMenu = el;
+
     render() {
         return <>
-            <Menu appendTo={document.body} model={this.state.contextItems} popup={true} ref={el => this.menu = el} />
-            <CMenu appendTo={document.body} model={this.state.contextItems} popup={true} ref={el => this.contextMenu = el} />
+            <Menu appendTo={document.body} model={this.state.contextItems} popup={true} ref={this.setMenuRef} />
+            <CMenu appendTo={document.body} model={this.state.contextItems} popup={true} ref={this.setContextMenuRef} />
         </>;
     }
 }

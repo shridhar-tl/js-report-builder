@@ -8,7 +8,7 @@ import MenuItem from "./MenuItem";
 import ChartItem from "./ChartItem";
 import SubReport from "./SubReport";
 
-export default {
+const components = {
     TBL: GridItem,
     IMG: ImageItem,
     TAB: TabItem,
@@ -19,3 +19,5 @@ export default {
     CHT: ChartItem,
     RPT: SubReport
 };
+
+export default components;

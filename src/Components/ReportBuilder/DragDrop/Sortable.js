@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Draggable from './Draggable';
 import Droppable from './Droppable';
 
@@ -80,9 +81,29 @@ class Sortable extends PureComponent {
         return this.renderItem(c, i, children);
     }
 
-    getDropableContainer = (itemsToRender) => {
+    getDropableContainer = (toRender, itemsCount) => {
+        let itemsToRender = toRender;
+
+        if (typeof itemsToRender === 'string') {
+            itemsToRender = (connectDrag, isOver, canDrop, isActive) => {
+                const className = classNames(
+                    'drop-placeholder',
+                    {
+                        'non-empty': itemsCount > 0,
+                        'drop-hover': canDrop && isOver,
+                        'drop-enabled': canDrop && !isOver,
+                        'drop-disabled': isActive && !canDrop
+                    }
+                );
+
+                return connectDrag(<div className={className}>{toRender}</div>);
+            }
+        }
+
         const { containerId, props: { items, itemType, accepts = itemType } } = this;
-        return <Droppable containerId={containerId} accepts={accepts} itemType={itemType} index={items.length} onDrop={this.handleDrop}>
+
+        return <Droppable containerId={containerId} accepts={accepts} itemType={itemType}
+            index={items.length} onDrop={this.handleDrop}>
             {itemsToRender}
         </Droppable>;
     }
@@ -100,11 +121,11 @@ class Sortable extends PureComponent {
         }
         else if (items && items.length > 0) {
             itemsToRender = <div className={className}>{items.map(this.renderChildren)}
-                {placeholder && this.getDropableContainer(placeholder)}
+                {placeholder && this.getDropableContainer(placeholder, items.length)}
             </div>;
         }
         else {
-            itemsToRender = this.getDropableContainer(placeholder);
+            itemsToRender = this.getDropableContainer(placeholder, 0);
         }
 
         return itemsToRender;

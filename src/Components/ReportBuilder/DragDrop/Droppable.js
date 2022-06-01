@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from "react-dnd";
 
@@ -28,14 +28,18 @@ const dropTarget = {
             return;
         } // This line is to handle drop event of nested components
 
-        const { accepts, itemType: targetItemType } = props;
+        const { accepts, itemType: destItemType } = props;
         if (!accepts) { return true; }
 
         const { itemType, itemTarget } = monitor.getItem();
-        if (targetItemType === itemType) { return true; }
+        if (destItemType === itemType || destItemType === itemTarget) { return true; }
 
         if (Array.isArray(itemTarget)) {
-            if (!!~itemTarget.indexOf(targetItemType)) { return true; }
+            if (!!~itemTarget.indexOf(destItemType)) { return true; }
+        }
+
+        if (Array.isArray(accepts)) {
+            if (!!~accepts.indexOf(itemType)) { return true; }
         }
     },
     /*hover(props, monitor, component) {

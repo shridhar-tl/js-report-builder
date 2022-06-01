@@ -1,6 +1,6 @@
 {
     "name": "jsd-report",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "author": "Shridhar TL",
     "description": "A Report Builder component which can be used by end users with minimal technical knowledge to built custom reports from browser. Supports generating charts, custom components, filters, custom functions and lot more.",
     "repository": {

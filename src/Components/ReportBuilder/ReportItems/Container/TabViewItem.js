@@ -63,7 +63,7 @@ class TabViewItem extends ReportItemBase {
                 <TabView>
                     {addedItems.map((d, i) => (
                         <TabPanel header={d.header} key={d._uniqueId}>
-                            <BaseContainer text={`Tab page - [${d.header}]`} data={d} onChange={c => this.itemChanged(i, c)} onItemRemoved={this.onItemRemoved} />
+                            <BaseContainer index={i} text={`Tab page - [${d.header}]`} data={d} onChange={c => this.itemChanged(i, c)} onItemRemoved={this.onItemRemoved} />
                         </TabPanel>))}
                 </TabView>
                 {showPropsDialog && <TabViewProperties definition={definition} onHide={this.hideProperties} onChange={this.onChange} />}

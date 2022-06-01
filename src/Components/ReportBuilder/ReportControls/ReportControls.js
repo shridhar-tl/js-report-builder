@@ -43,6 +43,9 @@ class ReportControls extends PureComponent {
     addDataset = e => this.showPopup(e, 3, this.ctlDatasets);
 
     showPopup(e, index, ctl) {
+        if (!ctl) {
+            return;
+        }
         e.preventDefault();
         e.stopPropagation();
         var { activeIndex } = this.state;

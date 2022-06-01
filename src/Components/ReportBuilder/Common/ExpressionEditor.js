@@ -25,7 +25,7 @@ class ExpressionEditor extends PureComponent {
     }
 
     componentDidMount() {
-        this.inputField.focus();
+        this.inputField?.focus();
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -119,17 +119,21 @@ class ExpressionEditor extends PureComponent {
         delete this.disableBlurEvent;
     };
 
+    onBlur = () => this.endEdit();
+    setRef = (field) => this.inputField = field;
+
     render() {
-        var { disabled, placeholder, style, className, isStrict, noGroups } = this.props;
-        var { expression, type, validation: { isValid } = {} } = this.state;
+        const { disabled, style = inputStyle, className, isStrict, noGroups } = this.props;
+        let { placeholder } = this.props;
+        let { expression, type, validation: { isValid } = {} } = this.state;
 
         if (!placeholder && !noGroups) {
             placeholder = isStrict ? "provide an expression here..." : "provide a value or expression here...";
         }
 
-        var useTextarea = true; // Revisit: may need to use "multiline" property instead
+        const useTextarea = true; // Revisit: may need to use "multiline" property instead
 
-        var hasValue = !!expression;
+        let hasValue = !!expression;
 
         if (!type && expression) {
             if (!expression.startsWith("=")) {
@@ -141,37 +145,19 @@ class ExpressionEditor extends PureComponent {
             }
         }
 
-        var inputField = useTextarea ? (
-            <InputTextarea
-                style={style || inputStyle}
-                disabled={disabled}
-                placeholder={placeholder}
-                value={expression || ""}
-                className={className}
-                ref={input => {
-                    this.inputField = (input || {}).element;
-                }}
-                autoResize={true}
-                onChange={this.expressionChanged}
-                onKeyDown={this.validateKeys}
-                onBlur={() => this.endEdit()}
-            />
-        ) : (
-                <InputText
-                    style={style || inputStyle}
-                    disabled={disabled}
-                    placeholder={placeholder}
-                    type="text"
-                    value={expression || ""}
-                    className={className}
-                    ref={f => {
-                        this.inputField = (f || {}).element;
-                    }}
-                    onChange={this.expressionChanged}
-                    onKeyDown={this.validateKeys}
-                    onBlur={() => this.endEdit()}
-                />
-            );
+        const inputProps = {
+            style,
+            disabled,
+            placeholder,
+            value: expression || "",
+            className,
+            ref: this.setRef,
+            onChange: this.expressionChanged,
+            onKeyDown: this.validateKeys,
+            onBlur: this.onBlur
+        };
+
+        const inputField = useTextarea ? <InputTextarea autoResize {...inputProps} /> : <InputText type="text" {...inputProps} />;
 
         if (noGroups) {
             return inputField;

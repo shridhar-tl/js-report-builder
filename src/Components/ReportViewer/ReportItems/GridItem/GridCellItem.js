@@ -10,7 +10,7 @@ class GridCellItem extends ItemsBase {
         var {
             expression, $expression,
             data: displayValue,
-            template
+            // template
         } = definition;
 
         if (expression && !$expression) {

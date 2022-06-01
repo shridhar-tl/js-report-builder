@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import "./App.scss";
 import { ReportBuilder, ReportViewer, initReportBuilder, ContextMenu } from "./lib";
 import "font-awesome/css/font-awesome.min.css";
-import "primereact/resources/themes/nova-light/theme.css";
+import "primereact/resources/themes/nova/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";

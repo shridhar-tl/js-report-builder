@@ -10,11 +10,11 @@ class ItemsBase extends PureComponent {
         this.state = {};
     }
 
-    UNSAFE_componentWillMount() {
-        this.deallocateTracker = this.context.trackState((tracker) => {
+    componentDidMount() {
+        this.deallocateTracker = this.context.trackState(async (tracker) => {
             this.stateTracker = tracker;
             try {
-                var newState = this.getStateObject(tracker);
+                const newState = await this.getStateObject(tracker);
                 this.setState(newState);
             } catch (err) {
                 this.handleError(err)
@@ -28,7 +28,7 @@ class ItemsBase extends PureComponent {
         }
     }
 
-    processDefaultProps(definition) {
+    async processDefaultProps(definition) {
         var {
             itemType, className,
             tooltip, $tooltip,
@@ -47,48 +47,48 @@ class ItemsBase extends PureComponent {
         }
 
         if (tooltip && !$tooltip) {
-            $tooltip = this.tryParseExpression(tooltip, true);
+            $tooltip = await this.tryParseExpression(tooltip, true);
             definition.$tooltip = $tooltip;
         }
 
         if (typeof $tooltip === "function") {
-            tooltip = this.executeExpr($tooltip);
+            tooltip = await this.executeExpr($tooltip);
         }
 
         if (hidden && !$hidden) {
-            $hidden = this.parseExpr(hidden, true);
+            $hidden = await this.parseExpr(hidden, true);
             definition.$hidden = $hidden;
         }
 
         if (typeof $hidden === "function") {
-            hidden = this.executeExpr($hidden);
+            hidden = await this.executeExpr($hidden);
         }
 
         if (disabled && !$disabled) {
-            $disabled = this.parseExpr(disabled, true);
+            $disabled = await this.parseExpr(disabled, true);
             definition.$disabled = $disabled;
         }
 
         if (typeof $disabled === "function") {
-            disabled = this.executeExpr($disabled);
+            disabled = await this.executeExpr($disabled);
         }
 
         if (clickAction) {
             switch (clickAction) {
                 case "LNK":
                     if (actionProps && !$actionProps) {
-                        $actionProps = this.tryParseExpression(actionProps, true);
+                        $actionProps = await this.tryParseExpression(actionProps, true);
                         definition.$actionProps = $actionProps;
                     }
 
                     if (typeof $actionProps === "function") {
-                        actionProps = this.executeExpr($actionProps);
+                        actionProps = await this.executeExpr($actionProps);
                     }
                     break;
 
                 case "FNC":
                     if (actionProps && !$actionProps) {
-                        $actionProps = this.parseExpr(actionProps, true);
+                        $actionProps = await this.parseExpr(actionProps, true);
                         definition.$actionProps = $actionProps;
                     }
 
@@ -98,7 +98,7 @@ class ItemsBase extends PureComponent {
 
                 case "RST":
                     if (actionProps && !$actionProps) {
-                        $actionProps = this.parseArray(actionProps);
+                        $actionProps = await this.parseArray(actionProps);
                         definition.$actionProps = $actionProps;
                     }
 
@@ -130,7 +130,7 @@ class ItemsBase extends PureComponent {
     }
 
     parseArray(arr) {
-        return arr.map(ap => { return { name: ap.name, value: this.tryParseExpression(ap.value, true) } });
+        return Promise.all(arr.map(async ap => { return { name: ap.name, value: await this.tryParseExpression(ap.value, true) } }));
     }
 
     executeArray(arr, reduce) {
@@ -184,39 +184,48 @@ class ItemsBase extends PureComponent {
         }
     }
 
-    tryParseExpression(item, noExecute) {
+    async tryParseExpression(item, noExecute) {
         if (typeof item !== "object") { return item; }
         if (item.expression) {
-            return this.parseExpr(item.expression, noExecute);
+            return await this.parseExpr(item.expression, noExecute);
         }
     }
 
-    parseExpr(expr, noExecute) {
-        var exprFunc = this.context.parseExpr(expr, this.stateTracker);
-        if (noExecute) { return exprFunc; }
+    async parseExpr(expr, noExecute) {
+        if (!expr) { return expr; }
 
-        return this.executeExpr(exprFunc);
+        try {
+            var exprFunc = this.context.parseExpr(expr, this.stateTracker);
+            if (noExecute) { return exprFunc; }
+
+            return await this.executeExpr(exprFunc);
+        } catch (err) {
+            console.error('Expression Parse failed:-', expr);
+            throw err;
+        }
     }
 
-    executeExpr(exprFunc) {
-        var { execProps: { fields, rowGroup, colGroup, variables } = {} } = this.props;
+    async executeExpr(exprFunc) {
+        if (!exprFunc || typeof exprFunc !== 'function') {
+            throw new Error('Expression is not parsed');
+        }
+
+        const { execProps: { fields, rowGroup, colGroup, variables } = {} } = this.props;
         return exprFunc(fields, rowGroup, colGroup, variables);
     }
 
-    handleError(err) {
-        this.error = err;
+    handleError(error) {
+        this.setState({ error });
     }
 
     renderError() {
-        return (
-            <div title={this.error}>#Error</div>
-        );
+        return (<div title={this.state.error}>#Error</div>);
     }
 
     render() {
         if (this.state.hidden) { return null; }
 
-        if (this.error) { return this.renderError(); }
+        if (this.state.error) { return this.renderError(); }
 
         return this.renderChild();
     }

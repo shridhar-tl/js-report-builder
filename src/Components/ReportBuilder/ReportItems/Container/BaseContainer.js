@@ -5,6 +5,7 @@ import { getUniqueId } from '../../Common/HelperFunctions';
 import Sortable from '../../DragDrop/Sortable';
 
 const noReportItemsMessage = <div className="message-no-items">Drag and drop report items here</div>;
+const dropMoreItemsMessage = <div className="message-no-items">Drag and drop more items here</div>;
 const accepts = ["RPT_ITMS", "RPT_CMPN"];
 
 class BaseContainer extends ReportItemBase {
@@ -65,7 +66,7 @@ class BaseContainer extends ReportItemBase {
     }
 
     getControl = (item, index, drpHndl, drgSrc) => {
-        var Ctl = componentsMap[item.type].control;
+        let { control: Ctl, icon, text } = componentsMap[item.type];
 
         if (!Ctl) { Ctl = ReportItemBase; }
 
@@ -77,14 +78,17 @@ class BaseContainer extends ReportItemBase {
                 index={index}
                 onItemRemoved={this.onItemRemoved}
                 data={item.data}
+                icon={icon}
+                text={text}
                 onChange={d => this.onChanged(d, index)}
             />);
     };
 
     getDroppableContainer() {
+        const hasSomeItems = this.state.addedItems?.length > 0;
         return <Sortable className="drop-grp" draggableClassName="component" itemType="RPT_ITMS" accepts={accepts}
             items={this.state.addedItems} keyName="_uniqueId" useDragHandle onItemAdded={this.onItemAdded}
-            onChange={this.itemsChanged} placeholder={noReportItemsMessage}>{this.getControl}</Sortable>
+            onChange={this.itemsChanged} placeholder={hasSomeItems ? dropMoreItemsMessage : noReportItemsMessage}>{this.getControl}</Sortable>
     }
 
     render() {

@@ -8,7 +8,12 @@ class ItemsContainer extends PureComponent {
 
         var itemHtml = null;
         if (ItemType) {
-            itemHtml = <ItemType definition={item.data} />;
+            itemHtml = <ItemType key={type + i} definition={item.data} />;
+
+            // This if block is primarly for BlockItem component which should not render wrapper div
+            if (ItemType.noWrapper) {
+                return itemHtml;
+            }
         } else {
             itemHtml = (
                 <div style={{ width: "100%", border: "1px solid grey", padding: "4px 12px" }}>An unknown report ui component found in this report</div>
@@ -23,7 +28,9 @@ class ItemsContainer extends PureComponent {
     }
 
     render() {
-        var { items } = this.props;
+        const { items } = this.props;
+        if (!Array.isArray(items)) { return null; }
+
         return <>{items.map(this.getReportItemComponent)}</>
     }
 }

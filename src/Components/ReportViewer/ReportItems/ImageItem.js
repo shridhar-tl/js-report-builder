@@ -2,14 +2,14 @@ import React from "react";
 import ItemsBase from "./ItemsBase";
 
 class ImageItem extends ItemsBase {
-    getStateObject = () => {
+    getStateObject = async () => {
         var { definition } = this.props;
 
-        var { style, tooltip, hidden, disabled, clickAction, actionProps } = this.processDefaultProps(definition);
+        var { style, tooltip, hidden, disabled, clickAction, actionProps } = await this.processDefaultProps(definition);
         var { srcMode, src, altText, autoHide } = definition;
 
-        src = this.tryParseExpression(src);
-        altText = this.tryParseExpression(altText);
+        src = src ? await this.tryParseExpression(src) : src;
+        altText = altText ? await this.tryParseExpression(altText) : altText;
 
         if (srcMode === 2) {
             // ToDo: based on srcMode take image from resource

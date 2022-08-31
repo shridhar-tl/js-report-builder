@@ -5,12 +5,12 @@ import ItemsContainer from './ItemsContainer'
 import { Panel } from 'primereact/panel';
 
 class PanelItem extends ItemsBase {
-    getStateObject = () => {
+    getStateObject = async () => {
         var { definition: { style, items, header, hidden, toggleable, collapsed } } = this.props;
 
-        hidden = this.parseExpr(hidden);
-        toggleable = this.parseExpr(toggleable);
-        collapsed = this.parseExpr(collapsed);
+        hidden = hidden && await this.parseExpr(hidden);
+        toggleable = toggleable && await this.parseExpr(toggleable);
+        collapsed = collapsed && await this.parseExpr(collapsed);
 
         return { style, items, header, hidden, toggleable, collapsed };
     }

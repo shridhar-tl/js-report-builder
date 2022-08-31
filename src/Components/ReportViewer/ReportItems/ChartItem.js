@@ -3,14 +3,14 @@ import ItemsBase from './ItemsBase';
 import { Chart } from 'primereact/chart';
 
 class ChartItem extends ItemsBase {
-    getStateObject = () => {
+    getStateObject = async () => {
         var { definition: { style, type, hidden, data, options, responsive, width, height } } = this.props;
 
-        hidden = this.parseExpr(hidden);
-        data = this.parseExpr(data);
-        options = this.parseExpr(options);
-        width = this.tryParseExpression(width);
-        height = this.tryParseExpression(height);
+        hidden = hidden ? await this.parseExpr(hidden) : hidden;
+        data = data ? await this.parseExpr(data) : data;
+        options = options ? await this.parseExpr(options) : options;
+        width = width ? await this.tryParseExpression(width) : width;
+        height = height ? await this.tryParseExpression(height) : height;
 
         return { style, type, hidden, data, options, responsive, width, height };
     }

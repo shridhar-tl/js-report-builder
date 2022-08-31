@@ -138,7 +138,15 @@ var defaultConfig = {
 class App extends PureComponent {
     constructor() {
         super();
-        this.state = { preview: false, reportDefinition: myOpenTickets.definition || userDaywiseReport };
+
+        let data = localStorage.getItem('reportDef');
+        if (data) {
+            data = JSON.parse(data);
+        } else {
+            data = myOpenTickets.definition || userDaywiseReport;
+        }
+
+        this.state = { preview: false, reportDefinition: data };
     }
 
     UNSAFE_componentWillMount() {
@@ -175,6 +183,9 @@ class App extends PureComponent {
         }
 
         this.setState(newState);
+        if (newState.reportDefinition) {
+            localStorage.setItem('reportDef', JSON.stringify(newState.reportDefinition));
+        }
     };
 
     render() {

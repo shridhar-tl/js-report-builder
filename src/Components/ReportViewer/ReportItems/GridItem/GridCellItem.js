@@ -2,10 +2,10 @@ import React from 'react';
 import ItemsBase from '../ItemsBase';
 
 class GridCellItem extends ItemsBase {
-    getStateObject = (reportState) => {
+    getStateObject = async (reportState) => {
         var { definition } = this.props;
 
-        var { className, style, tooltip, hidden, disabled, clickAction, actionProps } = this.processDefaultProps(definition);
+        var { className, style, tooltip, hidden, disabled, clickAction, actionProps } = await this.processDefaultProps(definition);
 
         var {
             expression, $expression,
@@ -20,7 +20,7 @@ class GridCellItem extends ItemsBase {
 
         if (typeof $expression === "function") {
             try {
-                displayValue = this.executeExpr($expression);
+                displayValue = await this.executeExpr($expression);
             } catch (e) {
                 displayValue = "#Error";
                 tooltip = e;

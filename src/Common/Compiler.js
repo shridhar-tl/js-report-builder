@@ -142,13 +142,16 @@ export function compileExpression(expression, props) {
         var isNoWrap = props && props.noWrap === true;
         var exprToCompile = expression;
 
+        let isAsync = exprToCompile.includes('await ');
+
         if (!isNoWrap) {
-            exprToCompile = "return function(Fields,RowGroup,ColGroup,Variables){ var Field = function(key){return getObjVal(Fields,key);}; return " +
+            exprToCompile = "return " + (isAsync ? 'async ' : '') + "function(Fields,RowGroup,ColGroup,Variables){ var Field = function(key){return getObjVal(Fields,key);}; return " +
                 exprToCompile +
                 ";}";
+            isAsync = false;
         }
 
-        exprToCompile = "'use strict'; return function(CommonFunctions,MyFunctions,Parameters,Datasets,array,getObjVal,ReportState,setReportState) { " + exprToCompile + " }";
+        exprToCompile = "'use strict'; return " + (isAsync ? 'async ' : '') + "function(CommonFunctions,MyFunctions,Parameters,Datasets,array,getObjVal,ReportState,setReportState) { " + exprToCompile + " }";
 
         var result = compiler(exprToCompile, sandbox, props);
 

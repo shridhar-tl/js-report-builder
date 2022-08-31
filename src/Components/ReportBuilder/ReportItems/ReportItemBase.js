@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
-import './ReportItemBase.scss';
 import { showContextMenu } from '../../../lib';
+import classNames from 'classnames';
+import './ReportItemBase.scss';
 
 class ReportItemBase extends PureComponent {
     constructor(props, propsDialog) {
@@ -60,7 +61,7 @@ class ReportItemBase extends PureComponent {
                 title="Remove this report item permenantly"></i></div>
         </div>
 
-        return <div className="component">
+        return <div className={classNames("component", this.className)}>
             <div ref={dropHandle} className="header-cntr">
                 {dragSource ? dragSource(header) : header}
             </div>

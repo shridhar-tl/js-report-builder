@@ -4,17 +4,17 @@ import { ReportViewer } from '../../../lib';
 import { resolveReport } from '../../../Common/ReportConfig';
 
 class SubReport extends ItemsBase {
-    getStateObject = () => {
+    getStateObject = async () => {
         var { definition } = this.props;
         var { style, hidden, $hidden, parameters, $parameters, reportId } = definition;
 
         if (hidden && !$hidden) {
-            $hidden = this.parseExpr(hidden, true);
+            $hidden = await this.parseExpr(hidden, true);
             definition.$hidden = $hidden;
         }
 
         if (typeof $hidden === "function") {
-            hidden = this.executeExpr($hidden);
+            hidden = await this.executeExpr($hidden);
         }
 
         if (parameters && !$parameters) {
@@ -23,7 +23,7 @@ class SubReport extends ItemsBase {
         }
 
         if (Array.isArray($parameters)) {
-            parameters = this.executeArray($parameters, true);
+            parameters = await this.executeArray($parameters, true);
         }
 
         if (reportId) {

@@ -29,7 +29,7 @@ class Sortable extends PureComponent {
             [removedItem] = newArr.splice(source.index, 1);
         }
 
-        let targetIndex = target.index;
+        const targetIndex = target.index;
         if (targetIndex >= newArr.length) {
             newArr.push(removedItem);
         }
@@ -38,7 +38,7 @@ class Sortable extends PureComponent {
         }
 
         onChange(newArr);
-    }
+    };
 
     handleRemove = (source, targetId) => {
         if (this.containerId === targetId || this.props.nonRemovable === true) {
@@ -53,7 +53,7 @@ class Sortable extends PureComponent {
         onChange(newArr);
 
         return sourceItem;
-    }
+    };
 
     renderItem = (c, i, itemTemplate) => {
         const { containerId, props: { itemType, accepts = itemType, keyName, draggableClassName, itemTarget, useDragHandle } } = this;
@@ -66,20 +66,20 @@ class Sortable extends PureComponent {
                     : itemTemplate(c, i, { dropConnector, isOver, canDrop })
                 }
             </Draggable>}
-        </Droppable>
-    }
+        </Droppable>;
+    };
 
     renderItems = (itemTemplate) => {
         const { props: { items } } = this;
 
         return items.map((c, i) => this.renderItem(c, i, itemTemplate));
-    }
+    };
 
     renderChildren = (c, i) => {
         const { props: { children } } = this;
 
         return this.renderItem(c, i, children);
-    }
+    };
 
     getDropableContainer = (toRender, itemsCount) => {
         let itemsToRender = toRender;
@@ -97,7 +97,7 @@ class Sortable extends PureComponent {
                 );
 
                 return connectDrag(<div className={className}>{toRender}</div>);
-            }
+            };
         }
 
         const { containerId, props: { items, itemType, accepts = itemType } } = this;
@@ -106,7 +106,7 @@ class Sortable extends PureComponent {
             index={items.length} onDrop={this.handleDrop}>
             {itemsToRender}
         </Droppable>;
-    }
+    };
 
     render() {
         const { props: { useCustomContainer, items, children, className, placeholder } } = this;

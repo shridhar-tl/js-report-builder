@@ -10,24 +10,24 @@ import NameField from '../../Common/NameField';
 class MenuProperties extends PureComponent {
     constructor(props) {
         super(props);
-        var { definition } = props;
+        let { definition } = props;
         definition = { ...definition };
-        definition.items = definition.items.map(item => { return { ...item }; });
+        definition.items = definition.items.map(item => ({ ...item }));
         this.state = { definition, showDialog: true };
     }
 
     hidePopup = () => {
         this.setState({ showDialog: false });
         this.props.onHide();
-    }
+    };
 
     saveProperties = () => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         this.props.onChange(definition);
-    }
+    };
 
     setValue = (field, value) => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         if (value === null) {
             delete definition[field];
         } else {
@@ -35,13 +35,13 @@ class MenuProperties extends PureComponent {
         }
 
         this.setState(this.validateField({ ...definition }));
-    }
+    };
 
     validateField = (definition) => {
-        var { name, items } = definition;
-        var isPropValid = name && items && items.length > 0;
+        const { name, items } = definition;
+        const isPropValid = name && items && items.length > 0;
         return { definition, isPropValid };
-    }
+    };
 
     setHiddenValue = (expression) => {
         if (expression === "true") {
@@ -53,19 +53,20 @@ class MenuProperties extends PureComponent {
         else {
             this.setValue("hidden", null);
         }
-    }
+    };
 
     menuSelected = (selectedMenu) => {
         this.setState({ selectedMenu, selectedMenuIndex: this.state.definition.items.indexOf(selectedMenu) });
-    }
+    };
 
     removeSelected = () => {
         this.menuChanged();
-    }
+    };
 
     menuChanged = (menuItem, index) => {
-        var { definition, selectedMenuIndex } = this.state;
-        var { items } = definition;
+        const { selectedMenuIndex } = this.state;
+        let { definition } = this.state;
+        const { items } = definition;
         index = index || selectedMenuIndex;
         if (menuItem) {
             items[index] = menuItem;
@@ -74,31 +75,29 @@ class MenuProperties extends PureComponent {
         }
         definition = { ...definition };
 
-        var newState = this.validateField(definition);
+        const newState = this.validateField(definition);
         newState.selectedMenuIndex = null;
         newState.selectedMenu = null;
 
         this.setState(newState);
-    }
+    };
 
     addMenuItem = () => {
-        var { definition } = this.state;
-        var { items } = definition;
-        var curIdx = items.length;
-        var newItem = { label: "Menu " + (curIdx + 1), icon: "" };
+        const { definition } = this.state;
+        const { items } = definition;
+        const curIdx = items.length;
+        const newItem = { label: `Menu ${curIdx + 1}`, icon: "" };
         this.menuChanged(newItem, curIdx);
-    }
+    };
 
     render() {
-        var { state, setValue, setHiddenValue, menuChanged, addMenuItem, removeSelected } = this;
-        var { definition, showDialog, isPropValid, selectedMenu } = state;
-        var { name, hidden, items } = definition;
+        const { state, setValue, setHiddenValue, menuChanged, addMenuItem, removeSelected } = this;
+        const { definition, showDialog, isPropValid, selectedMenu } = state;
+        const { name, hidden, items } = definition;
 
-        var itemTemplate = (item) => {
-            return <div onClick={() => this.menuSelected(item)}><span>{item.label}</span></div>
-        }
+        const itemTemplate = (item) => <div onClick={() => this.menuSelected(item)}><span>{item.label}</span></div>;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} disabled={!isPropValid} label="Save" />
@@ -157,7 +156,7 @@ class MenuItemProperties extends PureComponent {
     }
 
     setValue = (field, value) => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         if (value === null) {
             delete definition[field];
         } else {
@@ -165,11 +164,11 @@ class MenuItemProperties extends PureComponent {
         }
 
         this.setState(this.validateField(definition));
-    }
+    };
 
     validateField(definition) {
-        var { header } = definition;
-        var isParamValid = !!header;
+        const { header } = definition;
+        const isParamValid = !!header;
 
         return { definition: { ...definition }, isParamValid };
     }
@@ -186,12 +185,12 @@ class MenuItemProperties extends PureComponent {
         else {
             this.setValue(field, null);
         }
-    }
+    };
 
     render() {
-        var { setValue, setBooleanValue, state, props } = this;
-        var { definition } = state;
-        var { label, icon, hidden, disabled, expression } = definition;
+        const { setValue, setBooleanValue, state, props } = this;
+        const { definition } = state;
+        const { label, icon, hidden, disabled, expression } = definition;
 
         return (
             <Card title="Menu item properties">

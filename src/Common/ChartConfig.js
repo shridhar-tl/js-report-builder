@@ -12,7 +12,7 @@ export function getChartTypes() {
     return chartTypes;
 }
 
-var type1Data = {
+const type1Data = {
     labels: ['A', 'B', 'C'],
     datasets: [
         {
@@ -27,12 +27,14 @@ var type1Data = {
                 "#36A2EB",
                 "#FFCE56"
             ]
-        }]
+        }
+]
 };
 
-var type2Data = {
+const type2Data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [{
+    datasets: [
+{
         label: 'Dataset 1',
         fill: false,
         backgroundColor: '#42A5F5',
@@ -46,15 +48,17 @@ var type2Data = {
         borderColor: '#66BB6A',
         yAxisID: 'y-axis-2',
         data: [28, 48, 40, 19, 86, 27, 90]
-    }]
+    }
+]
 };
 
-var type2Options = {
+const type2Options = {
     responsive: true,
     hoverMode: 'index',
     stacked: false,
     scales: {
-        yAxes: [{
+        yAxes: [
+{
             type: 'linear',
             display: true,
             position: 'left',
@@ -67,11 +71,12 @@ var type2Options = {
             gridLines: {
                 drawOnChartArea: false
             }
-        }]
+        }
+]
     }
 };
 
-var barData = {
+const barData = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
         {

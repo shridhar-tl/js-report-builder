@@ -11,7 +11,7 @@ const buttonStyle = { minHeight: "32px" };
 class ExpressionEditor extends PureComponent {
     constructor(props) {
         super();
-        var { expression, type, autoDetect } = props;
+        let { expression, type, autoDetect } = props;
 
         if (typeof expression === "object") {
             type = null;
@@ -19,7 +19,7 @@ class ExpressionEditor extends PureComponent {
         }
         else if (autoDetect) { type = "text"; }
 
-        if (!type && (expression !== null && expression !== undefined)) { expression = "=" + expression; }
+        if (!type && (expression !== null && expression !== undefined)) { expression = `=${expression}`; }
 
         this.state = { expression, type, validation: this.validateExpression(expression) };
     }
@@ -29,7 +29,7 @@ class ExpressionEditor extends PureComponent {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        var { expression, type, autoDetect, isStrict } = nextProps;
+        let { expression, type, autoDetect, isStrict } = nextProps;
 
         if (typeof expression === "object") {
             type = null;
@@ -37,9 +37,9 @@ class ExpressionEditor extends PureComponent {
         }
         else if (autoDetect && !isStrict) { type = "text"; }
 
-        var { expression: oldExpression, type: oldType } = this.state;
+        const { expression: oldExpression, type: oldType } = this.state;
 
-        if (!type && (expression !== null && expression !== undefined)) { expression = "=" + expression; }
+        if (!type && (expression !== null && expression !== undefined)) { expression = `=${expression}`; }
 
         if (oldExpression && (expression || "").trim() === oldExpression.trim()) { expression = oldExpression; }
 
@@ -50,10 +50,10 @@ class ExpressionEditor extends PureComponent {
 
     expressionChanged = e => {
         this.isChanged = true;
-        var expression = e.target.value;
-        var value = expression.trim();
-        var type;
-        var validation = { isValid: true };
+        const expression = e.target.value;
+        let value = expression.trim();
+        let type;
+        let validation = { isValid: true };
         if (!value.startsWith("=") && !this.props.isStrict) {
             type = "text";
         } else {
@@ -65,7 +65,7 @@ class ExpressionEditor extends PureComponent {
         }
 
         this.setState({ expression, type, validation }, () => {
-            var { onChange } = this.props;
+            const { onChange } = this.props;
             if (onChange) {
                 onChange(value, type, validation);
             }
@@ -78,8 +78,8 @@ class ExpressionEditor extends PureComponent {
     }
 
     validateKeys = e => {
-        var { keyCode } = e;
-        var { wordWrap } = this.props;
+        const { keyCode } = e;
+        const { wordWrap } = this.props;
 
         if (keyCode === 13 && wordWrap !== true) {
             // When Enter key is pressed
@@ -93,7 +93,7 @@ class ExpressionEditor extends PureComponent {
     };
 
     endEdit = field => {
-        var { endEdit, disabled } = this.props;
+        const { endEdit, disabled } = this.props;
 
         if (!endEdit || disabled || this.disableBlurEvent) {
             return;
@@ -102,7 +102,7 @@ class ExpressionEditor extends PureComponent {
         if (!endEdit) {
             return;
         }
-        var { expression, type, validation } = field || this.state;
+        let { expression, type, validation } = field || this.state;
         if (field) {
             this.setState({ expression, type });
         }
@@ -137,7 +137,7 @@ class ExpressionEditor extends PureComponent {
 
         if (!type && expression) {
             if (!expression.startsWith("=")) {
-                expression = "=" + expression;
+                expression = `=${expression}`;
                 hasValue = true;
             }
             else {
@@ -167,7 +167,7 @@ class ExpressionEditor extends PureComponent {
             <div className="expression-editor">
                 <div className="p-inputgroup">
                     <span className="p-inputgroup-addon" style={preIconStyle}>
-                        <i className={"fa " + (!isStrict && type ? "fa-font" : "fa-code")} />
+                        <i className={`fa ${!isStrict && type ? "fa-font" : "fa-code"}`} />
                     </span>
                     {inputField}
                     <Button type={(hasValue ? (isValid ? "success" : "danger") : null)}

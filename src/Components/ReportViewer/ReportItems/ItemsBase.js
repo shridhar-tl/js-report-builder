@@ -17,7 +17,7 @@ class ItemsBase extends PureComponent {
                 const newState = await this.getStateObject(tracker);
                 this.setState(newState);
             } catch (err) {
-                this.handleError(err)
+                this.handleError(err);
             }
         });
     }
@@ -28,15 +28,17 @@ class ItemsBase extends PureComponent {
         }
     }
 
+    // eslint-disable-next-line complexity
     async processDefaultProps(definition) {
-        var {
-            itemType, className,
+        const { itemType, style, clickAction, } = definition;
+        let {
+            className,
             tooltip, $tooltip,
             hidden, $hidden,
             disabled, $disabled,
-            style,
 
-            clickAction, actionProps, $actionProps
+
+            actionProps, $actionProps
         } = definition;
 
 
@@ -115,11 +117,11 @@ class ItemsBase extends PureComponent {
 
     parseBooleanExpr(definition, propName) {
         let value = definition[propName];
-        let $value = definition["$" + propName];
+        let $value = definition[`$${propName}`];
 
         if (value && !$value) {
             $value = this.parseExpr(value, true);
-            definition["$" + propName] = $value;
+            definition[`$${propName}`] = $value;
         }
 
         if (typeof $value === "function") {
@@ -130,12 +132,13 @@ class ItemsBase extends PureComponent {
     }
 
     parseArray(arr) {
-        return Promise.all(arr.map(async ap => { return { name: ap.name, value: await this.tryParseExpression(ap.value, true) } }));
+        return Promise.all(arr.map(async ap => ({ name: ap.name, value: await this.tryParseExpression(ap.value, true) })));
     }
 
     executeArray(arr, reduce) {
-        var result = arr.map(itm => {
-            var { name, value } = itm;
+        let result = arr.map(itm => {
+            const { name } = itm;
+            let { value } = itm;
 
             if (typeof value === "function") {
                 value = this.executeExpr(value);
@@ -154,7 +157,7 @@ class ItemsBase extends PureComponent {
 
     callAction = (e) => {
         if (this.state.clickAction === "RST") {
-            var newRProps = this.executeArray(this.actionProps);
+            const newRProps = this.executeArray(this.actionProps);
 
             this.context.setReportState(newRProps);
         }
@@ -182,7 +185,7 @@ class ItemsBase extends PureComponent {
 
             showContextMenu(e, items);
         }
-    }
+    };
 
     async tryParseExpression(item, noExecute) {
         if (typeof item !== "object") { return item; }
@@ -195,7 +198,7 @@ class ItemsBase extends PureComponent {
         if (!expr) { return expr; }
 
         try {
-            var exprFunc = this.context.parseExpr(expr, this.stateTracker);
+            const exprFunc = this.context.parseExpr(expr, this.stateTracker);
             if (noExecute) { return exprFunc; }
 
             return await this.executeExpr(exprFunc);

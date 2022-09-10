@@ -9,12 +9,12 @@ import { Dropdown } from 'primereact/dropdown';
 import Button from '../../../Common/Button';
 import { clone } from '../../../../Common/HelperFunctions';
 import { Checkbox } from 'primereact/checkbox';
-import './ChartItem.scss'
+import './ChartItem.scss';
 
 class ChartItem extends ReportItemBase {
     constructor(props) {
         super(props);
-        var { data: definition } = props;
+        let { data: definition } = props;
         if (!definition) {
             definition = { type: "bar" };
         }
@@ -23,7 +23,7 @@ class ChartItem extends ReportItemBase {
     }
 
     getChartData() {
-        var { chartData, state: { definition: { type } } } = this;
+        let { chartData, state: { definition: { type } } } = this;
         if (!chartData || chartData.type !== type) {
             chartData = clone(defaultChartDefinition[type], true) || { type };
             this.chartData = chartData;
@@ -32,10 +32,10 @@ class ChartItem extends ReportItemBase {
     }
 
     render() {
-        var { state } = this;
-        var { definition, showPropsDialog } = state;
-        var { type, responsive, width, height } = definition;
-        var { data, options } = this.getChartData();
+        const { state } = this;
+        const { definition, showPropsDialog } = state;
+        let { type, responsive, width, height } = definition;
+        const { data, options } = this.getChartData();
 
         if (typeof width !== "string") { width = null; }
         if (typeof height !== "string") { height = null; }
@@ -55,42 +55,42 @@ export default ChartItem;
 class ChartItemProperties extends PureComponent {
     constructor(props) {
         super(props);
-        var { definition } = props;
+        let { definition } = props;
         definition = { ...definition };
         this.state = { definition, showDialog: true };
     }
 
     setValue(field, value) {
-        var { definition } = this.state;
+        let { definition } = this.state;
         definition[field] = value;
         definition = { ...definition };
         this.setState(this.validateProps(definition));
     }
 
     validateProps = (definition) => {
-        var isParamValid = definition && definition.type && definition.data;
+        const isParamValid = definition && definition.type && definition.data;
         return { definition, isParamValid: !!isParamValid };
-    }
+    };
 
     hidePopup = () => {
         this.setState({ showDialog: false });
         this.props.hideDialog();
-    }
+    };
 
     saveProperties = () => {
         this.props.onChange(this.state.definition);
         this.hidePopup();
-    }
+    };
 
     render() {
-        var { showDialog, definition, isParamValid } = this.state;
-        var { type, data, options, hidden, width, height, responsive } = definition;
+        const { showDialog, definition, isParamValid } = this.state;
+        const { type, data, options, hidden, width, height, responsive } = definition;
         if (!data) {
             //data = defaultChartDefinition[type].data;
             //data = JSON.stringify(data);
         }
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} disabled={!isParamValid} label="Save" />

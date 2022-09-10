@@ -3,10 +3,10 @@ import ReportItems from '.';
 
 class ItemsContainer extends PureComponent {
     getReportItemComponent(item, i) {
-        var { type } = item;
-        var ItemType = ReportItems[type];
+        const { type } = item;
+        const ItemType = ReportItems[type];
 
-        var itemHtml = null;
+        let itemHtml = null;
         if (ItemType) {
             itemHtml = <ItemType key={type + i} definition={item.data} />;
 
@@ -21,7 +21,7 @@ class ItemsContainer extends PureComponent {
         }
 
         return (
-            <div key={type + i} className={"report-item report-item-" + type.toLowerCase()}>
+            <div key={type + i} className={`report-item report-item-${type.toLowerCase()}`}>
                 {itemHtml}
             </div>
         );
@@ -31,7 +31,7 @@ class ItemsContainer extends PureComponent {
         const { items } = this.props;
         if (!Array.isArray(items)) { return null; }
 
-        return <>{items.map(this.getReportItemComponent)}</>
+        return <>{items.map(this.getReportItemComponent)}</>;
     }
 }
 

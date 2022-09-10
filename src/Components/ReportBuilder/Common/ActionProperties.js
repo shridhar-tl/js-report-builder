@@ -19,7 +19,7 @@ class ActionProperties extends PureComponent {
     }
 
     render() {
-        var { definition: { clickAction, actionProps }, setValue } = this.props;
+        const { definition: { clickAction, actionProps }, setValue } = this.props;
         const { menuList } = this.state;
 
         return (

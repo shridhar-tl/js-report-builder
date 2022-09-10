@@ -9,7 +9,7 @@ class ReportItemBase extends PureComponent {
 
         this.propsDialog = propsDialog;
 
-        var { data } = props;
+        let { data } = props;
         if (!data) { data = {}; }
         this.state = { definition: { ...data } };
     }
@@ -19,7 +19,7 @@ class ReportItemBase extends PureComponent {
             label: "Remove",
             //icon: "pi pi-fw pi-plus",
             command: () => {
-                this.props.onItemRemoved(this.props.index)
+                this.props.onItemRemoved(this.props.index);
             }
         },
         {
@@ -32,21 +32,21 @@ class ReportItemBase extends PureComponent {
     ];
 
     showProperties() {
-        this.setState({ showPropsDialog: true })
+        this.setState({ showPropsDialog: true });
     }
 
     hideProperties = () => {
         this.setState({ showPropsDialog: false });
-    }
+    };
 
     saveProperties = (definition) => {
         this.setState({ definition, showPropsDialog: false });
         this.props.onChange(definition);
-    }
+    };
 
     showContext = (e) => {
         showContextMenu(e, this.menuModel);
-    }
+    };
 
     renderBase(...children) {
         const { propsDialog: PropsDialog, state: { showPropsDialog, definition } } = this;
@@ -59,7 +59,7 @@ class ReportItemBase extends PureComponent {
             <div className="pull-left"><span className={icon} /> <span>{text}</span></div>
             <div className="pull-right"><i className="fa fa-times" onClick={() => onItemRemoved(index)}
                 title="Remove this report item permenantly"></i></div>
-        </div>
+        </div>;
 
         return <div className={classNames("component", this.className)}>
             <div ref={dropHandle} className="header-cntr">
@@ -71,7 +71,7 @@ class ReportItemBase extends PureComponent {
     }
 
     render() {
-        return this.renderBase(<div className="not-implemented">This component is not yet implemented!</div>)
+        return this.renderBase(<div className="not-implemented">This component is not yet implemented!</div>);
     }
 }
 

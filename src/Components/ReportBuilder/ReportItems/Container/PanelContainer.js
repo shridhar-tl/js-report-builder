@@ -9,7 +9,7 @@ import { InputText } from 'primereact/inputtext';
 class PanelContainer extends ContainerItem {
     constructor(props) {
         super(props);
-        var { data: definition } = props;
+        let { data: definition } = props;
         if (!definition) {
             definition = {items:[], toggleable: true, collapsed: false, header: "Panel header" };
         }
@@ -20,11 +20,11 @@ class PanelContainer extends ContainerItem {
     onChange = (definition) => {
         this.setState({ definition, showPropsDialog: false });
         this.props.onChange(definition);
-    }
+    };
 
     render() {
-        var { definition, collapsed, showPropsDialog } = this.state;
-        var { header, toggleable } = definition;
+        const { definition, collapsed, showPropsDialog } = this.state;
+        const { header, toggleable } = definition;
 
         return super.renderBase(<div className="container-item">
             <Panel header={header} toggleable={toggleable} collapsed={collapsed} onToggle={(e) => this.setState({ collapsed: e.value })}>
@@ -41,22 +41,22 @@ export default PanelContainer;
 class PanelProperties extends PureComponent {
     constructor(props) {
         super(props);
-        var { definition } = props;
+        const { definition } = props;
         this.state = { definition: { ...definition }, showDialog: true };
     }
 
     hidePopup = () => {
         this.setState({ showDialog: false });
         this.props.onHide();
-    }
+    };
 
     saveProperties = () => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         this.props.onChange(definition);
-    }
+    };
 
     setValue = (field, value) => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         if (value === null) {
             delete definition[field];
         } else {
@@ -64,7 +64,7 @@ class PanelProperties extends PureComponent {
         }
 
         this.setState({ definition: { ...definition } });
-    }
+    };
 
     setHiddenValue = (expression) => {
         if (expression === "true") {
@@ -76,14 +76,14 @@ class PanelProperties extends PureComponent {
         else {
             this.setValue("hidden", null);
         }
-    }
+    };
 
     render() {
-        var { state, setValue, setHiddenValue } = this;
-        var { definition, showDialog } = state;
-        var { hidden, header } = definition;
+        const { state, setValue, setHiddenValue } = this;
+        const { definition, showDialog } = state;
+        const { hidden, header } = definition;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} label="Save" />

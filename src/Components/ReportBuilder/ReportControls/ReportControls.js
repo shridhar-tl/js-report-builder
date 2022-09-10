@@ -16,8 +16,8 @@ class ReportControls extends PureComponent {
 
     constructor(props) {
         super(props);
-        var { data, selectedItems } = props;
-        var { parameters, datasetList, reportState } = data;
+        let { data, selectedItems } = props;
+        let { parameters, datasetList, reportState } = data;
 
         if (!selectedItems) {
             selectedItems = [];
@@ -29,8 +29,8 @@ class ReportControls extends PureComponent {
     }
 
     UNSAFE_componentWillReceiveProps(newProps) {
-        var { data, selectedItems } = newProps;
-        var { parameters, datasetList } = data;
+        let { data, selectedItems } = newProps;
+        const { parameters, datasetList } = data;
         if (!selectedItems) {
             selectedItems = [];
         }
@@ -48,7 +48,7 @@ class ReportControls extends PureComponent {
         }
         e.preventDefault();
         e.stopPropagation();
-        var { activeIndex } = this.state;
+        const { activeIndex } = this.state;
         if (activeIndex.indexOf(index) === -1) {
             activeIndex.push(index);
             this.setState({ activeIndex: [...activeIndex] });
@@ -57,14 +57,14 @@ class ReportControls extends PureComponent {
     }
 
     parameterModified = parameters => {
-        var { data } = this.state;
+        const { data } = this.state;
         data.parameters = parameters;
         this.setState({ parameters });
         this.props.onChange(data);
     };
 
     datasetModified = (datasets, datasetList) => {
-        var { data } = this.state;
+        const { data } = this.state;
         data.datasetList = datasetList;
         data.datasets = datasets;
         this.setState({ datasetList });
@@ -72,7 +72,7 @@ class ReportControls extends PureComponent {
     };
 
     reportStateModified = (reportState) => {
-        var { data } = this.state;
+        const { data } = this.state;
         data.reportState = reportState;
         this.setState({ reportState });
         this.props.onChange(data);
@@ -83,32 +83,32 @@ class ReportControls extends PureComponent {
     };
 
     render() {
-        var { data, parameters = [], datasetList = [], activeIndex, selectedItems, reportState } = this.state;
-        var { datasets = {}, myFunctions, userScript } = data;
-        var [selectedItem] = selectedItems;
+        const { data, parameters = [], datasetList = [], activeIndex, selectedItems, reportState } = this.state;
+        const { datasets = {}, myFunctions, userScript } = data;
+        const [selectedItem] = selectedItems;
 
-        var fieldsHeader = (
+        const fieldsHeader = (
             <div style={{ width: "100%" }}>
                 Global fields
                 <Button type="success" icon="fa fa-edit" className="pull-right" onClick={this.editFields} title="Edit report state items" />
             </div>
         );
 
-        var functionsHeader = (
+        const functionsHeader = (
             <div style={{ width: "100%" }}>
                 Utility Functions
                 <Button type="success" icon="fa fa-edit" className="pull-right" onClick={this.editFunctions} title="Add / edit custom functions" />
             </div>
         );
 
-        var parameterHeader = (
+        const parameterHeader = (
             <div style={{ width: "100%" }}>
                 Parameters ({parameters.length})
                 <Button type="success" icon="fa fa-plus" className="pull-right" onClick={this.addParam} title="Add new report parameter" />
             </div>
         );
 
-        var datasetHeader = (
+        const datasetHeader = (
             <div style={{ width: "100%" }}>
                 Datasets ({datasetList.length})
                 <Button type="success" icon="fa fa-plus" className="pull-right" onClick={this.addDataset} title="Add new report dataset" />
@@ -180,10 +180,10 @@ class BuiltinFields extends PureComponent {
     onChange = (reportState) => {
         this.setState({ reportState, showDialog: false });
         this.props.onChange(reportState);
-    }
+    };
 
     render() {
-        var { reportState, showDialog } = this.state;
+        const { reportState, showDialog } = this.state;
 
         return (
             <div className="builtin-fields">
@@ -211,7 +211,7 @@ class BuiltinFields extends PureComponent {
 class ReportStateProperties extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = { showDialog: true, reportState: props.definition.map(d => { return { ...d } }) };
+        this.state = { showDialog: true, reportState: props.definition.map(d => ({ ...d })) };
     }
 
     updateFieldValue = (field, value) => {
@@ -224,17 +224,17 @@ class ReportStateProperties extends PureComponent {
 
     onDone = () => {
         this.props.onChange(this.state.reportState);
-    }
+    };
 
     onHide = () => {
-        this.setState({ showDialog: false })
+        this.setState({ showDialog: false });
         this.props.onHide();
-    }
+    };
 
     render() {
-        var { showDialog, reportState, isValid } = this.state;
+        const { showDialog, reportState, isValid } = this.state;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.onDone} disabled={!isValid} label="Save" />
@@ -293,8 +293,8 @@ class FunctionsList extends PureComponent {
     };
 
     render() {
-        var { userScript, showDialog } = this.state;
-        var footer = (
+        const { userScript, showDialog } = this.state;
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveFunction} label="Save" />

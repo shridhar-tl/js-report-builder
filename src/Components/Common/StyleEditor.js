@@ -21,35 +21,35 @@ class StyleEditor extends PureComponent {
 
     getJSPropName = (name) => {
         if (name === 'float') { return 'cssFloat'; }
-        var slices = name.split('-');
-        var result = slices[0];
-        for (var i = 1; i < slices.length; i++) {
-            var word = slices[i];
+        const slices = name.split('-');
+        let result = slices[0];
+        for (let i = 1; i < slices.length; i++) {
+            const word = slices[i];
             result += word[0].toUpperCase() + word.substring(1);
         }
         return result;
-    }
+    };
 
     setStyleProps(element) {
-        var properties = window.getComputedStyle(element);
-        var propName = null;
-        var styleList = [];
-        var i = 0;
-        while (!!(propName = properties[i++])) {
+        const properties = window.getComputedStyle(element);
+        let propName = null;
+        const styleList = [];
+        let i = 0;
+        while (propName = properties[i++]) {
             // eslint-disable-next-line no-loop-func
             if (propName.length <= 2 || excludedCSSProps.some(t => propName.indexOf(t) === 0)) { continue; }
 
-            var propValue = properties[propName];
-            var jsPropName = this.getJSPropName(propName);
+            const propValue = properties[propName];
+            const jsPropName = this.getJSPropName(propName);
             styleList[styleList.length] = { key: propName, prop: jsPropName, value: propValue };
         }
         this.setState({ styleList });
     }
 
     styleChanged = (propName, jsPropName, value, oldValue) => {
-        var { element, style } = this.state;
+        let { element, style } = this.state;
         element.style[propName] = value;
-        var newValue = element.style[jsPropName];
+        const newValue = element.style[jsPropName];
         if (newValue && newValue !== oldValue) {
             style = { ...style };
             style[jsPropName] = newValue;
@@ -57,10 +57,10 @@ class StyleEditor extends PureComponent {
             this.setState({ style });
         }
         return newValue;
-    }
+    };
 
     render() {
-        var { styleList, element, style } = this.state;
+        const { styleList, element, style } = this.state;
 
         return <div style={{ width: '100%', height: '300px', overflow: 'auto' }}>
             <table className="table">
@@ -91,8 +91,8 @@ class StyleValueEditor extends PureComponent {
     }
 
     UNSAFE_componentWillReceiveProps(newProps, oldProps) {
-        var { value, element, customized } = newProps;
-        var newState = {
+        const { value, element, customized } = newProps;
+        const newState = {
             value, element, customized
         };
         if (oldProps.element !== element) {
@@ -102,25 +102,25 @@ class StyleValueEditor extends PureComponent {
     }
 
     valueChanged = (e) => {
-        var ctl = e.currentTarget;
-        var value = ctl.value;
+        const ctl = e.currentTarget;
+        const value = ctl.value;
         this.setState({ value });
-    }
+    };
 
     onKeyDown = (e) => {
         if (e.keyCode === 13) {
             this.setValue();
         }
         else if (e.keyCode === 27) {
-            var { oldValue } = this.state;
+            const { oldValue } = this.state;
             this.setState({ value: oldValue }, () => this.ctl.blur());
         }
-    }
+    };
 
     setValue = (e) => {
-        var { value, oldValue, customized } = this.state;
+        let { value, oldValue, customized } = this.state;
         if (value !== oldValue) {
-            var newValue = this.props.onChange(this.props.attr, this.props.propName, value, oldValue);
+            let newValue = this.props.onChange(this.props.attr, this.props.propName, value, oldValue);
             if (value && !newValue) { newValue = oldValue; }
             else { customized = true; }
             this.setState({ value: newValue, oldValue: newValue, customized }, () => {
@@ -129,16 +129,16 @@ class StyleValueEditor extends PureComponent {
                 }
             });
         }
-    }
+    };
 
     fieldFocused = () =>
         this.ctl.select();
 
 
     render() {
-        var { value, customized } = this.state;
+        const { value, customized } = this.state;
         return <input ref={(e) => this.ctl = e} type="text" value={value}
             style={{ width: '100%', height: '100%', border: '1px', fontWeight: (customized ? 'bold' : '') }}
-            onChange={this.valueChanged} onKeyDown={this.onKeyDown} onFocus={this.fieldFocused} onBlur={this.setValue} />
+            onChange={this.valueChanged} onKeyDown={this.onKeyDown} onFocus={this.fieldFocused} onBlur={this.setValue} />;
     }
 }

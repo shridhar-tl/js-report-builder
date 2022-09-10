@@ -21,20 +21,20 @@ export default class GridGroup extends PureComponent {
     }
 
     setComponentState(stateTracker) {
-        var { props } = this;
-        var { group, parentGroup, isRowGroup } = props;
+        const { props } = this;
+        const { group, parentGroup, isRowGroup } = props;
 
-        var $group = group.$group;
+        let $group = group.$group;
         if (!$group) {
             $group = this.context.compileGroup(group, stateTracker);
         }
 
         this.$group = $group;
 
-        var parentGroupFields = (parentGroup || {}).Fields;
+        const parentGroupFields = (parentGroup || {}).Fields;
 
-        var rowGroup = isRowGroup ? parentGroup : undefined;
-        var colGroup = isRowGroup ? undefined : parentGroup;
+        const rowGroup = isRowGroup ? parentGroup : undefined;
+        const colGroup = isRowGroup ? undefined : parentGroup;
 
         if (!this.variables) {
             this.variables = $group.variables({
@@ -45,8 +45,8 @@ export default class GridGroup extends PureComponent {
             });
         }
 
-        var dataset = group.dataset;
-        var data;
+        const dataset = group.dataset;
+        let data;
 
         if (dataset === -1) {
             data = $group.$expression(parentGroupFields, rowGroup, colGroup, this.variables);
@@ -56,13 +56,14 @@ export default class GridGroup extends PureComponent {
         }
 
         if (data) {
-            var { filter, keys, sortBy } = $group;
+            let { keys } = $group;
+            const { filter, sortBy } = $group;
             if (filter) {
                 data = data.filter(filter(null, rowGroup, colGroup, this.variables));
             }
 
             if (keys) {
-                var groupKey;
+                let groupKey;
                 if (keys.length === 1) {
                     keys = keys[0];
                     groupKey = f => keys(f, rowGroup, colGroup, this.variables);
@@ -81,7 +82,7 @@ export default class GridGroup extends PureComponent {
                 }
             }
         } else {
-            console.error("Unable to resolve data for " + (isRowGroup ? "row" : "col") + " group: ", group.name);
+            console.error(`Unable to resolve data for ${isRowGroup ? "row" : "col"} group: `, group.name);
         }
 
         this.setState({ data: data || null });
@@ -90,14 +91,14 @@ export default class GridGroup extends PureComponent {
     }
 
     render() {
-        var { state: { data }, props, variables: Variables, isDataGrouped, hasMultiKey } = this;
-        var { children } = props;
-        var keyPropName = hasMultiKey ? "keys" : "key";
+        const { state: { data }, props, variables: Variables, isDataGrouped, hasMultiKey } = this;
+        const { children } = props;
+        const keyPropName = hasMultiKey ? "keys" : "key";
 
         return (
             data &&
             data.map((Fields, i) => {
-                var grpData = { Fields, Variables };
+                const grpData = { Fields, Variables };
 
                 if (isDataGrouped) {
                     grpData.Fields = Fields.values;

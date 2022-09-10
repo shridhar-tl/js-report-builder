@@ -5,7 +5,7 @@ import Sortable from "../Components/ReportBuilder/DragDrop/Sortable";
 import Droppable from "../Components/ReportBuilder/DragDrop/Droppable";
 import Draggable from "../Components/ReportBuilder/DragDrop/Draggable";
 import ContextMenu, { showContextMenu, hideContextMenu } from "../Components/Common/ContextMenu";
-import * as Table from "../Components/Common/ScrollableTable/ScrollableTable"
+import * as Table from "../Components/Common/ScrollableTable/ScrollableTable";
 import 'primeflex/primeflex.css';
 import "./theme.scss";
 

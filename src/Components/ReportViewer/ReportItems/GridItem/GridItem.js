@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import GridRow from "./GridRow";
 import { GridContext, ViewerContext } from "../../Common";
-import { ScrollableTable, THead, TBody } from "../../../Common/ScrollableTable/ScrollableTable"
+import { ScrollableTable, THead, TBody } from "../../../Common/ScrollableTable/ScrollableTable";
 import GridGroup from "./GridGroup";
 import "./GridItem.scss";
 
@@ -15,8 +15,8 @@ export default class GridItem extends PureComponent {
     }
 
     render() {
-        var { definition } = this.props;
-        var { columns, head, body, style } = definition || {};
+        const { definition } = this.props;
+        const { columns, head, body, style } = definition || {};
 
         return (
             <GridContext.Provider value={this.commonContext}>
@@ -37,13 +37,13 @@ class GridRowRepeator extends PureComponent {
     static contextType = GridContext;
 
     UNSAFE_componentWillMount() {
-        var { rowGroupFields, group } = this.props;
+        const { rowGroupFields, group } = this.props;
 
         if (group) {
-            var rowGroup = function (grpName) {
+            const rowGroup = function (grpName) {
                 return rowGroupFields[grpName];
             };
-            var curGroup = rowGroup(group.name);
+            const curGroup = rowGroup(group.name);
             this.fields = curGroup.Fields;
             this.variables = curGroup.Variables;
             rowGroup.Fields = this.fields;
@@ -56,12 +56,14 @@ class GridRowRepeator extends PureComponent {
     }
 
     render() {
-        var { columns, rows = [], isHeader, rowGroupFields } = this.props;
+        const { columns, rows = [], isHeader } = this.props;
+        let { rowGroupFields } = this.props;
+
         return rows.map((row, iRow) => {
             if (row.type === 1) {
                 return <GridRow key={iRow} isHeader={isHeader} definition={row} rowGroup={this.rowGroup} columns={columns} />;
             } else {
-                var { name, children } = row;
+                const { name, children } = row;
                 if (!rowGroupFields) {
                     rowGroupFields = {};
                 }

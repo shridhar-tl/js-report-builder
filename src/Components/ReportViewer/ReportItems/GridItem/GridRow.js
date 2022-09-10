@@ -8,8 +8,8 @@ export default class GridRow extends PureComponent {
     static contextType = GridContext;
 
     render() {
-        var { definition, columns, isHeader, rowGroup } = this.props;
-        var { style, children } = definition;
+        const { definition, columns, isHeader, rowGroup } = this.props;
+        const { style, children } = definition;
 
         return (
             <tr style={style}>
@@ -23,14 +23,14 @@ class GridCellRepeater extends PureComponent {
     static contextType = GridContext;
 
     UNSAFE_componentWillMount() {
-        var { colGroupFields, group } = this.props;
+        const { colGroupFields, group } = this.props;
 
         if (group) {
-            var colGroup = function (grpName) {
+            const colGroup = function (grpName) {
                 return colGroupFields[grpName];
             };
 
-            var curGroup = colGroup(group.name);
+            const curGroup = colGroup(group.name);
             this.fields = curGroup.Fields;
             this.variables = curGroup.Variables;
             colGroup.Fields = this.fields;
@@ -43,11 +43,12 @@ class GridCellRepeater extends PureComponent {
     }
 
     render() {
-        var { cellStartIndex = 0, columns, cells, isHeader, colGroupFields, rowGroup } = this.props;
+        const { cellStartIndex = 0, columns, cells, isHeader, rowGroup } = this.props;
+        let { colGroupFields } = this.props;
 
         return columns.map((column, icolumn) => {
-            var { type } = column;
-            var bIndex = cellStartIndex + icolumn; // ToDo: correction required in this index
+            const { type } = column;
+            const bIndex = cellStartIndex + icolumn; // ToDo: correction required in this index
 
             if (type === 1) {
                 return (
@@ -61,7 +62,7 @@ class GridCellRepeater extends PureComponent {
                     />
                 );
             } else {
-                var { children, name } = column;
+                const { children, name } = column;
 
                 if (!colGroupFields) {
                     colGroupFields = {};
@@ -93,21 +94,21 @@ class GridCell extends PureComponent {
 
     constructor(props) {
         super(props);
-        var { isHeader } = props;
+        const { isHeader } = props;
         this.cellType = isHeader ? "th" : "td";
     }
 
     UNSAFE_componentWillMount() {
-        var { colGroup, rowGroup } = this.props;
+        const { colGroup, rowGroup } = this.props;
 
-        var fields = (rowGroup || {}).Fields;
-        var variables = (rowGroup || {}).Variables;
+        const fields = (rowGroup || {}).Fields;
+        const variables = (rowGroup || {}).Variables;
 
         this.execProps = { fields, rowGroup, colGroup, variables };
     }
 
     render() {
-        var {
+        const {
             cellType: CellType,
             props: { cell }
         } = this;
@@ -120,11 +121,11 @@ class GridCell extends PureComponent {
                         case "expression":
                         case "text":
                         case "mnu":
-                            return <GridCellItem key={i} definition={c} execProps={this.execProps} />
+                            return <GridCellItem key={i} definition={c} execProps={this.execProps} />;
                         case "img":
-                            return <ImageItem key={i} definition={c} execProps={this.execProps} />
+                            return <ImageItem key={i} definition={c} execProps={this.execProps} />;
                         default:
-                            return <span key={i} title="Unsupported element found inside grid cell">#Error: Unsupported</span>
+                            return <span key={i} title="Unsupported element found inside grid cell">#Error: Unsupported</span>;
                     }
                 })}
             </CellType>

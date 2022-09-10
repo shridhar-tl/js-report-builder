@@ -1,5 +1,5 @@
 import React from 'react';
-import GridGroup from './GridGroup'
+import GridGroup from './GridGroup';
 
 class ParentGroup extends GridGroup {
     render() {

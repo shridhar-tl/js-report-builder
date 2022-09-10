@@ -1,13 +1,15 @@
 
 import React from 'react';
 import ItemsBase from './ItemsBase';
-import ItemsContainer from './ItemsContainer'
+import ItemsContainer from './ItemsContainer';
 
 class ContainerItem extends ItemsBase {
     static noWrapper = true;
 
     getStateObject = async () => {
-        let { definition: { style, items, hidden, blockSize } } = this.props;
+        const { definition } = this.props;
+        const { style, items } = definition;
+        let { hidden, blockSize } = definition;
 
         hidden = hidden ? await this.parseExpr(hidden) : hidden;
         // as of now blockSize is not an expression. It supports only int
@@ -23,16 +25,16 @@ class ContainerItem extends ItemsBase {
         }
 
         return { style, items, hidden, blockSize };
-    }
+    };
 
     renderChild = () => {
         const { items, style, blockSize } = this.state;
-        const className = blockSize && blockSize !== 12 ? 'col-' + blockSize : undefined;
+        const className = blockSize && blockSize !== 12 ? `col-${blockSize}` : undefined;
 
         return <div style={style} className={className}>
             <ItemsContainer items={items} />
         </div>;
-    }
+    };
 }
 
 export default ContainerItem;

@@ -4,12 +4,12 @@ import React, { PureComponent } from 'react';
 import Button from '../../../Common/Button';
 import ExpressionEditor from '../../Common/ExpressionEditor';
 import BaseContainer from './BaseContainer';
-import './ContainerItem.scss'
+import './ContainerItem.scss';
 
 class ContainerItem extends BaseContainer {
     constructor(props) {
         super(props);
-        var { data: definition } = props;
+        let { data: definition } = props;
         if (!definition) {
             definition = { items: [], blockSize: 12 };
         }
@@ -22,7 +22,7 @@ class ContainerItem extends BaseContainer {
     setBlockSize(definition) {
         const { blockSize = 12 } = definition;
         if (blockSize && blockSize !== 12) {
-            this.className = 'col-' + blockSize;
+            this.className = `col-${blockSize}`;
         }
     }
 
@@ -30,10 +30,10 @@ class ContainerItem extends BaseContainer {
         this.setBlockSize(definition);
         this.setState({ definition, showPropsDialog: false });
         this.props.onChange(definition);
-    }
+    };
 
     render() {
-        var { definition, showPropsDialog } = this.state;
+        const { definition, showPropsDialog } = this.state;
 
         return super.renderBase(<div className="container-item">
             {this.getDroppableContainer()}
@@ -47,22 +47,22 @@ export default ContainerItem;
 class ContainerItemProperties extends PureComponent {
     constructor(props) {
         super(props);
-        var { definition } = props;
+        const { definition } = props;
         this.state = { definition: { ...definition }, showDialog: true };
     }
 
     hidePopup = () => {
         this.setState({ showDialog: false });
         this.props.onHide();
-    }
+    };
 
     saveProperties = () => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         this.props.onChange(definition);
-    }
+    };
 
     setValue = (field, value) => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         if (value === null) {
             delete definition[field];
         } else {
@@ -70,7 +70,7 @@ class ContainerItemProperties extends PureComponent {
         }
 
         this.setState({ definition: { ...definition } });
-    }
+    };
 
     setHiddenValue = (expression) => {
         if (expression === "true") {
@@ -82,14 +82,14 @@ class ContainerItemProperties extends PureComponent {
         else {
             this.setValue("hidden", null);
         }
-    }
+    };
 
     render() {
-        var { state, setValue, setHiddenValue } = this;
-        var { definition, showDialog } = state;
-        var { hidden, blockSize } = definition;
+        const { state, setValue, setHiddenValue } = this;
+        const { definition, showDialog } = state;
+        const { hidden, blockSize } = definition;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} label="Save" />

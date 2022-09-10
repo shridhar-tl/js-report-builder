@@ -1,8 +1,16 @@
 {
     "name": "jsd-report",
-    "version": "0.1.11",
-    "author": "Shridhar TL",
+    "version": "0.1.12",
     "description": "A Report Builder component which can be used by end users with minimal technical knowledge to built custom reports from browser. Supports generating charts, custom components, filters, custom functions and lot more.",
+    "author": {
+        "name": "Shridhar TL",
+        "email": "shridhar.tl@gmail.com"
+    },
+    "bugs": {
+        "url": "https://github.com/shridhar-tl/js-report-builder/issues"
+    },
+    "private": true,
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/shridhar-tl/js-report-builder"
@@ -41,10 +49,10 @@
         "font-awesome": "^4.7.0",
         "jquery": "^3.6.1",
         "moment": "^2.29.4",
-        "node-sass": "^7.0.1",
+        "node-sass": "^7.0.3",
         "primeflex": "^3.2.1",
         "primeicons": "^5.0.0",
-        "primereact": "^8.4.0",
+        "primereact": "^8.5.0",
         "react": "^18.2.0",
         "react-dnd": "^14.0.2",
         "react-dnd-html5-backend": "^14.0.0",
@@ -59,11 +67,64 @@
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
-        "extends": "react-app"
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ],
+        "rules": {
+            "arrow-body-style": [
+                "error",
+                "as-needed"
+            ],
+            "no-unused-vars": "error",
+            "no-unreachable": "error",
+            "eqeqeq": "error",
+            "semi": "error",
+            "no-var": "error",
+            "no-use-before-define": "error",
+            "no-constant-condition": "error",
+            "no-dupe-args": "error",
+            "no-duplicate-case": "error",
+            "no-empty": "error",
+            "no-extra-boolean-cast": "warn",
+            "no-extra-semi": "error",
+            "no-alert": "error",
+            "no-caller": "error",
+            "no-irregular-whitespace": "error",
+            "guard-for-in": "error",
+            "valid-typeof": "error",
+            "no-empty-function": "error",
+            "no-empty-pattern": "error",
+            "no-eq-null": "error",
+            "no-extend-native": "error",
+            "template-curly-spacing": "error",
+            "no-new-wrappers": "error",
+            "no-self-compare": "error",
+            "no-sequences": "error",
+            "no-throw-literal": "error",
+            "no-unmodified-loop-condition": "error",
+            "no-debugger": "warn",
+            "complexity": "error",
+            "curly": "error",
+            "no-const-assign": "error",
+            "array-bracket-newline": "error",
+            "no-confusing-arrow": "error",
+            "prefer-const": "error",
+            "prefer-numeric-literals": "error",
+            "prefer-template": "error",
+            "max-len": [
+                "error",
+                300,
+                2
+            ]
+        }
     },
     "browserslist": {
         "production": [
-            ">0.2%",
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version",
+            "not ie >= 0",
             "not dead",
             "not op_mini all"
         ],

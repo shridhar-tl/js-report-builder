@@ -18,10 +18,10 @@ class SubReport extends ReportItemBase {
     }
 
     render() {
-        var {
+        const {
             state: { reportsList, definition: { reportId } }
         } = this;
-        var report = (reportsList || []).filter(r => r.id === reportId)[0];
+        const report = (reportsList || []).filter(r => r.id === reportId)[0];
 
         return super.renderBase(
             <div className="sub-report" style={subReportStyle}>
@@ -36,18 +36,18 @@ class SubReport extends ReportItemBase {
 export default SubReport;
 
 class SubReportProperties extends PropertiesDialogBase {
-    static contextType = BuilderContext
+    static contextType = BuilderContext;
 
     constructor(props) {
         super(props, "Sub Report properties");
     }
 
     componentDidMount() {
-        var { definition: { reportId } } = this.props;
+        const { definition: { reportId } } = this.props;
         getReportsList(this.context.getDefinition()).then(reportsList => {
             this.setState({ reportsList });
 
-            var report = reportsList.filter(r => r.id === reportId)[0];
+            const report = reportsList.filter(r => r.id === reportId)[0];
             this.reportSelected(report);
         });
     }
@@ -55,8 +55,8 @@ class SubReportProperties extends PropertiesDialogBase {
     reportSelected(report) {
         if (!report) { return; }
         resolveReport(report.id).then(def => {
-            var { parameters } = def;
-            this.paramsList = parameters.map(p => { return { name: p.name, display: p.display } });
+            const { parameters } = def;
+            this.paramsList = parameters.map(p => ({ name: p.name, display: p.display }));
 
             this.reportDefinition = def;
             this.setValue("reportId", report.id);
@@ -68,8 +68,8 @@ class SubReportProperties extends PropertiesDialogBase {
     }
 
     validateField(definition) {
-        var isPropsValid = true;
-        var paramsMessage = null;
+        let isPropsValid = true;
+        let paramsMessage = null;
         if (this.ctlParams) {
             if (this.ctlParams.hasEmptyData()) {
                 isPropsValid = false;
@@ -84,11 +84,11 @@ class SubReportProperties extends PropertiesDialogBase {
     }
 
     render() {
-        var {
+        const {
             setValue,
             state: { reportsList, definition, report, paramsMessage }
         } = this;
-        var { reportId, parameters, hidden } = definition;
+        const { reportId, parameters, hidden } = definition;
 
         return super.renderBase(
             <TabView>

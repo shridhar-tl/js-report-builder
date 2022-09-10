@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Dialog } from 'primereact/dialog';
 import Button from '../../Common/Button';
-import ExpressionEditor from './ExpressionEditor'
+import ExpressionEditor from './ExpressionEditor';
 
 class PropertiesDialogBase extends PureComponent {
     constructor(props, title, style, maximizable) {
@@ -11,25 +11,25 @@ class PropertiesDialogBase extends PureComponent {
         this.style = style || { width: "70vw" };
         this.maximizable = maximizable;
 
-        var { definition } = props;
+        const { definition } = props;
         this.state = { definition: { ...definition }, showDialog: true };
     }
 
     onHide = () => {
         this.setState({ showDialog: false });
         this.props.onHide();
-    }
+    };
 
     saveProperties = () => {
         this.props.onChange(this.getProperties());
-    }
+    };
 
     getProperties() {
         return this.state.definition;
     }
 
     setValue = (field, value) => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         if (value === null) {
             delete definition[field];
         } else {
@@ -40,7 +40,7 @@ class PropertiesDialogBase extends PureComponent {
         if (field === "clickAction") { delete definition.actionProps; }
 
         this.setState(this.validateField({ ...definition }));
-    }
+    };
 
     setBooleanValue = (expression, field) => {
         field = field || "hidden";
@@ -53,32 +53,32 @@ class PropertiesDialogBase extends PureComponent {
         else {
             this.setValue(field, expression);
         }
-    }
+    };
 
     validateField(definition) {
-        var isPropsValid = true;
+        const isPropsValid = true;
         return { definition, isPropsValid };
     }
 
     getBooleanExpressionField(field, value) {
-        return <ExpressionEditor expression={value} autoDetect={true} isStrict={true} onChange={(expr, type, prop) => this.setBooleanValue(expr, field)} />
+        return <ExpressionEditor expression={value} autoDetect={true} isStrict={true} onChange={(expr, type, prop) => this.setBooleanValue(expr, field)} />;
     }
 
     getExpressionField(field, value, isStrict) {
-        return <ExpressionEditor expression={value} autoDetect={true} isStrict={isStrict} onChange={(expr, type, prop) => this.setValue(field, expr)} />
+        return <ExpressionEditor expression={value} autoDetect={true} isStrict={isStrict} onChange={(expr, type, prop) => this.setValue(field, expr)} />;
     }
 
     renderBase(children) {
-        var { title, style, onHide, saveProperties, maximizable, state: { showDialog, isPropsValid } } = this;
+        const { title, style, onHide, saveProperties, maximizable, state: { showDialog, isPropsValid } } = this;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={saveProperties} disabled={!isPropsValid} label="Save" />
             </div>
         );
 
-        return <Dialog header={title} maximizable={maximizable} visible={showDialog} footer={footer} style={style} modal={true} onHide={onHide}>{children}</Dialog>
+        return <Dialog header={title} maximizable={maximizable} visible={showDialog} footer={footer} style={style} modal={true} onHide={onHide}>{children}</Dialog>;
     }
 }
 

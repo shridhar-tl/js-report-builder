@@ -4,7 +4,7 @@ import ItemsContainer from "../ReportItems/ItemsContainer";
 
 class ReportDisplay extends PureComponent {
     render() {
-        var {
+        const {
             definition: { reportItems }
         } = this.props;
 

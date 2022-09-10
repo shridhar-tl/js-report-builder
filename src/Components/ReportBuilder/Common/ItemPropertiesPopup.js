@@ -13,19 +13,19 @@ class ItemPropertiesPopup extends PureComponent {
     }
 
     onHide = () => {
-        var { onHide } = this.props;
+        const { onHide } = this.props;
         this.setState({ showDialog: false });
         onHide();
-    }
+    };
 
     saveProperties = () => {
-        var { onChange } = this.props;
-        var { item } = this.state;
+        const { onChange } = this.props;
+        const { item } = this.state;
         onChange(item);
-    }
+    };
 
     setValue = (field, value) => {
-        var { item } = this.state;
+        const { item } = this.state;
         if (value === null) {
             delete item[field];
         } else {
@@ -33,7 +33,7 @@ class ItemPropertiesPopup extends PureComponent {
         }
         if (field === "clickAction") { delete item.actionProps; }
         this.setState(this.validateField(item));
-    }
+    };
 
     validateField(item) {
         let isFieldsValid = true;
@@ -55,23 +55,23 @@ class ItemPropertiesPopup extends PureComponent {
         else {
             this.setValue("hidden", null);
         }
-    }
+    };
 
     render() {
-        var { state, setValue, setHiddenValue } = this;
-        var { showDialog, isFieldsValid, item } = state;
-        var { itemType, expression, data, tooltip, hidden, isHTML } = item;
+        const { state, setValue, setHiddenValue } = this;
+        const { showDialog, isFieldsValid, item } = state;
+        let { itemType, expression, data, tooltip, hidden, isHTML } = item;
 
         const isMenu = itemType === "MNU";
 
-        var tooltipType = null;
+        let tooltipType = null;
         if (typeof tooltip === "object") {
             tooltip = tooltip.expression;
         } else {
             tooltipType = "text";
         }
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} disabled={!isFieldsValid} label="Save" />

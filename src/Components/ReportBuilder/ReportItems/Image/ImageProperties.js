@@ -10,22 +10,22 @@ import ActionProperties from '../../Common/ActionProperties';
 class ImageProperties extends PureComponent {
     constructor(props) {
         super(props);
-        var { definition } = props;
+        const { definition } = props;
         this.state = { definition: { ...definition }, showDialog: true };
     }
 
     onHide = () => {
         this.setState({ showDialog: false });
         this.props.onHide();
-    }
+    };
 
     saveProperties = () => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         this.props.onChange(definition);
-    }
+    };
 
     setValue = (field, value) => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         if (value === null) {
             delete definition[field];
         } else {
@@ -33,7 +33,7 @@ class ImageProperties extends PureComponent {
         }
         if (field === "clickAction") { delete definition.actionProps; }
         this.setState(this.validateField(definition));
-    }
+    };
 
     setHiddenValue = (expression) => {
         if (expression === "true") {
@@ -45,20 +45,21 @@ class ImageProperties extends PureComponent {
         else {
             this.setValue("hidden", null);
         }
-    }
+    };
 
     validateField(definition) {
-        var { src } = definition;
-        var isParamValid = !!src;
+        const { src } = definition;
+        const isParamValid = !!src;
 
         return { definition: { ...definition }, isParamValid };
     }
 
     render() {
-        var { state, setValue, setHiddenValue } = this;
-        var { definition, showDialog, isParamValid } = state;
-        var { srcMode, src, altText, tooltip, hidden, autoHide } = definition;
-        var srcType = "text", altType = "text", tooltipType = "text";
+        const { state, setValue, setHiddenValue } = this;
+        const { definition, showDialog, isParamValid } = state;
+        const { srcMode, hidden, autoHide } = definition;
+        let { src, altText, tooltip } = definition;
+        let srcType = "text", altType = "text", tooltipType = "text";
 
         if (typeof src === "object") {
             src = src.expression;
@@ -73,7 +74,7 @@ class ImageProperties extends PureComponent {
             tooltipType = null;
         }
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} disabled={!isParamValid} label="Save" />

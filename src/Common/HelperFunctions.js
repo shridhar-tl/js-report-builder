@@ -14,8 +14,8 @@ export function cloneArray(array, deep) {
     if (!array) {
         return array;
     }
-    var len = array.length;
-    var result = [];
+    let len = array.length;
+    const result = [];
     if (deep) {
         while (len--) {
             result[len] = clone(array[len], deep);
@@ -33,8 +33,8 @@ export function cloneObject(obj, deep) {
         return obj;
     }
     if (deep) {
-        var result = {};
-        for (var prop in obj) {
+        const result = {};
+        for (const prop in obj) {
             if (obj.hasOwnProperty(prop)) {
                 result[prop] = clone(obj[prop], true);
             }
@@ -46,37 +46,37 @@ export function cloneObject(obj, deep) {
 }
 
 export const UUID = (function() {
-    var self = {};
-    var lut = [];
-    for (var i = 0; i < 256; i++) {
+    const self = {};
+    const lut = [];
+    for (let i = 0; i < 256; i++) {
         lut[i] = (i < 16 ? "0" : "") + i.toString(16);
     }
     self.generate = function() {
-        var d0 = (Math.random() * 0xffffffff) | 0;
-        var d1 = (Math.random() * 0xffffffff) | 0;
-        var d2 = (Math.random() * 0xffffffff) | 0;
-        var d3 = (Math.random() * 0xffffffff) | 0;
+        const d0 = (Math.random() * 0xffffffff) | 0;
+        const d1 = (Math.random() * 0xffffffff) | 0;
+        const d2 = (Math.random() * 0xffffffff) | 0;
+        const d3 = (Math.random() * 0xffffffff) | 0;
         return (
-            lut[d0 & 0xff] +
+            `${lut[d0 & 0xff] +
             lut[(d0 >> 8) & 0xff] +
             lut[(d0 >> 16) & 0xff] +
-            lut[(d0 >> 24) & 0xff] +
-            "-" +
-            lut[d1 & 0xff] +
-            lut[(d1 >> 8) & 0xff] +
-            "-" +
-            lut[((d1 >> 16) & 0x0f) | 0x40] +
-            lut[(d1 >> 24) & 0xff] +
-            "-" +
-            lut[(d2 & 0x3f) | 0x80] +
-            lut[(d2 >> 8) & 0xff] +
-            "-" +
-            lut[(d2 >> 16) & 0xff] +
-            lut[(d2 >> 24) & 0xff] +
-            lut[d3 & 0xff] +
-            lut[(d3 >> 8) & 0xff] +
-            lut[(d3 >> 16) & 0xff] +
-            lut[(d3 >> 24) & 0xff]
+            lut[(d0 >> 24) & 0xff] 
+            }-${ 
+            lut[d1 & 0xff] 
+            }${lut[(d1 >> 8) & 0xff] 
+            }-${ 
+            lut[((d1 >> 16) & 0x0f) | 0x40] 
+            }${lut[(d1 >> 24) & 0xff] 
+            }-${ 
+            lut[(d2 & 0x3f) | 0x80] 
+            }${lut[(d2 >> 8) & 0xff] 
+            }-${ 
+            lut[(d2 >> 16) & 0xff] 
+            }${lut[(d2 >> 24) & 0xff] 
+            }${lut[d3 & 0xff] 
+            }${lut[(d3 >> 8) & 0xff] 
+            }${lut[(d3 >> 16) & 0xff] 
+            }${lut[(d3 >> 24) & 0xff]}`
         );
     };
     return self;

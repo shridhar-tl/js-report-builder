@@ -5,19 +5,19 @@ import "./GridRow.scss";
 class GridRow extends PureComponent {
     constructor(props) {
         super(props);
-        var { index, rowData, headSpan, rowSpans } = props;
+        const { index, rowData, headSpan, rowSpans } = props;
         this.state = { index, rowData, headSpan, rowSpans };
     }
 
     UNSAFE_componentWillReceiveProps(newProps) {
-        var { index, rowData, headSpan, rowSpans } = newProps;
+        const { index, rowData, headSpan, rowSpans } = newProps;
         this.setState({ index, rowData, headSpan, rowSpans });
     }
 
     render() {
-        var { columns, parent, updateParent, isDetailsRow, grid } = this.props;
-        var { index, rowData, headSpan, rowSpans } = this.state;
-        var { style } = rowData;
+        const { columns, parent, updateParent, isDetailsRow, grid } = this.props;
+        const { index, rowData, headSpan, rowSpans } = this.state;
+        const { style } = rowData;
         return (
             <tr style={style}>
                 {rowSpans &&
@@ -25,7 +25,7 @@ class GridRow extends PureComponent {
                         <th
                             key={s._uniqueId}
                             rowSpan={s.span}
-                            title={(s.name || "<<No name given>>") + " (" + (s.data.group.type === 2 ? "Parent" : "Details") + " group)"}
+                            title={`${s.name || "<<No name given>>"} (${s.data.group.type === 2 ? "Parent" : "Details"} group)`}
                             className="grid-group-head"
                             onContextMenu={e => grid.showRowGroupContext(e, index, s.data, updateParent)}
                         />
@@ -43,7 +43,7 @@ class GridRow extends PureComponent {
 
     repeatColumns(cols, result) {
         result = result || [];
-        for (var col of cols) {
+        for (const col of cols) {
             if (col.type === 1) {
                 result.push(this.tdRepeator(result.length, col));
             } else if (col.children.length > 0) {
@@ -54,18 +54,19 @@ class GridRow extends PureComponent {
     }
 
     cellDataChanged = (cellData, index) => {
-        let { rowData, updateParent, onChange = updateParent, index: parentIndex } = this.props;
+        const { updateParent, onChange = updateParent, index: parentIndex } = this.props;
+        let { rowData } = this.props;
         let { children = [] } = rowData || {};
         children = [...children];
         children[index] = cellData;
         rowData = { ...rowData, children };
         onChange(rowData, parentIndex);
-    }
+    };
 
     tdRepeator(index, col) {
-        var { rowData: { children } = {} } = this.state;
-        var { grid, isHeaderRow } = this.props;
-        var cellData = children[index];
+        const { rowData: { children } = {} } = this.state;
+        const { grid, isHeaderRow } = this.props;
+        let cellData = children[index];
         if (!cellData) {
             cellData = [];
             children[index] = cellData;

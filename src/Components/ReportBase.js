@@ -10,15 +10,15 @@ class ReportBase extends PureComponent {
 
         this.sharedProps = {
             buildMyFunctions: (script) => {
-                var { data = this.definition } = this.state;
-                var { userScript } = data;
+                const { data = this.definition } = this.state;
+                let { userScript } = data;
 
                 if (script) {
                     userScript = script;
                 }
 
                 if (userScript) {
-                    var funcObj = this.compileMyFunctions(userScript);
+                    const funcObj = this.compileMyFunctions(userScript);
 
                     data.myFunctions = Object.keys(funcObj);
                     data.userScript = userScript;
@@ -47,26 +47,26 @@ class ReportBase extends PureComponent {
     compileMyFunctions(userScript) {
         if (!userScript) { return {}; }
 
-        var {
+        const {
             commonFunctions,
             contextProps: { getDataset: datasets } = {},
             state: { parameterValues: parameters, reportState }
         } = this;
 
-        var funcScript = userScript + "\n return this;";
+        const funcScript = `${userScript}\n return this;`;
 
-        var funcObj = compileExpression(funcScript, {
+        const funcObj = compileExpression(funcScript, {
             noWrap: true, $this: {},
             commonFunctions, datasets, parameters,
             reportState,
-            setReportState: this.setReportState ? this.setReportState.bind(this) : () => { console.log("Report state is not available currently") }
+            setReportState: this.setReportState ? this.setReportState.bind(this) : () => { console.log("Report state is not available currently"); }
         });
 
         return funcObj;
     }
 
     resolveDatasets(refresh) {
-        var promises = null;
+        let promises = null;
         if (!this.isAnyDSUnresolved()) {
             promises = [];
         } else {
@@ -87,30 +87,30 @@ class ReportBase extends PureComponent {
     }
 
     isAnyDSUnresolved() {
-        var { datasetList } = this.definition;
+        const { datasetList } = this.definition;
         if (!datasetList || !datasetList.length) { return false; }
         return datasetList.some(dsId => !this.isDsResolved(dsId));
     }
 
     isDsResolved(dsId) {
-        var data = this.datasets[dsId];
+        const data = this.datasets[dsId];
         return !!data || data === false;
     }
 
     iterateAndResolveDS(refresh) {
-        let { definition: { datasetList } } = this;
+        const { definition: { datasetList } } = this;
 
-        let promises = [];
+        const promises = [];
 
-        for (let dsId of datasetList) {
-            var resolver = this.resolveDataset(dsId, refresh);
+        for (const dsId of datasetList) {
+            const resolver = this.resolveDataset(dsId, refresh);
             promises.push(resolver);
         }
         return promises;
     }
 
     async resolveDataset(dsId, refresh, resolveDependency) {
-        let { definition: { datasets, parameters } = this.state.data } = this;
+        const { definition: { datasets, parameters } = this.state.data } = this;
 
         let parameterTemplate = {};
         if (parameters && Array.isArray(parameters)) {
@@ -120,8 +120,8 @@ class ReportBase extends PureComponent {
             }, parameterTemplate);
         }
 
-        let dataset = datasets[dsId];
-        var dependency = dataset.dependencies || [];
+        const dataset = datasets[dsId];
+        let dependency = dataset.dependencies || [];
         if (!Array.isArray(dependency)) {
             dependency = [dependency];
         }
@@ -145,18 +145,16 @@ class ReportBase extends PureComponent {
         // ToDo: loop through paramDependency and return if not available
 
         if (refresh || !this.datasets[dsId]) {
-            var props = {
+            const props = {
                 dataset,
                 parameters: this.state.parameterValues,
                 parameterTemplate,
-                getDataset: dsId => {
-                    return datasets[dsId];
-                },
+                getDataset: dsId => datasets[dsId],
                 commonFunctions: { ...this.commonFunctions },
                 myFunctions: { ...this.myFunctions }
             };
 
-            var data = await this.datasetTypes[dataset.type].resolve(props, rdsId => this.datasets[rdsId]);
+            let data = await this.datasetTypes[dataset.type].resolve(props, rdsId => this.datasets[rdsId]);
             if (!data) { data = []; }
 
             this.datasets[dsId] = data;

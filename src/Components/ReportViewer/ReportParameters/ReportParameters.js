@@ -3,15 +3,15 @@ import { getParamTypes } from "../../../Common/ReportConfig";
 import "./ReportParameters.scss";
 import Button from "../../Common/Button";
 import InputParameter from "../../Common/InputParameter";
-import { ViewerContext } from '../Common'
+import { ViewerContext } from '../Common';
 
 class ReportParameters extends PureComponent {
     static contextType = ViewerContext;
 
     constructor(props) {
         super(props);
-        var { definition, values } = props;
-        var { datasets, parameters } = definition;
+        const { definition, values } = props;
+        const { datasets, parameters } = definition;
         this.parameters = parameters;
         this.datasets = datasets;
         this.paramTypes = getParamTypes(true);
@@ -19,27 +19,27 @@ class ReportParameters extends PureComponent {
     }
 
     parameterValueChanged = (param, value) => {
-        var { values } = this.state;
-        var existingValue = values[param.name];
+        let { values } = this.state;
+        const existingValue = values[param.name];
         if (existingValue === value) { return; }
         values[param.name] = value;
         values = { ...values };
-        var state = this.validateParameters(values);
+        const state = this.validateParameters(values);
         this.setState(state);
     };
 
     validateParameters(values) {
-        var { definition } = this.props;
-        var { parameters } = definition;
-        var paramLen = parameters.length;
-        var paramErrors = {};
-        var isParamsValid = true;
+        const { definition } = this.props;
+        const { parameters } = definition;
+        let paramLen = parameters.length;
+        const paramErrors = {};
+        let isParamsValid = true;
 
         while (paramLen--) {
-            var paramDef = parameters[paramLen];
-            var { name, allowNulls, allowMultiple } = paramDef;
+            const paramDef = parameters[paramLen];
+            const { name, allowNulls, allowMultiple } = paramDef;
             if (allowNulls) { continue; }
-            var paramValue = values[name];
+            const paramValue = values[name];
 
             if (!paramValue) { isParamsValid = false; break; }
             else if (allowMultiple && Array.isArray(paramValue)) {
@@ -51,27 +51,27 @@ class ReportParameters extends PureComponent {
     }
 
     saveParameters = () => {
-        var { values } = this.state;
+        const { values } = this.state;
         this.props.onChange(values);
     };
 
     getParameterControl = (param, i) => {
-        var { display, name, type, allowNulls } = param;
-        var { values } = this.state;
-        var paramType = this.paramTypes[type];
+        const { display, name, type, allowNulls } = param;
+        const { values } = this.state;
+        const paramType = this.paramTypes[type];
 
         if (!paramType) {
             console.error("Unknown parameter type: ", type);
             return null;
         }
 
-        var { control, displayHandled } = paramType;
+        const { control, displayHandled } = paramType;
 
-        var Control = control || InputParameter;
+        const Control = control || InputParameter;
 
         return (
             <div key={i} className="p-xl-3 p-lg-4 p-md-5 p-nogutter param">
-                {!displayHandled && <div className={"label" + (allowNulls ? "" : " mandatory")}><label>{display}</label></div>}
+                {!displayHandled && <div className={`label${allowNulls ? "" : " mandatory"}`}><label>{display}</label></div>}
                 <div className="control">
                     <Control
                         definition={param}
@@ -86,8 +86,8 @@ class ReportParameters extends PureComponent {
     };
 
     render() {
-        var { parameters, state } = this;
-        var { isParamsValid } = state;
+        const { parameters, state } = this;
+        const { isParamsValid } = state;
 
         return (
             <div className="params-container">

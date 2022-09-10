@@ -9,7 +9,7 @@ function maxDepth(a) {
 
     a.forEach(val => {
         val = val.type > 1 ? val.children : null;
-        let depth = getNestingDepth(val);
+        const depth = getNestingDepth(val);
         if (depth > maxVal) {
             maxVal = depth;
             item = val;
@@ -36,7 +36,7 @@ export function getDefaultGridData() {
 }
 
 export function getUniqueGroupName() {
-    return "Group" + getUniqueId();
+    return `Group${getUniqueId()}`;
 }
 
 export function getUniqueId() {

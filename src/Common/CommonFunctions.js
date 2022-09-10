@@ -1,6 +1,6 @@
 import moment from "moment";
 
-var inbuiltFunctions = [
+const inbuiltFunctions = [
     {
         name: "getDateRange",
         helpText: "Returns an array with the list of available dates between the provided from and to date",
@@ -40,7 +40,7 @@ var inbuiltFunctions = [
 
 export default inbuiltFunctions;
 
-var httpProxy = function () { console.error("Http proxy not set!"); }
+let httpProxy = function () { console.error("Http proxy not set!"); };
 
 export function setHttpProxy(proxy) { httpProxy = proxy; }
 
@@ -53,8 +53,8 @@ function httpPost(url, data, headers) { return httpRequest("POST", url, data, he
 
 function getDateRange(fromDate, toDate) {
     return getDateArray(fromDate, toDate).map(d => {
-        var dayOfWeek = d.getDay();
-        var today = moment(d)
+        const dayOfWeek = d.getDay();
+        const today = moment(d)
             .startOf("day")
             .toDate();
 
@@ -72,11 +72,11 @@ function getDateRange(fromDate, toDate) {
 }
 
 function getDateArray(startDate, endDate) {
-    var interval = 1;
-    var retVal = [];
-    var current = new Date(startDate.getTime());
-    var currentTime = current.getTime();
-    var endTime = endDate.getTime();
+    const interval = 1;
+    const retVal = [];
+    let current = convertToDate(startDate);
+    let currentTime = current.getTime();
+    const endTime = convertToDate(endDate).getTime();
 
     while (currentTime <= endTime) {
         retVal.push(new Date(currentTime));
@@ -89,13 +89,13 @@ function getDateArray(startDate, endDate) {
 
 function addDays(date, days) {
     date = convertToDate(date);
-    var dat = new Date(date.getTime());
+    const dat = new Date(date.getTime());
     dat.setDate(dat.getDate() + days);
     return dat;
 }
 
-var SHORT_MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-var FULL_MONTH_NAMES = [
+const SHORT_MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const FULL_MONTH_NAMES = [
     "January",
     "Febraury",
     "March",
@@ -110,9 +110,9 @@ var FULL_MONTH_NAMES = [
     "December"
 ];
 
-var TINY_DAY_NAMES = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-var SHORT_DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-var FULL_DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const TINY_DAY_NAMES = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const SHORT_DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const FULL_DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 export function convertToDate(value) {
     return new Date(value);
@@ -120,12 +120,12 @@ export function convertToDate(value) {
 
 function formatDate(value, format) {
     value = convertToDate(value);
-    var yyyy = value.getFullYear();
-    var mm = value.getMonth() < 9 ? "0" + (value.getMonth() + 1) : value.getMonth() + 1; // getMonth() is zero-based
-    var dd = value.getDate() < 10 ? "0" + value.getDate() : value.getDate();
-    var hh = value.getHours() < 10 ? "0" + value.getHours() : value.getHours();
-    var min = value.getMinutes() < 10 ? "0" + value.getMinutes() : value.getMinutes();
-    var ss = value.getSeconds() < 10 ? "0" + value.getSeconds() : value.getSeconds();
+    const yyyy = value.getFullYear();
+    const mm = value.getMonth() < 9 ? `0${value.getMonth() + 1}` : value.getMonth() + 1; // getMonth() is zero-based
+    const dd = value.getDate() < 10 ? `0${value.getDate()}` : value.getDate();
+    const hh = value.getHours() < 10 ? `0${value.getHours()}` : value.getHours();
+    const min = value.getMinutes() < 10 ? `0${value.getMinutes()}` : value.getMinutes();
+    const ss = value.getSeconds() < 10 ? `0${value.getSeconds()}` : value.getSeconds();
 
     if (format) {
         return (
@@ -167,16 +167,16 @@ function formatStr(str, args) {
     if (args && !Array.isArray(args)) {
         args = [args];
     }
-    for (var i = 0; i < args.length; i++) {
-        str = str.replace(new RegExp("\\{" + i + "\\}", "g"), args[i]);
+    for (let i = 0; i < args.length; i++) {
+        str = str.replace(new RegExp(`\\{${i}\\}`, "g"), args[i]);
     }
     return str;
 }
 
 function numPad(number, size) {
-    var s = String(number);
+    let s = String(number);
     while (s.length < (size || 2)) {
-        s = "0" + s;
+        s = `0${s}`;
     }
     return s;
 }

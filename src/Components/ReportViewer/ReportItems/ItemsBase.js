@@ -115,12 +115,12 @@ class ItemsBase extends PureComponent {
         return { className, style, tooltip, hidden, disabled, clickAction, actionProps };
     }
 
-    parseBooleanExpr(definition, propName) {
+    async parseBooleanExpr(definition, propName) {
         let value = definition[propName];
         let $value = definition[`$${propName}`];
 
         if (value && !$value) {
-            $value = this.parseExpr(value, true);
+            $value = await this.parseExpr(value, true);
             definition[`$${propName}`] = $value;
         }
 
@@ -135,17 +135,17 @@ class ItemsBase extends PureComponent {
         return Promise.all(arr.map(async ap => ({ name: ap.name, value: await this.tryParseExpression(ap.value, true) })));
     }
 
-    executeArray(arr, reduce) {
-        let result = arr.map(itm => {
+    async executeArray(arr, reduce) {
+        let result = await Promise.all(arr.map(async itm => {
             const { name } = itm;
             let { value } = itm;
 
             if (typeof value === "function") {
-                value = this.executeExpr(value);
+                value = await this.executeExpr(value);
             }
 
             return { name, value };
-        });
+        }));
         if (reduce) {
             result = result.reduce((obj, cur) => {
                 obj[cur.name] = cur.value;
@@ -155,9 +155,9 @@ class ItemsBase extends PureComponent {
         return result;
     }
 
-    callAction = (e) => {
+    callAction = async (e) => {
         if (this.state.clickAction === "RST") {
-            const newRProps = this.executeArray(this.actionProps);
+            const newRProps = await this.executeArray(this.actionProps);
 
             this.context.setReportState(newRProps);
         }
@@ -169,19 +169,23 @@ class ItemsBase extends PureComponent {
         else if (this.state.clickAction === "MNU") {
             const menuItems = this.context.getMenuItems(this.actionProps);
 
-            const items = menuItems.map(item => {
-                const { expression, icon, label } = item;
-                const disabled = this.parseBooleanExpr(item, "disabled");
-                const hidden = this.parseBooleanExpr(item, "hidden");
+            e.preventDefault();
+            // As this is a async call, need to secure the current event
+            e = { ...e };
 
-                const $expression = this.parseExpr(expression, true);
+            const items = (await Promise.all(menuItems.map(async item => {
+                const { expression, icon, label } = item;
+                const disabled = await this.parseBooleanExpr(item, "disabled");
+                const hidden = await this.parseBooleanExpr(item, "hidden");
+
+                const $expression = await this.parseExpr(expression, true);
 
                 if (hidden === true) {
                     return null;
                 }
 
                 return { label, icon, disabled, command: () => { this.executeExpr($expression); } };
-            }).filter(Boolean);
+            }))).filter(Boolean);
 
             showContextMenu(e, items);
         }

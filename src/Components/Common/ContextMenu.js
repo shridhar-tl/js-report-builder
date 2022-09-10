@@ -4,7 +4,9 @@ import { ContextMenu as CMenu } from 'primereact/contextmenu';
 
 let contextHandler = () => { /* Nothing to do */ };
 export function showContextMenu(event, model) {
-    event.preventDefault();
+    if (event.preventDefault) {
+        event.preventDefault();
+    }
     contextHandler(event, model);
 }
 

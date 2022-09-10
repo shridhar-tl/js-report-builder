@@ -184,10 +184,10 @@ class ReportViewer extends ReportBase {
         // ToDo: track and use for re-render call
     }
 
-    tryParseExpression(item) {
+    async tryParseExpression(item) {
         if (typeof item !== "object") { return item; }
         if (item.expression) {
-            const pfunc = this.parseExpr(item.expression);
+            const pfunc = await this.parseExpr(item.expression);
             if (typeof pfunc === "function") {
                 return pfunc();
             }
@@ -213,8 +213,8 @@ class ReportViewer extends ReportBase {
 
     updateParameters = parameterValues => {
         this.setState({ parameterValues, showParameters: false }, () => {
-            this.resolveDatasets().then(r => {
-                this.initReportState();
+            this.resolveDatasets().then(async r => {
+                await this.initReportState();
                 this.initCustomFunctions();
                 this.setState({ dataReady: true });
             });
@@ -225,16 +225,17 @@ class ReportViewer extends ReportBase {
         this.myFunctions = this.compileMyFunctions(this.definition.userScript);
     }
 
-    initReportState() {
+    async initReportState() {
         const { reportState } = this.definition;
         if (!reportState) { this.reportState = {}; this.reportStateKeys = []; return; }
         if (!Array.isArray(reportState)) { throw new Error("Report definition is invalid. Report state corrupted"); }
         if (!reportState.length) { this.reportState = {}; this.reportStateKeys = []; return; }
-        const newReportState = reportState.reduce((stt, val) => {
-            const value = this.tryParseExpression(val.value);
+        const newReportState = await reportState.reduce(async (stt, val) => {
+            stt = await stt;
+            const value = await this.tryParseExpression(val.value);
             stt[val.name] = value;
             return stt;
-        }, {});
+        }, Promise.resolve({}));
         this.reportState = newReportState;
         this.reportStateKeys = Object.keys(newReportState);
     }

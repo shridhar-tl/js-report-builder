@@ -16,25 +16,16 @@ class ReportControls extends PureComponent {
 
     constructor(props) {
         super(props);
-        let { data, selectedItems } = props;
-        let { parameters, datasetList, reportState } = data;
+        const { data, selectedItems } = props;
+        const { parameters, datasetList, reportState } = data;
 
-        if (!selectedItems) {
-            selectedItems = [];
-        }
-
-        reportState = reportState || [];
-
-        this.state = { data, activeIndex: [], parameters, reportState, datasetList, selectedItems };
+        this.state = { data: props.data, activeIndex: [], parameters, reportState: reportState || [], datasetList, selectedItems: selectedItems || [] };
     }
 
     UNSAFE_componentWillReceiveProps(newProps) {
-        let { data, selectedItems } = newProps;
+        const { data, selectedItems } = newProps;
         const { parameters, datasetList } = data;
-        if (!selectedItems) {
-            selectedItems = [];
-        }
-        this.setState({ data, parameters, datasetList, selectedItems });
+        this.setState({ data, parameters, datasetList, selectedItems: selectedItems || [] });
     }
 
     editFields = e => this.showPopup(e, 0, this.ctlFields);
@@ -189,13 +180,13 @@ class BuiltinFields extends PureComponent {
             <div className="builtin-fields">
                 <div className="header">Report fields</div>
                 {getBuiltInFields().map(f => (
-                    <div className="field" key={f.field} title={f.helpText}>
+                    <div className="r-field" key={f.field} title={f.helpText}>
                         {f.field}
                     </div>
                 ))}
                 <div className="header">Report state</div>
                 {reportState.map(f => (
-                    <div className="field" key={f.name}>
+                    <div className="r-field" key={f.name}>
                         {f.name}
                     </div>
                 ))}
@@ -284,6 +275,7 @@ class FunctionsList extends PureComponent {
             this.hidePopup();
         }
         catch (err) {
+            // eslint-disable-next-line no-alert
             alert("An error occured while parsing your script. Check the console to trace the error.");
         }
     };

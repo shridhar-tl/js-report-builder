@@ -16,15 +16,15 @@ export function setCompilerOptions(comp, prsr, selfHandleScriptExecution) {
     handleScriptExecution = selfHandleScriptExecution !== true;
 }
 
-export function setParser(prsr) {
-}
+//export function setParser(prsr) { }
 
 export function parseScript(script) {
     return parser(script);
 }
 
 export function compileGroup(group, props) {
-    let { filter, keys, sortBy, variables, dataset, expression } = group;
+    const { filter, variables, dataset, expression } = group;
+    let { keys, sortBy } = group;
 
     // ToDo: sortby should not be an array. need to check in old implementation
     if (sortBy && Array.isArray(sortBy) && !sortBy.length) {
@@ -43,7 +43,7 @@ export function compileGroup(group, props) {
     const $variables = compileVariables(variables, props);
     const varFunc = (function (varObj) {
         if (!varObj) {
-            return function () { return function () { }; };
+            return function () { return function () { /* Nothing to be done here */ }; };
         }
         return function (props) {
             const keysList = Object.keys(varObj);
@@ -94,7 +94,7 @@ export function wrapWithFunction(obj) {
 }*/
 
 const sandbox = [
-"window",
+    "window",
     "global",
     "document",
     "navigator",
@@ -147,23 +147,22 @@ export function compileExpression(expression, props) {
         let isAsync = exprToCompile.includes('await ');
 
         if (!isNoWrap) {
-            exprToCompile = `return ${isAsync ? 'async ' : ''}function(Fields,RowGroup,ColGroup,Variables){ var Field = function(key){return getObjVal(Fields,key);}; return ${ 
-                exprToCompile 
+            exprToCompile = `return ${isAsync ? 'async ' : ''}function(Fields,RowGroup,ColGroup,Variables){ var Field = function(key){return getObjVal(Fields,key);}; return ${exprToCompile
                 };}`;
             isAsync = false;
         }
 
-        exprToCompile = `'use strict'; return ${isAsync ? 'async ' : ''}function(CommonFunctions,MyFunctions,Parameters,Datasets,array,getObjVal,ReportState,setReportState) { ${exprToCompile} }`;
+        exprToCompile = `'use strict'; return ${isAsync ? 'async ' : ''}function(CommonFunctions,MyFunctions,Parameters,Datasets,Resources,array,getObjVal,ReportState,setReportState) { ${exprToCompile} }`;
 
         let result = compiler(exprToCompile, sandbox, props);
 
         //var result = func();
         if (props) {
-            const { commonFunctions, myFunctions, parameters, datasets, $this, setReportState, getReportState } = props;
+            const { commonFunctions, myFunctions, parameters, datasets, resources, $this, setReportState, getReportState } = props;
             if ($this) {
                 result = result.bind($this);
             }
-            result = result(commonFunctions, myFunctions, parameters, datasets, array, getObjVal, getReportState, setReportState);
+            result = result(commonFunctions, myFunctions, parameters, datasets, resources, array, getObjVal, getReportState, setReportState);
         }
         return result;
     } catch (err) {

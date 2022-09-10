@@ -11,12 +11,12 @@ class SelectParameter extends PureComponent {
     }
 
     componentDidMount() {
-        let { value, multiselect } = this.props;
+        let { value } = this.props;
         const parameters = this.context.getParametersList();
         if (!value) {
             value = [];
         }
-        const selItems = multiselect ? parameters.filter(p => value.indexOf(p.name) >= 0) : parameters.filter(p => p.name === value)[0];
+        const selItems = this.props.multiselect ? parameters.filter(p => value.indexOf(p.name) >= 0) : parameters.filter(p => p.name === value)[0];
         this.setState({ parameters, selItems });
     }
 

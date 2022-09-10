@@ -18,7 +18,7 @@ class GridCellItem extends ItemsBase {
         } = definition;
 
         if (expression && !$expression) {
-            $expression = this.parseExpr(expression, true);
+            $expression = await this.parseExpr(expression, true);
             definition.$expression = $expression;
         }
 

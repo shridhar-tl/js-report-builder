@@ -7,10 +7,10 @@ import "./GridItem.scss";
 
 export default class GridItem extends PureComponent {
     static contextType = ViewerContext;
-
-    UNSAFE_componentWillMount() {
+    constructor(props, context) {
+        super(props, context);
         this.commonContext = {
-            ...this.context
+            ...context
         };
     }
 

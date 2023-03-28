@@ -102,7 +102,7 @@ class TextProperties extends PureComponent {
                             <div className="field-collection">
                                 <div className="mandatory">
                                     <label>Text type</label>
-                                    <Dropdown appendTo={document.body} value={elType || ''} options={textElementTypes} onChange={this.elementTypeChanged} placeholder="Select text type" />;
+                                    <Dropdown appendTo={document.body} value={elType || ''} options={textElementTypes} onChange={this.elementTypeChanged} placeholder="Select text type" />
                                 </div>
                                 <div className="mandatory">
                                     <label>Text</label>

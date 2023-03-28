@@ -20,7 +20,7 @@ class ExpressionList extends PureComponent {
             this.nameFieldValues = this.nameFieldSet.reduce((obj, cur) => { obj[cur.name] = cur; return obj; }, {});
         }
         else {
-
+            // ToDo
         }
         this.state = { items: clone(value || []), newItem: {} };
     }
@@ -99,7 +99,7 @@ class ExpressionList extends PureComponent {
     setValue(index, item) {
         let { items, newItem } = this.state;
 
-        if (index != null) {
+        if (index !== null) {
             if (item) {
                 items[index] = item;
                 newItem = item === newItem ? {} : newItem;

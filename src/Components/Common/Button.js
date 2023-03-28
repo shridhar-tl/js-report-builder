@@ -14,7 +14,8 @@ const buttonTypes = {
 
 class Button extends PureComponent {
     render() {
-        let { type, className, rounded, label } = this.props;
+        const { type, rounded, label } = this.props;
+        let { className } = this.props;
         let btnClass = `rb-button ${buttonTypes[type] || ""}`;
         if (rounded) {
             btnClass += " p-button-rounded ";

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { PureComponent } from "react";
 import "./App.scss";
 import { ReportBuilder, ReportViewer, initReportBuilder, ContextMenu } from "./lib";
@@ -7,7 +8,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";
 import axios from "axios";
-import { userDaywiseReport, datasets, myOpenTickets, userList, projects, issuetypes, customfields, rapidview, tempData } from './testdata';
+import { userDaywiseReport, myOpenTickets, userList, projects, issuetypes, customfields, rapidview, tempData } from './testdata';
 
 const subReports = [
     { id: 1, name: "User daywise report", definition: userDaywiseReport },
@@ -45,9 +46,9 @@ const defaultConfig = {
                 promise.resolve(myOpenTickets.data);//datasets.JQL
                 return Promise.resolve(myOpenTickets.schema); //props
             },
-            resolveData: (props, params, arg) => 
-                 Promise.resolve(myOpenTickets.data)//datasets.JQL
-            
+            resolveData: (props, params, arg) =>
+                Promise.resolve(myOpenTickets.data)//datasets.JQL
+
         },
         PLS: {
             label: "Project list", allowEdit: false,

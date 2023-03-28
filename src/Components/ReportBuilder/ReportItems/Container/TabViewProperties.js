@@ -55,7 +55,8 @@ class TabViewProperties extends PureComponent {
     };
 
     tabChanged = (tabDefinition, index) => {
-        let { definition, selectedTabIndex } = this.state;
+        const { selectedTabIndex } = this.state;
+        let { definition } = this.state;
         const { items } = definition;
 
         items[index || selectedTabIndex] = tabDefinition;

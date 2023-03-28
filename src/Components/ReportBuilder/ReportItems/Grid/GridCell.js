@@ -55,7 +55,8 @@ class GridCell extends PureComponent {
 
     expressionValueReceived = (val, type, prop) => {
         if (prop.isCanceled) { this.endEdit(); return; }
-        let { editedItem, cellData } = this.state;
+        const { cellData } = this.state;
+        let { editedItem } = this.state;
         val = (val || "").trim();
         if (!editedItem && val) {
             editedItem = {};

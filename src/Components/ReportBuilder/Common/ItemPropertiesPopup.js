@@ -60,7 +60,8 @@ class ItemPropertiesPopup extends PureComponent {
     render() {
         const { state, setValue, setHiddenValue } = this;
         const { showDialog, isFieldsValid, item } = state;
-        let { itemType, expression, data, tooltip, hidden, isHTML } = item;
+        const { itemType, expression, data, hidden, isHTML } = item;
+        let { tooltip } = item;
 
         const isMenu = itemType === "MNU";
 

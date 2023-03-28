@@ -18,7 +18,8 @@ export default class InputParameter extends PureComponent {
     constructor(props) {
         super(props);
         const { definition, value, dataset } = props;
-        let { allowMultiple, valueField, fileTypes } = definition;
+        const { allowMultiple, valueField } = definition;
+        let { fileTypes } = definition;
         if (fileTypes) {
             fileTypes = fileTypes.map(t => supportedFileTypes[t - 1].type).join(',');
         }
@@ -165,41 +166,41 @@ export default class InputParameter extends PureComponent {
         const len = e.files.length;
         const fileObj = [];
 
-        const readFunc = (funcName, f) => new Promise((resolve, reject) => {
-                if (!isCsv && !isJSON && funcName === "readAsText") { reject("This is not a text file."); return; }
+        const readFunc = (funcName, f, isCsv, isJSON) => new Promise((resolve, reject) => {
+            if (!isCsv && !isJSON && funcName === "readAsText") { reject("This is not a text file."); return; }
 
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    resolve(e.target.result);
-                };
-                reader.onerror = (e) => {
-                    reject(e);
-                };
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                resolve(e.target.result);
+            };
+            reader.onerror = (e) => {
+                reject(e);
+            };
 
-                reader[funcName](f);
-            });
+            reader[funcName](f);
+        });
 
-        const readAsJson = (f, file) => readFunc("readAsText", f).then(data => {
-                if (file.isJSON) { return JSON.parse(data); }
-                else if (file.isCsv) { return parseCSV(data); }
-            });
+        const readAsJson = (f, file, isCsv, isJSON) => readFunc("readAsText", f, isCsv, isJSON).then(data => {
+            if (file.isJSON) { return JSON.parse(data); }
+            else if (file.isCsv) { return parseCSV(data); }
+        });
 
         for (let i = 0; i < len; i++) {
-            var f = e.files[i];
+            const f = e.files[i];
             const nameLower = f.name.toLowerCase();
             const isImage = f.type.indexOf("image") >= 0;
-            var isCsv = nameLower.endsWith(".csv");
-            var isJSON = nameLower.endsWith(".json");
+            const isCsv = nameLower.endsWith(".csv");
+            const isJSON = nameLower.endsWith(".json");
             const isExcel = nameLower.endsWith(".xls") || nameLower.endsWith(".xlsx");
 
-            var resultObj = {
+            const resultObj = {
                 name: f.name,
                 size: f.size,
                 type: f.type,
                 isImage, isCsv, isExcel, isJSON,
-                getAsText: () => readFunc("readAsText", f),
-                getAsDataURL: () => readFunc("readAsDataURL", f),
-                getAsJSON: () => readAsJson(f, resultObj)
+                getAsText: () => readFunc("readAsText", f, isCsv, isJSON),
+                getAsDataURL: () => readFunc("readAsDataURL", f, isCsv, isJSON),
+                getAsJSON: () => readAsJson(f, resultObj, isCsv, isJSON)
             };
 
             fileObj[i] = resultObj;
@@ -257,7 +258,7 @@ export default class InputParameter extends PureComponent {
             case "DTE":
                 return <Calendar value={value} onChange={this.valueChanged} className={className} placeholder={placeholder} />;
             case "DR":
-                var rValue = [];
+                const rValue = [];
                 if (value) {
                     if (value.fromDate) {
                         if (!(value.fromDate instanceof Date)) { value.fromDate = convertToDate(value.fromDate); }
@@ -354,11 +355,11 @@ export default class InputParameter extends PureComponent {
                     {(value, setValue, valueChanged) => this.getMultiValueField(value, setValue, valueChanged)}
                 </MultiValueField>
             ) : (
-                    this.getMultiValueField(this.state.value, this.setValue, this.valueChanged)
-                )
+                this.getMultiValueField(this.state.value, this.setValue, this.valueChanged)
+            )
         ) : (
-                this.getSingleValueField()
-            );
+            this.getSingleValueField()
+        );
     }
 }
 

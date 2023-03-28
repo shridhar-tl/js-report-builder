@@ -11,13 +11,13 @@ const buttonStyle = { minHeight: "32px" };
 class ExpressionEditor extends PureComponent {
     constructor(props) {
         super();
-        let { expression, type, autoDetect } = props;
+        let { expression, type } = props;
 
         if (typeof expression === "object") {
             type = null;
             expression = expression.expression;
         }
-        else if (autoDetect) { type = "text"; }
+        else if (props.autoDetect) { type = "text"; }
 
         if (!type && (expression !== null && expression !== undefined)) { expression = `=${expression}`; }
 
@@ -29,13 +29,13 @@ class ExpressionEditor extends PureComponent {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        let { expression, type, autoDetect, isStrict } = nextProps;
+        let { expression, type } = nextProps;
 
         if (typeof expression === "object") {
             type = null;
             expression = expression.expression;
         }
-        else if (autoDetect && !isStrict) { type = "text"; }
+        else if (nextProps.autoDetect && !nextProps.isStrict) { type = "text"; }
 
         const { expression: oldExpression, type: oldType } = this.state;
 
@@ -102,7 +102,8 @@ class ExpressionEditor extends PureComponent {
         if (!endEdit) {
             return;
         }
-        let { expression, type, validation } = field || this.state;
+        const { type, validation } = field || this.state;
+        let { expression } = field || this.state;
         if (field) {
             this.setState({ expression, type });
         }
@@ -125,7 +126,8 @@ class ExpressionEditor extends PureComponent {
     render() {
         const { disabled, style = inputStyle, className, isStrict, noGroups } = this.props;
         let { placeholder } = this.props;
-        let { expression, type, validation: { isValid } = {} } = this.state;
+        const { type, validation: { isValid } = {} } = this.state;
+        let { expression } = this.state;
 
         if (!placeholder && !noGroups) {
             placeholder = isStrict ? "provide an expression here..." : "provide a value or expression here...";

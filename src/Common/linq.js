@@ -1,4 +1,4 @@
-/*eslint-disable no-extend-native, no-loop-func*/
+/*eslint-disable */
 import { clone, cloneArray } from "./HelperFunctions";
 
 const arrayInitFunc = (function () {
@@ -130,7 +130,7 @@ const arrayInitFunc = (function () {
         };
 
         prototype.removeAt = function (index, count) {
-            if (index < 0) {return prototype;}
+            if (index < 0) { return prototype; }
             source.splice(index, count || 1);
             return prototype;
         };
@@ -199,10 +199,8 @@ const arrayInitFunc = (function () {
             }
             else {
                 // If no clause was specified, then return the First element in the Array
-                if (source.length > 0)
-                    {return source[0];}
-                else
-                    {return null;}
+                if (source.length > 0) { return source[0]; }
+                else { return null; }
             }
         };
         prototype.last = function (clause) {
@@ -216,10 +214,8 @@ const arrayInitFunc = (function () {
             }
             else {
                 // If no clause was specified, then return the Last element in the Array
-                if (source.length > 0)
-                    {return source[source.length - 1];}
-                else
-                    {return null;}
+                if (source.length > 0) { return source[source.length - 1]; }
+                else { return null; }
             }
         };
 

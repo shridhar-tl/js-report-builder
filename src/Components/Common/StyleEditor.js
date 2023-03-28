@@ -35,7 +35,7 @@ class StyleEditor extends PureComponent {
         let propName = null;
         const styleList = [];
         let i = 0;
-        while (propName = properties[i++]) {
+        while (propName = properties[i++]) { // eslint-disable-line no-cond-assign
             // eslint-disable-next-line no-loop-func
             if (propName.length <= 2 || excludedCSSProps.some(t => propName.indexOf(t) === 0)) { continue; }
 
@@ -47,7 +47,8 @@ class StyleEditor extends PureComponent {
     }
 
     styleChanged = (propName, jsPropName, value, oldValue) => {
-        let { element, style } = this.state;
+        const { element } = this.state;
+        let { style } = this.state;
         element.style[propName] = value;
         const newValue = element.style[jsPropName];
         if (newValue && newValue !== oldValue) {
@@ -118,7 +119,8 @@ class StyleValueEditor extends PureComponent {
     };
 
     setValue = (e) => {
-        let { value, oldValue, customized } = this.state;
+        const { value, oldValue } = this.state;
+        let { customized } = this.state;
         if (value !== oldValue) {
             let newValue = this.props.onChange(this.props.attr, this.props.propName, value, oldValue);
             if (value && !newValue) { newValue = oldValue; }

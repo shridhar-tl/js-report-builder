@@ -20,7 +20,7 @@ class JsonTree extends PureComponent {
     }
 
     getItemType(item) {
-        if (item == null) {
+        if (item === null || item === undefined) {
             return "unknown";
         }
         if (Array.isArray(item)) {

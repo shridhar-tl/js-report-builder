@@ -74,7 +74,8 @@ function resolve_HTP(props, getDatasetData) {
     return new Promise(function (resolve, reject) {
         try {
             const { dataset, parameters, commonFunctions, myFunctions } = props;
-            let { url, method, body, params, headers } = dataset;
+            const { method, body, params } = dataset;
+            let { url, headers } = dataset;
 
             const parseExpr = function (expr) {
                 if (!expr) { return expr; }
@@ -107,18 +108,18 @@ function resolve_HTP(props, getDatasetData) {
 
             if (!data && params && params.length > 0) {
                 data = params.reduce((obj, cur) => {
-                    let { name, value } = cur;
+                    let { value } = cur;
                     value = tryParseExpression(value);
-                    obj[name] = value;
+                    obj[cur.name] = value;
                     return obj;
                 }, {});
             }
 
             if (headers && headers.length > 0) {
                 headers = headers.reduce((obj, cur) => {
-                    let { name, value } = cur;
+                    let { value } = cur;
                     value = tryParseExpression(value);
-                    obj[name] = value;
+                    obj[cur.name] = value;
                     return obj;
                 }, {});
             } else {
@@ -202,7 +203,7 @@ function getItems(obj, set, prefix, dataset) {
 }
 
 function getItemType(item) {
-    if (item == null) {
+    if (item === null) {
         return "unknown";
     }
     if (Array.isArray(item)) {

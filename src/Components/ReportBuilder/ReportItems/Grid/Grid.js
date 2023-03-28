@@ -62,7 +62,7 @@ class Grid extends ReportItemBase {
     }
 
     showGridContext = (e) => {
-
+        // Need to implement
     };
 
     getRowContext(contextData) {
@@ -149,7 +149,7 @@ class Grid extends ReportItemBase {
     processAllRows = action => {
         const { head, body, footer } = this.state.data;
 
-        var processRow = row => {
+        const processRow = row => {
             const { type, children } = row;
             if (type === 1) {
                 action(children);
@@ -414,26 +414,26 @@ class Grid extends ReportItemBase {
     };
 
     getCellItemContext = ({ index, data = {}, menuClicked } = {}) => [
-            {
-                label: "Edit item",
-                icon: "fa fa-edit",
-                disabled: data.itemType === "IMG",
-                command: () => menuClicked(index, data, "EDIT")
+        {
+            label: "Edit item",
+            icon: "fa fa-edit",
+            disabled: data.itemType === "IMG",
+            command: () => menuClicked(index, data, "EDIT")
 
-            },
-            {
-                label: "Remove item",
-                icon: "fa fa-trash",
-                command: () => menuClicked(index, data, "REMOVE")
+        },
+        {
+            label: "Remove item",
+            icon: "fa fa-trash",
+            command: () => menuClicked(index, data, "REMOVE")
 
-            },
-            {
-                label: "Properties",
-                icon: "fa fa-trash",
-                command: () => menuClicked(index, data, "PROPS")
+        },
+        {
+            label: "Properties",
+            icon: "fa fa-trash",
+            command: () => menuClicked(index, data, "PROPS")
 
-            }
-        ];
+        }
+    ];
 
     expressionChanged = (value, type, validation) => {
         const { selected } = this.state;

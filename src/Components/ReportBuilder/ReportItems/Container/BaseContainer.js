@@ -66,7 +66,8 @@ class BaseContainer extends ReportItemBase {
     }
 
     getControl = (item, index, drpHndl, drgSrc) => {
-        let { control: Ctl, icon, text } = componentsMap[item.type];
+        const { icon, text } = componentsMap[item.type];
+        let { control: Ctl } = componentsMap[item.type];
 
         if (!Ctl) { Ctl = ReportItemBase; }
 

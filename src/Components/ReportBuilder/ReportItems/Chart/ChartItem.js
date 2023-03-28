@@ -23,7 +23,9 @@ class ChartItem extends ReportItemBase {
     }
 
     getChartData() {
-        let { chartData, state: { definition: { type } } } = this;
+        const { definition: { type } } = this.state;
+        let { chartData } = this;
+
         if (!chartData || chartData.type !== type) {
             chartData = clone(defaultChartDefinition[type], true) || { type };
             this.chartData = chartData;
@@ -34,7 +36,8 @@ class ChartItem extends ReportItemBase {
     render() {
         const { state } = this;
         const { definition, showPropsDialog } = state;
-        let { type, responsive, width, height } = definition;
+        const { type, responsive } = definition;
+        let { width, height } = definition;
         const { data, options } = this.getChartData();
 
         if (typeof width !== "string") { width = null; }

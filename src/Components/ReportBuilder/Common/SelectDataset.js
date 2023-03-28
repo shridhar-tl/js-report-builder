@@ -11,7 +11,7 @@ class SelectDataset extends PureComponent {
     }
 
     componentDidMount() {
-        let { value, multiselect, includeExprDS, excludeDS, allowUnselect } = this.props;
+        const { multiselect, includeExprDS, excludeDS, allowUnselect } = this.props;
         let datasets = this.context.getDatasetList(!!includeExprDS);
 
         if (excludeDS) {
@@ -22,6 +22,7 @@ class SelectDataset extends PureComponent {
             datasets.splice(0, 0, { id: null, name: "(none)" });
         }
 
+        let { value } = this.props;
         if (!value) {
             value = [];
         }

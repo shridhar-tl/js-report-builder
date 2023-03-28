@@ -255,7 +255,8 @@ class ExpressionDataset extends PureComponent {
             .sortBy("name")
             .toArray();
 
-        let { expression, dependencies } = dataset;
+        const { expression } = dataset;
+        let { dependencies } = dataset;
 
         if (dependencies) {
             dependencies = dependencies.map(d => datasets[d]);

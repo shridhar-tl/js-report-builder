@@ -2,7 +2,7 @@ import array from "./linq";
 import { compileExpression, compileVariables } from "./Compiler";
 import { httpRequest } from "./CommonFunctions";
 
-var inbuiltDatasets = [
+const inbuiltDatasets = [
     { type: "HTP", label: "Online dataset (http request)", resolve: resolve_HTP },
     { type: "FLT", label: "Flatern dataset (generate dataset by flatening other dataset)", resolve: resolve_FLT },
     { type: "EXP", label: "Expression dataset (generate dataset using other dataset)", resolve: resolve_EXP },
@@ -15,10 +15,10 @@ export default inbuiltDatasets;
 function resolve_FLT(props, getDatasetData) {
     return new Promise(function (resolve, reject) {
         try {
-            var { dataset, parameters, commonFunctions, myFunctions } = props;
-            var { colProps, dependencies: dsId, filter, variables } = dataset;
-            var $filter = filter ? compileExpression(filter)(commonFunctions, myFunctions, parameters, getDatasetData) : null;
-            var $colProps = null;
+            const { dataset, parameters, commonFunctions, myFunctions } = props;
+            const { colProps, dependencies: dsId, filter, variables } = dataset;
+            const $filter = filter ? compileExpression(filter)(commonFunctions, myFunctions, parameters, getDatasetData) : null;
+            let $colProps = null;
 
             if (~colProps.indexOf("function") || ~colProps.indexOf("=>")) {
                 $colProps = compileExpression(colProps)(commonFunctions, myFunctions, parameters, getDatasetData)();
@@ -26,16 +26,16 @@ function resolve_FLT(props, getDatasetData) {
                 $colProps = JSON.parse(colProps);
             }
 
-            var srcDSData = getDatasetData(dsId);
+            const srcDSData = getDatasetData(dsId);
             if (!srcDSData) {
                 reject("Source dataset is not available / valid");
                 return;
             }
 
-            var result = array(srcDSData).flattern($colProps)();
+            let result = array(srcDSData).flattern($colProps)();
 
             if ($filter && result && result.length) {
-                var $variables = compileVariables(
+                const $variables = compileVariables(
                     variables,
                     { parameters, commonFunctions, myFunctions, datasets: getDatasetData },
                     true
@@ -73,21 +73,22 @@ function resolve_FIL(props, getDatasetData) {
 function resolve_HTP(props, getDatasetData) {
     return new Promise(function (resolve, reject) {
         try {
-            var { dataset, parameters, commonFunctions, myFunctions } = props;
-            var { url, method, body, params, headers } = dataset;
+            const { dataset, parameters, commonFunctions, myFunctions } = props;
+            const { method, body, params } = dataset;
+            let { url, headers } = dataset;
 
-            var parseExpr = function (expr) {
+            const parseExpr = function (expr) {
                 if (!expr) { return expr; }
 
                 return compileExpression(expr, {
                     commonFunctions, myFunctions, datasets: getDatasetData, parameters
                 })();
-            }
+            };
 
-            var tryParseExpression = function (item) {
+            const tryParseExpression = function (item) {
                 if (typeof item !== "object") { return item; }
                 if (item.expression) {
-                    var pfunc = parseExpr(item.expression);
+                    const pfunc = parseExpr(item.expression);
                     if (typeof pfunc === "function") {
                         return pfunc();
                     }
@@ -95,11 +96,11 @@ function resolve_HTP(props, getDatasetData) {
                         return pfunc;
                     }
                 }
-            }
+            };
 
             url = tryParseExpression(url);
 
-            var data;
+            let data;
 
             if (method !== "GET" && !!body) {
                 data = tryParseExpression(body);
@@ -107,18 +108,18 @@ function resolve_HTP(props, getDatasetData) {
 
             if (!data && params && params.length > 0) {
                 data = params.reduce((obj, cur) => {
-                    var { name, value } = cur;
+                    let { value } = cur;
                     value = tryParseExpression(value);
-                    obj[name] = value;
+                    obj[cur.name] = value;
                     return obj;
                 }, {});
             }
 
             if (headers && headers.length > 0) {
                 headers = headers.reduce((obj, cur) => {
-                    var { name, value } = cur;
+                    let { value } = cur;
                     value = tryParseExpression(value);
-                    obj[name] = value;
+                    obj[cur.name] = value;
                     return obj;
                 }, {});
             } else {
@@ -163,7 +164,7 @@ function getItems(obj, set, prefix, dataset) {
         return null;
     }
 
-    let items = Object.keys(obj);
+    const items = Object.keys(obj);
     if (prefix) {
         prefix += ".";
     } else {
@@ -175,13 +176,13 @@ function getItems(obj, set, prefix, dataset) {
             curProp = (array(dataset).first(d => !!d[key]) || {})[key];
         }
 
-        let type = getItemType(curProp);
+        const type = getItemType(curProp);
         if (!type) {
             return null;
         }
 
         let path = prefix + key;
-        var childrens;
+        let childrens;
 
         if (type === "object") {
             childrens = getItems(curProp, set, path);
@@ -190,7 +191,7 @@ function getItems(obj, set, prefix, dataset) {
             childrens = getDatasetDefinition(curProp, set, path);
         }
 
-        let itm = { set, key, path, type, children: childrens };
+        const itm = { set, key, path, type, children: childrens };
 
         if (!itm.children || itm.children.length === 0) {
             delete itm.children;
@@ -202,7 +203,7 @@ function getItems(obj, set, prefix, dataset) {
 }
 
 function getItemType(item) {
-    if (item == null) {
+    if (item === null) {
         return "unknown";
     }
     if (Array.isArray(item)) {

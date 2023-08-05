@@ -3,22 +3,24 @@ import ItemsBase from './ItemsBase';
 import { Chart } from 'primereact/chart';
 
 class ChartItem extends ItemsBase {
-    getStateObject = () => {
-        var { definition: { style, type, hidden, data, options, responsive, width, height } } = this.props;
+    getStateObject = async () => {
+        const { definition } = this.props;
+        const { style, type, responsive } = definition;
+        let { hidden, data, options, width, height } = definition;
 
-        hidden = this.parseExpr(hidden);
-        data = this.parseExpr(data);
-        options = this.parseExpr(options);
-        width = this.tryParseExpression(width);
-        height = this.tryParseExpression(height);
+        hidden = hidden ? await this.parseExpr(hidden) : hidden;
+        data = data ? await this.parseExpr(data) : data;
+        options = options ? await this.parseExpr(options) : options;
+        width = width ? await this.tryParseExpression(width) : width;
+        height = height ? await this.tryParseExpression(height) : height;
 
         return { style, type, hidden, data, options, responsive, width, height };
-    }
+    };
 
     renderChild = () => {
-        var { type, data, options, responsive, width, height } = this.state;
-        return <Chart type={type} data={data} options={options} responsive={responsive} width={width} height={height} />
-    }
+        const { type, data, options, responsive, width, height } = this.state;
+        return <Chart type={type} data={data} options={options} responsive={responsive} width={width} height={height} />;
+    };
 }
 
 export default ChartItem;

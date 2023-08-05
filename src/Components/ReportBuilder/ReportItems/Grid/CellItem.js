@@ -6,19 +6,19 @@ class CellItem extends PureComponent {
         e.stopPropagation();
         const { onRemove, index } = this.props;
         onRemove(index);
-    }
+    };
 
     beginEdit = () => {
         const { beginEdit, index } = this.props;
         beginEdit(index);
-    }
+    };
 
     handleClick = e => {
         const { itemData, index } = this.props;
         if (!e.selections) { e.selections = []; }
         e.selections.push({ ctl: this, element: e.currentTarget, data: itemData, index: index });
         //this.props.selected(index);
-    }
+    };
 
     render() {
         const { text, itemData, showContext, dropHndl } = this.props;

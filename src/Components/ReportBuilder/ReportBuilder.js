@@ -14,7 +14,7 @@ import ItemPropertiesPopup from "./Common/ItemPropertiesPopup";
 class ReportBuilder extends ReportBase {
     constructor(props) {
         super(props);
-        var { definition: data } = props;
+        let { definition: data } = props;
 
         if (!data) {
             data = getDefaultRptDefinition();
@@ -27,10 +27,10 @@ class ReportBuilder extends ReportBase {
         this.builderProps = {
             ...this.sharedProps,
             getDatasetList: includeExpressionDS => {
-                var { datasets, datasetList } = this.state.data;
-                var list = array(
+                const { datasets, datasetList } = this.state.data;
+                const list = array(
                     datasetList.map(id => {
-                        var ds = datasets[id];
+                        const ds = datasets[id];
                         return { id, name: ds.name };
                     })
                 ).sortBy("name")();
@@ -41,14 +41,10 @@ class ReportBuilder extends ReportBase {
                 return list;
             },
             getDefinition: () => this.state.data,
-            getParametersList: () => {
-                return this.state.data.parameters;
-            },
-            editExpression: (definition) => {
-                return new Promise((onChange, onHide) => {
+            getParametersList: () => this.state.data.parameters,
+            editExpression: (definition) => new Promise((onChange, onHide) => {
                     this.setState({ expressionProps: { definition, isImage: definition.itemType === "IMG", onChange, onHide } });
-                }).finally(() => { this.setState({ expressionProps: null }) });
-            },
+                }).finally(() => { this.setState({ expressionProps: null }); }),
             getDataset: id => this.state.data.datasets[id],
             selectControl: (selElement, elementData) => {
                 this.setState({ selElement, elementData });
@@ -63,7 +59,7 @@ class ReportBuilder extends ReportBase {
     }
 
     componentDidMount() {
-        var { api } = this.props;
+        const { api } = this.props;
         if (api) {
             api(this.externalApi);
         }
@@ -89,7 +85,7 @@ class ReportBuilder extends ReportBase {
     };
 
     itemSelected = e => {
-        var { selections } = e;
+        const { selections } = e;
         if (selections) {
             this.setState({ selections });
             delete e.selections;
@@ -97,7 +93,7 @@ class ReportBuilder extends ReportBase {
     };
 
     render() {
-        var { data, selections, expressionProps } = this.state;
+        const { data, selections, expressionProps } = this.state;
 
         const reportBody = <>
             <div className="report-controls-cntr">

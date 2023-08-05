@@ -7,14 +7,14 @@ import ReportItemBase from '../ReportItemBase';
 class TabViewItem extends ReportItemBase {
     constructor(props) {
         super(props);
-        var { data: definition } = props;
+        let { data: definition } = props;
 
         if (!definition) {
             definition = {};
             this.definition = definition;
         }
 
-        var { items = [
+        const { items = [
             { items: [], header: "Sheet 1" },
             { items: [], header: "Sheet 2" }
         ] } = definition;
@@ -30,33 +30,33 @@ class TabViewItem extends ReportItemBase {
     }
 
     itemChanged = (index, newItem) => {
-        var { addedItems } = this.state;
+        const { addedItems } = this.state;
         addedItems[index] = newItem;
         this.itemsChanged(addedItems);
-    }
+    };
 
     itemsChanged = (addedItems) => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         addedItems = [...addedItems];
         definition.items = addedItems;
         this.setState({ addedItems });
         this.props.onChange(definition);
-    }
+    };
 
     onChange = (definition) => {
         this.props.onChange(definition);
         this.setState({ definition, addedItems: definition.items });
         this.hideProperties();
-    }
+    };
 
     onItemRemoved = (index) => {
-        var { addedItems } = this.state;
+        const { addedItems } = this.state;
         addedItems.splice(index, 1);
         this.itemsChanged(addedItems);
-    }
+    };
 
     render() {
-        var { addedItems, showPropsDialog, definition } = this.state;
+        const { addedItems, showPropsDialog, definition } = this.state;
 
         return super.renderBase(
             <>

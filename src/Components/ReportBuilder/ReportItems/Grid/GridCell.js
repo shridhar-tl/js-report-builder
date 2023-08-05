@@ -23,9 +23,9 @@ class GridCell extends PureComponent {
     }
 
     render() {
-        var { style, isHeaderCell } = this.props;
-        var { editMode, editedItem, selected, cellData } = this.state;
-        var CellType = isHeaderCell ? "th" : "td";
+        const { style, isHeaderCell } = this.props;
+        const { editMode, editedItem, selected, cellData } = this.state;
+        const CellType = isHeaderCell ? "th" : "td";
 
         return (
             <Sortable items={cellData} moduleName="GridCell" itemType="GRID_ITEM" accepts={gridCellAccepts}
@@ -55,7 +55,8 @@ class GridCell extends PureComponent {
 
     expressionValueReceived = (val, type, prop) => {
         if (prop.isCanceled) { this.endEdit(); return; }
-        var { editedItem, cellData } = this.state;
+        const { cellData } = this.state;
+        let { editedItem } = this.state;
         val = (val || "").trim();
         if (!editedItem && val) {
             editedItem = {};
@@ -94,19 +95,19 @@ class GridCell extends PureComponent {
     };
 
     cellSelected = (index, e) => {
-        var { cellData: data } = this.state;
+        const { cellData: data } = this.state;
         if (!e.selections) {
             e.selections = [];
         }
         e.selections.push({ ctl: this, element: e.currentTarget, data, index: index });
-        var editedItem = this.props.cellData[index || 0];
+        const editedItem = this.props.cellData[index || 0];
         this.props.grid.itemSelected(this, this.props.cellData, editedItem);
         this.changeSelection(true, editedItem);
         return editedItem;
     };
 
     changeSelection = (isSelected, editedItem) => {
-        var state = { selected: !!isSelected };
+        const state = { selected: !!isSelected };
         if (editedItem) {
             state.editedItem = editedItem;
         }
@@ -114,14 +115,14 @@ class GridCell extends PureComponent {
     };
 
     removeItem = index => {
-        var { cellData } = this.state;
+        const { cellData } = this.state;
         cellData.splice(index, 1);
         this.dataChanged(cellData);
         // ToDo: need to update the editedItem based on current selection and if required event should be raised to grid
     };
 
     beginEdit = index => {
-        var { cellData } = this.state;
+        const { cellData } = this.state;
 
         if (index === -1) {
             index = 0;
@@ -133,11 +134,11 @@ class GridCell extends PureComponent {
     };
 
     endEdit = index => {
-        var { editedItem, cellData } = this.state;
+        const { editedItem, cellData } = this.state;
         if (!editedItem) {
             return;
         }
-        var editedIndex = cellData.indexOf(editedItem);
+        const editedIndex = cellData.indexOf(editedItem);
         if (!editedItem.data && !editedItem.expression && ~editedIndex) {
             this.removeItem(editedIndex);
         }
@@ -152,19 +153,19 @@ class GridCell extends PureComponent {
     updateCellData = (cellData, editedItem) => {
         this.props.onChange(cellData, this.props.index);
         this.setState({ cellData, editedItem });
-    }
+    };
 
     cellItem_Added = (source) => {
-        var { cellData } = this.state;
+        const { cellData } = this.state;
         const { item } = source;
 
         let newItem = item;
 
         if (source.itemType === "RPT_DS_PRPS") {
-            newItem = { data: "[" + item.key + "]", expression: rxIsValidName.test(item.path) ? 'Fields.' + item.path : "Field('" + item.path + "')" };
+            newItem = { data: `[${item.key}]`, expression: rxIsValidName.test(item.path) ? `Fields.${item.path}` : `Field('${item.path}')` };
         }
         else if (source.itemType === "RPT_PARM") {
-            newItem = { data: "$[" + item.display + "]", expression: 'Parameters.' + item.name };
+            newItem = { data: `$[${item.display}]`, expression: `Parameters.${item.name}` };
         }
         else if (source.itemType === "RPT_CMPN") {
             switch (item.type) {
@@ -218,7 +219,7 @@ class GridCell extends PureComponent {
 
     showItemContext = (e, d, i) => {
         this.context.showCellItemContext(e, i, d, this.menuClicked);
-    }
+    };
 
     menuClicked = (index, data, menu) => {
         switch (menu) {
@@ -226,14 +227,14 @@ class GridCell extends PureComponent {
             case "REMOVE": this.removeItem(index); break;
             case "PROPS":
                 this.context.builderContext.editExpression(data).then(d => {
-                    var { cellData } = this.props;
+                    const { cellData } = this.props;
                     cellData[index] = d;
                     this.dataChanged(cellData, null);
                 }, () => { /* No need to handle this. This is to avoid unhandled rejection error */ });
                 break;
             default: break;
         }
-    }
+    };
 }
 
 export default GridCell;

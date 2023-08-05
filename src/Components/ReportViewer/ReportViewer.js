@@ -16,8 +16,10 @@ class ReportViewer extends ReportBase {
 
     constructor(props) {
         super(props);
-        var { parameterValues: defaultParameters, definition } = props;
-        var { datasets, reportItems, parameters, datasetList, userScript, reportState } = definition;
+        const { definition } = props;
+        let { parameterValues: defaultParameters } = props;
+        const { datasets, parameters, datasetList, userScript, reportState } = definition;
+        let { reportItems, } = definition;
         reportItems = clone(reportItems, true);
         this.definition = { datasets, reportItems, parameters, datasetList, userScript, reportState };
         this.commonFunctions = getCommonFunctions(true);
@@ -32,7 +34,7 @@ class ReportViewer extends ReportBase {
     }
 
     componentDidMount() {
-        var { api } = this.props;
+        const { api } = this.props;
         if (api) {
             api(this.externalApi);
         }
@@ -41,7 +43,7 @@ class ReportViewer extends ReportBase {
 
     externalApi = {
         showParameters: () => {
-            var { hasParameters } = this.state;
+            const { hasParameters } = this.state;
             if (hasParameters) {
                 this.setState({ showParameters: true });
             }
@@ -53,13 +55,11 @@ class ReportViewer extends ReportBase {
     };
 
     initParameters() {
-        var {
-            definition: { parameters },
-            state: { parameterValues }
-        } = this;
+        const { parameters } = this.definition;
+        let { parameterValues } = this.state;
 
         if (parameters && parameters.length > 0) {
-            var newParamValues = parameters.reduce((prms, p) => {
+            const newParamValues = parameters.reduce((prms, p) => {
                 if (prms[p.name] === undefined) {
                     prms[p.name] = p.defaultValue;
                 }
@@ -77,7 +77,7 @@ class ReportViewer extends ReportBase {
         ...this.sharedProps,
         getDataset: id => this.datasets[id],
         compileGroup: (group, getReportState) => {
-            var {
+            const {
                 commonFunctions,
                 myFunctions,
                 contextProps: { getDataset: datasets },
@@ -102,19 +102,19 @@ class ReportViewer extends ReportBase {
     };
 
     trackState(callback) {
-        var stateList = [];
-        var reportState = (name) => {
-            var value = this.getReportState(name);
+        const stateList = [];
+        const reportState = (name) => {
+            const value = this.getReportState(name);
             if (stateList.indexOf(name) === -1) {
                 stateList.push(name);
             }
             return value;
-        }
+        };
         callback(reportState);
 
         if (!stateList.length) { return; }
 
-        var newCallback = (arg) => {
+        const newCallback = (arg) => {
             if (arg.some(sl => stateList.indexOf(sl) > -1)) {
                 callback(reportState);
             }
@@ -128,7 +128,7 @@ class ReportViewer extends ReportBase {
     // #region expression parser
 
     compileExpression(expr, stateTracker) {
-        var {
+        const {
             commonFunctions,
             myFunctions,
             contextProps: { getDataset: datasets },
@@ -144,7 +144,7 @@ class ReportViewer extends ReportBase {
     setReportState(name, value) {
         if (!this.reportState) { throw new Error("Report state is not available in this scope"); }
 
-        var changedStates = [];
+        const changedStates = [];
 
         if (Array.isArray(name)) {
             name.forEach((k) => {
@@ -157,7 +157,7 @@ class ReportViewer extends ReportBase {
             });
         }
         else if (typeof name === "string") {
-            this.setReportStateValue(name, value)
+            this.setReportStateValue(name, value);
         }
 
         if (changedStates.length) {
@@ -167,7 +167,7 @@ class ReportViewer extends ReportBase {
 
     setReportStateValue(name, value) {
         if (!~this.reportStateKeys.indexOf(name)) { throw new Error("Invalid report state item: ", name); }
-        var oldValue = this.reportState[name];
+        const oldValue = this.reportState[name];
         if (oldValue !== value) {
             this.reportState[name] = value;
             return true;
@@ -178,16 +178,16 @@ class ReportViewer extends ReportBase {
         if (!this.reportState) { throw new Error("Report state is not available in this scope"); }
         this.reportStateRequested(name);
         return this.reportState[name];
-    }
+    };
 
     reportStateRequested(name) {
         // ToDo: track and use for re-render call
     }
 
-    tryParseExpression(item) {
+    async tryParseExpression(item) {
         if (typeof item !== "object") { return item; }
         if (item.expression) {
-            var pfunc = this.parseExpr(item.expression);
+            const pfunc = await this.parseExpr(item.expression);
             if (typeof pfunc === "function") {
                 return pfunc();
             }
@@ -213,8 +213,8 @@ class ReportViewer extends ReportBase {
 
     updateParameters = parameterValues => {
         this.setState({ parameterValues, showParameters: false }, () => {
-            this.resolveDatasets().then(r => {
-                this.initReportState();
+            this.resolveDatasets().then(async r => {
+                await this.initReportState();
                 this.initCustomFunctions();
                 this.setState({ dataReady: true });
             });
@@ -225,23 +225,24 @@ class ReportViewer extends ReportBase {
         this.myFunctions = this.compileMyFunctions(this.definition.userScript);
     }
 
-    initReportState() {
-        var { reportState } = this.definition;
+    async initReportState() {
+        const { reportState } = this.definition;
         if (!reportState) { this.reportState = {}; this.reportStateKeys = []; return; }
         if (!Array.isArray(reportState)) { throw new Error("Report definition is invalid. Report state corrupted"); }
         if (!reportState.length) { this.reportState = {}; this.reportStateKeys = []; return; }
-        var newReportState = reportState.reduce((stt, val) => {
-            var value = this.tryParseExpression(val.value);
+        const newReportState = await reportState.reduce(async (stt, val) => {
+            stt = await stt;
+            const value = await this.tryParseExpression(val.value);
             stt[val.name] = value;
             return stt;
-        }, {});
+        }, Promise.resolve({}));
         this.reportState = newReportState;
         this.reportStateKeys = Object.keys(newReportState);
     }
 
     render() {
-        var { showParameters, parameterValues, dataReady } = this.state;
-        var { definition } = this;
+        const { showParameters, parameterValues, dataReady } = this.state;
+        const { definition } = this;
 
         return (
             <ViewerContext.Provider value={this.contextProps}>

@@ -18,7 +18,7 @@ class ReportDisplay extends PureComponent {
 
     onItemAdded = (source, target) => {
         const { item } = source;
-        let { index } = target;
+        const { index } = target;
         let { addedItems } = this.state;
         addedItems = [...addedItems];
 
@@ -36,10 +36,10 @@ class ReportDisplay extends PureComponent {
     itemsChanged = (addedItems) => {
         this.setState({ addedItems });
         this.props.onChange(addedItems);
-    }
+    };
 
     onItemRemoved = index => {
-        var { addedItems } = this.state;
+        let { addedItems } = this.state;
         addedItems.splice(index, 1);
         addedItems = [...this.state.addedItems];
         this.setState({ addedItems });
@@ -47,13 +47,14 @@ class ReportDisplay extends PureComponent {
     };
 
     onChanged = (data, index) => {
-        var { addedItems } = this.state;
+        const { addedItems } = this.state;
         addedItems[index].data = data;
         this.props.onChange(addedItems);
     };
 
     getControl = (item, index, drpHndl, drgSrc) => {
-        var { control: Ctl, icon, text } = componentsMap[item.type];
+        const { icon, text } = componentsMap[item.type];
+        let { control: Ctl } = componentsMap[item.type];
 
         if (!Ctl) { Ctl = ReportItemBase; }
 

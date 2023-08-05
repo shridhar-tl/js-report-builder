@@ -14,8 +14,9 @@ const buttonTypes = {
 
 class Button extends PureComponent {
     render() {
-        var { type, className, rounded, label } = this.props;
-        var btnClass = "rb-button " + (buttonTypes[type] || "");
+        const { type, rounded, label } = this.props;
+        let { className } = this.props;
+        let btnClass = `rb-button ${buttonTypes[type] || ""}`;
         if (rounded) {
             btnClass += " p-button-rounded ";
         }
@@ -23,7 +24,7 @@ class Button extends PureComponent {
             btnClass += " ui-button-icon-only ";
         }
         className = className || "";
-        var props = { ...this.props, className: btnClass + " " + className };
+        const props = { ...this.props, className: `${btnClass} ${className}` };
         return <PrimeButton {...props} />;
     }
 }

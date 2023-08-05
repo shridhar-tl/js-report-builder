@@ -34,13 +34,13 @@ class Datasets extends PureComponent {
     };
 
     editDataset(datasetId) {
-        var { datasets } = this.state;
-        var editedDataset = datasets[datasetId];
+        const { datasets } = this.state;
+        const editedDataset = datasets[datasetId];
         this.setForEditing(editedDataset, datasetId);
     }
 
     setForEditing(editedDataset, datasetId) {
-        var dsType = this.datasetTypes[editedDataset.type];
+        const dsType = this.datasetTypes[editedDataset.type];
 
         if (dsType.resolveSchema) {
             new Promise((resolve, reject) => {
@@ -58,9 +58,9 @@ class Datasets extends PureComponent {
     }
 
     deleteDataset(datasetId) {
-        var { datasets } = this.state;
+        const { datasets } = this.state;
         delete datasets[datasetId];
-        var datasetList = Object.keys(datasets);
+        const datasetList = Object.keys(datasets);
         this.setState({
             datasets,
             datasetList
@@ -70,11 +70,11 @@ class Datasets extends PureComponent {
     }
 
     typeSelected = (type, name) => {
-        this.setForEditing({ type, name })
+        this.setForEditing({ type, name });
     };
 
     saveDataset = dataset => {
-        var { editIndex } = this.state;
+        const { editIndex } = this.state;
 
         this.updateDataset(dataset, editIndex);
     };
@@ -84,10 +84,10 @@ class Datasets extends PureComponent {
             editIndex = UUID.generate();
         }
 
-        var { datasets } = this.state;
+        let { datasets } = this.state;
         datasets[editIndex] = { ...dataset };
         datasets = { ...datasets };
-        var datasetList = Object.keys(datasets);
+        const datasetList = Object.keys(datasets);
         this.setState({
             showAddDialog: false,
             editedDataset: null,
@@ -101,20 +101,20 @@ class Datasets extends PureComponent {
     };
 
     isNameUnique = (name) => {
-        var { datasetList, datasets } = this.state;
+        const { datasetList, datasets } = this.state;
         name = name.toLowerCase();
         return !datasetList.some(dn => datasets[dn].name.toLowerCase() === name);
-    }
+    };
 
     render() {
-        var { datasets, datasetList, showAddDialog, editedDataset } = this.state;
+        const { datasets, datasetList, showAddDialog, editedDataset } = this.state;
 
         return (
             <div className="set-list">
                 {datasetList.map(d => {
-                    var ds = datasets[d];
-                    var { definition, name, type } = ds;
-                    var { label, allowEdit } = this.datasetTypes[type];
+                    const ds = datasets[d];
+                    const { definition, name, type } = ds;
+                    const { label, allowEdit } = this.datasetTypes[type];
 
                     return (
                         <div key={ds._uniqueId} className="set">
@@ -127,7 +127,7 @@ class Datasets extends PureComponent {
                             </div>
                             <div>{definition && <JsonTree items={definition} />}</div>
                         </div>
-                    )
+                    );
                 })}
                 <div style={{ clear: "both" }} />
 
@@ -182,14 +182,14 @@ class DatasetType extends PureComponent {
     };
 
     updateValue = event => {
-        var ctl = event.currentTarget;
-        var field = ctl.getAttribute("field");
-        var value = ctl.value;
+        const ctl = event.currentTarget;
+        const field = ctl.getAttribute("field");
+        const value = ctl.value;
         this.updateFieldValue(field, value);
     };
 
     updateFieldValue = (field, value) => {
-        var { duplicateName } = this.state;
+        let { duplicateName } = this.state;
         if (field === "name") { duplicateName = false; }
 
         this.setState({ [field]: value, duplicateName }, () => {
@@ -198,7 +198,7 @@ class DatasetType extends PureComponent {
     };
 
     done = () => {
-        var { type, name } = this.state;
+        const { type, name } = this.state;
 
         if (!this.props.isNameUnique(name)) {
             this.setState({ duplicateName: true, isPropsValid: false });
@@ -210,9 +210,9 @@ class DatasetType extends PureComponent {
     };
 
     render() {
-        var { showDialog, isPropsValid, duplicateName } = this.state;
+        const { showDialog, isPropsValid, duplicateName } = this.state;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.done} disabled={!isPropsValid} label="Next" />
@@ -235,9 +235,9 @@ class DatasetType extends PureComponent {
                     </div>
                     {this.datasetTypes.map((ds, i) => (
                         <div key={i} className="padding-5">
-                            <RadioButton inputId={"rbDSType_" + ds.type} value={ds.type} name="datasetType" disabled={ds.disabled}
+                            <RadioButton inputId={`rbDSType_${ds.type}`} value={ds.type} name="datasetType" disabled={ds.disabled}
                                 onChange={e => this.updateFieldValue("type", e.value)} checked={this.state.type === ds.type} />
-                            <label htmlFor={"rbDSType_" + ds.type}>{ds.label}</label>
+                            <label htmlFor={`rbDSType_${ds.type}`}>{ds.label}</label>
                         </div>
                     ))}
                 </div>
@@ -249,13 +249,14 @@ class DatasetType extends PureComponent {
 class ExpressionDataset extends PureComponent {
     constructor(props) {
         super(props);
-        var { datasets, datasetList, dataset } = props;
+        const { datasets, datasetList, dataset } = props;
 
-        var datasetsArr = array(datasetList.map(ds => datasets[ds]))
+        const datasetsArr = array(datasetList.map(ds => datasets[ds]))
             .sortBy("name")
             .toArray();
 
-        var { expression, dependencies } = dataset;
+        const { expression } = dataset;
+        let { dependencies } = dataset;
 
         if (dependencies) {
             dependencies = dependencies.map(d => datasets[d]);
@@ -275,9 +276,9 @@ class ExpressionDataset extends PureComponent {
     };
 
     updateValue = event => {
-        var ctl = event.currentTarget;
-        var field = ctl.getAttribute("field");
-        var value = ctl.value;
+        const ctl = event.currentTarget;
+        const field = ctl.getAttribute("field");
+        const value = ctl.value;
         this.updateFieldValue(field, value);
     };
 
@@ -290,17 +291,17 @@ class ExpressionDataset extends PureComponent {
     };
 
     done = () => {
-        var { expression, dependencies, paramDependency } = this.state;
-        var { dataset } = this.props;
+        const { expression, dependencies, paramDependency } = this.state;
+        let { dataset } = this.props;
         dataset = { ...dataset, expression, paramDependency, dependencies: dependencies.map(d => d.id) };
         this.setState({ showDialog: false });
         this.props.onChange(dataset);
     };
 
     render() {
-        var { showDialog, isPropsValid, expression, datasets, dependencies, paramDependency } = this.state;
+        const { showDialog, isPropsValid, expression, datasets, dependencies, paramDependency } = this.state;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.done} disabled={!isPropsValid} label="Save" />
@@ -347,13 +348,13 @@ class ExpressionDataset extends PureComponent {
 class FlatternDataset extends PureComponent {
     constructor(props) {
         super(props);
-        var { datasets, datasetList, dataset } = props;
+        const { datasets, datasetList, dataset } = props;
 
-        var datasetsArr = array(datasetList.map(ds => datasets[ds]))
+        const datasetsArr = array(datasetList.map(ds => datasets[ds]))
             .sortBy("name")
             .toArray();
 
-        var { dependencies, colProps, variables, filter } = dataset;
+        const { dependencies, colProps, variables, filter } = dataset;
 
         this.state = {
             showDialog: true,
@@ -371,9 +372,9 @@ class FlatternDataset extends PureComponent {
     };
 
     updateValue = event => {
-        var ctl = event.currentTarget;
-        var field = ctl.getAttribute("field");
-        var value = ctl.value;
+        const ctl = event.currentTarget;
+        const field = ctl.getAttribute("field");
+        const value = ctl.value;
         this.updateFieldValue(field, value);
     };
 
@@ -386,17 +387,17 @@ class FlatternDataset extends PureComponent {
     };
 
     done = () => {
-        var { dependencies, variables, filter, colProps } = this.state;
-        var { dataset } = this.props;
+        const { dependencies, variables, filter, colProps } = this.state;
+        let { dataset } = this.props;
         dataset = { ...dataset, dependencies, variables, filter, colProps };
         this.setState({ showDialog: false });
         this.props.onChange(dataset);
     };
 
     render() {
-        var { showDialog, isPropsValid, colProps, datasets, dependencies, variables, filter } = this.state;
+        const { showDialog, isPropsValid, colProps, datasets, dependencies, variables, filter } = this.state;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.done} disabled={!isPropsValid} label="Save" />
@@ -464,12 +465,12 @@ class HttpDataset extends PropertiesDialogBase {
     ];
 
     validateField(definition) {
-        var isPropsValid = true;
+        const isPropsValid = true;
         return { definition, isPropsValid };
     }
 
     render() {
-        var { setValue, state: { definition: { url, paramDependency, method, body, params, headers } } } = this;
+        const { setValue, state: { definition: { url, paramDependency, method, body, params, headers } } } = this;
 
         return super.renderBase(
             <div className="field-collection">

@@ -2,14 +2,14 @@ import React from 'react';
 import { Menu } from 'primereact/menu';
 import ReportItemBase from '../ReportItemBase';
 import MenuProperties from './MenuProperties';
-import { getUniqueId } from '../../Common/HelperFunctions'
+import { getUniqueId } from '../../Common/HelperFunctions';
 
 class MenuItems extends ReportItemBase {
     constructor(props) {
         super(props);
-        var { data: definition } = props;
+        let { data: definition } = props;
         if (!definition) {
-            var defId = "Menu" + getUniqueId();
+            const defId = `Menu${getUniqueId()}`;
             definition = {
                 id: defId,
                 name: defId,
@@ -29,11 +29,11 @@ class MenuItems extends ReportItemBase {
         this.setState({ definition });
         this.props.onChange(definition);
         this.hideProperties();
-    }
+    };
 
     render() {
-        var { definition, showPropsDialog } = this.state;
-        var { items } = definition;
+        const { definition, showPropsDialog } = this.state;
+        const { items } = definition;
 
         return super.renderBase(
             <div>

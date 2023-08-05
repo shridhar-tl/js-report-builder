@@ -7,10 +7,12 @@ import HorizontalLine from "./HorizontalLine";
 import MenuItem from "./MenuItem";
 import ChartItem from "./ChartItem";
 import SubReport from "./SubReport";
+import TextItem from "./TextItem";
 
 const components = {
     TBL: GridItem,
     IMG: ImageItem,
+    TXT: TextItem,
     TAB: TabItem,
     CTR: ContainerItem,
     PNL: PanelItem,

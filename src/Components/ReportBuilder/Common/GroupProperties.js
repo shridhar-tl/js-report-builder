@@ -20,11 +20,11 @@ class GroupProperties extends PureComponent {
     };
 
     setValue(field, value) {
-        var { group } = this.state;
+        let { group } = this.state;
         group[field] = value;
         group = { ...group };
 
-        var isParamValid = this.isModelValid(group);
+        const isParamValid = this.isModelValid(group);
 
         this.setState({ group, isParamValid });
     }
@@ -34,8 +34,8 @@ class GroupProperties extends PureComponent {
     }
 
     saveProperties = () => {
-        var { group } = this.state;
-        var { keys, dataset } = group;
+        const { group } = this.state;
+        const { keys, dataset } = group;
 
         if (keys && keys.length) {
             array(keys).removeAll(k => !k.expr);
@@ -57,9 +57,9 @@ class GroupProperties extends PureComponent {
     };
 
     render() {
-        var { showDialog, isParamValid, group } = this.state;
+        const { showDialog, isParamValid, group } = this.state;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} disabled={!isParamValid} label="Save" />

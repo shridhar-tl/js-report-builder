@@ -30,12 +30,12 @@ class ReportParameters extends ReportControlBase {
     };
 
     editClicked = index => {
-        var { parameters } = this.state;
+        const { parameters } = this.state;
         this.setState({ showAddDialog: true, editedParam: parameters[index], editIndex: index });
     };
 
     removeParameter = index => {
-        var { parameters } = this.state;
+        let { parameters } = this.state;
         parameters.splice(index, 1);
         parameters = [...parameters];
         this.setState({ parameters });
@@ -43,7 +43,7 @@ class ReportParameters extends ReportControlBase {
     };
 
     saveParameter = param => {
-        var { parameters, editIndex } = this.state;
+        let { parameters, editIndex } = this.state;
         parameters[editIndex] = param;
         parameters = [...parameters];
         editIndex = null;
@@ -52,23 +52,21 @@ class ReportParameters extends ReportControlBase {
     };
 
     isNameUnique = (name) => {
-        var { parameters } = this.state;
+        const { parameters } = this.state;
         name = name.toLowerCase();
         return !parameters.some(p => p.name.toLowerCase() === name);
-    }
+    };
 
     paramsSorted = (parameters) => {
         this.setState({ parameters });
         this.props.onChange(parameters);
-    }
+    };
 
-    renderParams = (param, index, dropHndl, dragSrc) => {
-        return dropHndl.dropConnector(<div className="param">
+    renderParams = (param, index, dropHndl, dragSrc) => dropHndl.dropConnector(<div className="param">
             {dragSrc.dragHandle(<span className="cr-move" title={param.display}>{param.name}</span>)}
             <i className="fa fa-edit" onClick={() => this.editClicked(index)} title="Edit parameter properties" />
             <i className="fa fa-times" onClick={() => this.removeParameter(index)} title="Remove parameter" />
-        </div>)
-    };
+        </div>);
 
     render() {
         const { showAddDialog, parameters, editedParam } = this.state;
@@ -92,11 +90,11 @@ class ReportParameters extends ReportControlBase {
 export default ReportParameters;
 
 class EditParameter extends PureComponent {
-    static contextType = BuilderContext
+    static contextType = BuilderContext;
 
     constructor(props) {
         super(props);
-        var { parameter = {} } = props;
+        const { parameter = {} } = props;
         this.paramTypes = getParamTypes(true);
         this.state = { parameter: { ...parameter }, paramType: this.paramTypes[parameter.type], showDialog: true };
     }
@@ -116,10 +114,10 @@ class EditParameter extends PureComponent {
     };
 
     updateValue = event => {
-        var ctl = event.currentTarget;
-        var field = ctl.getAttribute("field");
-        var value = ctl.value;
-        var type = ctl.type;
+        const ctl = event.currentTarget;
+        const field = ctl.getAttribute("field");
+        let value = ctl.value;
+        const type = ctl.type;
 
         if (type === "checkbox") {
             value = ctl.checked;
@@ -128,7 +126,7 @@ class EditParameter extends PureComponent {
     };
 
     updateFieldValue = (field, value) => {
-        var { parameter, duplicateName } = this.state;
+        let { parameter, duplicateName } = this.state;
         parameter[field] = value;
 
         if (field === "name") {
@@ -150,7 +148,7 @@ class EditParameter extends PureComponent {
 
         parameter = { ...parameter };
 
-        var isParamValid = this.isParamValid(parameter);
+        const isParamValid = this.isParamValid(parameter);
         this.setState({ parameter, isParamValid, duplicateName });
     };
 
@@ -188,16 +186,14 @@ class EditParameter extends PureComponent {
         return true;
     }
 
-    resolveDataset = (dsId) => {
-        return this.context.resolveDataset(dsId);
-    }
+    resolveDataset = (dsId) => this.context.resolveDataset(dsId);
 
     render() {
-        var { showDialog, parameter, isParamValid, noMultiValue, paramType, duplicateName } = this.state;
-        var { updateValue, updateFieldValue } = this;
-        var { value: pTypeName, allowedValidations = [] } = paramType || {};
+        const { showDialog, parameter, isParamValid, noMultiValue, paramType, duplicateName } = this.state;
+        const { updateValue, updateFieldValue } = this;
+        const { value: pTypeName, allowedValidations = [] } = paramType || {};
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.onHide} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveParameter} disabled={!isParamValid} label="Save" />
@@ -222,7 +218,7 @@ class EditParameter extends PureComponent {
                                     value={parameter.type}
                                     options={getParamTypes()}
                                     onChange={e => {
-                                        var paramType = this.paramTypes[e.value];
+                                        const paramType = this.paramTypes[e.value];
                                         this.setState({
                                             paramType, noMultiValue: paramType.supportMultiValue === false
                                         });

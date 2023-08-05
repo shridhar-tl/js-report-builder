@@ -4,7 +4,9 @@ import { ContextMenu as CMenu } from 'primereact/contextmenu';
 
 let contextHandler = () => { /* Nothing to do */ };
 export function showContextMenu(event, model) {
-    event.preventDefault();
+    if (event.preventDefault) {
+        event.preventDefault();
+    }
     contextHandler(event, model);
 }
 
@@ -14,17 +16,14 @@ export function hideContextMenu() {
 
 export default class ContextMenu extends PureComponent {
     state = { contextItems: [] };
-    lastEvent = {};
 
     componentDidMount() {
         contextHandler = (event, contextItems) => {
             if (!event) {
-                this.menu.hide(this.lastEvent);
-                this.contextMenu.hide(this.lastEvent);
+                this.menu.hide({});
+                this.contextMenu.hide({});
                 return;
             }
-
-            this.lastEvent = event;
             const isContextMenu = event.type === "contextmenu";
 
             if (!isContextMenu) {
@@ -36,12 +35,12 @@ export default class ContextMenu extends PureComponent {
             }
 
             if (isContextMenu) {
-                this.menu.hide(event);
+                this.menu.hide({});
                 this.contextMenu.show(event);
             }
             else {
-                this.contextMenu.hide(event);
-                this.menu.show(event);
+                this.contextMenu.hide({});
+                this.menu.toggle(event);
             }
         };
     }

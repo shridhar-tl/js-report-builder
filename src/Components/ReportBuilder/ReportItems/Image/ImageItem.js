@@ -8,7 +8,8 @@ class ImageItem extends ReportItemBase {
     }
 
     render() {
-        var { src, altText } = this.state.definition;
+        const { src } = this.state.definition;
+        let { altText } = this.state.definition;
 
         if (typeof altText !== "string") {
             altText = src ? ((typeof src === "string") ? (altText ? "Alt text will be evaluated at runtime" : "Alt text not set")

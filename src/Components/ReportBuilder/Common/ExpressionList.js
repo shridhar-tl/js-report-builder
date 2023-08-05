@@ -3,31 +3,31 @@ import Button from "../../Common/Button";
 import { InputText } from "primereact/inputtext";
 import ExpressionEditor from "./ExpressionEditor";
 import "./ExpressionList.scss";
-import { clone } from '../../../Common/HelperFunctions'
+import { clone } from '../../../Common/HelperFunctions';
 import { Dropdown } from "primereact/dropdown";
-import array from '../../../Common/linq'
+import array from '../../../Common/linq';
 
 class ExpressionList extends PureComponent {
     constructor(props) {
         super(props);
-        var { value, nameFieldSet } = props;
+        const { value, nameFieldSet } = props;
         if (nameFieldSet) {
             if (typeof nameFieldSet[0] === "string") {
-                this.nameFieldSet = nameFieldSet.map(n => { return { name: n }; });
+                this.nameFieldSet = nameFieldSet.map(n => ({ name: n }));
             } else {
                 this.nameFieldSet = nameFieldSet;
             }
             this.nameFieldValues = this.nameFieldSet.reduce((obj, cur) => { obj[cur.name] = cur; return obj; }, {});
         }
         else {
-
+            // ToDo
         }
         this.state = { items: clone(value || []), newItem: {} };
     }
 
     getExpressionRow(index, item, isNewRow) {
-        var { nameFieldSet } = this;
-        var { namePlaceholder, valuePlaceholder, nameField, valueField, autoDetect, fieldSetLabel, nameKeyFilter } = this.props;
+        const { nameFieldSet } = this;
+        const { namePlaceholder, valuePlaceholder, nameField, valueField, autoDetect, fieldSetLabel, nameKeyFilter } = this.props;
 
         return (
             <tr key={index}>
@@ -58,7 +58,7 @@ class ExpressionList extends PureComponent {
                                 if (!isNewRow) {
                                     this.setValue(index, item);
                                 } else {
-                                    this.setState({ newItem: { ...item }, addEnabled: !!(item[nameField] && item[valueField]) })
+                                    this.setState({ newItem: { ...item }, addEnabled: !!(item[nameField] && item[valueField]) });
                                 }
                             }}
                         />
@@ -75,7 +75,7 @@ class ExpressionList extends PureComponent {
                             if (!isNewRow) {
                                 this.setValue(index, item);
                             } else {
-                                this.setState({ addEnabled: !!(item[nameField] && item[valueField]) })
+                                this.setState({ addEnabled: !!(item[nameField] && item[valueField]) });
                             }
                         }}
                     />
@@ -97,12 +97,12 @@ class ExpressionList extends PureComponent {
     }
 
     setValue(index, item) {
-        var { items, newItem } = this.state;
+        let { items, newItem } = this.state;
 
-        if (index != null) {
+        if (index !== null) {
             if (item) {
                 items[index] = item;
-                newItem = item === newItem ? {} : newItem
+                newItem = item === newItem ? {} : newItem;
             }
             else {
                 items.splice(index, 1);
@@ -115,22 +115,22 @@ class ExpressionList extends PureComponent {
     }
 
     hasEmptyData = () => {
-        var { items } = this.state;
-        var { nameField, valueField } = this.props;
+        const { items } = this.state;
+        const { nameField, valueField } = this.props;
 
-        return items && items.length > 0 && items.some(i => !i[nameField] || !i[valueField])
-    }
+        return items && items.length > 0 && items.some(i => !i[nameField] || !i[valueField]);
+    };
 
     hasDuplicateData = () => {
-        var { items } = this.state;
-        var { nameField } = this.props;
+        const { items } = this.state;
+        const { nameField } = this.props;
 
-        return items && items.length > 0 && array(items).hasDuplicates(nameField)
-    }
+        return items && items.length > 0 && array(items).hasDuplicates(nameField);
+    };
 
     render() {
-        var { items, newItem } = this.state;
-        var { nameHeader, valueHeader } = this.props;
+        const { items, newItem } = this.state;
+        const { nameHeader, valueHeader } = this.props;
 
         return (
             <div className="expression-list">

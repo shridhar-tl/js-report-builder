@@ -11,26 +11,26 @@ class SelectParameter extends PureComponent {
     }
 
     componentDidMount() {
-        var { value, multiselect } = this.props;
-        var parameters = this.context.getParametersList();
+        let { value } = this.props;
+        const parameters = this.context.getParametersList();
         if (!value) {
             value = [];
         }
-        var selItems = multiselect ? parameters.filter(p => value.indexOf(p.name) >= 0) : parameters.filter(p => p.name === value)[0];
+        const selItems = this.props.multiselect ? parameters.filter(p => value.indexOf(p.name) >= 0) : parameters.filter(p => p.name === value)[0];
         this.setState({ parameters, selItems });
     }
 
     selectionChanged = e => {
         this.setState({ selItems: e.value });
-        var { onChange, multiselect } = this.props;
+        const { onChange, multiselect } = this.props;
         if (onChange) {
             onChange(multiselect ? e.value.map(v => v.name) : (e.value || {}).name);
         }
     };
 
     render() {
-        var { multiselect } = this.props;
-        var { parameters = [], selItems } = this.state;
+        const { multiselect } = this.props;
+        const { parameters = [], selItems } = this.state;
 
         if (multiselect) {
             return <MultiSelect appendTo={document.body} optionLabel="name" value={selItems} options={parameters} onChange={this.selectionChanged} placeholder="Choose one or more parameters" />;

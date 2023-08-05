@@ -3,12 +3,12 @@ import { InputText } from 'primereact/inputtext';
 
 class NameField extends PureComponent {
     onChange = (e) => {
-        var value = e.currentTarget.value;
+        const value = e.currentTarget.value;
         this.props.onChange(value);
-    }
+    };
 
     render() {
-        return <InputText keyfilter="alphanum" value={this.props.value} onChange={this.onChange} />
+        return <InputText keyfilter="alphanum" value={this.props.value} onChange={this.onChange} />;
     }
 }
 

@@ -9,10 +9,10 @@ import { Card } from 'primereact/card';
 class TabViewProperties extends PureComponent {
     constructor(props) {
         super(props);
-        var { definition } = props;
+        let { definition } = props;
 
         definition = { ...definition };
-        definition.items = definition.items.map(item => { return { ...item }; });
+        definition.items = definition.items.map(item => ({ ...item }));
 
         this.state = { definition, showDialog: true };
     }
@@ -20,15 +20,15 @@ class TabViewProperties extends PureComponent {
     hidePopup = () => {
         this.setState({ showDialog: false });
         this.props.onHide();
-    }
+    };
 
     saveProperties = () => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         this.props.onChange(definition);
-    }
+    };
 
     setValue = (field, value) => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         if (value === null) {
             delete definition[field];
         } else {
@@ -36,7 +36,7 @@ class TabViewProperties extends PureComponent {
         }
 
         this.setState({ definition: { ...definition } });
-    }
+    };
 
     setHiddenValue = (expression) => {
         if (expression === "true") {
@@ -48,39 +48,38 @@ class TabViewProperties extends PureComponent {
         else {
             this.setValue("hidden", null);
         }
-    }
+    };
 
     tabSelected = (selectedTab) => {
         this.setState({ selectedTab, selectedTabIndex: this.state.definition.items.indexOf(selectedTab) });
-    }
+    };
 
     tabChanged = (tabDefinition, index) => {
-        var { definition, selectedTabIndex } = this.state;
-        var { items } = definition;
+        const { selectedTabIndex } = this.state;
+        let { definition } = this.state;
+        const { items } = definition;
 
         items[index || selectedTabIndex] = tabDefinition;
         definition = { ...definition };
         this.setState({ definition, selectedTabIndex: null, selectedTab: null });
-    }
+    };
 
     addTabPage = () => {
-        var { definition } = this.state;
-        var { items } = definition;
-        var curIdx = items.length;
-        var newItem = { items: [], header: "Sheet " + (curIdx + 1) };
+        const { definition } = this.state;
+        const { items } = definition;
+        const curIdx = items.length;
+        const newItem = { items: [], header: `Sheet ${curIdx + 1}` };
         this.tabChanged(newItem, curIdx);
-    }
+    };
 
     render() {
-        var { state, setValue, setHiddenValue, tabChanged, addTabPage } = this;
-        var { definition, showDialog, selectedTab } = state;
-        var { hidden, items } = definition;
+        const { state, setValue, setHiddenValue, tabChanged, addTabPage } = this;
+        const { definition, showDialog, selectedTab } = state;
+        const { hidden, items } = definition;
 
-        var itemTemplate = (item) => {
-            return <div onClick={() => this.tabSelected(item)}><span>{item.header}</span></div>
-        }
+        const itemTemplate = (item) => <div onClick={() => this.tabSelected(item)}><span>{item.header}</span></div>;
 
-        var footer = (
+        const footer = (
             <div>
                 <Button type="default" icon="fa fa-times" onClick={this.hidePopup} label="Cancel" />
                 <Button type="primary" icon="fa fa-check" onClick={this.saveProperties} label="Save" />
@@ -132,7 +131,7 @@ class TabPageProperties extends PureComponent {
     }
 
     setValue = (field, value) => {
-        var { definition } = this.state;
+        const { definition } = this.state;
         if (value === null) {
             delete definition[field];
         } else {
@@ -140,11 +139,11 @@ class TabPageProperties extends PureComponent {
         }
 
         this.setState(this.validateField(definition));
-    }
+    };
 
     validateField(definition) {
-        var { header } = definition;
-        var isParamValid = !!header;
+        const { header } = definition;
+        const isParamValid = !!header;
 
         return { definition: { ...definition }, isParamValid };
     }
@@ -161,12 +160,12 @@ class TabPageProperties extends PureComponent {
         else {
             this.setValue(field, null);
         }
-    }
+    };
 
     render() {
-        var { setValue, setBooleanValue, state, props } = this;
-        var { definition } = state;
-        var { header, hidden, disabled } = definition;
+        const { setValue, setBooleanValue, state, props } = this;
+        const { definition } = state;
+        const { header, hidden, disabled } = definition;
 
         return (
             <Card title="Tab page properties">

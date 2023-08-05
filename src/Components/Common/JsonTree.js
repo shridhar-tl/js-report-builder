@@ -11,16 +11,16 @@ class JsonTree extends PureComponent {
     }
 
     getItems(obj) {
-        let items = Object.keys(obj);
+        const items = Object.keys(obj);
         return items.Select(item => {
-            let itm = { key: item, type: this.getItemType(obj[item]), hasChild: false };
+            const itm = { key: item, type: this.getItemType(obj[item]), hasChild: false };
             itm.hasChild = itm.type === "object" && Object.keys(obj[item]).length > 0;
             return itm;
         });
     }
 
     getItemType(item) {
-        if (item == null) {
+        if (item === null || item === undefined) {
             return "unknown";
         }
         if (Array.isArray(item)) {
@@ -37,10 +37,10 @@ class JsonTree extends PureComponent {
     }
 
     render() {
-        var { items } = this.state;
+        const { items } = this.state;
 
         return (
-            <div className="tree" style={{ height: (this.props.height || 200) + "px" }}>
+            <div className="tree" style={{ height: `${this.props.height || 200}px` }}>
                 {this.getNode(items)}
             </div>
         );
@@ -60,13 +60,13 @@ class JsonTreeNode extends PureComponent {
     };
 
     render() {
-        var { node } = this.props;
+        const { node } = this.props;
 
         if (!node) { return null; }
 
-        var { children } = node;
-        var { expanded } = this.state;
-        var hasChildren = children && children.length;
+        const { children } = node;
+        const { expanded } = this.state;
+        const hasChildren = children && children.length;
 
         return (
             <div className="node">
@@ -74,7 +74,7 @@ class JsonTreeNode extends PureComponent {
                     <div className="text">
                         {hasChildren && (
                             <i
-                                className={"togglable fa " + (expanded ? "fa-minus" : "fa-plus")}
+                                className={`togglable fa ${expanded ? "fa-minus" : "fa-plus"}`}
                                 onClick={this.toggleItem}
                                 title="Click to toggle the node"
                             />

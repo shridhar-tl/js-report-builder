@@ -1,7 +1,7 @@
 import array, { getObjVal } from "./linq";
 
-let compiler = function () { console.error("Script Compiler is not initialized!!"); }
-let parser = function () { console.error("Script Parser is not initialized!!"); return { isValid: true }; }
+let compiler = function () { console.error("Script Compiler is not initialized!!"); };
+let parser = function () { console.error("Script Parser is not initialized!!"); return { isValid: true }; };
 let handleScriptExecution = true;
 
 export function setCompilerOptions(comp, prsr, selfHandleScriptExecution) {
@@ -16,15 +16,15 @@ export function setCompilerOptions(comp, prsr, selfHandleScriptExecution) {
     handleScriptExecution = selfHandleScriptExecution !== true;
 }
 
-export function setParser(prsr) {
-}
+//export function setParser(prsr) { }
 
 export function parseScript(script) {
     return parser(script);
 }
 
 export function compileGroup(group, props) {
-    let { filter, keys, sortBy, variables, dataset, expression } = group;
+    const { filter, variables, dataset, expression } = group;
+    let { keys, sortBy } = group;
 
     // ToDo: sortby should not be an array. need to check in old implementation
     if (sortBy && Array.isArray(sortBy) && !sortBy.length) {
@@ -36,24 +36,24 @@ export function compileGroup(group, props) {
         keys = null;
     }
 
-    var $expression = dataset === -1 && expression ? compileExpression(expression, props) : undefined;
-    var $filter = filter ? compileExpression(getWrapperFunction(filter), props) : undefined;
-    var $keys = keys ? keys.map(f => compileExpression(f.expr, props)) : undefined;
-    var $sortBy = sortBy ? compileExpression(getWrapperFunction(sortBy), props) : undefined;
-    var $variables = compileVariables(variables, props);
-    var varFunc = (function (varObj) {
+    const $expression = dataset === -1 && expression ? compileExpression(expression, props) : undefined;
+    const $filter = filter ? compileExpression(getWrapperFunction(filter), props) : undefined;
+    const $keys = keys ? keys.map(f => compileExpression(f.expr, props)) : undefined;
+    const $sortBy = sortBy ? compileExpression(getWrapperFunction(sortBy), props) : undefined;
+    const $variables = compileVariables(variables, props);
+    const varFunc = (function (varObj) {
         if (!varObj) {
-            return function () { return function () { } }
+            return function () { return function () { /* Nothing to be done here */ }; };
         }
         return function (props) {
-            var keysList = Object.keys(varObj);
-            var valueObj = keysList.reduce((obj, varName) => {
-                obj["$" + varName] = varObj[varName](props.fields, props.rowGroup, props.colGroup, props.variables);
+            const keysList = Object.keys(varObj);
+            const valueObj = keysList.reduce((obj, varName) => {
+                obj[`$${varName}`] = varObj[varName](props.fields, props.rowGroup, props.colGroup, props.variables);
                 return obj;
             }, {});
 
-            var $varFunc = function (varName) {
-                return valueObj["$" + varName];
+            const $varFunc = function (varName) {
+                return valueObj[`$${varName}`];
             };
 
             // This may cause setting some readonly properties like name to function
@@ -63,7 +63,7 @@ export function compileGroup(group, props) {
         };
     })($variables);
 
-    var $group = { name: group.name, $expression, filter: $filter, keys: $keys, sortBy: $sortBy, variables: varFunc };
+    const $group = { name: group.name, $expression, filter: $filter, keys: $keys, sortBy: $sortBy, variables: varFunc };
     group.$group = $group;
     return $group;
 }
@@ -93,7 +93,8 @@ export function wrapWithFunction(obj) {
     }
 }*/
 
-const sandbox = ["window",
+const sandbox = [
+    "window",
     "global",
     "document",
     "navigator",
@@ -131,7 +132,8 @@ const sandbox = ["window",
     "stop",
     "$",
     " jQuery",
-    "console"]
+    "console"
+];
 
 export function compileExpression(expression, props) {
     if (!handleScriptExecution) {
@@ -139,37 +141,39 @@ export function compileExpression(expression, props) {
     }
 
     try {
-        var isNoWrap = props && props.noWrap === true;
-        var exprToCompile = expression;
+        const isNoWrap = props && props.noWrap === true;
+        let exprToCompile = expression;
+
+        let isAsync = exprToCompile.includes('await ');
 
         if (!isNoWrap) {
-            exprToCompile = "return function(Fields,RowGroup,ColGroup,Variables){ var Field = function(key){return getObjVal(Fields,key);}; return " +
-                exprToCompile +
-                ";}";
+            exprToCompile = `return ${isAsync ? 'async ' : ''}function(Fields,RowGroup,ColGroup,Variables){ var Field = function(key){return getObjVal(Fields,key);}; return ${exprToCompile
+                };}`;
+            isAsync = false;
         }
 
-        exprToCompile = "'use strict'; return function(CommonFunctions,MyFunctions,Parameters,Datasets,array,getObjVal,ReportState,setReportState) { " + exprToCompile + " }";
+        exprToCompile = `'use strict'; return ${isAsync ? 'async ' : ''}function(CommonFunctions,MyFunctions,Parameters,Datasets,Resources,array,getObjVal,ReportState,setReportState) { ${exprToCompile} }`;
 
-        var result = compiler(exprToCompile, sandbox, props);
+        let result = compiler(exprToCompile, sandbox, props);
 
         //var result = func();
         if (props) {
-            var { commonFunctions, myFunctions, parameters, datasets, $this, setReportState, getReportState } = props;
+            const { commonFunctions, myFunctions, parameters, datasets, resources, $this, setReportState, getReportState } = props;
             if ($this) {
                 result = result.bind($this);
             }
-            result = result(commonFunctions, myFunctions, parameters, datasets, array, getObjVal, getReportState, setReportState);
+            result = result(commonFunctions, myFunctions, parameters, datasets, resources, array, getObjVal, getReportState, setReportState);
         }
         return result;
     } catch (err) {
-        console.error("Expression Parse Error:- '" + expression + "'", err);
+        console.error(`Expression Parse Error:- '${expression}'`, err);
     }
 }
 
 export function compileVariables(variables, props, initVars) {
     return variables
         ? variables.reduce((vars, v) => {
-            var value = compileExpression(v.expr, props);
+            let value = compileExpression(v.expr, props);
             if (initVars) {
                 value = value();
             }
@@ -180,6 +184,6 @@ export function compileVariables(variables, props, initVars) {
 }
 
 function getWrapperFunction(expr) {
-    var fieldFunc = (expr || "").indexOf("Field(") >= 0 ? "Field=function(key){return getObjVal(Fields,key)};" : "";
-    return "function(Fields){ " + fieldFunc + " return " + expr + "; }";
+    const fieldFunc = (expr || "").indexOf("Field(") >= 0 ? "Field=function(key){return getObjVal(Fields,key)};" : "";
+    return `function(Fields){ ${fieldFunc} return ${expr}; }`;
 }

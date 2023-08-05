@@ -5,25 +5,26 @@ import { getUniqueId } from '../../Common/HelperFunctions';
 import Sortable from '../../DragDrop/Sortable';
 
 const noReportItemsMessage = <div className="message-no-items">Drag and drop report items here</div>;
+const dropMoreItemsMessage = <div className="message-no-items">Drag and drop more items here</div>;
 const accepts = ["RPT_ITMS", "RPT_CMPN"];
 
 class BaseContainer extends ReportItemBase {
     constructor(props) {
         super(props);
-        var { data: definition = {} } = props;
-        var { items = [] } = definition;
+        const { data: definition = {} } = props;
+        const { items = [] } = definition;
         this.state = { definition, addedItems: items || [] };
         this.containerId = getUniqueId();
     }
 
     onItemAdded = (source, target) => {
         const { item } = source;
-        let { index } = target;
+        const { index } = target;
         let { addedItems } = this.state;
         addedItems = [...addedItems];
 
         if (this.unsupportedItems && ~this.unsupportedItems.indexOf(item.type)) {
-            var { onUnknownItemAdded } = this.props;
+            const { onUnknownItemAdded } = this.props;
             if (onUnknownItemAdded) { onUnknownItemAdded(item); }
         }
 
@@ -39,7 +40,7 @@ class BaseContainer extends ReportItemBase {
     };
 
     onItemRemoved = index => {
-        var { addedItems } = this.state;
+        let { addedItems } = this.state;
         addedItems.splice(index, 1);
         addedItems = [...this.state.addedItems];
         this.setState({ addedItems });
@@ -48,7 +49,7 @@ class BaseContainer extends ReportItemBase {
     };
 
     onChanged = (itemData, index) => {
-        let { addedItems } = this.state;
+        const { addedItems } = this.state;
         addedItems[index].data = itemData;
         this.updateSource(addedItems);
     };
@@ -56,16 +57,17 @@ class BaseContainer extends ReportItemBase {
     itemsChanged = (addedItems) => {
         this.updateSource(addedItems);
         this.setState({ addedItems });
-    }
+    };
 
     updateSource(addedItems) {
-        var { definition } = this.state;
+        const { definition } = this.state;
         definition.items = addedItems;
         this.props.onChange(definition);
     }
 
     getControl = (item, index, drpHndl, drgSrc) => {
-        var Ctl = componentsMap[item.type].control;
+        const { icon, text } = componentsMap[item.type];
+        let { control: Ctl } = componentsMap[item.type];
 
         if (!Ctl) { Ctl = ReportItemBase; }
 
@@ -77,14 +79,17 @@ class BaseContainer extends ReportItemBase {
                 index={index}
                 onItemRemoved={this.onItemRemoved}
                 data={item.data}
+                icon={icon}
+                text={text}
                 onChange={d => this.onChanged(d, index)}
             />);
     };
 
     getDroppableContainer() {
+        const hasSomeItems = this.state.addedItems?.length > 0;
         return <Sortable className="drop-grp" draggableClassName="component" itemType="RPT_ITMS" accepts={accepts}
             items={this.state.addedItems} keyName="_uniqueId" useDragHandle onItemAdded={this.onItemAdded}
-            onChange={this.itemsChanged} placeholder={noReportItemsMessage}>{this.getControl}</Sortable>
+            onChange={this.itemsChanged} placeholder={hasSomeItems ? dropMoreItemsMessage : noReportItemsMessage}>{this.getControl}</Sortable>;
     }
 
     render() {

@@ -7,7 +7,7 @@ import { setCompilerOptions } from "./Compiler";
 export const options = { useExternalDnDProvider: false };
 
 export function initReportBuilder(config) {
-    var { parameterTypes, datasetTypes, builtInFields, commonFunctions, subReports, resolveReportDefinition, resolveHttpRequest, compiler, parser, selfHandleScriptExecution } = config;
+    const { parameterTypes, datasetTypes, builtInFields, commonFunctions, subReports, resolveReportDefinition, resolveHttpRequest, compiler, parser, selfHandleScriptExecution } = config;
     options.useExternalDnDProvider = config.useExternalDnDProvider === true;
     setCompilerOptions(compiler, parser, selfHandleScriptExecution);
     setHttpProxy(resolveHttpRequest);
@@ -43,7 +43,7 @@ export const supportedFileTypes = [
     { value: 4, label: "Excel documents", type: ".xlsx,.xls" }
 ];
 
-var paramTypes = [...inbuiltParamTypes];
+let paramTypes = [...inbuiltParamTypes];
 
 export function getParamTypes(reduced) {
     if (!reduced) {
@@ -59,11 +59,11 @@ export function getParamTypes(reduced) {
 function initParamTypes(parameterTypes) {
     if (parameterTypes) {
         paramTypes = [...inbuiltParamTypes];
-        var $params = array(paramTypes);
+        const $params = array(paramTypes);
         // ToDo: Check for duplicate / existing parameters and override. Allow changing label alone
 
         Object.keys(parameterTypes).forEach(k => {
-            var param = parameterTypes[k];
+            const param = parameterTypes[k];
             if (param === false) {
                 $params.removeAll(p => p.value === k);
                 return;
@@ -86,7 +86,7 @@ function initParamTypes(parameterTypes) {
 // #endregion
 
 // #region Dataset related functions
-var datasetTypes = [...inbuiltDatasets];
+let datasetTypes = [...inbuiltDatasets];
 
 export function getDatasetTypes(reduced) {
     if (!reduced) {
@@ -102,11 +102,11 @@ export function getDatasetTypes(reduced) {
 function initDatasetTypes(customTypes) {
     if (customTypes) {
         datasetTypes = [...inbuiltDatasets];
-        var $datasetTypes = array(datasetTypes);
+        const $datasetTypes = array(datasetTypes);
         // ToDo: Check for duplicate / existing datasets and override. Allow changing label alone
 
         Object.keys(customTypes).forEach(k => {
-            var ds = customTypes[k];
+            const ds = customTypes[k];
 
             if (ds === false) {
                 $datasetTypes.removeAll(p => p.type === k);
@@ -114,16 +114,16 @@ function initDatasetTypes(customTypes) {
             }
 
             if (ds === true) {
-                var idx = $datasetTypes.findIndex(p => p.type === k)[0];
+                const idx = $datasetTypes.findIndex(p => p.type === k)[0];
                 if (idx >= 0) {
-                    var dsToOrder = datasetTypes[idx];
+                    const dsToOrder = datasetTypes[idx];
                     datasetTypes.splice(idx, 1);
                     datasetTypes.push(dsToOrder);
                     return;
                 }
             }
 
-            var { label, allowEdit, resolveSchema, resolveData } = ds;
+            const { label, allowEdit, resolveSchema, resolveData } = ds;
 
             if (!label || !resolveSchema || !resolveData) {
                 console.error("Custom dataset type expect mandatory properties of label, resolveSchema and resolveData", ds);
@@ -137,7 +137,7 @@ function initDatasetTypes(customTypes) {
                 resolveSchema: resolveSchema,
                 resolve: function ({ dataset, parameters, parameterTemplate }, getDatasetData) {
                     //Also received in first param, commonFunctions, myFunctions
-                    var { props } = dataset;
+                    const { props } = dataset;
                     return resolveData(props, parameters, { parameterTemplate, getDatasetData });
                 }
             });
@@ -148,7 +148,7 @@ function initDatasetTypes(customTypes) {
 // #endregion
 
 // #region Builtin fields
-var builtInFields = [];
+let builtInFields = [];
 
 export function getBuiltInFields() {
     return builtInFields;
@@ -157,7 +157,7 @@ export function getBuiltInFields() {
 function initBuiltinFields(fields) {
     if (fields) {
         builtInFields = Object.keys(fields).map(k => {
-            var field = fields[k];
+            const field = fields[k];
             return {
                 field: k,
                 helpText: field.helpText,
@@ -171,7 +171,7 @@ function initBuiltinFields(fields) {
 
 // #region Common inbuilt functions
 
-var commonFuncs = [...inbuiltFunctions];
+let commonFuncs = [...inbuiltFunctions];
 
 export function getCommonFunctions(reduced) {
     if (!reduced) {
@@ -202,9 +202,9 @@ function initCommonFunctions(funcs) {
 
 // #region Builder template
 
-var defaultDefinition = { reportItems: [], datasets: {}, datasetList: [], parameters: [] };
+const defaultDefinition = { reportItems: [], datasets: {}, datasetList: [], parameters: [] };
 
-var reportDefinition = { ...defaultDefinition };
+const reportDefinition = { ...defaultDefinition };
 
 export function getDefaultRptDefinition() {
     return reportDefinition;
@@ -225,8 +225,8 @@ this.yourFunction2 = function yourFunction2(paramA, paramB) {
 
 // #region Sub Reports
 
-var subReportsList = [];
-var resolveReportDefinition = null;
+let subReportsList = [];
+let resolveReportDefinition = null;
 
 export function getReportsList(definition) {
     if (Array.isArray(subReportsList)) {
@@ -239,7 +239,7 @@ export function getReportsList(definition) {
 
 function prepareReportsList(subReports) {
     return subReports.map(r => {
-        var { id, name } = r;
+        const { id, name } = r;
         if (!id || !name) { throw new Error("id & name properties are expected in subReports"); }
         return { id, name };
     });

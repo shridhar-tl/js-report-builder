@@ -1,13 +1,22 @@
 import React, { PureComponent } from 'react';
-import { RadioButton } from 'primereact/radiobutton';
 import ExpressionEditor from '../../Common/ExpressionEditor';
 import Button from '../../../Common/Button';
 import { Dialog } from 'primereact/dialog';
-import { Checkbox } from 'primereact/checkbox';
 import { TabView, TabPanel } from 'primereact/tabview';
 import ActionProperties from '../../Common/ActionProperties';
+import { Dropdown } from 'primereact/dropdown';
 
-class ImageProperties extends PureComponent {
+const textElementTypes = [
+    { value: '', label: 'Span' },
+    { value: 'p', label: 'Paragraph' },
+    { value: 'h1', label: 'Heading 1' },
+    { value: 'h2', label: 'Heading 2' },
+    { value: 'h3', label: 'Heading 3' },
+    { value: 'h4', label: 'Heading 4' },
+    { value: 'h5', label: 'Heading 5' },
+];
+
+class TextProperties extends PureComponent {
     constructor(props) {
         super(props);
         const { definition } = props;
@@ -48,26 +57,24 @@ class ImageProperties extends PureComponent {
     };
 
     validateField(definition) {
-        const { src } = definition;
-        const isParamValid = !!src;
+        const { text } = definition;
+        const isParamValid = !!text;
 
         return { definition: { ...definition }, isParamValid };
     }
 
+    elementTypeChanged = ({ value }) => this.setValue('elType', value);
+
     render() {
         const { state, setValue, setHiddenValue } = this;
         const { definition, showDialog, isParamValid } = state;
-        const { srcMode, hidden, autoHide } = definition;
-        let { src, altText, tooltip } = definition;
-        let srcType = "text", altType = "text", tooltipType = "text";
+        const { elType, hidden } = definition;
+        let { text, tooltip } = definition;
+        let textType = "text", tooltipType = "text";
 
-        if (typeof src === "object") {
-            src = src.expression;
-            srcType = null;
-        }
-        if (typeof altText === "object") {
-            altText = altText.expression;
-            altType = null;
+        if (typeof text === "object") {
+            text = text.expression;
+            textType = null;
         }
         if (typeof tooltip === "object") {
             tooltip = tooltip.expression;
@@ -84,31 +91,23 @@ class ImageProperties extends PureComponent {
         return (
             <div>
                 <Dialog
-                    header="Image properties"
+                    header="Text properties"
                     visible={showDialog}
                     footer={footer}
-                    style={{ width: "60vw" }}
+                    style={{ width: "50vw" }}
                     modal={true}
                     onHide={this.onHide}>
                     <TabView>
                         <TabPanel header="General" contentClassName="no-padding" className="no-padding">
                             <div className="field-collection">
                                 <div className="mandatory">
-                                    <label>Image source</label>
-                                    <RadioButton inputId="rbImgFromUrl" checked={srcMode !== 2} onChange={e => setValue("srcMode", 1)} /> <label htmlFor="rbImgFromUrl">External url</label>
-                                    <RadioButton inputId="rbEmbededImg" checked={srcMode === 2} onChange={e => setValue("srcMode", 2)} /> <label htmlFor="rbEmbededImg">Embedded image</label>
+                                    <label>Text type</label>
+                                    <Dropdown appendTo={document.body} value={elType || ''} options={textElementTypes} onChange={this.elementTypeChanged} placeholder="Select text type" />
                                 </div>
                                 <div className="mandatory">
-                                    {srcMode !== 2 && <label>External image url or expression evaluating to same</label>}
-                                    {srcMode === 2 && <label>Embedded image resource name or expression evaluating to same</label>}
-                                    <ExpressionEditor expression={src} type={srcType}
-                                        onChange={(expr, type, prop) => setValue("src", type ? expr : { expression: expr })} />
-                                </div>
-
-                                <div className="mandatory">
-                                    <label>Alt text (text to be displayed when the image is unavailable)</label>
-                                    <ExpressionEditor expression={altText} type={altType}
-                                        onChange={(expr, type, prop) => setValue("altText", type ? expr : { expression: expr })} />
+                                    <label>Text</label>
+                                    <ExpressionEditor expression={text} type={textType}
+                                        onChange={(expr, type, prop) => setValue("text", type ? expr : { expression: expr })} />
                                 </div>
                                 <div>
                                     <label>Tooltip text or expression</label>
@@ -116,13 +115,9 @@ class ImageProperties extends PureComponent {
                                         onChange={(expr, type, prop) => setValue("tooltip", type ? expr : { expression: expr })} />
                                 </div>
                                 <div>
-                                    <label>Visibility (hide image if expression evaluates to true)</label>
+                                    <label>Visibility (hide text if expression evaluates to true)</label>
                                     <ExpressionEditor expression={hidden === true ? "true" : hidden} isStrict={true}
                                         onChange={(expr, type, prop) => setHiddenValue(expr)} />
-                                </div>
-                                <div>
-                                    <Checkbox inputId="chk_autoHide" checked={autoHide} onChange={(e) => setValue("autoHide", e.checked)} />
-                                    <label htmlFor="chk_autoHide">Auto hide image when unavailable</label>
                                 </div>
                             </div>
                         </TabPanel>
@@ -136,4 +131,4 @@ class ImageProperties extends PureComponent {
     }
 }
 
-export default ImageProperties;
+export default TextProperties;

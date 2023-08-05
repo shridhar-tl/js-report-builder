@@ -1,26 +1,26 @@
-/*eslint-disable no-extend-native, no-loop-func*/
+/*eslint-disable */
 import { clone, cloneArray } from "./HelperFunctions";
 
-var arrayInitFunc = (function () {
-    var arrayFunc = function arrayFunc(array) {
+const arrayInitFunc = (function () {
+    const arrayFunc = function arrayFunc(array) {
         if (!array) {
             throw new Error("No input received. Expected an array.");
         }
-        var source = array;
+        let source = array;
 
         if (typeof source === "number") {
             source = new Array(source);
         }
 
-        var prototype = function () {
+        const prototype = function () {
             return source;
         };
 
         prototype.where = function (clause, maxItems) {
-            var newArray = [];
+            const newArray = [];
 
             // The clause was passed in as a Method that return a Boolean
-            for (var index = 0; index < source.length && (!maxItems || maxItems > newArray.length); index++) {
+            for (let index = 0; index < source.length && (!maxItems || maxItems > newArray.length); index++) {
                 if (clause(source[index], index)) {
                     newArray[newArray.length] = source[index];
                 }
@@ -29,10 +29,10 @@ var arrayInitFunc = (function () {
         };
 
         prototype.findIndex = function (clause, maxItems) {
-            var newArray = [];
+            const newArray = [];
 
             // The clause was passed in as a Method that return a Boolean
-            for (var index = 0; index < source.length && (!maxItems || maxItems > newArray.length); index++) {
+            for (let index = 0; index < source.length && (!maxItems || maxItems > newArray.length); index++) {
                 if (clause(source[index], index)) {
                     newArray[newArray.length] = index;
                 }
@@ -41,11 +41,11 @@ var arrayInitFunc = (function () {
         };
 
         prototype.select = function (clause, incNull) {
-            var newArray = [];
+            const newArray = [];
 
             // The clause was passed in as a Method that returns a Value
-            for (var i = 0; i < this.length; i++) {
-                var data = clause ? clause(this[i], i) : this[i];
+            for (let i = 0; i < this.length; i++) {
+                const data = clause ? clause(this[i], i) : this[i];
                 if (data != null || incNull) {
                     newArray[newArray.length] = data;
                 }
@@ -55,7 +55,7 @@ var arrayInitFunc = (function () {
 
         prototype.addRange = function (items, startIdx = 0) {
             if (items && Array.isArray(items)) {
-                for (var i = 0; i < items.length; i++) {
+                for (let i = 0; i < items.length; i++) {
                     source[startIdx + i] = items[i];
                 }
             }
@@ -63,7 +63,7 @@ var arrayInitFunc = (function () {
         };
 
         prototype.fillWith = function (defaultValue) {
-            var len = source.length;
+            let len = source.length;
             while (len--) {
                 source[len] = clone(defaultValue);
             }
@@ -84,15 +84,15 @@ var arrayInitFunc = (function () {
         };
 
         prototype.orderBy = function (clause) {
-            var tempArray = [];
-            var len = source.length;
+            const tempArray = [];
+            let len = source.length;
             while (len--) {
                 tempArray[len] = source[len];
             }
 
             source = tempArray.sort(function (a, b) {
-                var x = parseClause(clause, a);
-                var y = parseClause(clause, b);
+                const x = parseClause(clause, a);
+                const y = parseClause(clause, b);
                 return x < y ? -1 : x > y ? 1 : 0;
             });
 
@@ -100,15 +100,15 @@ var arrayInitFunc = (function () {
         };
 
         prototype.orderByDescending = function (clause) {
-            var tempArray = [];
-            var len = source.length;
+            const tempArray = [];
+            let len = source.length;
             while (len--) {
                 tempArray[len] = source[len];
             }
 
             source = tempArray.sort(function (a, b) {
-                var x = parseClause(clause, b);
-                var y = parseClause(clause, a);
+                const x = parseClause(clause, b);
+                const y = parseClause(clause, a);
                 return x < y ? -1 : x > y ? 1 : 0;
             });
 
@@ -116,11 +116,11 @@ var arrayInitFunc = (function () {
         };
 
         prototype.select = function (clause, incNull) {
-            var newArray = [];
+            const newArray = [];
 
             // The clause was passed in as a Method that returns a Value
-            for (var i = 0; i < this.length; i++) {
-                var data = parseClause(clause, this[i], i);
+            for (let i = 0; i < this.length; i++) {
+                const data = parseClause(clause, this[i], i);
                 if (data != null || incNull) {
                     newArray[newArray.length] = data;
                 }
@@ -130,7 +130,7 @@ var arrayInitFunc = (function () {
         };
 
         prototype.removeAt = function (index, count) {
-            if (index < 0) return prototype;
+            if (index < 0) { return prototype; }
             source.splice(index, count || 1);
             return prototype;
         };
@@ -150,12 +150,12 @@ var arrayInitFunc = (function () {
 
         // Array flattening related methods
         prototype.flattern = function (clause, filter, templ, propPrefix) {
-            var $this = source;
-            var thisLen = $this.length;
-            var resultArray = [];
-            for (var i = 0; i < thisLen; i++) {
-                var row = $this[i];
-                var result = getObject(row, clause, templ ? { ...templ } : {}, propPrefix);
+            const $this = source;
+            const thisLen = $this.length;
+            const resultArray = [];
+            for (let i = 0; i < thisLen; i++) {
+                const row = $this[i];
+                const result = getObject(row, clause, templ ? { ...templ } : {}, propPrefix);
                 result.forEach(r => {
                     if (!filter || filter(r)) {
                         resultArray.push(r);
@@ -169,18 +169,18 @@ var arrayInitFunc = (function () {
 
         // ToDo: this function can be renamed as "reduceByKey"
         prototype.toKeyValuePair = function (clause, filter, singleOnly) {
-            var $this = prototype.groupBy(clause, filter)();
-            var result = {};
-            for (var i = 0; i < $this.length; i++) {
-                var item = $this[i];
-                result["" + item.key] = singleOnly ? item.values[0] : item.values;
+            const $this = prototype.groupBy(clause, filter)();
+            const result = {};
+            for (let i = 0; i < $this.length; i++) {
+                const item = $this[i];
+                result[`${item.key}`] = singleOnly ? item.values[0] : item.values;
             }
             return result;
         };
 
         prototype.sum = function (clause) {
-            var value = 0;
-            var index;
+            let value = 0;
+            let index;
             if (clause) {
                 for (index = 0; index < source.length; index++) {
                     value += clause(source[index]) || 0;
@@ -199,15 +199,13 @@ var arrayInitFunc = (function () {
             }
             else {
                 // If no clause was specified, then return the First element in the Array
-                if (source.length > 0)
-                    return source[0];
-                else
-                    return null;
+                if (source.length > 0) { return source[0]; }
+                else { return null; }
             }
-        }
+        };
         prototype.last = function (clause) {
             if (clause != null) {
-                var newArr = source.filter(clause);
+                const newArr = source.filter(clause);
                 if (newArr.length) {
                     return newArr[newArr.length - 1];
                 } else {
@@ -216,32 +214,30 @@ var arrayInitFunc = (function () {
             }
             else {
                 // If no clause was specified, then return the Last element in the Array
-                if (source.length > 0)
-                    return source[source.length - 1];
-                else
-                    return null;
+                if (source.length > 0) { return source[source.length - 1]; }
+                else { return null; }
             }
-        }
+        };
 
         prototype.groupBy = function (clause, filter) {
-            var result = [];
-            var valObj = {};
-            var isClauseString = typeof clause === "string";
+            const result = [];
+            const valObj = {};
+            const isClauseString = typeof clause === "string";
             if (isClauseString) {
-                var tmp = clause;
+                const tmp = clause;
                 clause = function (obj) {
                     return obj[tmp];
                 };
             }
 
-            for (var i = 0; i < source.length; i++) {
-                var item = source[i];
-                var key = clause(item);
-                var keyStr = null;
+            for (let i = 0; i < source.length; i++) {
+                const item = source[i];
+                const key = clause(item);
+                let keyStr = null;
                 if (typeof key === "object") {
                     keyStr = JSON.stringify(key);
                 }
-                var obj = valObj[keyStr || key];
+                let obj = valObj[keyStr || key];
                 if (!obj) {
                     obj = { key: key, values: [] };
                     result.push((valObj[keyStr || key] = obj));
@@ -264,10 +260,10 @@ var arrayInitFunc = (function () {
         };
 
         prototype.hasDuplicates = function (clause) {
-            var srcLen = source.length - 1;
-            var item, lpItem, j;
+            const srcLen = source.length - 1;
+            let item, lpItem, j;
             if (typeof clause === "function") {
-                for (var i = 0; i < srcLen; i++) {
+                for (let i = 0; i < srcLen; i++) {
                     item = clause(source[i]);
                     for (j = i + 1; j < srcLen + 1; j++) {
                         lpItem = clause[source[j]];
@@ -276,7 +272,7 @@ var arrayInitFunc = (function () {
                 }
             }
             else if (typeof clause === "string") {
-                for (var a = 0; a < srcLen; a++) {
+                for (let a = 0; a < srcLen; a++) {
                     item = source[a][clause];
                     for (j = a + 1; j < srcLen + 1; j++) {
                         lpItem = source[j][clause];
@@ -285,25 +281,25 @@ var arrayInitFunc = (function () {
                 }
             }
             else {
-                for (var x = 0; x < srcLen; x++) {
-                    var itm = source[x];
+                for (let x = 0; x < srcLen; x++) {
+                    const itm = source[x];
                     if (~source.indexOf(itm, x + 1)) { return true; }
                 }
             }
 
             return false;
-        }
+        };
 
         function getObject(row, clause, curItem, propPrefix) {
             propPrefix = propPrefix || "";
-            var cols = getColsArr(clause);
-            var colsLen = cols.length;
-            var returnRaw = false;
+            const cols = getColsArr(clause);
+            const colsLen = cols.length;
+            let returnRaw = false;
 
-            for (var i = 0; i < colsLen; i++) {
+            for (let i = 0; i < colsLen; i++) {
                 var propName = cols[i];
-                var field = clause[propName];
-                var repeatOnVal = propName.startsWith("~~");
+                let field = clause[propName];
+                const repeatOnVal = propName.startsWith("~~");
                 if (repeatOnVal) {
                     propName = propName.substring(2);
                 }
@@ -313,15 +309,15 @@ var arrayInitFunc = (function () {
                 }
 
                 if (typeof field === "object" && !Array.isArray(field)) {
-                    var obj = field;
+                    const obj = field;
                     field = field.field;
                     if (!field || field === true) {
                         field = propName;
                     }
-                    var spread = obj.spread === true || !propName;
-                    var value = getObjVal(row, field);
-                    var props = obj.props;
-                    var newVal = null;
+                    const spread = obj.spread === true || !propName;
+                    const value = getObjVal(row, field);
+                    const props = obj.props;
+                    let newVal = null;
 
                     if (value) {
                         if (!repeatOnVal) {
@@ -335,7 +331,7 @@ var arrayInitFunc = (function () {
                                 : value;
                             if (!spread) {
                                 curItem = newVal.map(nv => {
-                                    var ret = { ...curItem, [propPrefix + propName]: nv };
+                                    const ret = { ...curItem, [propPrefix + propName]: nv };
                                     Object.keys(nv).forEach(nvp => {
                                         if (nvp.startsWith("...")) {
                                             ret[nvp.substring(3)] = nv[nvp];
@@ -357,7 +353,7 @@ var arrayInitFunc = (function () {
         }
 
         function getColsArr(obj) {
-            var cols = Object.keys(obj);
+            let cols = Object.keys(obj);
             if (cols.filter(c => c.startsWith("~~")).length > 1) {
                 throw new Error("#Error: Multiple array recurssion not allowed");
             } // check to see if their are more than one ~~ item
@@ -372,13 +368,13 @@ var arrayInitFunc = (function () {
                 return clause(value, param2, param3);
             } else if (typeof clause === "string") {
                 if (~clause.indexOf(",")) {
-                    var fields = clause.split(",");
-                    var result = {};
-                    var hasProps = false;
-                    var fLen = fields.length;
+                    const fields = clause.split(",");
+                    const result = {};
+                    let hasProps = false;
+                    let fLen = fields.length;
                     while (fLen--) {
-                        var fieldSplit = fields[fLen].trim().split(":");
-                        var field = (fieldSplit[1] || fieldSplit[0]).trim();
+                        const fieldSplit = fields[fLen].trim().split(":");
+                        const field = (fieldSplit[1] || fieldSplit[0]).trim();
 
                         if (field && value[field] !== undefined) {
                             result[fieldSplit[0].trim() || field] = value[field];
@@ -406,9 +402,9 @@ export default arrayInitFunc;
 
 export function getObjVal(row, prop) {
     if (typeof prop === "string") {
-        var split = prop.split(".");
-        var value = row[split[0]];
-        for (var j = 1; value && j < split.length; j++) {
+        const split = prop.split(".");
+        let value = row[split[0]];
+        for (let j = 1; value && j < split.length; j++) {
             value = value[split[j]];
         }
         return value;

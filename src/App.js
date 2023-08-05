@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { PureComponent } from "react";
 import "./App.scss";
 import { ReportBuilder, ReportViewer, initReportBuilder, ContextMenu } from "./lib";
@@ -7,15 +8,15 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Button from "./Components/Common/Button";
 import axios from "axios";
-import { userDaywiseReport, datasets, myOpenTickets, userList, projects, issuetypes, customfields, rapidview, tempData } from './testdata'
+import { userDaywiseReport, myOpenTickets, userList, projects, issuetypes, customfields, rapidview, tempData } from './testdata';
 
-var subReports = [
+const subReports = [
     { id: 1, name: "User daywise report", definition: userDaywiseReport },
     { id: 2, name: "Temp report", definition: tempData }
 ];
 
 // This is the default configuration object to be passed to "initReportBuilder" function.
-var defaultConfig = {
+const defaultConfig = {
     compiler: function (code, sandbox) { return Function(...sandbox, code)(); },
     useExternalDnDProvider: false,
     parameterTypes: {
@@ -45,9 +46,9 @@ var defaultConfig = {
                 promise.resolve(myOpenTickets.data);//datasets.JQL
                 return Promise.resolve(myOpenTickets.schema); //props
             },
-            resolveData: (props, params, arg) => {
-                return Promise.resolve(myOpenTickets.data);//datasets.JQL
-            }
+            resolveData: (props, params, arg) =>
+                Promise.resolve(myOpenTickets.data)//datasets.JQL
+
         },
         PLS: {
             label: "Project list", allowEdit: false,
@@ -87,7 +88,7 @@ var defaultConfig = {
                 promise.resolve(projects);
                 return Promise.resolve(props);
             },
-            resolveData: props => { Promise.resolve(null) }
+            resolveData: props => { Promise.resolve(null); }
         },
         HTP: true,
         FIL: true,
@@ -101,7 +102,7 @@ var defaultConfig = {
     },
     commonFunctions: {
         getUsersFromGroup: { value: function (group) { } },
-        getJiraIssueUrl: { value: function (jiraIssueKey) { return "http://jira-ja.attlassian.com/browse/" + jiraIssueKey } },
+        getJiraIssueUrl: { value: function (jiraIssueKey) { return `http://jira-ja.attlassian.com/browse/${jiraIssueKey}`; } },
         getUserProfileUrl: { value: function (userName) { } },
         getTicketDetails: { value: function (ticketsList, fields) { } },
         executeJQL: { value: function (jql, fields) { } },
@@ -123,11 +124,9 @@ var defaultConfig = {
         }
     },
     subReports: () => Promise.resolve(subReports),
-    resolveReportDefinition: (reportId) => {
-        return Promise.resolve((subReports.filter(r => r.id === reportId)[0] || {}).definition);
-    },
+    resolveReportDefinition: (reportId) => Promise.resolve((subReports.filter(r => r.id === reportId)[0] || {}).definition),
     resolveHttpRequest: (method, url, data, headers) => {
-        var params = data;
+        let params = data;
         if ((method || "GET").toUpperCase() === "GET") { data = undefined; }
         else { params = undefined; }
 
@@ -138,7 +137,15 @@ var defaultConfig = {
 class App extends PureComponent {
     constructor() {
         super();
-        this.state = { preview: false, reportDefinition: myOpenTickets.definition || userDaywiseReport };
+
+        let data = localStorage.getItem('reportDef');
+        if (data) {
+            data = JSON.parse(data);
+        } else {
+            data = myOpenTickets.definition || userDaywiseReport;
+        }
+
+        this.state = { preview: false, reportDefinition: data };
     }
 
     UNSAFE_componentWillMount() {
@@ -147,11 +154,11 @@ class App extends PureComponent {
 
     copyDefinition = () => {
         this.copyStringToClipboard(JSON.stringify(this.builderAPI.getReportDefinition()));
-    }
+    };
 
     copyStringToClipboard(str) {
         // Create new element
-        var el = document.createElement('textarea');
+        const el = document.createElement('textarea');
         // Set value (string to be copied)
         el.value = str;
         // Set non-editable to avoid focus and move outside of view
@@ -167,18 +174,21 @@ class App extends PureComponent {
     }
 
     viewPreview = () => {
-        var { preview } = this.state;
-        var newState = { preview: !preview };
+        const { preview } = this.state;
+        const newState = { preview: !preview };
 
         if (!preview) {
             newState.reportDefinition = this.builderAPI.getReportDefinition();
         }
 
         this.setState(newState);
+        if (newState.reportDefinition) {
+            localStorage.setItem('reportDef', JSON.stringify(newState.reportDefinition));
+        }
     };
 
     render() {
-        var { preview, reportDefinition } = this.state;
+        const { preview, reportDefinition } = this.state;
 
         return (
             <div className="report-builder-container">

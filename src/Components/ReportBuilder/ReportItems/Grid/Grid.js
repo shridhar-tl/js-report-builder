@@ -12,7 +12,7 @@ import { BuilderContext, GridContext } from "../../Common/Constants";
 import { showContextMenu } from "../../../../lib";
 
 class Grid extends ReportItemBase {
-    static contextType = BuilderContext
+    static contextType = BuilderContext;
 
     constructor(props) {
         super(props);
@@ -27,8 +27,8 @@ class Grid extends ReportItemBase {
         this.sharedProps = {
             builderContext: this.context,
             itemSelected: (e, d, itm) => {
-                var { selected = {} } = this.state;
-                var { element } = selected;
+                let { selected = {} } = this.state;
+                const { element } = selected;
                 if (element) {
                     element.changeSelection();
                 }
@@ -39,43 +39,43 @@ class Grid extends ReportItemBase {
                 this.setState({ selected });
             },
             showRowHeaderContext: (e, index, parent, updateParent) => {
-                var menuItems = this.getRowContext({ index, parent, updateParent });
+                const menuItems = this.getRowContext({ index, parent, updateParent });
                 showContextMenu(e, menuItems);
             },
             showRowGroupContext: (e, index, data, updateParent) => {
-                var menuItems = this.getRowGroupContext({ index, data, updateParent });
+                const menuItems = this.getRowGroupContext({ index, data, updateParent });
                 showContextMenu(e, menuItems);
             },
             showColHeaderContext: (e, index, parent, realObj) => {
-                var menuItems = this.getColContext({ index, parent, realObj });
+                const menuItems = this.getColContext({ index, parent, realObj });
                 showContextMenu(e, menuItems);
             },
             showColGroupContext: (e, index, parent, group, grpSpan) => {
-                var menuItems = this.getColGroupContext({ index, parent, group, grpSpan });
+                const menuItems = this.getColGroupContext({ index, parent, group, grpSpan });
                 showContextMenu(e, menuItems);
             },
             showCellItemContext: (e, index, data, menuClicked) => {
-                var menuItems = this.getCellItemContext({ index, data, menuClicked });
+                const menuItems = this.getCellItemContext({ index, data, menuClicked });
                 showContextMenu(e, menuItems);
             }
         };
     }
 
     showGridContext = (e) => {
-
-    }
+        // Need to implement
+    };
 
     getRowContext(contextData) {
-        var { index = 0, parent = [], updateParent } = contextData;
+        const { index = 0, parent = [], updateParent } = contextData;
 
-        var data = parent;
-        var isRootParent = Array.isArray(data);
+        let data = parent;
+        const isRootParent = Array.isArray(data);
 
         if (!isRootParent) {
             data = data.children;
         }
 
-        var insertRow = above => {
+        const insertRow = above => {
             if (above) {
                 data.splice(index, 0, {
                     type: 1,
@@ -90,30 +90,30 @@ class Grid extends ReportItemBase {
             updateParent(data);
         };
 
-        var removeRow = function () {
+        const removeRow = function () {
             data.splice(index, 1);
             updateParent(data);
         };
 
-        var insertGroup = function () {
-            var curRow = data[index];
+        const insertGroup = function () {
+            const curRow = data[index];
             data[index] = { type: 3, name: getUniqueGroupName(), children: [curRow] };
             updateParent(data);
         };
 
-        var menuModel = [
+        const menuModel = [
             {
                 label: "Insert row",
                 items: [
                     {
-                        label: "Above" + (isRootParent ? "" : " (Inside group)"),
+                        label: `Above${isRootParent ? "" : " (Inside group)"}`,
                         //icon: "pi pi-fw pi-plus",
                         command: () => {
                             insertRow(true);
                         }
                     },
                     {
-                        label: "Below" + (isRootParent ? "" : " (Inside group)"),
+                        label: `Below${isRootParent ? "" : " (Inside group)"}`,
                         //icon: "pi pi-fw pi-plus",
                         command: () => {
                             insertRow();
@@ -138,19 +138,19 @@ class Grid extends ReportItemBase {
             }
         ];
         return menuModel;
-    };
+    }
 
     gridDataChanged() {
-        var stateData = cloneObject(this.state.data, true);
+        const stateData = cloneObject(this.state.data, true);
         this.setState({ data: stateData });
         this.props.onChange(stateData);
     }
 
     processAllRows = action => {
-        var { head, body, footer } = this.state.data;
+        const { head, body, footer } = this.state.data;
 
-        var processRow = row => {
-            var { type, children } = row;
+        const processRow = row => {
+            const { type, children } = row;
             if (type === 1) {
                 action(children);
             } else {
@@ -172,17 +172,17 @@ class Grid extends ReportItemBase {
     };
 
     getColContext = (contextData) => {
-        var { index = 0, parent = [], realObj } = contextData;
+        const { index = 0, parent = [], realObj } = contextData;
 
-        var data = parent;
-        var isRootParent = Array.isArray(data);
+        let data = parent;
+        const isRootParent = Array.isArray(data);
 
         if (!isRootParent) {
             data = data.children;
         }
 
-        var insertColumn = before => {
-            var insertAt = index + (before ? 0 : 1);
+        const insertColumn = before => {
+            const insertAt = index + (before ? 0 : 1);
             data.splice(insertAt, 0, {
                 type: 1,
                 style: {}
@@ -191,15 +191,15 @@ class Grid extends ReportItemBase {
             this.processAllRows(c => c.splice(insertAt, 0, []));
         };
 
-        var removeCol = () => {
-            var idx = data.indexOf(realObj);
+        const removeCol = () => {
+            const idx = data.indexOf(realObj);
             data.splice(idx, 1);
             this.processAllRows(c => c.splice(index, 1));
         };
 
-        var insertGroup = () => {
-            var idx = data.indexOf(realObj);
-            var curData = data[idx];
+        const insertGroup = () => {
+            const idx = data.indexOf(realObj);
+            const curData = data[idx];
             data[idx] = { type: 3, name: getUniqueGroupName(), children: [curData] };
             this.gridDataChanged();
         };
@@ -244,14 +244,14 @@ class Grid extends ReportItemBase {
     };
 
     getRowGroupContext = (contextData) => {
-        var { data = {} } = contextData;
-        var { group, addRow, removeGroup, insertGroup, updateGroup } = data;
+        const { data = {} } = contextData;
+        const { group, addRow, removeGroup, insertGroup, updateGroup } = data;
 
-        var editGroup = () => {
+        const editGroup = () => {
             this.setState({ editedGroup: group, updateGroup });
         };
 
-        var menuModel = [
+        const menuModel = [
             {
                 label: "Insert row",
                 items: [
@@ -313,18 +313,18 @@ class Grid extends ReportItemBase {
     };
 
     getColGroupContext = (contextData) => {
-        var { index = 0, parent = [], group, grpSpan } = contextData;
-        var columns = parent;
+        const { index = 0, parent = [], group, grpSpan } = contextData;
+        let columns = parent;
         if (columns && !Array.isArray(columns)) {
             columns = parent.children;
         }
 
-        var editGroup = () => {
+        const editGroup = () => {
             this.setState({ editedGroup: group }); // Need to set updateGroup function to save group details
         };
 
-        var insertColumn = after => {
-            var realIdx = columns.indexOf(group);
+        const insertColumn = after => {
+            let realIdx = columns.indexOf(group);
             realIdx += after ? 1 : 0;
 
             columns.splice(realIdx, 0, {
@@ -335,20 +335,20 @@ class Grid extends ReportItemBase {
             this.processAllRows(c => c.splice(index + (after ? grpSpan : 0), 0, []));
         };
 
-        var insertGroup = parent => {
-            var realIdx = columns.indexOf(group);
+        const insertGroup = parent => {
+            const realIdx = columns.indexOf(group);
             if (parent) {
                 columns[realIdx] = { type: 2, name: getUniqueGroupName(), children: [group] };
             } else {
-                var children = group.children;
+                const children = group.children;
                 group.children = [{ type: 3, name: getUniqueGroupName(), children }];
             }
 
             this.gridDataChanged();
         };
 
-        var removeGroup = () => {
-            var realIdx = columns.indexOf(group);
+        const removeGroup = () => {
+            const realIdx = columns.indexOf(group);
             columns.splice(realIdx, 1, ...group.children);
 
             this.gridDataChanged();
@@ -413,33 +413,31 @@ class Grid extends ReportItemBase {
         ];
     };
 
-    getCellItemContext = ({ index, data = {}, menuClicked } = {}) => {
-        return [
-            {
-                label: "Edit item",
-                icon: "fa fa-edit",
-                disabled: data.itemType === "IMG",
-                command: () => menuClicked(index, data, "EDIT")
+    getCellItemContext = ({ index, data = {}, menuClicked } = {}) => [
+        {
+            label: "Edit item",
+            icon: "fa fa-edit",
+            disabled: data.itemType === "IMG",
+            command: () => menuClicked(index, data, "EDIT")
 
-            },
-            {
-                label: "Remove item",
-                icon: "fa fa-trash",
-                command: () => menuClicked(index, data, "REMOVE")
+        },
+        {
+            label: "Remove item",
+            icon: "fa fa-trash",
+            command: () => menuClicked(index, data, "REMOVE")
 
-            },
-            {
-                label: "Properties",
-                icon: "fa fa-trash",
-                command: () => menuClicked(index, data, "PROPS")
+        },
+        {
+            label: "Properties",
+            icon: "fa fa-trash",
+            command: () => menuClicked(index, data, "PROPS")
 
-            }
-        ];
-    }
+        }
+    ];
 
     expressionChanged = (value, type, validation) => {
-        var { selected } = this.state;
-        var { element } = selected || {};
+        const { selected } = this.state;
+        const { element } = selected || {};
         if (!element) {
             return;
         }
@@ -448,7 +446,7 @@ class Grid extends ReportItemBase {
 
     getRows(parent, grid, columns, headSpan, updateParent, isHeaderRow) {
         return parent.map((item, i) => {
-            var commonProps = {
+            const commonProps = {
                 key: item._uniqueId,
                 index: i,
                 grid,
@@ -467,11 +465,11 @@ class Grid extends ReportItemBase {
     }
 
     updateRows = (updated, index, field) => {
-        var { data } = this.state;
+        let { data } = this.state;
         data = { ...data };
         if (!Array.isArray(updated)) {
             // When group is updated
-            var fields = data[field];
+            let fields = data[field];
             fields = [...fields];
             updated = { ...updated };
             fields[index] = updated;
@@ -488,8 +486,8 @@ class Grid extends ReportItemBase {
     updateFooterRows = (body, index) => this.updateRows(body, index, "footer");
 
     getColumns = (colGrpDepth, maxDepth, columns, result = []) => {
-        var index = 0;
-        var pendingGrps = [];
+        const index = 0;
+        const pendingGrps = [];
 
         result.push(
             <tr key={result.length}>
@@ -503,7 +501,7 @@ class Grid extends ReportItemBase {
                     </th>
                 )}
                 {columns.map((c, i) => {
-                    var parent;
+                    let parent;
                     if (c.$parent) {
                         parent = c.$parent;
                         c = c.chi;
@@ -522,17 +520,15 @@ class Grid extends ReportItemBase {
                         );
                     } else {
                         array(pendingGrps).addRange(
-                            c.children.map(ic => {
-                                return { chi: ic, $parent: c };
-                            }),
+                            c.children.map(ic => ({ chi: ic, $parent: c })),
                             i + index
                         );
-                        var cspan = this.getNestedCellsCount(c.children);
+                        const cspan = this.getNestedCellsCount(c.children);
                         //index += cspan - 1;
                         return (
                             <th
                                 key={i}
-                                title={"Group: " + c.name}
+                                title={`Group: ${c.name}`}
                                 className="builder-head-grp"
                                 colSpan={cspan}
                                 onContextMenu={e => this.sharedProps.showColGroupContext(e, i + index, parent, c, cspan)}
@@ -557,13 +553,13 @@ class Grid extends ReportItemBase {
     }
 
     updateGroup = group => {
-        var { updateGroup } = this.state;
+        const { updateGroup } = this.state;
         updateGroup(group);
         this.setState({ updateGroup: null, editedGroup: null });
     };
 
     getGroupProperties() {
-        var { editedGroup } = this.state;
+        const { editedGroup } = this.state;
         if (!editedGroup) {
             return null;
         }
@@ -579,22 +575,22 @@ class Grid extends ReportItemBase {
     }
 
     render() {
-        var { data } = this.state; // Type 1 - Row, 2- Group, 3 - detail group?
-        var { columns, head, body, footer } = data;
-        var { selected } = this.state;
-        var { cellItem = {} } = selected || {};
+        const { data } = this.state; // Type 1 - Row, 2- Group, 3 - detail group?
+        const { columns, head, body, footer } = data;
+        const { selected } = this.state;
+        const { cellItem = {} } = selected || {};
 
-        var maxDepth = getNestingDepth(head);
-        var maxDepthBody = getNestingDepth(body);
+        let maxDepth = getNestingDepth(head);
+        const maxDepthBody = getNestingDepth(body);
         if (maxDepthBody > maxDepth) {
             maxDepth = maxDepthBody;
         }
 
-        var colGrpDepth = getNestingDepth(columns);
+        const colGrpDepth = getNestingDepth(columns);
 
-        var builderHeader = <thead className="jsr-builder-head">{this.getColumns(colGrpDepth, maxDepth, columns)}</thead>;
+        const builderHeader = <thead className="jsr-builder-head">{this.getColumns(colGrpDepth, maxDepth, columns)}</thead>;
 
-        var expressionEditor = (
+        const expressionEditor = (
             <div key="0" className="jsr-expr-container inline">
                 <div className="field">
                     <ExpressionEditor
@@ -608,7 +604,7 @@ class Grid extends ReportItemBase {
             </div>
         );
 
-        var table = (
+        const table = (
             <GridContext.Consumer>
                 {grid => (
                     <table className="jsr-grid">

@@ -8,7 +8,7 @@ import { Dropdown } from "primereact/dropdown";
 import { MultiSelect } from "primereact/multiselect";
 import { AutoComplete } from "primereact/autocomplete";
 import { Chips } from "primereact/chips";
-import array from '../../Common/linq'
+import array from '../../Common/linq';
 import { convertToDate } from "../../Common/CommonFunctions";
 import Button from "./Button";
 import { supportedFileTypes } from "../../Common/ReportConfig";
@@ -17,8 +17,9 @@ import { parseCSV } from "../../Common/HelperFunctions";
 export default class InputParameter extends PureComponent {
     constructor(props) {
         super(props);
-        var { definition, value, dataset } = props;
-        var { allowMultiple, valueField, fileTypes } = definition;
+        const { definition, value, dataset } = props;
+        const { allowMultiple, valueField } = definition;
+        let { fileTypes } = definition;
         if (fileTypes) {
             fileTypes = fileTypes.map(t => supportedFileTypes[t - 1].type).join(',');
         }
@@ -45,19 +46,19 @@ export default class InputParameter extends PureComponent {
     }
 
     setIncommingValue(value, valueField, dataset) {
-        var newValue;
+        let newValue;
 
         if (valueField && value) {
             if (!dataset && this.state) { dataset = this.state.dataset; }
 
             if (dataset) {
                 if (Array.isArray(value)) {
-                    var firstVal = value[0];
+                    const firstVal = value[0];
                     if (typeof (firstVal) != "object") {
                         newValue = dataset.filter(d => value.indexOf(d[valueField]) >= 0);
                     }
                     else if (firstVal instanceof Date) {
-                        var vTicks = value.map(v => v.getTime());
+                        const vTicks = value.map(v => v.getTime());
                         newValue = dataset.filter(d => vTicks.indexOf(convertToDate(d[valueField]).getTime()) >= 0);
                     }
                     if (newValue.length === 0) { newValue = null; }
@@ -66,7 +67,7 @@ export default class InputParameter extends PureComponent {
                     newValue = array(dataset).first(d => d[valueField] === value);
                 }
                 else if (value instanceof Date) {
-                    var valTicks = value.getTime();
+                    const valTicks = value.getTime();
                     newValue = array(dataset).first(d => convertToDate(d[valueField]).getTime() === valTicks);
                 }
             }
@@ -76,12 +77,12 @@ export default class InputParameter extends PureComponent {
     }
 
     resolveDataset() {
-        var { definition, value } = this.props;
-        var { dataset: dsId, displayField, valueField } = definition;
+        const { definition, value } = this.props;
+        const { dataset: dsId, displayField, valueField } = definition;
         if (dsId && displayField) {
             this.props.resolveDataset(dsId).then(dataset => {
-                var state = { dataset, dsId };
-                var newValue = this.setIncommingValue(value, valueField, dataset);
+                const state = { dataset, dsId };
+                const newValue = this.setIncommingValue(value, valueField, dataset);
 
                 if (newValue !== value) { state.value = newValue; }
 
@@ -96,15 +97,15 @@ export default class InputParameter extends PureComponent {
 
     targetValueChanged = (e) => {
         this.setValue(e.value);
-    }
+    };
 
     setValue = (value, noPropogate) => {
         this.setState({ value });
         if (!noPropogate) {
-            var { valueField } = this.props.definition;
+            const { valueField } = this.props.definition;
             if (valueField && value && typeof value === "object" && !(value instanceof Date)) {
                 if (Array.isArray(value)) {
-                    value = value.map(v => v[valueField])
+                    value = value.map(v => v[valueField]);
                 }
                 else {
                     value = value[valueField];
@@ -115,14 +116,14 @@ export default class InputParameter extends PureComponent {
     };
 
     dateRangeChanged = e => {
-        var value = this.getDateRangeFromArr(e);
+        const value = this.getDateRangeFromArr(e);
         if (value) {
             this.setValue(value);
         }
     };
 
     getDateRangeFromArr = e => {
-        var range = e.value;
+        const range = e.value;
         if (!range || !Array.isArray(range)) {
             return;
         }
@@ -134,8 +135,8 @@ export default class InputParameter extends PureComponent {
 
     filterDataset = (e) => {
         setTimeout(() => {
-            var { dataset } = this.state;
-            var { query } = e;
+            const { dataset } = this.state;
+            let { query } = e;
 
             if (!query) {
                 this.setState({ filteredDataset: dataset });
@@ -144,13 +145,13 @@ export default class InputParameter extends PureComponent {
 
             query = query.trimLeft();
 
-            var filteredDataset = [];
+            const filteredDataset = [];
 
-            var { displayField, valueField } = this.props.definition;
-            var len = dataset.length;
-            for (var i = 0; i < len; i++) {
-                var entry = dataset[i];
-                var { [displayField]: dField, [valueField]: vField } = entry;
+            const { displayField, valueField } = this.props.definition;
+            const len = dataset.length;
+            for (let i = 0; i < len; i++) {
+                const entry = dataset[i];
+                let { [displayField]: dField, [valueField]: vField } = entry;
                 dField = (dField || "").toString().toLowerCase();
                 vField = (vField || "").toString().toLowerCase();
 
@@ -159,64 +160,60 @@ export default class InputParameter extends PureComponent {
 
             this.setState({ filteredDataset });
         }, 0);
-    }
+    };
 
     onFileSelected = e => {
-        var len = e.files.length;
-        var fileObj = [];
+        const len = e.files.length;
+        const fileObj = [];
 
-        var readFunc = (funcName, f) => {
-            return new Promise((resolve, reject) => {
-                if (!isCsv && !isJSON && funcName === "readAsText") { reject("This is not a text file."); return; }
+        const readFunc = (funcName, f, isCsv, isJSON) => new Promise((resolve, reject) => {
+            if (!isCsv && !isJSON && funcName === "readAsText") { reject("This is not a text file."); return; }
 
-                var reader = new FileReader();
-                reader.onload = (e) => {
-                    resolve(e.target.result);
-                }
-                reader.onerror = (e) => {
-                    reject(e);
-                }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                resolve(e.target.result);
+            };
+            reader.onerror = (e) => {
+                reject(e);
+            };
 
-                reader[funcName](f);
-            });
-        }
+            reader[funcName](f);
+        });
 
-        var readAsJson = (f, file) => {
-            return readFunc("readAsText", f).then(data => {
-                if (file.isJSON) { return JSON.parse(data); }
-                else if (file.isCsv) { return parseCSV(data); }
-            });
-        }
+        const readAsJson = (f, file, isCsv, isJSON) => readFunc("readAsText", f, isCsv, isJSON).then(data => {
+            if (file.isJSON) { return JSON.parse(data); }
+            else if (file.isCsv) { return parseCSV(data); }
+        });
 
-        for (var i = 0; i < len; i++) {
-            var f = e.files[i];
-            var nameLower = f.name.toLowerCase();
-            var isImage = f.type.indexOf("image") >= 0;
-            var isCsv = nameLower.endsWith(".csv");
-            var isJSON = nameLower.endsWith(".json");
-            var isExcel = nameLower.endsWith(".xls") || nameLower.endsWith(".xlsx");
+        for (let i = 0; i < len; i++) {
+            const f = e.files[i];
+            const nameLower = f.name.toLowerCase();
+            const isImage = f.type.indexOf("image") >= 0;
+            const isCsv = nameLower.endsWith(".csv");
+            const isJSON = nameLower.endsWith(".json");
+            const isExcel = nameLower.endsWith(".xls") || nameLower.endsWith(".xlsx");
 
-            var resultObj = {
+            const resultObj = {
                 name: f.name,
                 size: f.size,
                 type: f.type,
                 isImage, isCsv, isExcel, isJSON,
-                getAsText: () => readFunc("readAsText", f),
-                getAsDataURL: () => readFunc("readAsDataURL", f),
-                getAsJSON: () => readAsJson(f, resultObj)
+                getAsText: () => readFunc("readAsText", f, isCsv, isJSON),
+                getAsDataURL: () => readFunc("readAsDataURL", f, isCsv, isJSON),
+                getAsJSON: () => readAsJson(f, resultObj, isCsv, isJSON)
             };
 
             fileObj[i] = resultObj;
         }
-        var { allowMultiple } = this.props.definition;
+        const { allowMultiple } = this.props.definition;
         this.setValue(allowMultiple ? fileObj : fileObj[0]);
     };
 
     getSingleValueField() {
-        var { name, mask, slotChar, display, type, displayField, placeholder } = this.props.definition;
-        var { value, dataset, filteredDataset, fileTypes } = this.state;
+        const { name, mask, slotChar, display, type, displayField, placeholder } = this.props.definition;
+        const { value, dataset, filteredDataset, fileTypes } = this.state;
 
-        var className = "param-ctl param-ctl-" + type.toLowerCase();
+        const className = `param-ctl param-ctl-${type.toLowerCase()}`;
 
         switch (type) {
             default:
@@ -227,12 +224,12 @@ export default class InputParameter extends PureComponent {
                 return (
                     <div className={className}>
                         <Checkbox
-                            inputId={"pcb_" + name}
+                            inputId={`pcb_${name}`}
                             value={true}
                             onChange={e => this.setValue(e.checked)}
                             checked={value || false}
                         />
-                        <label htmlFor={"pcb_" + name} className="p-checkbox-label">
+                        <label htmlFor={`pcb_${name}`} className="p-checkbox-label">
                             {display}
                         </label>
                     </div>
@@ -261,15 +258,15 @@ export default class InputParameter extends PureComponent {
             case "DTE":
                 return <Calendar value={value} onChange={this.valueChanged} className={className} placeholder={placeholder} />;
             case "DR":
-                var rValue = [];
+                const rValue = [];
                 if (value) {
                     if (value.fromDate) {
-                        if (!(value.fromDate instanceof Date)) { value.fromDate = convertToDate(value.fromDate) }
+                        if (!(value.fromDate instanceof Date)) { value.fromDate = convertToDate(value.fromDate); }
                         rValue.push(value.fromDate);
                     }
 
                     if (value.toDate) {
-                        if (!(value.toDate instanceof Date)) { value.toDate = convertToDate(value.toDate) }
+                        if (!(value.toDate instanceof Date)) { value.toDate = convertToDate(value.toDate); }
                         rValue.push(value.toDate);
                     }
                 }
@@ -297,10 +294,10 @@ export default class InputParameter extends PureComponent {
     }
 
     getMultiValueField(value, setValue, valueChanged) {
-        var { mask, slotChar, type, displayField, placeholder } = this.props.definition;
-        var { dataset, fileTypes } = this.state;
+        const { mask, slotChar, type, displayField, placeholder } = this.props.definition;
+        const { dataset, fileTypes } = this.state;
 
-        var className = "param-ctl param-multctl-" + type.toLowerCase();
+        const className = `param-ctl param-multctl-${type.toLowerCase()}`;
 
         switch (type) {
             default:
@@ -350,26 +347,26 @@ export default class InputParameter extends PureComponent {
     }
 
     render() {
-        var { definition, handleMultivalue } = this.props;
-        var { allowMultiple } = definition;
+        const { definition, handleMultivalue } = this.props;
+        const { allowMultiple } = definition;
         return allowMultiple ? (
             handleMultivalue ? (
                 <MultiValueField onChange={this.setValue}>
                     {(value, setValue, valueChanged) => this.getMultiValueField(value, setValue, valueChanged)}
                 </MultiValueField>
             ) : (
-                    this.getMultiValueField(this.state.value, this.setValue, this.valueChanged)
-                )
+                this.getMultiValueField(this.state.value, this.setValue, this.valueChanged)
+            )
         ) : (
-                this.getSingleValueField()
-            );
+            this.getSingleValueField()
+        );
     }
 }
 
 class MultiValueField extends PureComponent {
     constructor(props) {
         super(props);
-        var value = this.props.value || [];
+        const value = this.props.value || [];
         this.state = { value };
     }
 
@@ -379,7 +376,7 @@ class MultiValueField extends PureComponent {
 
     setValue = (value, i) => {
         if (i >= 0) {
-            var stateValue = this.state.value;
+            let stateValue = this.state.value;
             stateValue[i] = value;
             stateValue = [...stateValue];
             this.setState({ value: stateValue });
@@ -390,14 +387,14 @@ class MultiValueField extends PureComponent {
     };
 
     addItem = () => {
-        var { value, newValue } = this.state;
+        const { value, newValue } = this.state;
         this.setState({ newValue: "" });
         this.setValue(newValue, value.length);
     };
 
     render() {
-        var { children } = this.props;
-        var { value, newValue } = this.state;
+        const { children } = this.props;
+        const { value, newValue } = this.state;
         return (
             <div className="multivalue-param">
                 <table>

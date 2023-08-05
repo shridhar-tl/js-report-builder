@@ -20,8 +20,8 @@ export default class ContextMenu extends PureComponent {
     componentDidMount() {
         contextHandler = (event, contextItems) => {
             if (!event) {
-                this.menu.hide(event);
-                this.contextMenu.hide(event);
+                this.menu.hide({});
+                this.contextMenu.hide({});
                 return;
             }
             const isContextMenu = event.type === "contextmenu";
@@ -35,11 +35,11 @@ export default class ContextMenu extends PureComponent {
             }
 
             if (isContextMenu) {
-                this.menu.hide(event);
+                this.menu.hide({});
                 this.contextMenu.show(event);
             }
             else {
-                this.contextMenu.hide(event);
+                this.contextMenu.hide({});
                 this.menu.toggle(event);
             }
         };

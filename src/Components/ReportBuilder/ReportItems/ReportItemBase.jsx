@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { showContextMenu } from '../../../lib';
+import { showContextMenu } from '../../..';
 import classNames from 'classnames';
 import './ReportItemBase.scss';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ItemsBase from './ItemsBase';
-import { ReportViewer } from '../../../lib';
+import { ReportViewer } from '../../..';
 import { resolveReport } from '../../../Common/ReportConfig';
 
 class SubReport extends ItemsBase {

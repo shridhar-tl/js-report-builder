@@ -1,7 +1,7 @@
 import "./extensions";
 import array from "./linq";
 import inbuiltFunctions, { setHttpProxy } from "./CommonFunctions";
-import inbuiltDatasets from "./DatasetTypes";
+import inbuiltDatasets from "./datasetTypes";
 import { setCompilerOptions } from "./Compiler";
 
 export const options = { useExternalDnDProvider: false };

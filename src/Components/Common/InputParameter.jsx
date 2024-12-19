@@ -54,7 +54,7 @@ export default class InputParameter extends PureComponent {
             if (dataset) {
                 if (Array.isArray(value)) {
                     const firstVal = value[0];
-                    if (typeof (firstVal) != "object") {
+                    if (typeof firstVal !== "object") {
                         newValue = dataset.filter(d => value.indexOf(d[valueField]) >= 0);
                     }
                     else if (firstVal instanceof Date) {
@@ -63,7 +63,7 @@ export default class InputParameter extends PureComponent {
                     }
                     if (newValue.length === 0) { newValue = null; }
                 }
-                else if (typeof (value) != "object") {
+                else if (typeof value !== "object") {
                     newValue = array(dataset).first(d => d[valueField] === value);
                 }
                 else if (value instanceof Date) {
